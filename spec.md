@@ -2,10 +2,11 @@ JSON specification
 ==================
 
 `$foo` are custom ids that are not exposed to a user but may be used as HTML ids
-(restrictions to white-space and special characters eg. '.' or '#'
+(restrictions to white-space and special characters eg. `.` or `#`
 apply and they must be globally unique).
 `<"foo">` are optional fields in an object.
 Colors are all valid CSS colors (named, hexadecimal, rgb, …)
+A set of good colors is `["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"]`.
 Timestamps are UNIX timestamps in seconds since standard epoch.
 
 The specification is split into two files, the dictionary containing all types (ie. rows)
