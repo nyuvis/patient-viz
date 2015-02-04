@@ -63,7 +63,7 @@ The events file:
         {
           "event_id": $event_id, // the event id of the connected event
           <"color">: "#e78ac3", // the color of the connection or black
-          <"stroke_width">: "1pt" // the thickness of the connection or 4
+          <"stroke_width">: "1pt" // the thickness of the connection or 4px
         },
         …
       ],
