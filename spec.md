@@ -62,8 +62,8 @@ The events file:
       <"connections">: [ // directed connections to other events (the direction is ignored for now)
         {
           "event_id": $event_id, // the event id of the connected event
-          "color": "#e78ac3", // the color of the connection
-          "stroke_width": "1pt" // the thickness of the connection
+          <"color">: "#e78ac3", // the color of the connection or black
+          <"stroke_width">: "1pt" // the thickness of the connection or 4
         },
         …
       ],
