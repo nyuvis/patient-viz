@@ -60,7 +60,11 @@ The events file:
       <"flag_value">: "4mg", // optional event flag display value
       <"event_id">: $event_id, // optional id for this event
       <"connections">: [ // directed connections to other events (the direction is ignored for now)
-        $event_id, // the event id of the connected event
+        {
+          "event_id": $event_id, // the event id of the connected event
+          "color": "#e78ac3", // the color of the connection
+          "stroke_width": "1pt" // the thickness of the connection
+        },
         …
       ],
       <"weight">: 0.75 // an associated weight to the event (shown as circle)
