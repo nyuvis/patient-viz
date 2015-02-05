@@ -6,7 +6,7 @@ JSON specification
 apply and they must be globally unique).
 `<"foo">` are optional fields in an object.
 Colors are all valid CSS colors (named, hexadecimal, rgb, …)
-A set of good colors is `["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3"]`.
+A set of good colors is `["#80b1d3", "#4daf4a", "#fb8072", "#ff7f00", "#eb9adb"]`.
 Timestamps are UNIX timestamps in seconds since standard epoch.
 
 The specification is split into two files, the dictionary containing all types (ie. rows)
