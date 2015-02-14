@@ -1,0 +1,101 @@
+#pHead>div>ul>li>div {
+    transform: translateY(4px);
+}
+
+#pTimeLine, #pViewReset, #pSort {
+    cursor: default;
+}
+
+#pTimeLine:hover, #pViewReset:hover, #pSort:hover {
+    text-decoration: underline;
+}
+
+.pTypeHead > span {
+    cursor: default;
+}
+
+.pTypeHead > span:hover {
+    text-decoration: underline;
+}
+
+.pType > div {
+    margin-top: 5px;
+    overflow: auto;
+}
+
+.pT {
+    text-align: left;
+    background-color: white;
+    color: black;
+    white-space: nowrap;
+    width: auto;
+    cursor: default;
+}
+
+.pT:nth-child(even) {
+    background-color: lightgrey;
+}
+
+.pElem div {
+    display: inline-block;
+    background-color: white;
+}
+
+.pElem:nth-child(odd) {
+    background-color: lightgrey;
+}
+
+.pElem {
+    padding: 1px;
+}
+
+.pElem > span {
+    vertical-align: baseline;
+    display: inline-block;
+    cursor: default;
+}
+
+.pBox {
+    vertical-align: baseline;
+    transform: translateY(1px);
+    width: 9px;
+    height: 9px;
+    display: inline-block;
+    border: solid 1px black;
+    margin: 0 4px 0 0;
+}
+
+.xAxisClass path {
+    fill: none;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.xAxisClass .tick {
+    fill: none;
+    stroke: black;
+}
+
+.xAxisClass .tick text {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 14px;
+    fill: black;
+}
+
+.yAxisClass path {
+    fill: none;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.yAxisClass .tick {
+    fill: none;
+    stroke: black;
+}
+
+.yAxisClass .tick text {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 8px;
+    fill: black;
+}

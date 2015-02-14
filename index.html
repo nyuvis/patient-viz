@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patient Viz</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="lib/colorbrewer/colorbrewer.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/busy.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/zui.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/time.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/text.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/path.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/stat.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
+  <script src="js/typepool.js" charset="utf-8"></script>
+  <script src="js/type.js" charset="utf-8"></script>
+  <script src="js/event.js" charset="utf-8"></script>
+  <script src="js/overview.js" charset="utf-8"></script>
+  <script src="js/eventview.js" charset="utf-8"></script>
+  <script src="js/typeview.js" charset="utf-8"></script>
+  <script src="js/linechart.js" charset="utf-8"></script>
+  <script src="js/labels.js" charset="utf-8"></script>
+  <script src="js/shared.js" charset="utf-8"></script>
+</head>
+<body onload="start()">
+
+<header id="pHead" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <ul class="list-inline" id="pHeadList">
+      <li><div>
+        <strong>Time:</strong>
+        <span id="pStart"></span> - <span id="pEnd"></span>
+      </div></li><li><div class="checkbox">
+        <label id="pShowLabel">
+          <input id="pShow" type="checkbox" checked="checked"> Show All Events
+        </label>
+        <label>
+          <input id="pJoin" type="checkbox"> Join Selections
+        </label>
+        <label>
+          <input id="pUseLens" type="checkbox"> Use Lens
+        </label>
+        <label>
+          <input id="pYCluster" type="checkbox"> Y-Compress
+        </label>
+        <label>
+          Connect: <input id="pConnectRange" type="range" value="0" min="0" max="50"> <span id="pConnectRangeDisplay">0</span>
+        </label>
+      </div></li>
+      <li><div id="hCon"><strong>Sort types: </strong></div></li>
+      <li><div id="xMode"><strong>X: </strong></div></li>
+      <li><div id="yMode"><strong>Y: </strong></div></li>
+    </ul>
+  </div>
+</header>
+<div id="pContent">
+  <div id="pSVG"></div>
+</div>
+<div id="pTypes"></div>
+<div id="pList"></div>
+
+<script>
+var SLOW_MODE = false;
+
+function start() {
+  jkjs.busy.imgBusy = "jk-js/jkjs/img/busy.gif";
+  jkjs.busy.imgWarn = "jk-js/jkjs/img/warning.png";
+  jkjs.text.exact(!SLOW_MODE);
+
+  function setPidSel(ps) {
+    ps.on("change", function() {
+      var pn = ps.node();
+      var op = d3.select(pn.options[pn.selectedIndex]).datum();
+      loadFile(op, lastDictionaryFile, true);
+    });
+    var dd = ps.node();
+    var curId = d3.select(dd.options[dd.selectedIndex]).text();
+    d3.text("patients.txt", "text/plain", function(error, data) {
+      if(error) {
+        return;
+      }
+      var pids = data.split("\n").map(function(pid) {
+        return (""+pid).trim();
+      }).filter(function(pid) {
+        return pid != "";
+      });
+      var pidOpts = ps.selectAll("option").data(pids);
+      pidOpts.exit().remove();
+      pidOpts.enter().append("option");
+      pidOpts.text(function(pid) {
+        return pid;
+      });
+      pidOpts.sort();
+
+      ps.selectAll("option").each(function(p, i) {
+        if(p !== curId) {
+          return;
+        }
+        var tmpChg = ps.on("change");
+        ps.on("change", null);
+        ps.node().selectedIndex = i;
+        ps.on("change", tmpChg);
+      });
+    });
+  }
+
+  var showLabelsOnDrag = !SLOW_MODE;
+  var topPad = 71; // bootstraps navbar
+  var divContent = d3.select("#pContent").style({
+    "display": "inline-block",
+    "margin": "0 5px",
+    "padding": 0,
+    "box-sizing": "border-box",
+    "font-size": "10px",
+    "font-family": "monospace"
+  });
+  var divSVG = d3.select("#pSVG");
+  var width = 800;
+  var height = 600;
+  var ovWidth = 256;
+  var ovHeight = Math.floor(256 / width * height);
+  var handler = {
+    getSize: function() {
+      return {
+        width: ovWidth,
+        height: ovHeight
+      };
+    },
+    getBox: function() {
+      return box;
+    },
+    getZUI: function() {
+      return zui;
+    }
+  };
+  var inTransition = 0;
+  var zui = jkjs.zui.create(divSVG, {
+    width: width + "px",
+    height: height + "px"
+  }, {
+    width: width,
+    height: height
+  }, function() {
+    return box;
+  }, function(target, translate, scale, w, h, canvasRect, isSmooth) {
+    if(isSmooth) {
+      labels && labels.setShowLabels(false);
+      inTransition += 1;
+      setTimeout(function() {
+        inTransition -= 1;
+        if(inTransition == 0) {
+          labels && labels.setShowLabels(true);
+          updateViewport();
+        }
+      }, jkjs.zui.animationDuration);
+    }
+    jkjs.zui.applyCanvasZoom(target, translate, scale, w, h, canvasRect, isSmooth);
+    var visRect = jkjs.zui.computeVisibleRect(translate, scale, w, h);
+    overview.updateCameraRect(canvasRect, visRect, isSmooth);
+    pool.onViewportChange(box, visRect, scale, isSmooth);
+  }, [ 1e-2, 3 ]);
+
+  function updateViewport() {
+    zui.move(0, 0, false);
+  }
+
+  zui.svg.style({
+    "cursor": "crosshair"
+  });
+  if(!showLabelsOnDrag) {
+    zui.svg.on("mousedown.labels", function() {
+      labels && labels.setShowLabels(false);
+    }).on("mouseup.labels", function() {
+      labels && labels.setShowLabels(true);
+      updateViewport();
+    }).on("mousewheel.labels", function() {
+      labels && labels.setShowLabels(true);
+      updateViewport();
+    });
+  }
+  var suppl = divSVG.append("svg");
+  var overview = new Overview(d3.select("#pTypes"), handler);
+  overview.getSVG().on("mousedown.labels", function() {
+    labels && labels.setShowLabels(false);
+  }).on("mouseup.labels", function() {
+    labels && labels.setShowLabels(true);
+    updateViewport();
+  });
+  var pool = null;
+  var eventList = null;
+  var typeList = null;
+  var linechart = null;
+  var box = null;
+  var labels = null;
+
+  function setBox(w, h) {
+    box = {
+      x: 0,
+      y: 0,
+      width: w,
+      height: h
+    };
+    overview.onBoxUpdate();
+  };
+
+  var mainG = zui.inner.append("g").attr({
+    "id": "mainG"
+  });
+  var secG = zui.svg.append("g");
+  var busy = new jkjs.busy.layer(zui.svg, {
+    x: 0,
+    y: 0,
+    width: width,
+    height: height
+  });
+  var fullRect = zui.svg.append("rect").attr({
+    "x": 0,
+    "y": 0,
+    "width": width,
+    "height": height,
+    "stroke": "black",
+    "stroke-width": 1,
+    "fill": "none"
+  });
+  var blank = zui.svg.append("rect").attr({
+    "x": 0,
+    "y": 0,
+    "width": width,
+    "height": height,
+    "fill": "white",
+    "opacity": 0
+  });
+
+  function setSize(w, h) {
+    width = w;
+    height = h;
+    if(box) {
+      setBox(box.width, box.height);
+    }
+    overview.onSizeUpdate();
+    fullRect.attr({
+      "width": width,
+      "height": height
+    });
+    blank.attr({
+      "width": width,
+      "height": height
+    });
+    busy.setRect({
+      x: 0,
+      y: 0,
+      width: width,
+      height: height
+    });
+    zui.setSize({
+      width: width + "px",
+      height: height + "px"
+    }, {
+      width: width,
+      height: height
+    });
+    if(pool) {
+      pool.onSizeUpdate(width, height);
+    }
+  }
+
+  var views = initViews(mainG, secG, suppl, blank, d3.select("#pList"), d3.select("#pTypes"), overview, setBox, onVC, busy, updateViewport);
+  pool = views[0];
+  eventList = views[1];
+  typeList = views[2];
+  linechart = views[3];
+  labels = views[4];
+  d3.select("#pJoin").on("change", function() {
+    pool.joinSelections(d3.select("#pJoin").node().checked);
+  });
+  d3.select("#pShow").on("change", function() {
+    pool.showOnlyWeightedEvents(!d3.select("#pShow").node().checked);
+  });
+
+  function updateRange() {
+    var value = d3.select("#pConnectRange").node().value;
+    d3.select("#pConnectRangeDisplay").text(value);
+    pool.maxConnectSlot(value);
+  }
+
+  d3.select("#pConnectRange").style({
+    "width": "50px",
+    "display": "inline-block"
+  }).on("change", updateRange);
+  if(!SLOW_MODE) {
+    d3.select("#pConnectRange").on("input", updateRange);
+  }
+
+  var args = jkjs.util.getQueryStrings();
+
+  var dictionaryDefault = 'dictionary.json';
+  var dictionary = null;
+  var lastDictionaryFile = null;
+  loadFile(args["p"], args["d"] ? args["d"] : dictionaryDefault, false);
+
+  function loadFile(pid, dictionaryFile, createState) {
+    if(!dictionary || lastDictionaryFile != dictionaryFile) {
+      d3.json(dictionaryFile, function(err, json) {
+        if(err) {
+          console.warn("Failed loading dictionary: '"+dictionaryFile+"'");
+          busy.setState(jkjs.busy.state.warn);
+          return console.warn(err);
+        }
+        dictionary = json;
+        lastDictionaryFile = dictionaryFile;
+        loadFile(pid, dictionaryFile, createState);
+        return;
+      });
+      return;
+    }
+    if(createState) {
+      var url = jkjs.util.getOwnURL() + "?p=" + pid + (dictionaryFile !== dictionaryDefault ? "&d=" + dictionaryFile : "");
+      window.history.pushState({
+        pid: pid,
+        dictionary: dictionaryFile
+      },"", url);
+    }
+    var inputFile = pid;
+    busy.setState(jkjs.busy.state.busy);
+    overview.clearShadow(); // having a use element would slow down DOM manipulations by at least 20s
+    typeList.clearLists();
+    eventList.setEvents([], false, false);
+    d3.json(inputFile, function(err, json) {
+      if(err) {
+        console.warn("Failed loading patient: '"+inputFile+"' Note: Give the patient file as argument 'p'");
+        busy.setState(jkjs.busy.state.warn);
+        return console.warn(err);
+      }
+      var error = true;
+      try {
+        setPidSel(loadPerson(pid, json, pool, eventList, typeList, linechart, dictionary, suppl));
+        busy.setState(jkjs.busy.state.norm);
+        relayout();
+        zui.showAll(false);
+        error = false;
+      } finally {
+        if(error) {
+          busy.setState(jkjs.busy.state.warn);
+        }
+      }
+    });
+  }
+
+  window.onpopstate = function(e) {
+    if(e.state) {
+      loadFile(e.state.pid, e.state.dictionary, false);
+    }
+  };
+
+  function onVC() {
+    relayout();
+    zui.showAll(false);
+  }
+
+  function relayout() {
+    topPad = d3.select("#pHead").node().offsetHeight + 10; // comfort space
+    var bodyHeight = window.innerHeight;
+    var body = d3.select("body").style({
+      "width": "100%",
+      "height": bodyHeight + "px"
+    });
+    var bodyPadding = topPad;
+    var bodyWidth = body.node().offsetWidth;
+    var listWidth = d3.select("#pTypes").node().offsetWidth;
+    var correctWidth = bodyWidth - listWidth - 36; // 2 * 5px margin on both sides + 16px buffer
+    var allowedHeight = bodyHeight - bodyPadding - 16; // 10px bottom margin + 6px buffer
+    divContent.style({
+      "height": allowedHeight + "px",
+      "width": correctWidth + "px"
+    });
+    divSVG.style({
+      "height": allowedHeight + "px",
+      "width": correctWidth + "px",
+      "position": "absolute",
+      "top": bodyPadding + "px"
+    });
+    if(ovWidth !== listWidth) {
+      var ovw = listWidth;
+      ovHeight = overview.getHeightForWidth(ovw);
+      ovWidth = ovw;
+      overview.onSizeUpdate();
+    }
+    var shadowHeight = overview.getHeightForWidth(listWidth);
+    eventList && eventList.resize(allowedHeight, bodyPadding);
+    typeList && typeList.resize(allowedHeight - shadowHeight, bodyPadding);
+    if(box) {
+      var supplHeight = suppl.node().offsetHeight;
+      // firefox may not have values for that
+      if(!supplHeight) {
+        supplHeight = 108;
+      }
+      setSize(correctWidth, allowedHeight - supplHeight);
+    }
+    labels && labels.isInit(false);
+  }
+
+  window.onresize = function() {
+    relayout();
+  };
+}
+
+</script>
+
+</body>
+</html>
