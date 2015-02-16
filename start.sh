@@ -62,7 +62,7 @@ if [[ $# -gt 1 ]]; then
   usage
 fi
 
-if [ -z $pfile ]; then
+if [[ -z $pfile && -z do_start && -z do_stop ]]; then
   echo "require patient file"
   usage
 fi
@@ -95,6 +95,10 @@ if [ ! -z $do_stop ]; then
   else
     echo "No server running..."
   fi
+fi
+
+if [ -z $pfile ]; then
+  exit 0
 fi
 
 if [ ! -z $only_url ]; then
