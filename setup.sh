@@ -8,7 +8,7 @@ JSON_DIR="json"
 OPD_SAMPLE_ALL=`seq -s " " -t "" 1 20`
 
 base_dir=`pwd`
-convert_top_n=10
+convert_top_n=3
 convert_list=
 dictionary="${JSON_DIR}/dictionary.json"
 config="config.txt"
