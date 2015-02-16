@@ -71,7 +71,7 @@ cd_back() {
   cd "${base_dir}"
 }
 
-url="http://localhost:8000/patient-viz/index.html?p=${pfile}&dict=${dfile}"
+url="http://localhost:8000/patient-viz/index.html?p=${pfile}&d=${dfile}"
 
 if [ ! -z $do_start ]; then
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
