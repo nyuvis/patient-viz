@@ -95,6 +95,7 @@ def initPrescribed():
         nid = pc.replace('-', '')
         if uid not in uidLookup:
             print("warning missing uid: "+uid, file=sys.stderr)
+            continue
         l = uidLookup[uid]
         if nid in prescribeLookup:
             desc = prescribeLookup[nid]["desc"] + " or " + desc
