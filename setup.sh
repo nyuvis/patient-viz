@@ -245,7 +245,7 @@ convert_patients() {
     }
   done
 
-  ls -A "${JSON_DIR}/*.json" | grep -v "${dictionary}" > patients.txt
+  find "${JSON_DIR}" -name "*.json" -and -not -path "${dictionary}" > patients.txt
 }
 
 if [ ! -z $do_clean ]; then
