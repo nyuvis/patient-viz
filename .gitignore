@@ -5,3 +5,7 @@
 /err_dict.txt
 /config.txt
 /code/
+/server_pid.txt
+/server_log.txt
+/server_err.txt
+/patients.txt

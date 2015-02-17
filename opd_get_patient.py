@@ -114,6 +114,17 @@ def handleRow(row, obj):
             )
         )
 
+    def emitNDC(date, ndc):
+        event = createEntry(TYPE_PRESCRIBED, ndc)
+        event['time'] = toTime(date)
+        obj['events'].append(event)
+
+    handleKey(row, 'SRVC_DT', lambda date:
+            handleKey(row, 'PROD_SRVC_ID', lambda ndc:
+                emitNDC(date, ndc)
+            )
+        )
+
 def processFile(inputFile, id, obj):
     with open(inputFile) as csvFile:
         reader = csv.DictReader(csvFile)

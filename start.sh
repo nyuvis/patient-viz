@@ -105,11 +105,16 @@ if [ ! -z $only_url ]; then
   echo "${url}"
 else
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
-    probe_browser=`command -v google-chrome 2>/dev/null 1>&2; echo $?`
-    if [ "${probe_browser}" -ne 0 ]; then
+    mac_chrome="/Applications/Google Chrome.app"
+    probe_browser_a=`command -v google-chrome 2>/dev/null 1>&2; echo $?`
+    probe_browser_b=`ls "${mac_chrome}" 2>/dev/null 1>&2; echo $?`
+    if [ "${probe_browser_a}" -eq 0 ]; then
       # chrome
       echo "open window: ${url}"
       google-chrome "${url}"
+    elif [ "${probe_browser_b}" -eq 0 ]; then
+      echo "open window: ${url}"
+      open "${mac_chrome}" "${url}"
     else
       # assume firefox
       if [[ -z `ps | grep [f]irefox` ]]; then
