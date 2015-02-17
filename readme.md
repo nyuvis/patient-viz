@@ -3,6 +3,8 @@
 Tool for visualizing timed events of possibly many different types.
 Example data from medical insurance claim data is provided via download.
 
+![The tool in action!](overview.png)
+
 ## Setup
 
 In order to set up the tool please run the following command:
