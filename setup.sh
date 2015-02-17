@@ -135,8 +135,12 @@ clean() {
   ./start.sh -q --stop
 }
 
+curl_unzip() {
+  curl -# -o "tmp.zip" "$1" && unzip "tmp.zip" && rm -- "tmp.zip"
+  test_fail $?
+}
+
 fetch_ndc() {
-  NDC_ZIP="ndc.zip"
   NDC_URL="http://www.fda.gov/downloads/Drugs/DevelopmentApprovalProcess/UCM070838.zip"
   NDC_INFO="http://www.fda.gov/Drugs/InformationOnDrugs/ucm142438.htm"
   if [ ! -d "${NDC_DIR}" ]; then
@@ -146,15 +150,10 @@ fetch_ndc() {
     cd "${NDC_DIR}"
     echo "downloading NDC database"
     echo "more infos at ${NDC_INFO}"
-    curl -# -o "${NDC_ZIP}" "${NDC_URL}" && unzip "${NDC_ZIP}" && rm -- "${NDC_ZIP}" "product.xls" "package.xls"
-    test_fail $?
+    curl_unzip "${NDC_URL}"
+    rm -- "product.xls" "package.xls"
     cd_back
   fi
-}
-
-curl_unzip() {
-  curl -# -o "tmp.zip" "$1" && unzip "tmp.zip" && rm -- "tmp.zip"
-  test_fail $?
 }
 
 fetch_opd() {

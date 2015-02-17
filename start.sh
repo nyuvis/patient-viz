@@ -44,7 +44,7 @@ while [ $# -gt 0 ]; do
     usage
     ;;
   -q)
-    quiet=1
+    quiet="-q"
     ;;
   -p)
     shift
@@ -55,7 +55,7 @@ while [ $# -gt 0 ]; do
     dfile="$1"
     ;;
   --url)
-    only_url=1
+    only_url="--no-open"
     ;;
   --start)
     do_start=1
@@ -90,12 +90,10 @@ cd_back() {
 }
 
 print() {
-  if [ -z $quiet ]; then
+  if [ -z "${quiet}" ]; then
     echo "$@"
   fi
 }
-
-url="http://localhost:8000/patient-viz/index.html?p=${pfile}&d=${dfile}"
 
 if [ ! -z $do_start ]; then
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
@@ -129,39 +127,8 @@ if [ ! -z $show_list ]; then
   cat "${file_list}"
 fi
 
-if [ -z $pfile ]; then
+if [ -z "${pfile}" ]; then
   exit 0
 fi
 
-if [ ! -z $only_url ]; then
-  echo "${url}"
-else
-  if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
-    mac_chrome="/Applications/Google Chrome.app"
-    mac_firefox="/Applications/Firefox.app"
-    if [ `command -v google-chrome 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
-      # chrome
-      print "open window: ${url}"
-      google-chrome "${url}"
-    elif [ `ls "${mac_chrome}" 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
-      print "open window: ${url}"
-      open "${mac_chrome}" "${url}"
-    elif [ `ls "${mac_firefox}" 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
-      print "open window: ${url}"
-      open "${mac_firefox}" "${url}"
-    elif [ `command -v firefox 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
-      if [[ -z `ps | grep [f]irefox` ]]; then
-        print "open window: ${url}"
-        firefox -new-window "${url}" &
-      else
-        print "open url: ${url}"
-        firefox -remote "openURL(${url})" &
-      fi
-    else
-      print "Could not find chrome or firefox..."
-      print "${url}"
-    fi
-  else
-    print "No server running..."
-  fi
-fi
+./open_url.sh -c "${quiet}" "${only_url}" -- "http://localhost:8000/patient-viz/index.html?p=${pfile}&d=${dfile}"
