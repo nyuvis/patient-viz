@@ -245,7 +245,7 @@ convert_patients() {
     }
   done
 
-  find "${JSON_DIR}" -name "*.json" -and -not -path "${dictionary}" > patients.txt
+  ./start.sh --list-update
 }
 
 if [ ! -z $do_clean ]; then

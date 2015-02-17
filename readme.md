@@ -30,12 +30,18 @@ when no setup is performed.
 After setting up the tool, files can be viewed with the following command:
 
 ```
-  ./start.sh -p json/AEF023C2029F05BC.json --start
+./start.sh -p json/AEF023C2029F05BC.json --start
 ```
 
 where the argument after `-p` points to one of the previously created
 event sequence files which can be found in `json/`. The command starts
 a server which can be stopped using `./start.sh --stop`.
+
+The list of available files can be seen using:
+
+```
+./start.sh --list
+```
 
 Patient files can be created manually from the example claims data by
 issuing the following commands:
@@ -43,7 +49,7 @@ issuing the following commands:
 ```
 ./opd_get_patient.py -p AEF023C2029F05BC -o json/AEF023C2029F05BC.json -- opd
 ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
-find json -name "*.json" -and -not -path "json/dictionary.json" > patients.txt
+./start.sh --list-update
 ```
 The file `patients.txt` is used to display all currently available event sequence files.
 `./opd_analyze.py opd` can be used to see which patient ids for `-p` are available.
@@ -51,3 +57,7 @@ The file `patients.txt` is used to display all currently available event sequenc
 Own data can be loaded by passing the event sequence file as argument to `-p`
 and the dictionary file as argument to `-d`. For further information you
 can consult the help (`./start.sh -h`) and [the JSON specification](spec.md).
+
+## Contributing
+
+Pull requests are very much welcome :)

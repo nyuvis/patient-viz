@@ -4,17 +4,21 @@
 
 JSON_DIR="json"
 base_dir=`pwd`
+dictionary="${JSON_DIR}/dictionary.json"
+file_list="patients.txt"
 server_pid_file="${base_dir}/server_pid.txt"
 server_log="${base_dir}/server_log.txt"
 server_err="${base_dir}/server_err.txt"
 
-USAGE="Usage: $0 -h -p <patient file> [-d <dictionary file>] [--url] [--start|--stop]"
+USAGE="Usage: $0 -h -p <patient file> [-d <dictionary file>] [--url] [--start|--stop] [--list|--list-update]"
 
 usage() {
     echo $USAGE
     echo "-h: print help"
     echo "-p <patient file>: the patient file to load"
     echo "-d <dictionary file>: the dictionary file to load"
+    echo "--list: lists all available patient files"
+    echo "--list-update: updates this list"
     echo "--url: only prints the URL (does not open a browser)"
     echo "--start: starts the server"
     echo "--stop: stops the server"
@@ -26,6 +30,8 @@ dfile="${JSON_DIR}/dictionary.json"
 only_url=
 do_start=
 do_stop=
+show_list=
+update_list=
 
 if [ $# -eq 0 ]; then
   usage
@@ -51,6 +57,12 @@ while [ $# -gt 0 ]; do
   --stop)
     do_stop=1
     ;;
+  --list)
+    show_list=1
+    ;;
+  --list-update)
+    update_list=1
+    ;;
   *)
     echo "illegal option -- $1"
     usage ;;
@@ -62,7 +74,7 @@ if [[ $# -gt 1 ]]; then
   usage
 fi
 
-if [[ -z $pfile && -z do_start && -z do_stop ]]; then
+if [[ -z $pfile && -z $do_start && -z $do_stop && -z $show_list && -z $update_list ]]; then
   echo "require patient file"
   usage
 fi
@@ -95,6 +107,14 @@ if [ ! -z $do_stop ]; then
   else
     echo "No server running..."
   fi
+fi
+
+if [ ! -z $update_list ]; then
+  find "${JSON_DIR}" -name "*.json" -and -not -path "${dictionary}" > "${file_list}"
+fi
+
+if [ ! -z $show_list ]; then
+  cat "${file_list}"
 fi
 
 if [ -z $pfile ]; then
