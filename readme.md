@@ -9,8 +9,8 @@ Example data from medical insurance claim data is provided via download.
 
 In order to set up the tool please run the following command:
 
-```
-./setup.sh --default
+```bash
+$ ./setup.sh --default
 ```
 
 This downloads all necessary files for label creation of claims data events
@@ -31,8 +31,8 @@ when no setup is performed.
 
 After setting up the tool, files can be viewed with the following command:
 
-```
-./start.sh -p json/AEF023C2029F05BC.json --start
+```bash
+$ ./start.sh -p json/AEF023C2029F05BC.json --start
 ```
 
 where the argument after `-p` points to one of the previously created
@@ -41,17 +41,17 @@ a server which can be stopped using `./start.sh --stop`.
 
 The list of available files can be seen using:
 
-```
-./start.sh --list
+```bash
+$ ./start.sh --list
 ```
 
 Patient files can be created manually from the example claims data by
 issuing the following commands:
 
-```
-./opd_get_patient.py -p AEF023C2029F05BC -o json/AEF023C2029F05BC.json -- opd
-./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
-./start.sh --list-update
+```bash
+$ ./opd_get_patient.py -p AEF023C2029F05BC -o json/AEF023C2029F05BC.json -- opd
+$ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
+$ ./start.sh --list-update
 ```
 The file `patients.txt` is used to display all currently available event sequence files.
 `./opd_analyze.py opd` can be used to see which patient ids for `-p` are available.
