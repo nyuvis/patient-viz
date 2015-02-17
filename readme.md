@@ -13,7 +13,8 @@ In order to set up the tool please run the following command:
 
 This downloads all necessary files for label creation of claims data events
 and also example patient claims data. Note that, by downloading the data,
-you agree with the respective terms and conditions of the sources. You will
+you agree with the respective terms and conditions of the sources
+(URLs of info pages are shown when running the script). You will
 be prompted to confirm before downloading the claims data (this can be silenced
 via `-s`). In total, required space will be approximately `3 GB`.
 Processing of some files may take a while letting the script appear
