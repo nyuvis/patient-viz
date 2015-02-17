@@ -16,6 +16,7 @@ err_file="err.txt"
 err_dict_file="err_dict.txt"
 server_log="server_log.txt"
 server_err="server_err.txt"
+file_list="patients.txt"
 fetch_samples="10"
 no_prompt=
 ndc=
@@ -130,6 +131,7 @@ clean() {
   echo "removing ${JSON_DIR}" && rm -r -- "${JSON_DIR}" 2> /dev/null
   echo "removing ${err_file} and ${err_dict_file}" && rm -- "${err_file}" "${err_dict_file}" 2> /dev/null
   echo "removing ${server_log} and ${server_err}" && rm -- "${server_log}" "${server_err}" 2> /dev/null
+  echo "removing ${file_list}" && rm -- "${file_list}" 2> /dev/null
   ./start.sh -q --stop
 }
 
