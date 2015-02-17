@@ -140,6 +140,63 @@ curl_unzip() {
   test_fail $?
 }
 
+prompt() {
+  abort=
+  if [ $# -ge 1 ]; then
+    read_url=$1
+    text_url="; u - go to URL"
+  else
+    read_url=
+    text_url=
+  fi
+  if [ $# -ge 2 ]; then
+    read_terms=$2
+    text_terms="; r - read terms"
+  else
+    read_terms=
+    text_terms=
+  fi
+  if [ $# -ge 3 ]; then
+    url_terms=$3
+  else
+    url_terms=
+  fi
+  if [ -z "${no_prompt}" ]; then
+    while true; do
+      read -p "Do you wish to continue? y - yes; n - no${text_url}${text_terms}: " yn
+      case $yn in
+        [Yy]* )
+          break
+          ;;
+        [Nn]* )
+          abort=1
+          break
+          ;;
+        [Rr]* )
+          if [ ! -z "${read_terms}" ]; then
+            if [ ! -f "${read_terms}" ]; then
+              echo "downloading disclaimer and terms"
+              curl -# -o "${read_terms}" "${url_terms}"
+              test_fail $?
+            fi
+            open_pdf "${read_terms}"
+          fi
+          ;;
+        [Uu]* )
+          if [ ! -z "${read_url}" ]; then
+            "${base_dir}/open_url.sh" -q -- "${read_url}"
+          fi
+          ;;
+      esac
+    done
+  fi
+
+  if [ ! -z "${abort}" ]; then
+    return 1
+  fi
+  return 0
+}
+
 fetch_ndc() {
   NDC_URL="http://www.fda.gov/downloads/Drugs/DevelopmentApprovalProcess/UCM070838.zip"
   NDC_INFO="http://www.fda.gov/Drugs/InformationOnDrugs/ucm142438.htm"
@@ -168,35 +225,14 @@ fetch_opd() {
   # show disclaimer and info page
   echo "preparing to download samples ${samples} of the patient claims data"
   echo "more infos at ${OPD_INFO}"
-  if [ ! -f "${OPD_DISCLAIMER_FILE}" ]; then
-    echo "downloading disclaimer and terms"
-    curl -# -o "${OPD_DISCLAIMER_FILE}" "${OPD_DISCLAIMER}"
-    test_fail $?
-  fi
   # user confirmation
   abort=
   approx_gb=`echo "${samples}" | wc -w | sed -e "s/$/*3/" | bc` # pessimistic estimate of 3GB per sample
   echo "by downloading you agree to the terms for the claims data"
   echo "the download can take a while (~${approx_gb}GB)"
-  if [ -z "${no_prompt}" ]; then
-    while true; do
-      read -p "Do you wish to continue? y - yes; n - no; r - read terms: " yn
-      case $yn in
-        [Yy]* )
-          break
-          ;;
-        [Nn]* )
-          abort=1
-          break
-          ;;
-        [Rr]* )
-          open_pdf "${OPD_DISCLAIMER_FILE}"
-          ;;
-      esac
-    done
-  fi
+  prompt "${OPD_INFO}" "${OPD_DISCLAIMER_FILE}" "${OPD_DISCLAIMER}"
 
-  if [ ! -z "${abort}" ]; then
+  if [ $? -ne 0 ]; then
     cd_back
     exit 0
   fi
