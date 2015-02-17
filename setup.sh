@@ -168,7 +168,7 @@ fetch_opd() {
   echo "preparing to download samples ${samples} of the patient claims data"
   echo "more infos at ${OPD_INFO}"
   if [ ! -f "${OPD_DISCLAIMER_FILE}" ]; then
-    echi "downloading disclaimer and terms"
+    echo "downloading disclaimer and terms"
     curl -# -o "${OPD_DISCLAIMER_FILE}" "${OPD_DISCLAIMER}"
     test_fail $?
   fi
