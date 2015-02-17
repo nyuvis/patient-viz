@@ -197,7 +197,7 @@ fetch_opd() {
 
   if [ ! -z "${abort}" ]; then
     cd_back
-    return
+    exit 0
   fi
 
   for i in $samples; do
