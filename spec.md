@@ -50,7 +50,7 @@ The events file:
       <"label">: "primary" // if present the value is displayed as bootstrap label with the specified class (eg. "label-primary")
     },
     …
-  ]
+  ],
   "events": [ // a list of events
     {
       "group": $group_id,
