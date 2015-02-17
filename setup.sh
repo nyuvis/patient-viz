@@ -238,11 +238,11 @@ convert_patients() {
 if [ ! -z $do_clean ]; then
   clean
 fi
-if [ ! -z $ndc ]; then
-  fetch_ndc
-fi
 if [ ! -z $opd ]; then
   fetch_opd "${fetch_samples}"
+fi
+if [ ! -z $ndc ]; then
+  fetch_ndc
 fi
 if [ ! -z $do_convert ]; then
   convert_patients
