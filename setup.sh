@@ -14,6 +14,8 @@ dictionary="${JSON_DIR}/dictionary.json"
 config="config.txt"
 err_file="err.txt"
 err_dict_file="err_dict.txt"
+server_log="server_log.txt"
+server_err="server_err.txt"
 fetch_samples="10"
 no_prompt=
 ndc=
@@ -123,10 +125,12 @@ open_pdf() {
 }
 
 clean() {
-  echo "removing ${NDC_DIR}" && rm -r "${NDC_DIR}"
-  echo "removing ${OPD_DIR}" && rm -r "${OPD_DIR}"
-  echo "removing ${JSON_DIR}" && rm -r "${JSON_DIR}"
-  echo "removing ${err_file} and ${err_dict_file}" && rm "${err_file}" "${err_dict_file}"
+  echo "removing ${NDC_DIR}" && rm -r -- "${NDC_DIR}" 2> /dev/null
+  echo "removing ${OPD_DIR}" && rm -r -- "${OPD_DIR}" 2> /dev/null
+  echo "removing ${JSON_DIR}" && rm -r -- "${JSON_DIR}" 2> /dev/null
+  echo "removing ${err_file} and ${err_dict_file}" && rm -- "${err_file}" "${err_dict_file}" 2> /dev/null
+  echo "removing ${server_log} and ${server_err}" && rm -- "${server_log}" "${server_err}" 2> /dev/null
+  ./start.sh -q --stop
 }
 
 fetch_ndc() {
@@ -140,14 +144,14 @@ fetch_ndc() {
     cd "${NDC_DIR}"
     echo "downloading NDC database"
     echo "more infos at ${NDC_INFO}"
-    curl -# -o "${NDC_ZIP}" "${NDC_URL}" && unzip "${NDC_ZIP}" && rm "${NDC_ZIP}" "product.xls" "package.xls"
+    curl -# -o "${NDC_ZIP}" "${NDC_URL}" && unzip "${NDC_ZIP}" && rm -- "${NDC_ZIP}" "product.xls" "package.xls"
     test_fail $?
     cd_back
   fi
 }
 
 curl_unzip() {
-  curl -# -o "tmp.zip" "$1" && unzip "tmp.zip" && rm "tmp.zip"
+  curl -# -o "tmp.zip" "$1" && unzip "tmp.zip" && rm -- "tmp.zip"
   test_fail $?
 }
 

@@ -10,11 +10,12 @@ server_pid_file="${base_dir}/server_pid.txt"
 server_log="${base_dir}/server_log.txt"
 server_err="${base_dir}/server_err.txt"
 
-USAGE="Usage: $0 -h -p <patient file> [-d <dictionary file>] [--url] [--start|--stop] [--list|--list-update]"
+USAGE="Usage: $0 -hq -p <patient file> [-d <dictionary file>] [--url] [--start|--stop] [--list|--list-update]"
 
 usage() {
     echo $USAGE
     echo "-h: print help"
+    echo "-q: be quiet"
     echo "-p <patient file>: the patient file to load"
     echo "-d <dictionary file>: the dictionary file to load"
     echo "--list: lists all available patient files"
@@ -32,6 +33,7 @@ do_start=
 do_stop=
 show_list=
 update_list=
+quiet=
 
 if [ $# -eq 0 ]; then
   usage
@@ -39,7 +41,11 @@ fi
 while [ $# -gt 0 ]; do
   case "$1" in
   -h)
-    usage ;;
+    usage
+    ;;
+  -q)
+    quiet=1
+    ;;
   -p)
     shift
     pfile="$1"
@@ -83,13 +89,19 @@ cd_back() {
   cd "${base_dir}"
 }
 
+print() {
+  if [ -z $quiet ]; then
+    echo "$@"
+  fi
+}
+
 url="http://localhost:8000/patient-viz/index.html?p=${pfile}&d=${dfile}"
 
 if [ ! -z $do_start ]; then
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
-    echo "Server already running..."
+    print "Server already running..."
   else
-    echo "Starting server..."
+    print "Starting server..."
     cd ..
     python -m SimpleHTTPServer > "${server_log}" 2> "${server_err}" &
     server_pid=$!
@@ -101,11 +113,11 @@ fi
 if [ ! -z $do_stop ]; then
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
     server_pid=`cat "${server_pid_file}"`
-    echo "Server pid: ${server_pid}"
+    print "Server pid: ${server_pid}"
     kill "${server_pid}"
-    rm "${server_pid_file}"
+    rm -- "${server_pid_file}" 2> /dev/null
   else
-    echo "No server running..."
+    print "No server running..."
   fi
 fi
 
@@ -129,27 +141,27 @@ else
     mac_firefox="/Applications/Firefox.app"
     if [ `command -v google-chrome 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
       # chrome
-      echo "open window: ${url}"
+      print "open window: ${url}"
       google-chrome "${url}"
     elif [ `ls "${mac_chrome}" 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
-      echo "open window: ${url}"
+      print "open window: ${url}"
       open "${mac_chrome}" "${url}"
     elif [ `ls "${mac_firefox}" 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
-      echo "open window: ${url}"
+      print "open window: ${url}"
       open "${mac_firefox}" "${url}"
     elif [ `command -v firefox 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
       if [[ -z `ps | grep [f]irefox` ]]; then
-        echo "open window: ${url}"
+        print "open window: ${url}"
         firefox -new-window "${url}" &
       else
-        echo "open url: ${url}"
+        print "open url: ${url}"
         firefox -remote "openURL(${url})" &
       fi
     else
-      echo "Could not find chrome or firefox..."
-      echo "${url}"
+      print "Could not find chrome or firefox..."
+      print "${url}"
     fi
   else
-    echo "No server running..."
+    print "No server running..."
   fi
 fi
