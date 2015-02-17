@@ -169,6 +169,7 @@ fetch_opd() {
     test_fail $?
   fi
   # user confirmation
+  abort=
   approx_gb=`echo "${samples}" | wc -w | sed -e "s/$/*3/" | bc` # pessimistic estimate of 3GB per sample
   echo "by downloading you agree to the terms for the claims data"
   echo "the download can take a while (~${approx_gb}GB)"
@@ -176,11 +177,23 @@ fetch_opd() {
     while true; do
       read -p "Do you wish to continue? y - yes; n - no; r - read terms: " yn
       case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) return;;
-        [Rr]* ) open_pdf "${OPD_DISCLAIMER_FILE}"
+        [Yy]* )
+          break
+          ;;
+        [Nn]* )
+          abort=1
+          break
+          ;;
+        [Rr]* )
+          open_pdf "${OPD_DISCLAIMER_FILE}"
+          ;;
       esac
     done
+  fi
+
+  if [ ! -z "${abort}" ]; then
+    cd_back
+    return
   fi
 
   for i in $samples; do
