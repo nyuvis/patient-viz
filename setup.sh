@@ -92,6 +92,13 @@ if [[ $# -gt 1 ]]; then
   usage
 fi
 
+# initialize git submodule if not done by user
+git_submodule=`git submodule status`
+if [ -z "${git_submodule}" ]; then
+  git submodule init
+  git submodule update
+fi
+
 cd_back() {
   cd "${base_dir}"
 }

@@ -106,17 +106,18 @@ if [ ! -z $only_url ]; then
 else
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
     mac_chrome="/Applications/Google Chrome.app"
-    probe_browser_a=`command -v google-chrome 2>/dev/null 1>&2; echo $?`
-    probe_browser_b=`ls "${mac_chrome}" 2>/dev/null 1>&2; echo $?`
-    if [ "${probe_browser_a}" -eq 0 ]; then
+    mac_firefox="/Applications/Firefox.app"
+    if [ `command -v google-chrome 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
       # chrome
       echo "open window: ${url}"
       google-chrome "${url}"
-    elif [ "${probe_browser_b}" -eq 0 ]; then
+    elif [ `ls "${mac_chrome}" 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
       echo "open window: ${url}"
       open "${mac_chrome}" "${url}"
-    else
-      # assume firefox
+    elif [ `ls "${mac_firefox}" 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
+      echo "open window: ${url}"
+      open "${mac_firefox}" "${url}"
+    elif [ `command -v firefox 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
       if [[ -z `ps | grep [f]irefox` ]]; then
         echo "open window: ${url}"
         firefox -new-window "${url}" &
@@ -124,6 +125,9 @@ else
         echo "open url: ${url}"
         firefox -remote "openURL(${url})" &
       fi
+    else
+      echo "Could not find chrome or firefox..."
+      echo "${url}"
     fi
   else
     echo "No server running..."
