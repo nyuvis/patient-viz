@@ -18,13 +18,15 @@ server_log="server_log.txt"
 server_err="server_err.txt"
 file_list="patients.txt"
 fetch_samples="10"
+
 no_prompt=
 ndc=
 opd=
 do_convert=
 do_clean=
+do_nop=
 
-USAGE="Usage: $0 -hs [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--ndc] [--opd] [--do-convert] [--clean]"
+USAGE="Usage: $0 -hs [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--ndc] [--opd] [--do-convert] [--clean] [--nop]"
 
 usage() {
     echo $USAGE
@@ -39,6 +41,7 @@ usage() {
     echo "--opd: downloads the patient claims data"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
+    echo "--nop: performs no operation besides basic setup tasks"
     exit 1
 }
 
@@ -84,6 +87,9 @@ while [ $# -gt 0 ]; do
   --clean)
     do_clean=1
     ;;
+  --nop)
+    do_nop=1
+    ;;
   *)
     echo "illegal option -- $1"
     usage ;;
@@ -100,6 +106,10 @@ git_submodule=`git submodule status | grep "^-"`
 if [ ! -z "${git_submodule}" ]; then
   git submodule init
   git submodule update
+fi
+
+if [ ! -z "${do_nop}" ]; then
+  exit 0
 fi
 
 cd_back() {
@@ -125,45 +135,42 @@ open_pdf() {
   `${pdf_open} $1`
 }
 
-clean() {
-  echo "removing ${NDC_DIR}" && rm -r -- "${NDC_DIR}" 2> /dev/null
-  echo "removing ${OPD_DIR}" && rm -r -- "${OPD_DIR}" 2> /dev/null
-  echo "removing ${JSON_DIR}" && rm -r -- "${JSON_DIR}" 2> /dev/null
-  echo "removing ${err_file} and ${err_dict_file}" && rm -- "${err_file}" "${err_dict_file}" 2> /dev/null
-  echo "removing ${server_log} and ${server_err}" && rm -- "${server_log}" "${server_err}" 2> /dev/null
-  echo "removing ${file_list}" && rm -- "${file_list}" 2> /dev/null
-  ./start.sh -q --stop
-}
-
 curl_unzip() {
   curl -# -o "tmp.zip" "$1" && unzip "tmp.zip" && rm -- "tmp.zip"
   test_fail $?
 }
 
+prompt_echo() {
+  if [ -z "${no_prompt}" ]; then
+    echo "$@"
+  fi
+}
+
 prompt() {
   abort=
-  if [ $# -ge 1 ]; then
-    read_url=$1
-    text_url="; u - go to URL"
+  text=$1
+  if [ $# -ge 2 ]; then
+    read_url=$2
+    text_url=" [i]nfo"
   else
     read_url=
     text_url=
   fi
-  if [ $# -ge 2 ]; then
-    read_terms=$2
-    text_terms="; r - read terms"
+  if [ $# -ge 3 ]; then
+    read_terms=$3
+    text_terms=" [t]erms"
   else
     read_terms=
     text_terms=
   fi
-  if [ $# -ge 3 ]; then
-    url_terms=$3
+  if [ $# -ge 4 ]; then
+    url_terms=$4
   else
     url_terms=
   fi
   if [ -z "${no_prompt}" ]; then
     while true; do
-      read -p "Do you wish to continue? y - yes; n - no${text_url}${text_terms}: " yn
+      read -p "${text} [y]es [n]o${text_url}${text_terms} [q]uit: " yn
       case $yn in
         [Yy]* )
           break
@@ -172,7 +179,7 @@ prompt() {
           abort=1
           break
           ;;
-        [Rr]* )
+        [Tt]* )
           if [ ! -z "${read_terms}" ]; then
             if [ ! -f "${read_terms}" ]; then
               echo "downloading disclaimer and terms"
@@ -182,10 +189,14 @@ prompt() {
             open_pdf "${read_terms}"
           fi
           ;;
-        [Uu]* )
+        [Ii]* )
           if [ ! -z "${read_url}" ]; then
             "${base_dir}/open_url.sh" -q -- "${read_url}"
           fi
+          ;;
+        [Qq]* )
+          cd_back
+          exit 0
           ;;
       esac
     done
@@ -197,23 +208,51 @@ prompt() {
   return 0
 }
 
+allow_clean=
+ask_clean() {
+  prompt_echo "Cleaning removes all files created by this script."
+  prompt "Are you sure you want to clean the project?"
+  if [ $? -eq 0 ]; then
+    allow_clean=1
+  fi
+}
+
+clean() {
+  echo "removing ${NDC_DIR}" && rm -r -- "${NDC_DIR}" 2> /dev/null
+  echo "removing ${OPD_DIR}" && rm -r -- "${OPD_DIR}" 2> /dev/null
+  echo "removing ${JSON_DIR}" && rm -r -- "${JSON_DIR}" 2> /dev/null
+  echo "removing ${err_file} and ${err_dict_file}" && rm -- "${err_file}" "${err_dict_file}" 2> /dev/null
+  echo "removing ${server_log} and ${server_err}" && rm -- "${server_log}" "${server_err}" 2> /dev/null
+  echo "removing ${file_list}" && rm -- "${file_list}" 2> /dev/null
+  ./start.sh -q --stop
+}
+
+allow_ndc=
+ask_ndc() {
+  NDC_INFO="http://www.fda.gov/Drugs/InformationOnDrugs/ucm142438.htm"
+  prompt "Do you want to download NDC definitions?" "${NDC_INFO}"
+  if [ $? -eq 0 ]; then
+    allow_ndc=1
+  fi
+}
+
 fetch_ndc() {
   NDC_URL="http://www.fda.gov/downloads/Drugs/DevelopmentApprovalProcess/UCM070838.zip"
-  NDC_INFO="http://www.fda.gov/Drugs/InformationOnDrugs/ucm142438.htm"
   if [ ! -d "${NDC_DIR}" ]; then
     mkdir -p "${NDC_DIR}"
   fi
   if [ ! -f "${NDC_DIR}/product.txt" ] || [ ! -f "${NDC_DIR}/package.txt" ]; then
     cd "${NDC_DIR}"
     echo "downloading NDC database"
-    echo "more infos at ${NDC_INFO}"
+
     curl_unzip "${NDC_URL}"
     rm -- "product.xls" "package.xls"
     cd_back
   fi
 }
 
-fetch_opd() {
+allow_opd=
+ask_opd() {
   OPD_INFO="http://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html"
   OPD_DISCLAIMER="http://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/BSAPUFS/Downloads/PUF_Disclaimer.pdf"
   OPD_DISCLAIMER_FILE="disclaimer.pdf"
@@ -222,21 +261,24 @@ fetch_opd() {
   fi
   cd "${OPD_DIR}"
   samples="$1"
-  # show disclaimer and info page
-  echo "preparing to download samples ${samples} of the patient claims data"
-  echo "more infos at ${OPD_INFO}"
-  # user confirmation
-  abort=
+  sample_count=`echo "${samples}" | wc -w | tr -d "[[:space:]]"`
   approx_gb=`echo "${samples}" | wc -w | sed -e "s/$/*3/" | bc` # pessimistic estimate of 3GB per sample
-  echo "by downloading you agree to the terms for the claims data"
-  echo "the download can take a while (~${approx_gb}GB)"
-  prompt "${OPD_INFO}" "${OPD_DISCLAIMER_FILE}" "${OPD_DISCLAIMER}"
-
-  if [ $? -ne 0 ]; then
-    cd_back
-    exit 0
+  prompt_echo "Preparing to download ${sample_count} sample[s] of the patient claims data."
+  prompt_echo "The download may take a while (~${approx_gb}GB)."
+  prompt "Do you want to download claims data?" "${OPD_INFO}" "${OPD_DISCLAIMER_FILE}" "${OPD_DISCLAIMER}"
+  if [ $? -eq 0 ]; then
+    allow_opd=1
   fi
 
+  cd_back
+}
+
+fetch_opd() {
+  if [ ! -d "${OPD_DIR}" ]; then
+    mkdir -p "${OPD_DIR}"
+  fi
+  cd "${OPD_DIR}"
+  samples="$1"
   for i in $samples; do
     valid_sample=`echo $i | grep -E "[1-9]|1[0-9]|20"`
     if [ -z "${valid_sample}" ]; then
@@ -289,13 +331,27 @@ convert_patients() {
   ./start.sh --list-update
 }
 
+# ask user for permission
 if [ ! -z $do_clean ]; then
-  clean
+  ask_clean
 fi
 if [ ! -z $opd ]; then
-  fetch_opd "${fetch_samples}"
+  ask_opd "${fetch_samples}"
 fi
 if [ ! -z $ndc ]; then
+  ask_ndc
+fi
+
+prompt_echo "=== no user input required after this point ==="
+
+# execute ops
+if [ ! -z $allow_clean ]; then
+  clean
+fi
+if [ ! -z $allow_opd ]; then
+  fetch_opd "${fetch_samples}"
+fi
+if [ ! -z $allow_ndc ]; then
   fetch_ndc
 fi
 if [ ! -z $do_convert ]; then
