@@ -326,6 +326,7 @@ convert_patients() {
       cd_back
       exit 1
     }
+    echo "conversion successful"
   done
 
   ./start.sh --list-update

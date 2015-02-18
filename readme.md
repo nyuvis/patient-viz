@@ -17,7 +17,7 @@ This downloads all necessary files for label creation of claims data events
 and also example patient claims data. Note that, by downloading the data,
 you agree with the respective terms and conditions of the sources
 (URLs of info pages are shown when running the script). You will
-be prompted to confirm before downloading the claims data (this can be silenced
+be prompted to confirm before downloading (this can be silenced
 via `-s`). In total, required space will be approximately `3 GB`.
 Processing of some files may take a while letting the script appear
 to be frozen (which is not the case!).
@@ -53,7 +53,7 @@ $ ./opd_get_patient.py -p AEF023C2029F05BC -o json/AEF023C2029F05BC.json -- opd
 $ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 $ ./start.sh --list-update
 ```
-The file `patients.txt` is used to display all currently available event sequence files.
+
 `./opd_analyze.py opd` can be used to see which patient ids for `-p` are available.
 
 Own data can be loaded by passing the event sequence file as argument to `-p`
