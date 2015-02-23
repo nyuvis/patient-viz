@@ -314,7 +314,9 @@ function start() {
   var dictionary = null;
   var lastDictionaryFile = null;
   if(args["p"]) {
-    loadFile(args["p"], args["d"] || dictionaryDefault, false);
+    // we need to remove '/' from the end of arguments because chrome likes
+    // to add those if the page was not called via 'index.html'
+    loadFile(args["p"].replace(/\/+$/,''), args["d"] ? args["d"].replace(/\/+$/,'') : dictionaryDefault, false);
   } else {
     setPidSel(null);
   }
