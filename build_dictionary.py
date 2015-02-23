@@ -45,6 +45,9 @@ def init():
 
 def createPrescribedEntry(symbols, type, id):
     pid = "" # find way to determine parent
+    if id in symbols:
+        l = symbols[id]
+        return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"])
     if id[0] == '0':
         modCode = id[1:]
     else:
@@ -52,7 +55,7 @@ def createPrescribedEntry(symbols, type, id):
     if modCode in symbols:
         l = symbols[modCode]
         return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"])
-    return createUnknownEntry(symbols, type, id)
+    return createUnknownEntry(symbols, type, id, pid)
 
 def initPrescribed():
     with open(productFile, 'r') as prFile:
@@ -66,14 +69,15 @@ def initPrescribed():
             continue
         # PRODUCTID PRODUCTNDC PRODUCTTYPENAME PROPRIETARYNAME PROPRIETARYNAMESUFFIX NONPROPRIETARYNAME DOSAGEFORMNAME ROUTENAME STARTMARKETINGDATE ENDMARKETINGDATE MARKETINGCATEGORYNAME APPLICATIONNUMBER LABELERNAME SUBSTANCENAME ACTIVE_NUMERATOR_STRENGTH ACTIVE_INGRED_UNIT PHARM_CLASSES DEASCHEDULE
         line = products[i].split('\t')
-        uid = line[0].strip('\n')
-        ptn = line[2].strip('\n')
-        prop = line[3].strip('\n')
-        nonp = line[5].strip('\n')
-        subst = line[13].strip('\n')
-        pharm = line[16].strip('\n')
+        uid = line[0].strip()
+        ndc = line[1].strip().replace('-', '')
+        ptn = line[2].strip()
+        prop = line[3].strip()
+        nonp = line[5].strip()
+        subst = line[13].strip()
+        pharm = line[16].strip()
         if uid in uidLookup:
-            print("warning duplicate uid: "+uid, file=sys.stderr)
+            print("warning duplicate uid: " + uid, file=sys.stderr)
         uidLookup[uid] = {
             "pType": ptn,
             "prop": prop,
@@ -81,18 +85,28 @@ def initPrescribed():
             "subst": subst,
             "pharm": pharm
         }
+        desc = nonp + " " + ptn
+        l = uidLookup[uid]
+        if nid in prescribeLookup:
+            desc = prescribeLookup[nid]["desc"] + " or " + desc
+        prescribeLookup[nid] = {
+            "desc": desc,
+            "pType": l["pType"],
+            "prop": l["prop"],
+            "nonp": l["nonp"],
+            "subst": l["subst"],
+            "pharm": l["pharm"]
+        }
     for i in range(len(packages)):
         if i == 0:
             continue
         # PRODUCTID PRODUCTNDC NDCPACKAGECODE PACKAGEDESCRIPTION
         line = packages[i].split('\t')
-        uid = line[0].strip('\n')
-        #ndc = line[1].strip('\n')
-        pc = line[2].strip('\n')
-        desc = line[3].strip('\n')
-        nid = pc.replace('-', '')
+        uid = line[0].strip()
+        nid = line[2].strip().replace('-', '')
+        desc = line[3].strip()
         if uid not in uidLookup:
-            print("warning missing uid: "+uid, file=sys.stderr)
+            print("warning missing uid: " + uid, file=sys.stderr)
             continue
         l = uidLookup[uid]
         if nid in prescribeLookup:
@@ -113,7 +127,7 @@ def createLabtestEntry(symbols, type, id):
     pid = "" # find parent id
     if id in symbols:
         return toEntry(id, pid, symbols[id], symbols[id])
-    return createUnknownEntry(symbols, type, id)
+    return createUnknownEntry(symbols, type, id, pid)
 
 def initLabtest():
     return getGlobalSymbols()
@@ -160,7 +174,7 @@ def initProcedure():
 
 ### unknown ###
 
-def createUnknownEntry(_, type, id, pid=""):
+def createUnknownEntry(_, type, id, pid):
     print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
     return toEntry(id, pid, id, type + " " + id)
 
