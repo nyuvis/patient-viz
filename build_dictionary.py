@@ -57,7 +57,7 @@ def initPrescribed():
         return prescribeLookup
     uidLookup = {}
     with open(productFile, 'r') as prFile:
-        for row in csv.DictReader(prFile):
+        for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
             uid = row['PRODUCTID'].strip()
             fullndc = row['PRODUCTNDC'].strip()
             ndcparts = fullndc.split('-')
@@ -105,10 +105,11 @@ def initPrescribed():
             }
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
+            prescribeLookup[fullndc] = obj
     if not os.path.isfile(packageFile):
         return prescribeLookup
     with open(packageFile, 'r') as paFile:
-        for row in csv.DictReader(paFile):
+        for row in csv.DictReader(paFile, delimiter='\t', quoting=csv.QUOTE_NONE):
             uid = row['PRODUCTID'].strip()
             fullndc = row['NDCPACKAGECODE'].strip()
             ndcparts = fullndc.split('-')
@@ -145,6 +146,7 @@ def initPrescribed():
             }
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
+            prescribeLookup[fullndc] = obj
     return prescribeLookup
 
 ### lab-test ###
