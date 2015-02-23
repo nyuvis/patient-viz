@@ -235,25 +235,51 @@ ask_for_clean() {
   fi
 }
 
+ask_all_clean() {
+  allow_clean=1
+
+  ask_for_clean "ICD9 definitions" "${ICD9_DIR}"
+  ask_for_clean "CCS hierarchies" "${CCS_DIR}"
+  ask_for_clean "NDC definitions" "${NDC_DIR}"
+  ask_for_clean "claims data" "${OPD_DIR}"
+  ask_for_clean "patient files" "${JSON_DIR}" "${file_list}"
+  ask_for_clean "error output files" "${err_file}" "${err_dict_file}"
+  ask_for_clean "server logs" "${server_log}" "${server_err}"
+  ask_for_clean "config files" "${config}"
+
+  prompt "Do you want to stop the server?"
+  if [ $? -eq 0 ]; then
+    allow_stop=1
+  fi
+}
+
 ask_clean() {
   prompt_echo "Cleaning removes files created by this script."
-  prompt "Are you sure you want to clean the project?"
-  if [ $? -eq 0 ]; then
-    allow_clean=1
-
-    ask_for_clean "ICD9 definitions" "${ICD9_DIR}"
-    ask_for_clean "CCS hierarchies" "${CCS_DIR}"
-    ask_for_clean "NDC definitions" "${NDC_DIR}"
-    ask_for_clean "claims data" "${OPD_DIR}"
-    ask_for_clean "patient files" "${JSON_DIR}" "${file_list}"
-    ask_for_clean "error output files" "${err_file}" "${err_dict_file}"
-    ask_for_clean "server logs" "${server_log}" "${server_err}"
-    ask_for_clean "config files" "${config}"
-
-    prompt "Do you want to stop the server?"
-    if [ $? -eq 0 ]; then
-      allow_stop=1
-    fi
+  if [ -z "${no_prompt}" ]; then
+    while true; do
+      read -p "What files do you want to remove? [a]ll [s]pecify [n]one [q]uit: " resp
+      case $resp in
+        [Aa]* )
+          tmp="${no_prompt}"
+          no_prompt=1
+          ask_all_clean
+          no_prompt="${tmp}"
+          break
+          ;;
+        [Nn]* )
+          break
+          ;;
+        [Ss]* )
+          ask_all_clean
+          break
+          ;;
+        [Qq]* )
+          exit 0
+          ;;
+      esac
+    done
+  else
+    ask_all_clean
   fi
 }
 

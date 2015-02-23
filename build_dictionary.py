@@ -87,9 +87,9 @@ def initPrescribed():
         }
         desc = nonp + " " + ptn
         l = uidLookup[uid]
-        if nid in prescribeLookup:
-            desc = prescribeLookup[nid]["desc"] + " or " + desc
-        prescribeLookup[nid] = {
+        if ndc in prescribeLookup:
+            desc = prescribeLookup[ndc]["desc"] + " or " + desc
+        prescribeLookup[ndc] = {
             "desc": desc,
             "pType": l["pType"],
             "prop": l["prop"],
