@@ -271,7 +271,7 @@ def readCCS(ccsFile, codes):
                         parents[n] = cur
                 continue
             spl = line.split(None, 1)
-            if len(spl) != 2:
+            if len(spl) == 2:
                 par = spl[0].rtrim('0123456789').rtrim('.')
                 cur = "HIERARCHY_" + spl[0]
                 parents[cur] = "HIERARCHY_" + par if len(par) > 0 else ""
