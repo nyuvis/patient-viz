@@ -70,15 +70,21 @@ function start() {
   jkjs.text.exact(!SLOW_MODE);
 
   function setPidSel(ps) {
-    ps.on("change", function() {
-      var pn = ps.node();
-      var op = d3.select(pn.options[pn.selectedIndex]).datum();
-      loadFile(op, lastDictionaryFile, true);
-    });
-    var dd = ps.node();
-    var curId = d3.select(dd.options[dd.selectedIndex]).text();
+    var curId;
+    if(ps) {
+      ps.on("change", function() {
+        var pn = ps.node();
+        var op = d3.select(pn.options[pn.selectedIndex]).datum();
+        loadFile(op, lastDictionaryFile, true);
+      });
+      var dd = ps.node();
+      curId = d3.select(dd.options[dd.selectedIndex]).text();
+    } else {
+      curId = 0;
+    }
     d3.text("patients.txt", "text/plain", function(error, data) {
       if(error) {
+        busy.setState(jkjs.busy.state.warn);
         return;
       }
       var pids = data.split("\n").map(function(pid) {
@@ -86,23 +92,32 @@ function start() {
       }).filter(function(pid) {
         return pid != "";
       });
-      var pidOpts = ps.selectAll("option").data(pids);
-      pidOpts.exit().remove();
-      pidOpts.enter().append("option");
-      pidOpts.text(function(pid) {
-        return pid;
-      });
-      pidOpts.sort();
+      if(ps) {
+        var pidOpts = ps.selectAll("option").data(pids);
+        pidOpts.exit().remove();
+        pidOpts.enter().append("option");
+        pidOpts.text(function(pid) {
+          return pid;
+        });
+        pidOpts.sort();
 
-      ps.selectAll("option").each(function(p, i) {
-        if(p !== curId) {
-          return;
+        ps.selectAll("option").each(function(p, i) {
+          if(p !== curId) {
+            return;
+          }
+          var tmpChg = ps.on("change");
+          ps.on("change", null);
+          ps.node().selectedIndex = i;
+          ps.on("change", tmpChg);
+        });
+      } else {
+        if(curId < pids.length) {
+          loadFile(pids[curId], lastDictionaryFile || dictionaryDefault, true);
+        } else {
+          console.warn("no patients found!");
+          busy.setState(jkjs.busy.state.warn);
         }
-        var tmpChg = ps.on("change");
-        ps.on("change", null);
-        ps.node().selectedIndex = i;
-        ps.on("change", tmpChg);
-      });
+      }
     });
   }
 
@@ -295,10 +310,14 @@ function start() {
 
   var args = jkjs.util.getQueryStrings();
 
-  var dictionaryDefault = 'dictionary.json';
+  var dictionaryDefault = 'json/dictionary.json';
   var dictionary = null;
   var lastDictionaryFile = null;
-  loadFile(args["p"], args["d"] ? args["d"] : dictionaryDefault, false);
+  if(args["p"]) {
+    loadFile(args["p"], args["d"] || dictionaryDefault, false);
+  } else {
+    setPidSel(null);
+  }
 
   function loadFile(pid, dictionaryFile, createState) {
     if(!dictionary || lastDictionaryFile != dictionaryFile) {
@@ -316,7 +335,7 @@ function start() {
       return;
     }
     if(createState) {
-      var url = jkjs.util.getOwnURL() + "?p=" + pid + (dictionaryFile !== dictionaryDefault ? "&d=" + dictionaryFile : "");
+      var url = jkjs.util.getOwnURL() + "?p=" + pid + "&d=" + dictionaryFile;
       window.history.pushState({
         pid: pid,
         dictionary: dictionaryFile
