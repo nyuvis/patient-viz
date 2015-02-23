@@ -214,7 +214,7 @@ def initICD9():
     if not os.path.isfile(icd9File):
         return codes
     with open(icd9File, 'r') as file:
-        lastCode=""
+        lastCode = ""
         for line in file:
             if len(line) < 2:
                 continue
@@ -227,7 +227,7 @@ def initICD9():
                 lastCode = spl[0]
                 codes[lastCode] = spl[1].rstrip()
             else:
-                print("invalid line: '" + line.rstrip() + "'", file=sys.stderr)
+                print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
     return codes
 
 ### ccs ###
@@ -242,7 +242,7 @@ def readCCS(ccsFile, codes):
             if len(line) < 1:
                 continue
             if not line[0].isdigit():
-                if line[0] == ' ' and lastCode != "":
+                if line[0] == ' ' and cur != "":
                     nums = line.split()
                     for n in nums:
                         parents[n] = cur
@@ -254,7 +254,7 @@ def readCCS(ccsFile, codes):
                 parents[cur] = "HIERARCHY_" + par if len(par) > 0 else ""
                 codes[cur] = spl[1].rtrim('0123456789 \t\n\r')
             else:
-                print("invalid line: '" + line.rstrip() + "'", file=sys.stderr)
+                print("invalid CCS line: '" + line.rstrip() + "'", file=sys.stderr)
     return parents
 
 ### general lookup table ###
