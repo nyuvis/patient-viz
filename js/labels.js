@@ -256,11 +256,22 @@ TypePool.labelsLens = function(labels, svgport, viewport, scale, smooth) {
   }
 
   var types = [];
-  pool.traverseTypes(function(gid, tid, type) {
-    if(!type.showLabels() || !type.isValid()) {
-      labels.noShow(type);
+  var already = {};
+  pool.traverseTypes(function(gid, tid, origType) {
+    if(!origType.showLabels() || !origType.isValid()) {
+      labels.noShow(origType);
       return;
     }
+    var type = origType.proxyType();
+    if(type !== origType) {
+      labels.noShow(origType);
+    }
+    if(type.getTypeId() in already) {
+      return;
+    }
+    already[type.getTypeId()] = true;
+    // need origType to set all y positions since type doesn't necessarily have the correct values
+    type.setY(origType.getY());
     var range = pool.getRangeY(type);
     var minY = -viewport.y + Math.min.apply(null, range);
     var maxY = -viewport.y + Math.max.apply(null, range);
@@ -273,9 +284,9 @@ TypePool.labelsLens = function(labels, svgport, viewport, scale, smooth) {
     var lrPref = 0;
     var minD = Number.POSITIVE_INFINITY;
     var leftB = viewport.x + xLeft((-viewport.y + y + rowH * 0.5) * scale) / scale - colW * 0.5;
-    var rightB = viewport.x + xRight((-viewport.y + y + rowH * 0.5) * scale) / scale + colW * 0.5;
+    var rightB = viewport.x + xRight((-viewport.y + y + rowH * 0.5) * scale) / scale; // + colW * 0.5;
     var mid = (leftB + rightB) * 0.5;
-    type.traverseEventRange(leftB, rightB, function(e) {
+    type.traverseProxedEventRange(leftB, rightB, function(e) {
       return pool.getXByEventTime(e);
     }, function(e, x) {
       var dl = Math.abs(x - leftB);

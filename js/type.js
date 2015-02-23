@@ -69,6 +69,17 @@ function Type(p, g, typeId, dictionary) {
     ensureProxedEvents();
     proxedEvents.forEach(cb);
   };
+  this.traverseProxedEventRange = function(fromX, toX, getX, cb) {
+    // events are sorted by time -> x position
+    ensureProxedEvents();
+    proxedEvents.every(function(e) {
+      var x = getX(e);
+      if(x < fromX) return true;
+      if(x >= toX) return false;
+      e.shown() && cb(e, x);
+      return true;
+    });
+  };
   this.proxedMinTime = function() {
     ensureProxedEvents();
     isNaN(proxedMinTime) && console.warn("NaN proxedMinTime", that);
@@ -290,11 +301,14 @@ function Type(p, g, typeId, dictionary) {
 
   var y = 0;
   this.setY = function(yPos) {
+    var oldY = y;
     y = yPos;
-    that.select().attr({
-      "transform": "translate(0 "+y+")",
-      "opacity": y < 0 ? 0 : null
-    });
+    if(oldY !== y && events.length > 0) {
+      that.select().attr({
+        "transform": "translate(0 "+y+")",
+        "opacity": y < 0 ? 0 : null
+      });
+    }
   };
   this.getY = function() {
     return y;
