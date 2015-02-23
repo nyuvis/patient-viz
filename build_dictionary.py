@@ -12,6 +12,7 @@ import datetime
 import shelve
 from datetime import datetime,timedelta
 import sys
+import csv
 #import simplejson as json
 import json
 import os.path
@@ -44,74 +45,106 @@ def init():
 ### prescribed ###
 
 def createPrescribedEntry(symbols, type, id):
-    pid = "" # find way to determine parent
+    pid = id[:-2] if len(id) == 11 else ""
     if id in symbols:
         l = symbols[id]
         return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"])
     return createUnknownEntry(symbols, type, id, pid)
 
 def initPrescribed():
-    with open(productFile, 'r') as prFile:
-        products = prFile.readlines()
-    with open(packageFile, 'r') as paFile:
-        packages = paFile.readlines()
     prescribeLookup = {}
+    if not os.path.isfile(productFile):
+        return prescribeLookup
     uidLookup = {}
-    for i in range(len(products)):
-        if i == 0:
-            continue
-        # PRODUCTID PRODUCTNDC PRODUCTTYPENAME PROPRIETARYNAME PROPRIETARYNAMESUFFIX NONPROPRIETARYNAME DOSAGEFORMNAME ROUTENAME STARTMARKETINGDATE ENDMARKETINGDATE MARKETINGCATEGORYNAME APPLICATIONNUMBER LABELERNAME SUBSTANCENAME ACTIVE_NUMERATOR_STRENGTH ACTIVE_INGRED_UNIT PHARM_CLASSES DEASCHEDULE
-        line = products[i].split('\t')
-        uid = line[0].strip()
-        ndc = line[1].strip().replace('-', '') # TODO also create 11 digit codes by padding 4-4, or 5-3 to 5-4
-        ptn = line[2].strip()
-        prop = line[3].strip()
-        nonp = line[5].strip()
-        subst = line[13].strip()
-        pharm = line[16].strip()
-        if uid in uidLookup:
-            print("warning duplicate uid: " + uid, file=sys.stderr)
-        uidLookup[uid] = {
-            "pType": ptn,
-            "prop": prop,
-            "nonp": nonp,
-            "subst": subst,
-            "pharm": pharm
-        }
-        desc = nonp + " " + ptn
-        l = uidLookup[uid]
-        if ndc in prescribeLookup:
-            desc = prescribeLookup[ndc]["desc"] + " or " + desc
-        prescribeLookup[ndc] = {
-            "desc": desc,
-            "pType": l["pType"],
-            "prop": l["prop"],
-            "nonp": l["nonp"],
-            "subst": l["subst"],
-            "pharm": l["pharm"]
-        }
-    for i in range(len(packages)):
-        if i == 0:
-            continue
-        # PRODUCTID PRODUCTNDC NDCPACKAGECODE PACKAGEDESCRIPTION
-        line = packages[i].split('\t')
-        uid = line[0].strip()
-        nid = line[2].strip().replace('-', '') # TODO also create 11 digit codes by padding 4-4-2, 5-3-2, or 5-4-1 to 5-4-2
-        desc = line[3].strip()
-        if uid not in uidLookup:
-            print("warning missing uid: " + uid, file=sys.stderr)
-            continue
-        l = uidLookup[uid]
-        if nid in prescribeLookup:
-            desc = prescribeLookup[nid]["desc"] + " or " + desc
-        prescribeLookup[nid] = {
-            "desc": desc,
-            "pType": l["pType"],
-            "prop": l["prop"],
-            "nonp": l["nonp"],
-            "subst": l["subst"],
-            "pharm": l["pharm"]
-        }
+    with open(productFile, 'r') as prFile:
+        for row in csv.DictReader(prFile):
+            uid = row['PRODUCTID'].strip()
+            fullndc = row['PRODUCTNDC'].strip()
+            ndcparts = fullndc.split('-')
+            if len(ndcparts) != 2:
+                print("invalid NDC (2):" + fullndc + "  " + uid, file=sys.stderr)
+                continue
+            normndc = ""
+            if len(ndcparts[0]) == 4 and len(ndcparts[1]) == 4:
+                normndc = "0" + ndcparts[0] + ndcparts[1]
+            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 3:
+                normndc = ndcparts[0] + "0" + ndcparts[1]
+            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4:
+                normndc = ndcparts[0] + ndcparts[1]
+            else:
+                print("invalid split NDC (2):" + fullndc + "  " + uid, file=sys.stderr)
+                continue
+            ndc = ndcparts[0] + ndcparts[1]
+            ptn = row['PRODUCTTYPENAME'].strip()
+            prop = row['PROPRIETARYNAME'].strip()
+            nonp = row['NONPROPRIETARYNAME'].strip()
+            subst = row['SUBSTANCENAME'].strip()
+            pharm = row['PHARM_CLASSES'].strip()
+            if uid in uidLookup:
+                print("warning duplicate uid: " + uid, file=sys.stderr)
+            uidLookup[uid] = {
+                "pType": ptn,
+                "prop": prop,
+                "nonp": nonp,
+                "subst": subst,
+                "pharm": pharm
+            }
+            desc = nonp + " " + ptn
+            l = uidLookup[uid]
+            if ndc in prescribeLookup:
+                print("warning duplicate NDC: " + uid + " " + fullndc, file=sys.stderr)
+            if normndc in prescribeLookup:
+                print("warning duplicate NDC: " + uid + " " + fullndc, file=sys.stderr)
+            obj = {
+                "desc": desc,
+                "pType": l["pType"],
+                "prop": l["prop"],
+                "nonp": l["nonp"],
+                "subst": l["subst"],
+                "pharm": l["pharm"]
+            }
+            prescribeLookup[ndc] = obj
+            prescribeLookup[normndc] = obj
+    if not os.path.isfile(packageFile):
+        return prescribeLookup
+    with open(packageFile, 'r') as paFile:
+        for row in csv.DictReader(paFile):
+            uid = row['PRODUCTID'].strip()
+            fullndc = row['NDCPACKAGECODE'].strip()
+            ndcparts = fullndc.split('-')
+            if len(ndcparts) != 3:
+                print("invalid NDC (3):" + fullndc + "  " + uid, file=sys.stderr)
+                continue
+            normndc = ""
+            if len(ndcparts[0]) == 4 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 2:
+                normndc = "0" + ndcparts[0] + ndcparts[1] + ndcparts[2]
+            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 3 and len(ndcparts[2]) == 2:
+                normndc = ndcparts[0] + "0" + ndcparts[1] + ndcparts[2]
+            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 1:
+                normndc = ndcparts[0] + ndcparts[1] + "0" + ndcparts[2]
+            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 2:
+                normndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
+            else:
+                print("invalid split NDC (3):" + fullndc + "  " + uid, file=sys.stderr)
+                continue
+            ndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
+            desc = row['PACKAGEDESCRIPTION'].strip()
+            if uid not in uidLookup:
+                print("warning missing uid: " + uid, file=sys.stderr)
+                continue
+            l = uidLookup[uid]
+            if ndc in prescribeLookup:
+                desc = prescribeLookup[ndc]["desc"] + " or " + desc
+            obj = {
+                "desc": desc,
+                "pType": l["pType"],
+                "prop": l["prop"],
+                "nonp": l["nonp"],
+                "subst": l["subst"],
+                "pharm": l["pharm"]
+            }
+            prescribeLookup[ndc] = obj
+            prescribeLookup[normndc] = obj
     return prescribeLookup
 
 ### lab-test ###
@@ -305,15 +338,14 @@ def extractEntries(dict, patient):
 
 def loadOldDict(file):
     dict = {}
+    if file == sys.stdout or not os.path.isfile(file):
+        return dict
     with open(file, 'r') as input:
         dict = json.loads(input.read())
     return dict
 
 def enrichDict(file, mid):
-    if file == sys.stdout or not os.path.isfile(file):
-        dict = {}
-    else:
-        dict = loadOldDict(file)
+    dict = loadOldDict(file)
     with open(mid, 'r') as pfile:
         patient = json.loads(pfile.read())
     extractEntries(dict, patient)
