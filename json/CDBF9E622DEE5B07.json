@@ -1,0 +1,5773 @@
+{
+  "info": [
+    {
+      "id": "pid", 
+      "value": "CDBF9E622DEE5B07", 
+      "name": "Patient"
+    }, 
+    {
+      "id": "born", 
+      "value": 1963, 
+      "name": "Born"
+    }, 
+    {
+      "label": "default", 
+      "id": "gender", 
+      "value": "U", 
+      "name": "Gender"
+    }, 
+    {
+      "id": "event_count", 
+      "value": 1148, 
+      "name": "Events"
+    }
+  ], 
+  "end": 1279771200, 
+  "v_bars": [
+    "auto"
+  ], 
+  "h_bars": [], 
+  "start": 1199336400, 
+  "events": [
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1199336400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78605", 
+      "time": 1199336400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71946", 
+      "time": 1199336400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42732", 
+      "time": 1199768400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1199768400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78960", 
+      "time": 1200286800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5183", 
+      "time": 1200286800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25042", 
+      "time": 1200286800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3320", 
+      "time": 1200286800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4974", 
+      "time": 1200632400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5194", 
+      "time": 1201496400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72767", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78079", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72885", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4179", 
+      "time": 1203051600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "55842", 
+      "time": 1203051600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5641", 
+      "time": 1203051600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78079", 
+      "time": 1203051600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29285", 
+      "time": 1204002000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3384", 
+      "time": 1204002000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7245", 
+      "time": 1204002000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5733", 
+      "time": 1204002000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2534", 
+      "time": 1204088400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25002", 
+      "time": 1204088400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4359", 
+      "time": 1204088400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2534", 
+      "time": 1204174800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25002", 
+      "time": 1204174800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4359", 
+      "time": 1204174800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1203570000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1203656400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1203742800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1203829200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1203915600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1204002000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1204088400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1204174800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1204261200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3969", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6256", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4409", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79430", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56081", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2867", 
+      "time": 1205467200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42091", 
+      "time": 1206072000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4255", 
+      "time": 1206072000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5518", 
+      "time": 1206244800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78039", 
+      "time": 1206244800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V126", 
+      "time": 1206590400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1206590400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71197", 
+      "time": 1206676800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4910", 
+      "time": 1207195200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1629", 
+      "time": 1207195200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4612", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1623", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2734", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28529", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4612", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1623", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2734", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28529", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3383", 
+      "time": 1207800000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1207800000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5867", 
+      "time": 1207800000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7291", 
+      "time": 1207800000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99670", 
+      "time": 1208664000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4272", 
+      "time": 1208836800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "83905", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25091", 
+      "time": 1210046400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1210046400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3572", 
+      "time": 1210046400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "36201", 
+      "time": 1210046400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7230", 
+      "time": 1211256000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2452", 
+      "time": 1212120000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7945", 
+      "time": 1212120000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "490", 
+      "time": 1212292800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71123", 
+      "time": 1212465600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1212638400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5859", 
+      "time": 1212638400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71580", 
+      "time": 1212638400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29690", 
+      "time": 1212638400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78903", 
+      "time": 1212897600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4659", 
+      "time": 1213243200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7862", 
+      "time": 1213243200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72639", 
+      "time": 1213588800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5997", 
+      "time": 1213588800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "33829", 
+      "time": 1213588800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78321", 
+      "time": 1213588800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2808", 
+      "time": 1213934400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1213934400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2810", 
+      "time": 1213934400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4585", 
+      "time": 1214107200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "9180", 
+      "time": 1214798400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7210", 
+      "time": 1214884800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "20410", 
+      "time": 1214884800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7210", 
+      "time": 1214971200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "20410", 
+      "time": 1214971200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7210", 
+      "time": 1215057600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "20410", 
+      "time": 1215057600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7210", 
+      "time": 1215144000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "20410", 
+      "time": 1215144000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72239", 
+      "time": 1215144000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7969", 
+      "time": 1215576000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72881", 
+      "time": 1215748800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7807", 
+      "time": 1216094400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1216699200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99699", 
+      "time": 1217304000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25003", 
+      "time": 1217908800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25013", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5642", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78071", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5959", 
+      "time": 1219032000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5331", 
+      "time": 1219118400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1219118400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51189", 
+      "time": 1220068800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1220068800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72290", 
+      "time": 1220414400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1220414400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1220414400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1220500800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78799", 
+      "time": 1220587200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "494", 
+      "time": 1221710400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7850", 
+      "time": 1221969600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "486", 
+      "time": 1221969600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1221969600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "496", 
+      "time": 1221969600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8053", 
+      "time": 1222574400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V292", 
+      "time": 1222920000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5855", 
+      "time": 1222920000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79093", 
+      "time": 1222920000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71596", 
+      "time": 1222920000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7851", 
+      "time": 1223006400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "0221", 
+      "time": 1223697600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "0221", 
+      "time": 1223784000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "0221", 
+      "time": 1223870400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4919", 
+      "time": 1223956800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4919", 
+      "time": 1224043200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72479", 
+      "time": 1224648000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78701", 
+      "time": 1224648000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7234", 
+      "time": 1224648000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72881", 
+      "time": 1224907200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1224907200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7813", 
+      "time": 1224907200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24970", 
+      "time": 1224993600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "44023", 
+      "time": 1224993600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78606", 
+      "time": 1224993600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "496", 
+      "time": 1224993600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "36603", 
+      "time": 1225339200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4613", 
+      "time": 1225339200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5789", 
+      "time": 1225339200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4400", 
+      "time": 1225339200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "45183", 
+      "time": 1226034000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42830", 
+      "time": 1226206800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1226206800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1226206800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4148", 
+      "time": 1226206800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71592", 
+      "time": 1226379600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4365", 
+      "time": 1226379600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1226379600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71536", 
+      "time": 1226379600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99667", 
+      "time": 1226725200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71906", 
+      "time": 1226725200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "04111", 
+      "time": 1226725200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5881", 
+      "time": 1226898000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5568", 
+      "time": 1226898000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1226898000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56983", 
+      "time": 1226898000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29630", 
+      "time": 1227070800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5160", 
+      "time": 1227070800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78057", 
+      "time": 1227070800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1227070800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1227070800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7201", 
+      "time": 1227330000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71945", 
+      "time": 1227330000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1227330000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1227330000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5793", 
+      "time": 1227502800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4822", 
+      "time": 1227502800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1227502800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70901", 
+      "time": 1227502800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7197", 
+      "time": 1227502800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4479", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78900", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24921", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4010", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2769", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24941", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24941", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24941", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24941", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24941", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24941", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24941", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3569", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53020", 
+      "time": 1229230800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78900", 
+      "time": 1229230800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "57420", 
+      "time": 1229230800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71945", 
+      "time": 1229230800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53020", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78900", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "57420", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71945", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7243", 
+      "time": 1230094800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72210", 
+      "time": 1230094800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7291", 
+      "time": 1230094800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7241", 
+      "time": 1230094800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72885", 
+      "time": 1230094800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3384", 
+      "time": 1230094800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4272", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5939", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2722", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "496", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1230699600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78605", 
+      "time": 1230699600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1230699600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4322", 
+      "time": 1230786000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4148", 
+      "time": 1230786000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5859", 
+      "time": 1230786000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1230786000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "82009", 
+      "time": 1231563600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "E8888", 
+      "time": 1231563600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3320", 
+      "time": 1231563600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5185", 
+      "time": 1231650000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5070", 
+      "time": 1231650000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1231650000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1231650000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1231650000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5185", 
+      "time": 1231736400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5070", 
+      "time": 1231736400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1231736400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1231736400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1231736400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5185", 
+      "time": 1231822800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5070", 
+      "time": 1231822800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1231822800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1231822800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1231822800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5185", 
+      "time": 1231909200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5070", 
+      "time": 1231909200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1231909200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1231909200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1231909200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72191", 
+      "time": 1232254800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78604", 
+      "time": 1232254800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25050", 
+      "time": 1232254800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1232254800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71940", 
+      "time": 1232254800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28804", 
+      "time": 1232341200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "0539", 
+      "time": 1232341200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2760", 
+      "time": 1232686800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1232686800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1232686800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1890", 
+      "time": 1232686800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49310", 
+      "time": 1233205200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1101", 
+      "time": 1233205200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "496", 
+      "time": 1233205200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "34290", 
+      "time": 1233378000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4977", 
+      "time": 1233550800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7140", 
+      "time": 1233550800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4292", 
+      "time": 1233550800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28739", 
+      "time": 1233723600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7050", 
+      "time": 1234328400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1234328400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "40390", 
+      "time": 1235106000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71949", 
+      "time": 1235106000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25002", 
+      "time": 1235106000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70709", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78904", 
+      "time": 1236056400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53011", 
+      "time": 1236056400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "33811", 
+      "time": 1236056400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78904", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53011", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "33811", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "20302", 
+      "time": 1236315600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2874", 
+      "time": 1236315600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "27542", 
+      "time": 1236315600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78720", 
+      "time": 1236315600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3912", 
+      "time": 1236916800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4501", 
+      "time": 1236916800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4589", 
+      "time": 1236916800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1237089600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7242", 
+      "time": 1237089600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29532", 
+      "time": 1237089600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "73398", 
+      "time": 1237435200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1237435200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78962", 
+      "time": 1237694400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5768", 
+      "time": 1237694400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1237694400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5194", 
+      "time": 1238040000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7868", 
+      "time": 1238212800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "496", 
+      "time": 1238212800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "38002", 
+      "time": 1238644800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3804", 
+      "time": 1238644800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1238904000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5162", 
+      "time": 1238990400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V433", 
+      "time": 1238990400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3885", 
+      "time": 1239422400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7864", 
+      "time": 1239681600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8059", 
+      "time": 1239854400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53081", 
+      "time": 1239854400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1240200000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "73302", 
+      "time": 1240286400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7246", 
+      "time": 1240632000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29642", 
+      "time": 1240632000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4281", 
+      "time": 1241150400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1241150400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78607", 
+      "time": 1241409600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1241409600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79439", 
+      "time": 1241409600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1241409600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "514", 
+      "time": 1241496000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5716", 
+      "time": 1241668800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29651", 
+      "time": 1242273600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1242273600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6819", 
+      "time": 1242878400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6851", 
+      "time": 1243051200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4611", 
+      "time": 1243137600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "515", 
+      "time": 1243569600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4912", 
+      "time": 1243569600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1243569600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53081", 
+      "time": 1243569600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8469", 
+      "time": 1244088000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V218", 
+      "time": 1244692800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "311", 
+      "time": 1244692800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1244692800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "82010", 
+      "time": 1244865600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4975", 
+      "time": 1244865600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1244865600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7867", 
+      "time": 1245211200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "59789", 
+      "time": 1245211200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7260", 
+      "time": 1245297600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78843", 
+      "time": 1245297600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5183", 
+      "time": 1245297600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "462", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7821", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1245470400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1245556800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78607", 
+      "time": 1245556800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5368", 
+      "time": 1245556800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7292", 
+      "time": 1245556800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1245556800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29502", 
+      "time": 1245556800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "30390", 
+      "time": 1245556800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78906", 
+      "time": 1245902400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "55091", 
+      "time": 1245902400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1245902400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56210", 
+      "time": 1245902400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7948", 
+      "time": 1245902400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78906", 
+      "time": 1245988800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "55091", 
+      "time": 1245988800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1245988800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56210", 
+      "time": 1245988800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7948", 
+      "time": 1245988800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78906", 
+      "time": 1246075200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "55091", 
+      "time": 1246075200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1246075200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56210", 
+      "time": 1246075200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7948", 
+      "time": 1246075200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78906", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "55091", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56210", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7948", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72230", 
+      "time": 1246766400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V190", 
+      "time": 1246852800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7881", 
+      "time": 1246852800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1246852800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5934", 
+      "time": 1246939200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4414", 
+      "time": 1246939200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78900", 
+      "time": 1246939200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "59970", 
+      "time": 1246939200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3089", 
+      "time": 1247716800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "74685", 
+      "time": 1247716800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3019", 
+      "time": 1247716800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53140", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V160", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56210", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56942", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79029", 
+      "time": 1248580800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1248580800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1248580800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2808", 
+      "time": 1249012800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "9998", 
+      "time": 1249531200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25001", 
+      "time": 1249531200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1250308800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1250308800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78061", 
+      "time": 1250827200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "30440", 
+      "time": 1251172800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "07070", 
+      "time": 1251172800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V854", 
+      "time": 1251172800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V431", 
+      "time": 1251259200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4281", 
+      "time": 1251604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1251604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "40290", 
+      "time": 1251604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4660", 
+      "time": 1251604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1251604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7244", 
+      "time": 1251864000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7241", 
+      "time": 1251864000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "44023", 
+      "time": 1251950400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4981", 
+      "time": 1251950400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78907", 
+      "time": 1252468800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1252468800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5929", 
+      "time": 1252468800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78321", 
+      "time": 1252468800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "30511", 
+      "time": 1252728000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1252728000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5180", 
+      "time": 1252728000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5194", 
+      "time": 1253592000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204347600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204520400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204606800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204779600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1205038800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4111", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "3723", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "2809", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "5781", 
+      "time": 1205121600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71535", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "40390", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5862", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "8154", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4019", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "procedure", 
+      "id": "40390", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71535", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "40390", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5862", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "8154", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4019", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "procedure", 
+      "id": "40390", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71535", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "40390", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5862", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "8154", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4019", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "40390", 
+      "time": 1209700800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71535", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "40390", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5862", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "procedure", 
+      "id": "8154", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4019", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "procedure", 
+      "id": "40390", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71535", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "40390", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5862", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "8154", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4019", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "40390", 
+      "time": 1209873600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3310", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4573", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1218168000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1218168000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1218168000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1218168000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3310", 
+      "time": 1218168000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1218168000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4573", 
+      "time": 1218168000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1218254400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1218254400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1218254400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1218254400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3310", 
+      "time": 1218254400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1218254400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4573", 
+      "time": 1218254400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3310", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4573", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99642", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3310", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4573", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78791", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72252", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71590", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25062", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4292", 
+      "time": 1235278800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78791", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72252", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71590", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25062", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4292", 
+      "time": 1235365200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78791", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72252", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71590", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25062", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "procedure", 
+      "id": "4292", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4321", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4010", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "34290", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42789", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3004", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4364", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4365", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4240", 
+      "time": 1251518400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1201669200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1201669200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "43310", 
+      "time": 1201669200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79439", 
+      "time": 1201669200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53081", 
+      "time": 1201669200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78703", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7840", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78703", 
+      "time": 1205380800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1205380800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1205380800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1205380800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7840", 
+      "time": 1205380800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "412", 
+      "time": 1210132800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5844", 
+      "time": 1213156800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7455", 
+      "time": 1213156800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "43400", 
+      "time": 1213156800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1214193600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V1260", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79029", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "311", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78652", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5533", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4148", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "586", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7862", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V1260", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79029", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "311", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78652", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5533", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4148", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "586", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7862", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1216353600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V1260", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79029", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "311", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78652", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5533", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4148", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "586", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7862", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1216440000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "73309", 
+      "time": 1221883200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79029", 
+      "time": 1223092800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3051", 
+      "time": 1223092800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1223092800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7890", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53540", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5759", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7873", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3051", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56400", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42840", 
+      "time": 1229403600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1229403600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4563", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4589", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5939", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29680", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7823", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70713", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70710", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1233118800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1233637200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42841", 
+      "time": 1233723600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78602", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1236402000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1236402000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V433", 
+      "time": 1236402000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1236402000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2840", 
+      "time": 1237348800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7807", 
+      "time": 1237435200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5939", 
+      "time": 1237435200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "60001", 
+      "time": 1237435200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1237435200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "79029", 
+      "time": 1237435200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "07953", 
+      "time": 1239076800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7098", 
+      "time": 1244088000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V7644", 
+      "time": 1244088000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1244088000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8440", 
+      "time": 1247284800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247284800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247284800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247284800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247284800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247371200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247371200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247371200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247371200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247457600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247457600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247457600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247457600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247544000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247544000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247544000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247544000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247630400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247630400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247630400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247630400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247716800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247716800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247716800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247716800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247803200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247803200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247803200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247803200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7835", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7905", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1247889600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5862", 
+      "time": 1249185600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1249185600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1889", 
+      "time": 1249185600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "0422", 
+      "time": 1256011200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1256011200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7910", 
+      "time": 1256011200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7906", 
+      "time": 1256011200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24970", 
+      "time": 1257829200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1257829200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "9855", 
+      "time": 1261198800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "59000", 
+      "time": 1263618000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1262754000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1262754000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1262754000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1262840400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1262840400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1262840400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1262926800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1262926800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1262926800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263013200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263013200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263013200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263099600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263099600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263099600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263186000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263186000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263186000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263272400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263272400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263272400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263358800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263358800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263358800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263445200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263445200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263445200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263531600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263531600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263531600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263618000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263618000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263618000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263704400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263704400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263704400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263790800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263790800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263790800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263877200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263877200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263877200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1263963600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1263963600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1263963600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1264050000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1264050000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1264050000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1264136400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1264136400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1264136400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1264222800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1264222800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1264222800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1264309200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1264309200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1264309200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1264395600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1264395600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1264395600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72812", 
+      "time": 1264482000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7262", 
+      "time": 1264482000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1264482000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1264827600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1264914000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265000400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265086800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265173200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265259600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265346000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265432400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265518800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265605200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265691600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265778000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265864400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1265950800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1266037200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1266123600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1266210000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1266296400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1266382800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1266469200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29594", 
+      "time": 1266555600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56210", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2113", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78720", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56210", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6989", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78900", 
+      "time": 1266728400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "81351", 
+      "time": 1269921600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42841", 
+      "time": 1274068800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5883", 
+      "time": 1274068800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42843", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4148", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "797", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4259", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7823", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4241", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V123", 
+      "time": 1274673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4151", 
+      "time": 1275796800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V739", 
+      "time": 1279771200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "66267015714", 
+      "time": 1199336400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00172422070", 
+      "time": 1199422800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00603802010", 
+      "time": 1199768400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016096173", 
+      "time": 1200027600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54868122300", 
+      "time": 1200546000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00223781010", 
+      "time": 1202274000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "57866493202", 
+      "time": 1202706000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "36987206503", 
+      "time": 1202965200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55953048070", 
+      "time": 1203051600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "66267032020", 
+      "time": 1203483600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "63629132601", 
+      "time": 1203915600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "53002038230", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00046103105", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "11517074106", 
+      "time": 1204434000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "21695051510", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "68071041230", 
+      "time": 1204693200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "19458059201", 
+      "time": 1205208000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00024131402", 
+      "time": 1205208000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00083013532", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "17228070200", 
+      "time": 1205380800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00723181028", 
+      "time": 1205467200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00814632530", 
+      "time": 1205726400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "43265075402", 
+      "time": 1205812800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "33261001605", 
+      "time": 1206244800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00904791940", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55045204307", 
+      "time": 1208404800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "18837023960", 
+      "time": 1208577600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00490715544", 
+      "time": 1208836800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "10135019601", 
+      "time": 1209096000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "51079068217", 
+      "time": 1209268800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016091006", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00025122331", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "52544050410", 
+      "time": 1209960000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "42549061330", 
+      "time": 1210046400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "59632010401", 
+      "time": 1210219200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54092019112", 
+      "time": 1210219200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "60258044815", 
+      "time": 1210996800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54383006003", 
+      "time": 1211342400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "99207251744", 
+      "time": 1211774400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "49999009504", 
+      "time": 1211860800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54383005604", 
+      "time": 1211860800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "51129291201", 
+      "time": 1212379200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "47837006200", 
+      "time": 1215230400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00268093410", 
+      "time": 1215230400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "63874053200", 
+      "time": 1215576000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55887095224", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "41284006512", 
+      "time": 1216526400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "61113045058", 
+      "time": 1216612800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "68071025918", 
+      "time": 1217217600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00228261303", 
+      "time": 1217304000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00781317895", 
+      "time": 1217908800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00536464801", 
+      "time": 1218081600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "65243010518", 
+      "time": 1218340800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016062224", 
+      "time": 1220500800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00008027701", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00469215215", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00719197610", 
+      "time": 1220846400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "23490532303", 
+      "time": 1220932800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "60505023203", 
+      "time": 1220932800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00179167572", 
+      "time": 1220932800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58948040572", 
+      "time": 1221019200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "64579009941", 
+      "time": 1221364800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00268619806", 
+      "time": 1221624000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "57866352401", 
+      "time": 1221710400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00168002016", 
+      "time": 1221796800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016058042", 
+      "time": 1222056000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "57480034001", 
+      "time": 1222142400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00074765002", 
+      "time": 1223092800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58554000205", 
+      "time": 1223265600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55111012601", 
+      "time": 1223438400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "53489033210", 
+      "time": 1223524800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00536992001", 
+      "time": 1223611200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00536492701", 
+      "time": 1224129600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "16408271404", 
+      "time": 1224129600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00684015905", 
+      "time": 1224475200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "11722092299", 
+      "time": 1225688400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00364737830", 
+      "time": 1225774800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55289070407", 
+      "time": 1225947600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00182036440", 
+      "time": 1226120400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "63874044320", 
+      "time": 1226120400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55045342001", 
+      "time": 1226638800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "47202249402", 
+      "time": 1226725200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016092444", 
+      "time": 1227070800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "36987246904", 
+      "time": 1227589200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "10244051163", 
+      "time": 1228712400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "11819025690", 
+      "time": 1228798800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00363692110", 
+      "time": 1229058000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "21091030110", 
+      "time": 1229144400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "66267047260", 
+      "time": 1229144400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00894651402", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00781504210", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00186113551", 
+      "time": 1230094800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00781284801", 
+      "time": 1230354000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54868502404", 
+      "time": 1231131600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "36987222104", 
+      "time": 1231304400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "36987317301", 
+      "time": 1232168400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "61392029890", 
+      "time": 1232427600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00779105225", 
+      "time": 1232427600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00247008515", 
+      "time": 1233032400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54569388700", 
+      "time": 1233291600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00228263550", 
+      "time": 1233550800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "61553029925", 
+      "time": 1233637200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "16590064560", 
+      "time": 1233810000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "66267101730", 
+      "time": 1233896400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "51079097920", 
+      "time": 1233982800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "52297016478", 
+      "time": 1234674000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00067013430", 
+      "time": 1235883600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "52721009510", 
+      "time": 1236657600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016037993", 
+      "time": 1236744000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00781108013", 
+      "time": 1237521600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00031746963", 
+      "time": 1237780800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54868118300", 
+      "time": 1237953600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "10221000107", 
+      "time": 1238904000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00002751101", 
+      "time": 1239249600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "16590058090", 
+      "time": 1239681600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58165003101", 
+      "time": 1239681600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00228221210", 
+      "time": 1239940800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "47679055135", 
+      "time": 1240200000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00641132035", 
+      "time": 1240286400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "49288058301", 
+      "time": 1241150400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00822153000", 
+      "time": 1241150400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00615356613", 
+      "time": 1241755200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "51660078701", 
+      "time": 1242014400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016038383", 
+      "time": 1242273600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "59930150008", 
+      "time": 1242360000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00173045402", 
+      "time": 1242705600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "52493027430", 
+      "time": 1242705600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55289040720", 
+      "time": 1243656000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58864068230", 
+      "time": 1243915200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00472076699", 
+      "time": 1244174400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00349207801", 
+      "time": 1244347200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016064816", 
+      "time": 1244520000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "53002025260", 
+      "time": 1244606400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00904075329", 
+      "time": 1244952000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00044012004", 
+      "time": 1244952000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54569390000", 
+      "time": 1245124800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "59879011501", 
+      "time": 1246766400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00157037301", 
+      "time": 1246852800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "11845112001", 
+      "time": 1246939200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "36987240801", 
+      "time": 1248062400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00580034316", 
+      "time": 1249012800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58177000604", 
+      "time": 1249704000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "38245038120", 
+      "time": 1251086400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "51079093101", 
+      "time": 1251172800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00065062606", 
+      "time": 1252296000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "16252009833", 
+      "time": 1252555200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "60505077405", 
+      "time": 1252641600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "42549052724", 
+      "time": 1252814400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54697004602", 
+      "time": 1253592000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58864030590", 
+      "time": 1253851200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "50629092626", 
+      "time": 1254110400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "53261003302", 
+      "time": 1254283200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58864062530", 
+      "time": 1254369600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "67544060753", 
+      "time": 1254715200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "60346070312", 
+      "time": 1254888000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00349235400", 
+      "time": 1254888000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016066982", 
+      "time": 1254974400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "51728004605", 
+      "time": 1255233600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016050732", 
+      "time": 1255320000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016008393", 
+      "time": 1255665600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "61392011832", 
+      "time": 1255752000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "36987157701", 
+      "time": 1256270400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55154435405", 
+      "time": 1256529600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00179025150", 
+      "time": 1257397200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00093521110", 
+      "time": 1257483600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "59011043010", 
+      "time": 1257656400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "57866432702", 
+      "time": 1257829200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "51432019603", 
+      "time": 1258520400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00283088631", 
+      "time": 1258520400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "63552025111", 
+      "time": 1258693200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "35470036709", 
+      "time": 1258779600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "53978069405", 
+      "time": 1258779600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "10337066499", 
+      "time": 1259038800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "36987239502", 
+      "time": 1259125200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55289031760", 
+      "time": 1259384400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55289082314", 
+      "time": 1259470800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00169770391", 
+      "time": 1259730000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016068735", 
+      "time": 1260162000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "47679056204", 
+      "time": 1260334800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016053732", 
+      "time": 1260421200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00037052124", 
+      "time": 1261112400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55289089201", 
+      "time": 1261285200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "52297024700", 
+      "time": 1261544400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54868117400", 
+      "time": 1262840400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00839570006", 
+      "time": 1263013200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "66105012015", 
+      "time": 1263013200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00471007508", 
+      "time": 1263013200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "55887041490", 
+      "time": 1263272400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54569516700", 
+      "time": 1263272400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00157088110", 
+      "time": 1263704400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "66105051810", 
+      "time": 1264050000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "66267001820", 
+      "time": 1264827600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00894578402", 
+      "time": 1265173200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "38245041310", 
+      "time": 1265518800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00065021115", 
+      "time": 1267074000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54868101100", 
+      "time": 1267506000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "52959020600", 
+      "time": 1267765200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00480715456", 
+      "time": 1268110800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "17228150200", 
+      "time": 1268542800
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "67228044703", 
+      "time": 1268798400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00677077110", 
+      "time": 1268798400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "54868470005", 
+      "time": 1269230400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00781100301", 
+      "time": 1269403200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00093066505", 
+      "time": 1269921600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00904603652", 
+      "time": 1269921600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00904503310", 
+      "time": 1270353600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "48695115104", 
+      "time": 1270440000
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "12516150607", 
+      "time": 1270526400
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "58016091098", 
+      "time": 1270699200
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "00781168131", 
+      "time": 1271217600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "23490583802", 
+      "time": 1271649600
+    }, 
+    {
+      "group": "prescribed", 
+      "id": "18837011630", 
+      "time": 1271649600
+    }
+  ]
+}
