@@ -14,7 +14,18 @@ import csv
 #import simplejson as json
 import json
 
-idField = 'DESYNPUF_ID'
+input_format = {
+    "patient_id": 'DESYNPUF_ID',
+    "born": 'BENE_BIRTH_DT',
+    "gender": 'BENE_SEX_IDENT_CD',
+    "claim_from": 'CLM_FROM_DT',
+    "claim_to": 'CLM_THRU_DT',
+    "diagnosis": ['ICD9_DGNS_CD_' + str(n) for n in xrange(1, 11)],
+    "procedures": ['ICD9_PRCDR_CD_' + str(n) for n in xrange(1, 7)],
+    # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
+    "prescribed_date": 'SRVC_DT',
+    "prescribed": 'PROD_SRVC_ID'
+}
 
 TYPE_PRESCRIBED = "prescribed"
 TYPE_LABTEST    = "lab-test"
@@ -70,20 +81,19 @@ def handleEvent(row):
         if value != '':
             res.append(createEntry(type, value))
 
-    dgns_cols = ['ICD9_DGNS_CD_' + str(n) for n in xrange(1, 11)]
+    dgns_cols = input_format["diagnosis"]
     for icd9 in dgns_cols:
         handleKey(row, icd9, lambda value: emit(TYPE_DIAGNOSIS, value))
-    prcdr_cols = ['ICD9_PRCDR_CD_' + str(n) for n in xrange(1, 7)]
+    prcdr_cols = input_format["procedures"]
     for icd9 in prcdr_cols:
         handleKey(row, icd9, lambda value: emit(TYPE_PROCEDURE, value))
-    # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     return res
 
 def handleRow(row, obj):
-    handleKey(row, 'BENE_BIRTH_DT', lambda value:
-            addInfo(obj, 'age', 'Age', 2012 - int(str(value)[0:4])) # FIXME come up with something better later -- maybe no age but birth year?
+    handleKey(row, input_format["born"], lambda value:
+            addInfo(obj, 'born', 'Born', int(str(value)[0:4]))
         )
-    handleKey(row, 'BENE_SEX_IDENT_CD', lambda value:
+    handleKey(row, input_format["gender"], lambda value:
             addInfo(obj, 'gender', 'Gender', gender_map.get(value, 'U'), True, gender_label.get(value, "default"))
         )
 
@@ -108,8 +118,8 @@ def handleRow(row, obj):
                 event['time'] = curDate
                 obj['events'].append(event)
 
-    handleKey(row, 'CLM_FROM_DT', lambda fromDate:
-            handleKey(row, 'CLM_THRU_DT', lambda toDate:
+    handleKey(row, input_format["claim_from"], lambda fromDate:
+            handleKey(row, input_format["claim_to"], lambda toDate:
                 dates(fromDate, toDate)
             )
         )
@@ -119,8 +129,8 @@ def handleRow(row, obj):
         event['time'] = toTime(date)
         obj['events'].append(event)
 
-    handleKey(row, 'SRVC_DT', lambda date:
-            handleKey(row, 'PROD_SRVC_ID', lambda ndc:
+    handleKey(row, input_format["prescribed_date"], lambda date:
+            handleKey(row, input_format["prescribed"], lambda ndc:
                 emitNDC(date, ndc)
             )
         )
@@ -129,7 +139,7 @@ def processFile(inputFile, id, obj):
     with open(inputFile) as csvFile:
         reader = csv.DictReader(csvFile)
         for row in reader:
-            if id == row[idField]:
+            if id == row[input_format["patient_id"]]:
                 handleRow(row, obj)
 
 def processDirectory(dir, id, obj):
