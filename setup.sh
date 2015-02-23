@@ -3,6 +3,8 @@
 # created 2015-02-16 09:00
 
 NDC_DIR="code/ndc"
+ICD9_DIR="code/icd9"
+CCS_DIR="code/ccs"
 OPD_DIR="opd"
 JSON_DIR="json"
 OPD_SAMPLE_ALL=`seq -s " " -t "" 1 20`
@@ -22,11 +24,13 @@ fetch_samples="10"
 no_prompt=
 ndc=
 opd=
+icd9=
+ccs=
 do_convert=
 do_clean=
 do_nop=
 
-USAGE="Usage: $0 -hs [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--ndc] [--opd] [--do-convert] [--clean] [--nop]"
+USAGE="Usage: $0 -hs [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--do-convert] [--clean] [--nop]"
 
 usage() {
     echo $USAGE
@@ -36,8 +40,10 @@ usage() {
     echo "--samples-all: download all samples"
     echo "--convert <list of ids>: specify which patients to convert"
     echo "--convert-num <top n>: specify how many patients to convert (top n by the total number of events)"
-    echo "--default: use default settings (equal to --ndc --opd --do-convert)"
-    echo "--ndc: downloads the NDC database"
+    echo "--default: use default settings (equal to --icd9 --ccs --ndc --opd --do-convert)"
+    echo "--icd9: downloads ICD9 definitions"
+    echo "--ccs: downloads CCS ICD9 hierarchies"
+    echo "--ndc: downloads NDC definitions"
     echo "--opd: downloads the patient claims data"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
@@ -71,9 +77,17 @@ while [ $# -gt 0 ]; do
     convert_top_n="$1"
     ;;
   --default)
+    icd9=1
+    ccs=1
     ndc=1
     opd=1
     do_convert=1
+    ;;
+  --icd9)
+    icd9=1
+    ;;
+  --ccs)
+    ccs=1
     ;;
   --ndc)
     ndc=1
@@ -227,6 +241,56 @@ clean() {
   ./start.sh -q --stop
 }
 
+allow_icd9=
+ask_icd9() {
+  ICD9_INFO="ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD-9/ucreadme.txt"
+  prompt "Do you want to download ICD9 definitions?" "${ICD9_INFO}"
+  if [ $? -eq 0 ]; then
+    allow_icd9=1
+  fi
+}
+
+fetch_icd9() {
+  ICD9_URL="ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD-9/ucod.txt"
+  if [ ! -d "${ICD9_DIR}" ]; then
+    mkdir -p "${ICD9_DIR}"
+  fi
+  if [ ! -f "${ICD9_DIR}/ucod.txt" ]; then
+    cd "${ICD9_DIR}"
+    echo "downloading ICD9 definitions"
+    curl -# -o "ucod.txt" "${ICD9_URL}"
+    cd_back
+  fi
+}
+
+allow_ccs=
+ask_ccs() {
+  CCS_INFO="http://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp"
+  prompt "Do you want to download the CCS ICD9 hierarchies?" "${CCS_INFO}"
+  if [ $? -eq 0 ]; then
+    allow_ccs=1
+  fi
+}
+
+fetch_ccs() {
+  CCS_SINGLE_DIAG_URL="http://www.hcup-us.ahrq.gov/toolssoftware/ccs/AppendixASingleDX.txt"
+  CCS_SINGLE_PROC_URL="http://www.hcup-us.ahrq.gov/toolssoftware/ccs/AppendixBSinglePR.txt"
+  CCS_MULTI_DIAG_URL="http://www.hcup-us.ahrq.gov/toolssoftware/ccs/AppendixCMultiDX.txt"
+  CCS_MULTI_PROC_URL="http://www.hcup-us.ahrq.gov/toolssoftware/ccs/AppendixDMultiPR.txt"
+  if [ ! -d "${CCS_DIR}" ]; then
+    mkdir -p "${CCS_DIR}"
+  fi
+  if [ ! -f "${CCS_DIR}/single_diag.txt" ] || [ ! -f "${CCS_DIR}/single_proc.txt" ] || [ ! -f "${CCS_DIR}/multi_diag.txt" ] || [ ! -f "${CCS_DIR}/multi_proc.txt" ]; then
+    cd "${CCS_DIR}"
+    echo "downloading CCS hierarchies"
+    curl -# -o "single_diag.txt" "${CCS_SINGLE_DIAG_URL}"
+    curl -# -o "single_proc.txt" "${CCS_SINGLE_PROC_URL}"
+    curl -# -o "multi_diag.txt" "${CCS_MULTI_DIAG_URL}"
+    curl -# -o "multi_proc.txt" "${CCS_MULTI_PROC_URL}"
+    cd_back
+  fi
+}
+
 allow_ndc=
 ask_ndc() {
   NDC_INFO="http://www.fda.gov/Drugs/InformationOnDrugs/ucm142438.htm"
@@ -243,7 +307,7 @@ fetch_ndc() {
   fi
   if [ ! -f "${NDC_DIR}/product.txt" ] || [ ! -f "${NDC_DIR}/package.txt" ]; then
     cd "${NDC_DIR}"
-    echo "downloading NDC database"
+    echo "downloading NDC definitions"
 
     curl_unzip "${NDC_URL}"
     rm -- "product.xls" "package.xls"
@@ -339,6 +403,12 @@ fi
 if [ ! -z $opd ]; then
   ask_opd "${fetch_samples}"
 fi
+if [ ! -z $icd9 ]; then
+  ask_icd9
+fi
+if [ ! -z $ccs ]; then
+  ask_ccs
+fi
 if [ ! -z $ndc ]; then
   ask_ndc
 fi
@@ -351,6 +421,12 @@ if [ ! -z $allow_clean ]; then
 fi
 if [ ! -z $allow_opd ]; then
   fetch_opd "${fetch_samples}"
+fi
+if [ ! -z $allow_icd9 ]; then
+  fetch_icd9
+fi
+if [ ! -z $allow_ccs ]; then
+  fetch_ccs
 fi
 if [ ! -z $allow_ndc ]; then
   fetch_ndc

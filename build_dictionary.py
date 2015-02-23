@@ -57,10 +57,8 @@ def createPrescribedEntry(symbols, type, id):
 def initPrescribed():
     with open(productFile, 'r') as prFile:
         products = prFile.readlines()
-    prFile.close()
     with open(packageFile, 'r') as paFile:
         packages = paFile.readlines()
-    paFile.close()
     prescribeLookup = {}
     uidLookup = {}
     for i in range(len(products)):
@@ -122,36 +120,35 @@ def initLabtest():
 
 ### diagnosis ###
 
+diag_parents = {}
 def createDiagnosisEntry(symbols, type, id):
-    if len(id) > 0 and (id[0] == 'V' or id[0] == 'E'):
-        if len(id) > 4:
-            pid = id[:4]
-        elif(len(id) > 1):
-            pid = id[0]
-        else:
-            pid = ""
-    else:
-        if len(id) > 3:
-            pid = id[:3]
-        else:
-            pid = ""
+    pid = diag_parents[id] if id in diag_parents else ""
     if id in symbols:
         return toEntry(id, pid, symbols[id], symbols[id])
     return createUnknownEntry(symbols, type, id, pid)
 
 def initDiagnosis():
-    return getGlobalSymbols()
+    global diag_parents
+    codes = getGlobalSymbols()
+    codes.update(getICD9())
+    diag_parents = readCCS(ccs_diag_file, codes)
+    return codes
 
 ### procedure ###
 
+proc_parents = {}
 def createProcedureEntry(symbols, type, id):
-    pid = "" # find parent id
+    pid = proc_parents[id] if id in proc_parents else ""
     if id in symbols:
         return toEntry(id, pid, symbols[id], symbols[id])
     return createUnknownEntry(symbols, type, id)
 
 def initProcedure():
-    return getGlobalSymbols()
+    global proc_parents
+    codes = getGlobalSymbols()
+    codes.update(getICD9())
+    proc_parents = readCCS(ccs_proc_file, codes)
+    return codes
 
 ### unknown ###
 
@@ -202,6 +199,58 @@ def createRootEntry(type):
         res["flags"] = root_flags[type]
     return res
 
+### icd9 ###
+
+globalICD9 = {}
+
+def getICD9():
+    global globalICD9
+    if len(globalICD9.keys()) == 0:
+        globalICD9 = initICD9()
+    return globalICD9.copy()
+
+def initICD9():
+    codes = {}
+    if not os.path.isfile(icd9File):
+        return codes
+    with open(icd9File, 'r') as file:
+        lastCode=""
+        for line in file:
+            if len(line) < 2:
+                continue
+            if not line[1].isdigit():
+                if line[0] == ' ' and lastCode != "":
+                    codes[lastCode] = codes[lastCode] + " " + line.strip()
+                continue
+            spl = line.split(None, 1)
+            lastCode = spl[0]
+            codes[lastCode] = spl[1].rstrip()
+    return codes
+
+### ccs ###
+
+def readCCS(ccsFile, codes):
+    parents = {}
+    if not os.path.isfile(ccsFile):
+        return codes
+    with open(ccsFile, 'r') as file:
+        cur = ""
+        for line in file:
+            if len(line) < 1:
+                continue
+            if not line[0].isdigit():
+                if line[0] == ' ' and lastCode != "":
+                    nums = line.split()
+                    for n in nums:
+                        parents[n] = cur
+                continue
+            spl = line.split(None, 1)
+            par = spl[0].rtrim('0123456789').rtrim('.')
+            cur = "HIERARCHY_" + spl[0]
+            parents[cur] = "HIERARCHY_" + par if len(par) > 0 else ""
+            codes[cur] = spl[1].rtrim('0123456789 \t\n\r')
+    return parents
+
 ### general lookup table ###
 
 globalSymbols = {}
@@ -210,7 +259,7 @@ def getGlobalSymbols():
     global globalSymbols
     if len(globalSymbols.keys()) == 0:
         globalSymbols = initGlobalSymbols()
-    return globalSymbols
+    return globalSymbols.copy()
 
 def initGlobalSymbols():
     codes_dict = {}
@@ -218,7 +267,6 @@ def initGlobalSymbols():
         return codes_dict
     with open(globalSymbolsFile, 'r') as file:
         lines = file.readlines()
-    file.close()
     for i in range(len(lines)):
         codeList = lines[i].split('#')[0].strip('\n');
         label = lines[i].split('#')[1].strip('\n')
@@ -237,7 +285,6 @@ def loadOldDict(file):
     dict = {}
     with open(file, 'r') as input:
         dict = json.loads(input.read())
-    input.close()
     return dict
 
 def enrichDict(file, mid):
@@ -247,17 +294,18 @@ def enrichDict(file, mid):
         dict = loadOldDict(file)
     with open(mid, 'r') as pfile:
         patient = json.loads(pfile.read())
-    pfile.close()
     extractEntries(dict, patient)
     if file == sys.stdout:
         print(json.dumps(dict, indent=2), file=file)
     else:
         with open(file, 'w') as output:
             print(json.dumps(dict, indent=2), file=output)
-        output.close()
 
 ### argument API
 
+icd9File = 'code/icd9/ucod.txt'
+ccs_diag_file = 'code/ccs/multi_diag.txt'
+ccs_proc_file = 'code/ccs/multi_proc.txt'
 productFile = 'code/ndc/product.txt'
 packageFile = 'code/ndc/package.txt'
 globalSymbolsFile = 'code/icd9/code_names.txt'
@@ -286,12 +334,10 @@ def readConfig(settings, file):
         print("creating config file: "+file, file=sys.stderr)
         with open(file, 'w') as output:
             print(json.dumps(settings, indent=2), file=output)
-        output.close()
         return
     config = {}
     with open(file, 'r') as input:
         config = json.loads(input.read())
-    input.close()
     for k in config.keys():
         if k not in settings:
             print("unknown setting: "+k, file=sys.stderr)
@@ -310,7 +356,10 @@ def interpretArgs():
     settings = {
         'filename': globalSymbolsFile,
         'ndc_prod': productFile,
-        'ndc_package': packageFile
+        'ndc_package': packageFile,
+        'icd9': icd9File,
+        'ccs_diag': ccs_diag_file,
+        'ccs_proc': ccs_proc_file
     }
     info = {
         'mid': globalMid,
@@ -348,6 +397,9 @@ if __name__ == '__main__':
     (settings, info) = interpretArgs()
     init()
     globalSymbolsFile = settings['filename']
+    icd9File = settings['icd9']
+    ccs_diag_file = settings['ccs_diag']
+    ccs_proc_file = settings['ccs_proc']
     productFile = settings['ndc_prod']
     packageFile = settings['ndc_package']
     enrichDict(info['output'], info['mid'])
