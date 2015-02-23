@@ -495,6 +495,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         type.setY(yMap[pt.getGroup()][pid]);
       } else {
         console.warn("no mapping for "+pid, pt.getTypeId(), pt.getGroup());
+        type.setY(-rowH);
       }
     });
     return h;

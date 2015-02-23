@@ -166,7 +166,11 @@ function TypeView(pool, sel, sortDropdownSel) {
       var childs = null;
       var count = Number.NaN;
       var y = Number.NaN;
-
+      var isRoot = false;
+      this.isRoot = function(_) {
+        if(!arguments.length) return isRoot;
+        isRoot = !!_;
+      };
       this.putChild = function(node) {
         var id = node.getId();
         if(that.getId() == id) {
@@ -224,7 +228,7 @@ function TypeView(pool, sel, sortDropdownSel) {
         return that.getChildren().length > 0;
       };
       this.isExpanded = function() {
-        return !that.getChildren().some(function(c) {
+        return that.isRoot() || !that.getChildren().some(function(c) {
           return c.getType().hasRealProxy();
         });
       };
@@ -259,6 +263,7 @@ function TypeView(pool, sel, sortDropdownSel) {
           p.putChild(node);
         }
         if(id == "" && !(g in roots)) {
+          p.isRoot(true);
           roots[g] = p;
         }
         if(!(id in nm)) {
@@ -279,6 +284,7 @@ function TypeView(pool, sel, sortDropdownSel) {
             return "";
           }
         });
+        roots[g].isRoot(true);
         node && roots[g].putChild(node);
       }
     }
