@@ -232,12 +232,15 @@ ask_clean() {
 }
 
 clean() {
-  echo "removing ${NDC_DIR}" && rm -r -- "${NDC_DIR}" 2> /dev/null
-  echo "removing ${OPD_DIR}" && rm -r -- "${OPD_DIR}" 2> /dev/null
-  echo "removing ${JSON_DIR}" && rm -r -- "${JSON_DIR}" 2> /dev/null
-  echo "removing ${err_file} and ${err_dict_file}" && rm -- "${err_file}" "${err_dict_file}" 2> /dev/null
-  echo "removing ${server_log} and ${server_err}" && rm -- "${server_log}" "${server_err}" 2> /dev/null
-  echo "removing ${file_list}" && rm -- "${file_list}" 2> /dev/null
+  echo "delete ${ICD9_DIR}" && rm -r -- "${ICD9_DIR}" 2> /dev/null
+  echo "delete ${CCS_DIR}" && rm -r -- "${CCS_DIR}" 2> /dev/null
+  echo "delete ${NDC_DIR}" && rm -r -- "${NDC_DIR}" 2> /dev/null
+  echo "delete ${OPD_DIR}" && rm -r -- "${OPD_DIR}" 2> /dev/null
+  echo "delete ${JSON_DIR}" && rm -r -- "${JSON_DIR}" 2> /dev/null
+  echo "delete ${err_file} and ${err_dict_file}" && rm -- "${err_file}" "${err_dict_file}" 2> /dev/null
+  echo "delete ${server_log} and ${server_err}" && rm -- "${server_log}" "${server_err}" 2> /dev/null
+  echo "delete ${file_list}" && rm -- "${file_list}" 2> /dev/null
+  echo "delete ${config}" && rm -- "${config}" 2> /dev/null
   ./start.sh -q --stop
 }
 
