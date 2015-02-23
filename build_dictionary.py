@@ -91,10 +91,8 @@ def initPrescribed():
             }
             desc = nonp + " " + ptn
             l = uidLookup[uid]
-            if ndc in prescribeLookup:
-                print("warning duplicate NDC: " + uid + " " + fullndc, file=sys.stderr)
-            if normndc in prescribeLookup:
-                print("warning duplicate NDC: " + uid + " " + fullndc, file=sys.stderr)
+            if ndc in prescribeLookup or normndc in prescribeLookup:
+                continue
             obj = {
                 "desc": desc,
                 "pType": l["pType"],
