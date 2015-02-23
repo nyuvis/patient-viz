@@ -231,7 +231,7 @@ ask_for_clean() {
 
   prompt "Do you want to remove ${name}?"
   if [ $? -eq 0 ]; then
-    file_clean+=(${@[@]})
+    file_clean+=($@)
   fi
 }
 
@@ -259,9 +259,10 @@ ask_clean() {
 
 clean() {
   for file in "${file_clean[@]}"; do
-    echo "remove ${file}" && rm -rv -- "${file}" #2> /dev/null
+    echo "remove ${file}" && rm -r -- "${file}" 2> /dev/null
   done
   if [ ! -z $allow_stop ]; then
+    echo "stop the server"
     ./start.sh -q --stop
   fi
 }
