@@ -25,12 +25,20 @@ input_format = {
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     "prescribed_date": 'SRVC_DT',
     "prescribed": 'PROD_SRVC_ID'
+    #"lab_date": ''
+    #"lab_code": ''
+    #"lab_result": ''
+    #"lab_flag": ''
 }
 
 TYPE_PRESCRIBED = "prescribed"
 TYPE_LABTEST    = "lab-test"
 TYPE_DIAGNOSIS  = "diagnosis"
 TYPE_PROCEDURE  = "procedure"
+
+MODE_OPTIONAL = 0
+MODE_DEFAULT = 1
+MODE_ARRAY = 2
 
 gender_label = {
     1: "primary",
@@ -61,9 +69,19 @@ def addInfo(obj, id, key, value, hasLabel = False, label = ""):
         node["label"] = label
     obj["info"].append(node)
 
-def handleKey(row, key, hnd):
-    if key in row:
-        hnd(row[key])
+def handleKey(row, key, mode, hnd):
+    if mode == MODE_ARRAY:
+        for k in input_format[key]:
+            if k in row:
+                hnd(row[k])
+        return
+    ignore_missing = mode == MODE_DEFAULT
+    if key in input_format:
+        k = input_format[key]
+        if k in row:
+            hnd(row[k])
+    elif ignore_missing:
+        hnd('')
 
 def createEntry(group, id, hasResult = False, resultFlag = False, result = ""):
     res = {
@@ -81,19 +99,15 @@ def handleEvent(row):
         if value != '':
             res.append(createEntry(type, value))
 
-    dgns_cols = input_format["diagnosis"]
-    for icd9 in dgns_cols:
-        handleKey(row, icd9, lambda value: emit(TYPE_DIAGNOSIS, value))
-    prcdr_cols = input_format["procedures"]
-    for icd9 in prcdr_cols:
-        handleKey(row, icd9, lambda value: emit(TYPE_PROCEDURE, value))
+    handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
+    handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
     return res
 
 def handleRow(row, obj):
-    handleKey(row, input_format["born"], lambda value:
+    handleKey(row, "born", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'born', 'Born', int(str(value)[0:4]))
         )
-    handleKey(row, input_format["gender"], lambda value:
+    handleKey(row, "gender", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'gender', 'Gender', gender_map.get(value, 'U'), True, gender_label.get(value, "default"))
         )
 
@@ -118,8 +132,8 @@ def handleRow(row, obj):
                 event['time'] = curDate
                 obj['events'].append(event)
 
-    handleKey(row, input_format["claim_from"], lambda fromDate:
-            handleKey(row, input_format["claim_to"], lambda toDate:
+    handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
+            handleKey(row, "claim_to", MODE_DEFAULT, lambda toDate:
                 dates(fromDate, toDate)
             )
         )
@@ -129,9 +143,24 @@ def handleRow(row, obj):
         event['time'] = toTime(date)
         obj['events'].append(event)
 
-    handleKey(row, input_format["prescribed_date"], lambda date:
-            handleKey(row, input_format["prescribed"], lambda ndc:
+    handleKey(row, "prescribed_date", MODE_OPTIONAL, lambda date:
+            handleKey(row, "prescribed", MODE_OPTIONAL, lambda ndc:
                 emitNDC(date, ndc)
+            )
+        )
+
+    def emitLab(date, code, result, resultFlag):
+        event = createEntry(TYPE_LABTEST, code, result != '' or resultFlag != '', resultFlag, result)
+        event['time'] = toTime(date)
+        obj['events'].append(event)
+
+    handleKey(row, "lab_date", MODE_OPTIONAL, lambda date:
+            handleKey(row, "lab_code", MODE_OPTIONAL, lambda code:
+                handleKey(row, "lab_result", MODE_DEFAULT, lambda result:
+                    handleKey(row, "lab_flag", MODE_DEFAULT, lambda flag:
+                        emitLab(date, code, result, flag)
+                    )
+                )
             )
         )
 
