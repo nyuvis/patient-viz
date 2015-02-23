@@ -223,25 +223,47 @@ prompt() {
 }
 
 allow_clean=
+allow_stop=
+file_clean=()
+ask_for_clean() {
+  name=$1
+  shift
+
+  prompt "Do you want to remove ${name}?"
+  if [ $? -eq 0 ]; then
+    file_clean+=(${@[@]})
+  fi
+}
+
 ask_clean() {
   prompt_echo "Cleaning removes all files created by this script."
   prompt "Are you sure you want to clean the project?"
   if [ $? -eq 0 ]; then
     allow_clean=1
+
+    ask_for_clean "ICD9 definitions" "${ICD9_DIR}"
+    ask_for_clean "CCS hierarchies" "${CCS_DIR}"
+    ask_for_clean "NDC definitions" "${NDC_DIR}"
+    ask_for_clean "claims data" "${OPD_DIR}"
+    ask_for_clean "patient files" "${JSON_DIR}" "${file_list}"
+    ask_for_clean "error output files" "${err_file}" "${err_dict_file}"
+    ask_for_clean "server logs" "${server_log}" "${server_err}"
+    ask_for_clean "config files" "${config}"
+
+    prompt "Do you want to stop the server?"
+    if [ $? -eq 0 ]; then
+      allow_stop=1
+    fi
   fi
 }
 
 clean() {
-  echo "delete ${ICD9_DIR}" && rm -r -- "${ICD9_DIR}" 2> /dev/null
-  echo "delete ${CCS_DIR}" && rm -r -- "${CCS_DIR}" 2> /dev/null
-  echo "delete ${NDC_DIR}" && rm -r -- "${NDC_DIR}" 2> /dev/null
-  echo "delete ${OPD_DIR}" && rm -r -- "${OPD_DIR}" 2> /dev/null
-  echo "delete ${JSON_DIR}" && rm -r -- "${JSON_DIR}" 2> /dev/null
-  echo "delete ${err_file} and ${err_dict_file}" && rm -- "${err_file}" "${err_dict_file}" 2> /dev/null
-  echo "delete ${server_log} and ${server_err}" && rm -- "${server_log}" "${server_err}" 2> /dev/null
-  echo "delete ${file_list}" && rm -- "${file_list}" 2> /dev/null
-  echo "delete ${config}" && rm -- "${config}" 2> /dev/null
-  ./start.sh -q --stop
+  for file in "${file_clean[@]}"; do
+    echo "remove ${file}" && rm -rv -- "${file}" #2> /dev/null
+  done
+  if [ ! -z $allow_stop ]; then
+    ./start.sh -q --stop
+  fi
 }
 
 allow_icd9=

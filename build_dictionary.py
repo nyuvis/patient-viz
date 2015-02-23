@@ -216,7 +216,8 @@ def initICD9():
     with open(icd9File, 'r') as file:
         lastCode = ""
         for line in file:
-            if len(line) < 2:
+            if len(line.strip()) < 2:
+                lastCode = ""
                 continue
             if not line[1].isdigit():
                 if line[0] == ' ' and lastCode != "":
@@ -224,7 +225,7 @@ def initICD9():
                 continue
             spl = line.split(None, 1)
             if len(spl) == 2:
-                lastCode = spl[0]
+                lastCode = spl[0].replace(".", "")
                 codes[lastCode] = spl[1].rstrip()
             else:
                 print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
