@@ -1,6 +1,10 @@
-JSON specification
-==================
+# Importing own data
 
+TODO text
+
+## How to read the specifications
+
+The input formats described in this document are JSON files.
 `$foo` are custom ids that are not exposed to a user but may be used as HTML ids
 (restrictions to white-space and special characters eg. `.` or `#`
 apply and they must be globally unique).
@@ -8,6 +12,40 @@ apply and they must be globally unique).
 Colors are all valid CSS colors (named, hexadecimal, rgb, …)
 A set of good colors is `["#80b1d3", "#4daf4a", "#fb8072", "#ff7f00", "#eb9adb"]`.
 Timestamps are UNIX timestamps in seconds since standard epoch.
+
+## Patient file creation format
+
+TODO text and comments
+
+```javascript
+{
+  "patient_id": 'DESYNPUF_ID',
+  <"born">: 'BENE_BIRTH_DT',
+  <"gender">: 'BENE_SEX_IDENT_CD',
+  <"claim_from">: 'CLM_FROM_DT',
+  <"claim_to">: 'CLM_THRU_DT',
+  "diagnosis": [
+    'ICD9_DGNS_CD_1',
+    'ICD9_DGNS_CD_2',
+    …
+  ],
+  "procedures": [
+    'ICD9_PRCDR_CD_1',
+    'ICD9_PRCDR_CD_2',
+    …
+  ],
+  <"prescribed_date">: 'SRVC_DT',
+  <"prescribed">: 'PROD_SRVC_ID',
+  <"lab_date">: 'LAB_RSL_SERVICE_DATE',
+  <"lab_code">: 'LOINC',
+  <"lab_result">: 'LAB_RSL',
+  <"lab_flag">: 'LAB_NORMAL'
+}
+```
+
+## Web input format
+
+TODO text
 
 The specification is split into two files, the dictionary containing all types (ie. rows)
 and the events containing all events (ie. boxes).

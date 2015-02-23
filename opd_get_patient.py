@@ -149,16 +149,16 @@ def handleRow(row, obj):
             )
         )
 
-    def emitLab(date, code, result, resultFlag):
-        event = createEntry(TYPE_LABTEST, code, result != '' or resultFlag != '', resultFlag, result)
+    def emitLab(date, loinc, result, resultFlag):
+        event = createEntry(TYPE_LABTEST, loinc, result != '' or resultFlag != '', resultFlag, result)
         event['time'] = toTime(date)
         obj['events'].append(event)
 
     handleKey(row, "lab_date", MODE_OPTIONAL, lambda date:
-            handleKey(row, "lab_code", MODE_OPTIONAL, lambda code:
+            handleKey(row, "lab_code", MODE_OPTIONAL, lambda loinc:
                 handleKey(row, "lab_result", MODE_DEFAULT, lambda result:
                     handleKey(row, "lab_flag", MODE_DEFAULT, lambda flag:
-                        emitLab(date, code, result, flag)
+                        emitLab(date, loinc, result, flag)
                     )
                 )
             )
