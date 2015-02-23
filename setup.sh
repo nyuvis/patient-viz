@@ -367,6 +367,15 @@ fetch_opd() {
   cd_back
 }
 
+allow_convert=
+ask_convert() {
+  prompt_echo "Converting patient files can take a while."
+  prompt "Do you want to convert some patient files?"
+  if [ $? -eq 0 ]; then
+    allow_convert=1
+  fi
+}
+
 convert_patients() {
   if [ ! -d "${JSON_DIR}" ]; then
     mkdir -p "${JSON_DIR}"
@@ -415,6 +424,9 @@ fi
 if [ ! -z $ndc ]; then
   ask_ndc
 fi
+if [ ! -z $do_convert ]; then
+  ask_convert
+fi
 
 prompt_echo "=== no user input required after this point ==="
 
@@ -434,6 +446,6 @@ fi
 if [ ! -z $allow_ndc ]; then
   fetch_ndc
 fi
-if [ ! -z $do_convert ]; then
+if [ ! -z $allow_convert ]; then
   convert_patients
 fi

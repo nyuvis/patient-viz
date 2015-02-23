@@ -223,8 +223,11 @@ def initICD9():
                     codes[lastCode] = codes[lastCode] + " " + line.strip()
                 continue
             spl = line.split(None, 1)
-            lastCode = spl[0]
-            codes[lastCode] = spl[1].rstrip()
+            if len(spl) == 2:
+                lastCode = spl[0]
+                codes[lastCode] = spl[1].rstrip()
+            else:
+                print("invalid line: '" + line.rstrip() + "'", file=sys.stderr)
     return codes
 
 ### ccs ###
@@ -245,10 +248,13 @@ def readCCS(ccsFile, codes):
                         parents[n] = cur
                 continue
             spl = line.split(None, 1)
-            par = spl[0].rtrim('0123456789').rtrim('.')
-            cur = "HIERARCHY_" + spl[0]
-            parents[cur] = "HIERARCHY_" + par if len(par) > 0 else ""
-            codes[cur] = spl[1].rtrim('0123456789 \t\n\r')
+            if len(spl) != 2:
+                par = spl[0].rtrim('0123456789').rtrim('.')
+                cur = "HIERARCHY_" + spl[0]
+                parents[cur] = "HIERARCHY_" + par if len(par) > 0 else ""
+                codes[cur] = spl[1].rtrim('0123456789 \t\n\r')
+            else:
+                print("invalid line: '" + line.rstrip() + "'", file=sys.stderr)
     return parents
 
 ### general lookup table ###
