@@ -150,7 +150,7 @@ open_pdf() {
 }
 
 curl_unzip() {
-  curl -# -o "tmp.zip" "$1" && unzip "tmp.zip" && rm -- "tmp.zip"
+  curl -# -o "tmp.zip" "$1" && unzip -q "tmp.zip" && rm -- "tmp.zip"
   test_fail $?
 }
 
