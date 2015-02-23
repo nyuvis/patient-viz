@@ -466,6 +466,7 @@ function setupTypeView(pool, typeList) {
   return tView;
 }
 
+var yCompressClustering = false;
 function setupYCluster(pool, sel) {
   var busy = pool.getBusy();
   sel.on("change", null);
@@ -482,12 +483,20 @@ function setupYCluster(pool, sel) {
       setTimeout(function() {
         var error = true;
         try {
-          computeRowClusters(pool, function(vecA, vecB) {
-            // levenshtein, 3, 3 // 10, 5
-            // hamming, 5, 3
-            // jaccard, 0.5, 1
-            return jkjs.stat.edit_distances.hamming(vecA, vecB);
-          }, 5, 3);
+          if(!yCompressClustering) {
+            pool.startBulkValidity();
+            pool.traverseTypes(function(gid, tid, type) {
+              type.proxyType(type.getParent() || type);
+            });
+            pool.endBulkValidity();
+          } else {
+            computeRowClusters(pool, function(vecA, vecB) {
+              // levenshtein, 3, 3 // 10, 5
+              // hamming, 5, 3
+              // jaccard, 0.5, 1
+              return jkjs.stat.edit_distances.hamming(vecA, vecB);
+            }, 5, 3);
+          }
           error = false;
         } finally {
           busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm);
