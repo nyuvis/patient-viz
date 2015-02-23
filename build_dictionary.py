@@ -48,13 +48,6 @@ def createPrescribedEntry(symbols, type, id):
     if id in symbols:
         l = symbols[id]
         return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"])
-    if id[0] == '0':
-        modCode = id[1:]
-    else:
-        modCode = id[0:5]+id[6:]
-    if modCode in symbols:
-        l = symbols[modCode]
-        return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"])
     return createUnknownEntry(symbols, type, id, pid)
 
 def initPrescribed():
@@ -70,7 +63,7 @@ def initPrescribed():
         # PRODUCTID PRODUCTNDC PRODUCTTYPENAME PROPRIETARYNAME PROPRIETARYNAMESUFFIX NONPROPRIETARYNAME DOSAGEFORMNAME ROUTENAME STARTMARKETINGDATE ENDMARKETINGDATE MARKETINGCATEGORYNAME APPLICATIONNUMBER LABELERNAME SUBSTANCENAME ACTIVE_NUMERATOR_STRENGTH ACTIVE_INGRED_UNIT PHARM_CLASSES DEASCHEDULE
         line = products[i].split('\t')
         uid = line[0].strip()
-        ndc = line[1].strip().replace('-', '')
+        ndc = line[1].strip().replace('-', '') # TODO also create 11 digit codes by padding 4-4, or 5-3 to 5-4
         ptn = line[2].strip()
         prop = line[3].strip()
         nonp = line[5].strip()
@@ -103,7 +96,7 @@ def initPrescribed():
         # PRODUCTID PRODUCTNDC NDCPACKAGECODE PACKAGEDESCRIPTION
         line = packages[i].split('\t')
         uid = line[0].strip()
-        nid = line[2].strip().replace('-', '')
+        nid = line[2].strip().replace('-', '') # TODO also create 11 digit codes by padding 4-4-2, 5-3-2, or 5-4-1 to 5-4-2
         desc = line[3].strip()
         if uid not in uidLookup:
             print("warning missing uid: " + uid, file=sys.stderr)
