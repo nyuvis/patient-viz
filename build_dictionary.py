@@ -122,9 +122,13 @@ def initLabtest():
 
 diag_parents = {}
 def createDiagnosisEntry(symbols, type, id):
-    pid = diag_parents[id] if id in diag_parents else ""
-    if id in symbols:
-        return toEntry(id, pid, symbols[id], symbols[id])
+    prox_id = id
+    pid = ""
+    while len(prox_id) > 3:
+        pid = diag_parents[prox_id] if prox_id in diag_parents else pid
+        if prox_id in symbols:
+            return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
+        prox_id = prox_id[:-1]
     return createUnknownEntry(symbols, type, id, pid)
 
 def initDiagnosis():
@@ -138,10 +142,14 @@ def initDiagnosis():
 
 proc_parents = {}
 def createProcedureEntry(symbols, type, id):
-    pid = proc_parents[id] if id in proc_parents else ""
-    if id in symbols:
-        return toEntry(id, pid, symbols[id], symbols[id])
-    return createUnknownEntry(symbols, type, id)
+    prox_id = id
+    pid = ""
+    while len(prox_id) > 3:
+        pid = proc_parents[prox_id] if prox_id in proc_parents else pid
+        if prox_id in symbols:
+            return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
+        prox_id = prox_id[:-1]
+    return createUnknownEntry(symbols, type, id, pid)
 
 def initProcedure():
     global proc_parents

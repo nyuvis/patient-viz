@@ -236,7 +236,7 @@ ask_for_clean() {
 }
 
 ask_clean() {
-  prompt_echo "Cleaning removes all files created by this script."
+  prompt_echo "Cleaning removes files created by this script."
   prompt "Are you sure you want to clean the project?"
   if [ $? -eq 0 ]; then
     allow_clean=1
