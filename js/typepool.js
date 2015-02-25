@@ -683,53 +683,93 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       cb(from, endTime, prevObj);
     }
   };
-  var inGridAnimation = false;
-  var inGridAnimationVG = [];
+  var inTransition = false;
+  this.inTransition = function(_) {
+    if(!arguments.length) return inTransition;
+    inTransition = _;
+  };
   var vGrids = [];
-  this.setVGrids = function(vg, smooth) {
-    if(smooth && !inGridAnimation) {
+  var newVGrids = [];
+  this.setVGrids = function(vg) {
+    newVGrids = vg;
+  };
+
+  var hGrids = [];
+  var newHGrids = [];
+  var gridSize = 100;
+  function updateGrid(svgport, viewport, scale, smooth) {
+    if(smooth || inTransition) {
       vGrids.forEach(function(s) {
         s.remove();
       });
       vGrids = [];
-      inGridAnimationVG = vg;
-      inGridAnimation = true;
-      jkjs.zui.afterTransition(function() {
-        that.setVGrids(inGridAnimationVG, false);
-        inGridAnimation = false;
-      }, true);
+      hGrids.forEach(function(s) {
+        s.remove();
+      });
+      hGrids = [];
       return;
     }
-    if(inGridAnimation) {
-      inGridAnimationVG = vg;
-      return;
-    }
-    if(vg.length < vGrids.length) {
-      for(var ix = vg.length;ix < vGrids.length;ix += 1) {
-        vGrids[ix].remove();
-      }
-      vGrids.length = vg.length;
-    } else {
-      for(var ix = vGrids.length;ix < vg.length;ix += 1) {
-        vGrids.push(sec.append("line").attr({
-          "y1": -jkjs.util.BIG_NUMBER * 0.5,
-          "y2": jkjs.util.BIG_NUMBER
-        }).style({
-          "opacity": 0.25,
-          "stroke": "black",
-          "stroke-width": 1,
-          /*"stroke-dasharray": "10, 10"*/
-        }));
+
+    function adjust(arr, arrAfter, create, style) {
+      if(arrAfter.length < arr.length) {
+        for(var ix = arrAfter.length;ix < arr.length;ix += 1) {
+          arr[ix].remove();
+        }
+        arr.length = arrAfter.length;
+      } else {
+        for(var ix = arr.length;ix < arrAfter.length;ix += 1) {
+          arr.push(sec.append(create).style(style));
+        }
       }
     }
+
+    var debug = false;
+    var dashes = debug ? gridSize / 2 / 3 : gridSize / 2 / 30;
+    adjust(vGrids, newVGrids, "line", {
+      "opacity": debug ? 1 : 0.4,
+      "stroke": "black",
+      "stroke-width": 0.5,
+      "stroke-dasharray": dashes + ", " + dashes
+    });
     vGrids.forEach(function(s, ix) {
-      var x = vg[ix];
+      var x = newVGrids[ix];
       s.attr({
         "x1": x,
-        "x2": x
+        "x2": x,
+        "y1": svgport.y - gridSize - (viewport.y * scale - gridSize) % gridSize,
+        "y2": svgport.height + gridSize
       });
     });
-  };
+    newVGrids = [];
+
+    newHGrids = [];
+    var dist = gridSize * scale;
+    while(dist < gridSize * 0.5) {
+      dist *= 2;
+    }
+    while(dist > gridSize * 1.5) {
+      dist /= 2;
+    }
+    var yStart = svgport.y - dist - (viewport.y * scale - dist) % dist;
+    for(var yPos = yStart;yPos < svgport.y + svgport.height;yPos += dist) {
+      newHGrids.push(yPos);
+    }
+    adjust(hGrids, newHGrids, "line", {
+      "opacity": debug ? 1 : 0.4,
+      "stroke": "black",
+      "stroke-width": 0.5,
+      "stroke-dasharray": dashes + ", " + dashes
+    });
+    hGrids.forEach(function(s, ix) {
+      var y = newHGrids[ix];
+      s.attr({
+        "x1": svgport.x - gridSize - (viewport.x * scale - gridSize) % gridSize,
+        "x2": svgport.width + gridSize,
+        "y1": y,
+        "y2": y
+      });
+    });
+  }
 
   var maxConnectSlot = 0;
   this.maxConnectSlot = function(_) {
@@ -870,8 +910,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     });
   };
   this.addViewportChangeListener = function(listen) {
-    vpListeners.push(listen);
+    vpListeners.unshift(listen); // earlier added listeners are always called last!
   };
+  this.addViewportChangeListener(function(svgport, viewport, scale, smooth) {
+    updateGrid(svgport, viewport, scale, smooth);
+  });
 
   this.getGroupColor = function(gid) {
     return that.getTypeFor(gid, "").getColor();

@@ -345,7 +345,7 @@ function setupAxisLabels(pool, suppl, h, topMargin) {
       xAxisLabel.style({
         "opacity": vis ? null : 0
       });
-      pool.setVGrids([], false);
+      pool.setVGrids([]);
     }
     if(!vis) return;
 
@@ -360,7 +360,7 @@ function setupAxisLabels(pool, suppl, h, topMargin) {
     xAxisLabel.selectAll(".tick").each(function(d) {
       ticks.push(scaling(d));
     });
-    pool.setVGrids(ticks, smooth);
+    pool.setVGrids(ticks);
   });
 }
 

@@ -162,11 +162,13 @@ function start() {
   }, function(target, translate, scale, w, h, canvasRect, isSmooth) {
     if(isSmooth) {
       labels && labels.setShowLabels(false);
+      pool.inTransition(true);
       inTransition += 1;
       setTimeout(function() {
         inTransition -= 1;
         if(inTransition == 0) {
           labels && labels.setShowLabels(true);
+          pool.inTransition(false);
           updateViewport();
         }
       }, jkjs.zui.animationDuration);
