@@ -2,6 +2,7 @@
 
 Tool for visualizing timed events of possibly many different types.
 Example data from medical insurance claim data is provided via download.
+We also have a [live demo](http://nyuvis.github.io/patient-viz/index.html)!
 
 ![The tool in action!](overview.png)
 

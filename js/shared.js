@@ -345,6 +345,7 @@ function setupAxisLabels(pool, suppl, h, topMargin) {
       xAxisLabel.style({
         "opacity": vis ? null : 0
       });
+      pool.setVGrids([]);
     }
     if(!vis) return;
 
@@ -354,6 +355,12 @@ function setupAxisLabels(pool, suppl, h, topMargin) {
     tc.domain(tExtent);
     tAxis.scale(tc);
     jkjs.zui.asTransition(xAxisLabel, smooth).call(tAxis);
+    var ticks = [];
+    var scaling = tAxis.scale();
+    xAxisLabel.selectAll(".tick").each(function(d) {
+      ticks.push(scaling(d));
+    });
+    pool.setVGrids(ticks);
   });
 }
 

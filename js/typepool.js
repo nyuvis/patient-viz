@@ -683,6 +683,57 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       cb(from, endTime, prevObj);
     }
   };
+  var inTransition = false;
+  this.inTransition = function(_) {
+    if(!arguments.length) return inTransition;
+    inTransition = _;
+  };
+  var vGrids = [];
+  var newGrids = [];
+  this.setVGrids = function(vg) {
+    newGrids = vg;
+  };
+
+  var gridSize = 100;
+  function updateGrid(svgport, viewport, scale, smooth) {
+    if(smooth || inTransition) {
+      vGrids.forEach(function(s) {
+        s.remove();
+      });
+      vGrids = [];
+      return;
+    }
+
+    function adjust(arr, arrAfter, create, style) {
+      if(arrAfter.length < arr.length) {
+        for(var ix = arrAfter.length;ix < arr.length;ix += 1) {
+          arr[ix].remove();
+        }
+        arr.length = arrAfter.length;
+      } else {
+        for(var ix = arr.length;ix < arrAfter.length;ix += 1) {
+          arr.push(sec.append(create).style(style));
+        }
+      }
+    }
+
+    adjust(vGrids, newGrids, "line", {
+      "opacity": 0.5,
+      "stroke": "black",
+      "stroke-width": 0.5,
+      "stroke-dasharray": "2, 2"
+    });
+    vGrids.forEach(function(s, ix) {
+      var x = newGrids[ix];
+      s.attr({
+        "x1": x,
+        "x2": x,
+        "y1": svgport.y - gridSize - (viewport.y * scale - gridSize) % gridSize, // TODO fix bug
+        "y2": svgport.height + gridSize
+      });
+    });
+    newGrids = [];
+  }
 
   var maxConnectSlot = 0;
   this.maxConnectSlot = function(_) {
@@ -823,8 +874,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     });
   };
   this.addViewportChangeListener = function(listen) {
-    vpListeners.push(listen);
+    vpListeners.unshift(listen); // earlier added listeners are always called last!
   };
+  this.addViewportChangeListener(function(svgport, viewport, scale, smooth) {
+    updateGrid(svgport, viewport, scale, smooth);
+  });
 
   this.getGroupColor = function(gid) {
     return that.getTypeFor(gid, "").getColor();
