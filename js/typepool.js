@@ -689,11 +689,13 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     inTransition = _;
   };
   var vGrids = [];
-  var newGrids = [];
+  var newVGrids = [];
   this.setVGrids = function(vg) {
-    newGrids = vg;
+    newVGrids = vg;
   };
 
+  var hGrids = [];
+  var newHGrids = [];
   var gridSize = 100;
   function updateGrid(svgport, viewport, scale, smooth) {
     if(smooth || inTransition) {
@@ -701,6 +703,10 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         s.remove();
       });
       vGrids = [];
+      hGrids.forEach(function(s) {
+        s.remove();
+      });
+      hGrids = [];
       return;
     }
 
@@ -717,22 +723,52 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       }
     }
 
-    adjust(vGrids, newGrids, "line", {
-      "opacity": 0.25,
+    var debug = false;
+    var dashes = debug ? gridSize / 2 / 3 : gridSize / 2 / 30;
+    adjust(vGrids, newVGrids, "line", {
+      "opacity": debug ? 1 : 0.4,
       "stroke": "black",
       "stroke-width": 0.5,
-      "stroke-dasharray": "2, 2"
+      "stroke-dasharray": dashes + ", " + dashes
     });
     vGrids.forEach(function(s, ix) {
-      var x = newGrids[ix];
+      var x = newVGrids[ix];
       s.attr({
         "x1": x,
         "x2": x,
-        "y1": svgport.y - gridSize - (viewport.y * scale - gridSize) % gridSize, // TODO fix bug
+        "y1": svgport.y - gridSize - (viewport.y * scale - gridSize) % gridSize,
         "y2": svgport.height + gridSize
       });
     });
-    newGrids = [];
+    newVGrids = [];
+
+    newHGrids = [];
+    var dist = gridSize * scale;
+    while(dist < gridSize * 0.5) {
+      dist *= 2;
+    }
+    while(dist > gridSize * 1.5) {
+      dist /= 2;
+    }
+    var yStart = svgport.y - dist - (viewport.y * scale - dist) % dist;
+    for(var yPos = yStart;yPos < svgport.y + svgport.height;yPos += dist) {
+      newHGrids.push(yPos);
+    }
+    adjust(hGrids, newHGrids, "line", {
+      "opacity": debug ? 1 : 0.4,
+      "stroke": "black",
+      "stroke-width": 0.5,
+      "stroke-dasharray": dashes + ", " + dashes
+    });
+    hGrids.forEach(function(s, ix) {
+      var y = newHGrids[ix];
+      s.attr({
+        "x1": svgport.x - gridSize - (viewport.x * scale - gridSize) % gridSize,
+        "x2": svgport.width + gridSize,
+        "y1": y,
+        "y2": y
+      });
+    });
   }
 
   var maxConnectSlot = 0;
