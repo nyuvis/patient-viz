@@ -683,16 +683,25 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       cb(from, endTime, prevObj);
     }
   };
+  var inGridAnimation = false;
+  var inGridAnimationVG = [];
   var vGrids = [];
   this.setVGrids = function(vg, smooth) {
-    if(smooth) {
+    if(smooth && !inGridAnimation) {
       vGrids.forEach(function(s) {
         s.remove();
       });
       vGrids = [];
+      inGridAnimationVG = vg;
+      inGridAnimation = true;
       jkjs.zui.afterTransition(function() {
-        that.setVGrids(vg, false);
+        that.setVGrids(inGridAnimationVG, false);
+        inGridAnimation = false;
       }, true);
+      return;
+    }
+    if(inGridAnimation) {
+      inGridAnimationVG = vg;
       return;
     }
     if(vg.length < vGrids.length) {
