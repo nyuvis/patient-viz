@@ -685,48 +685,61 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   };
   var inGridAnimation = false;
   var inGridAnimationVG = [];
+  var inGridAnimationSvgport = null;
+  var inGridAnimationViewport = null;
+  var inGridAnimationScale = 1;
   var vGrids = [];
-  this.setVGrids = function(vg, smooth) {
+  this.setVGrids = function(vg, svgport, viewport, scale, smooth) {
     if(smooth && !inGridAnimation) {
       vGrids.forEach(function(s) {
         s.remove();
       });
       vGrids = [];
       inGridAnimationVG = vg;
+      inGridAnimationSvgport = svgport;
+      inGridAnimationViewport = viewport;
+      inGridAnimationScale = scale;
       inGridAnimation = true;
       jkjs.zui.afterTransition(function() {
-        that.setVGrids(inGridAnimationVG, false);
         inGridAnimation = false;
+        that.setVGrids(inGridAnimationVG, inGridAnimationSvgport, inGridAnimationViewport, inGridAnimationScale, false);
       }, true);
       return;
     }
     if(inGridAnimation) {
+      inGridAnimationSvgport = svgport;
+      inGridAnimationViewport = viewport;
+      inGridAnimationScale = scale;
       inGridAnimationVG = vg;
       return;
     }
-    if(vg.length < vGrids.length) {
-      for(var ix = vg.length;ix < vGrids.length;ix += 1) {
-        vGrids[ix].remove();
-      }
-      vGrids.length = vg.length;
-    } else {
-      for(var ix = vGrids.length;ix < vg.length;ix += 1) {
-        vGrids.push(sec.append("line").attr({
-          "y1": -jkjs.util.BIG_NUMBER * 0.5,
-          "y2": jkjs.util.BIG_NUMBER
-        }).style({
-          "opacity": 0.25,
-          "stroke": "black",
-          "stroke-width": 1,
-          /*"stroke-dasharray": "10, 10"*/
-        }));
+
+    function adjust(arr, arrAfter, create, style) {
+      if(arrAfter.length < arr.length) {
+        for(var ix = arrAfter.length;ix < arr.length;ix += 1) {
+          arr[ix].remove();
+        }
+        arr.length = arrAfter.length;
+      } else {
+        for(var ix = arr.length;ix < arrAfter.length;ix += 1) {
+          arr.push(sec.append(create).style(style));
+        }
       }
     }
+
+    adjust(vGrids, vg, "line", {
+      "opacity": 0.25,
+      "stroke": "black",
+      "stroke-width": 1,
+      "stroke-dasharray": "10, 10"
+    });
     vGrids.forEach(function(s, ix) {
       var x = vg[ix];
       s.attr({
         "x1": x,
-        "x2": x
+        "x2": x,
+        "y1": svgport.y,
+        "y2": svgport.height
       });
     });
   };
