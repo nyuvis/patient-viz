@@ -683,34 +683,24 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       cb(from, endTime, prevObj);
     }
   };
-  var inGridAnimation = false;
-  var inGridAnimationVG = [];
-  var inGridAnimationSvgport = null;
-  var inGridAnimationViewport = null;
-  var inGridAnimationScale = 1;
+  var inTransition = false;
+  this.inTransition = function(_) {
+    if(!arguments.length) return inTransition;
+    inTransition = _;
+  };
   var vGrids = [];
-  this.setVGrids = function(vg, svgport, viewport, scale, smooth) {
-    if(smooth && !inGridAnimation) {
+  var newGrids = [];
+  this.setVGrids = function(vg) {
+    newGrids = vg;
+  };
+
+  var gridSize = 100;
+  function updateGrid(svgport, viewport, scale, smooth) {
+    if(smooth || inTransition) {
       vGrids.forEach(function(s) {
         s.remove();
       });
       vGrids = [];
-      inGridAnimationVG = vg;
-      inGridAnimationSvgport = svgport;
-      inGridAnimationViewport = viewport;
-      inGridAnimationScale = scale;
-      inGridAnimation = true;
-      jkjs.zui.afterTransition(function() {
-        inGridAnimation = false;
-        that.setVGrids(inGridAnimationVG, inGridAnimationSvgport, inGridAnimationViewport, inGridAnimationScale, false);
-      }, true);
-      return;
-    }
-    if(inGridAnimation) {
-      inGridAnimationSvgport = svgport;
-      inGridAnimationViewport = viewport;
-      inGridAnimationScale = scale;
-      inGridAnimationVG = vg;
       return;
     }
 
@@ -727,22 +717,23 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       }
     }
 
-    adjust(vGrids, vg, "line", {
-      "opacity": 0.25,
+    adjust(vGrids, newGrids, "line", {
+      "opacity": 0.5,
       "stroke": "black",
-      "stroke-width": 1,
-      "stroke-dasharray": "10, 10"
+      "stroke-width": 0.5,
+      "stroke-dasharray": "2, 2"
     });
     vGrids.forEach(function(s, ix) {
-      var x = vg[ix];
+      var x = newGrids[ix];
       s.attr({
         "x1": x,
         "x2": x,
-        "y1": svgport.y,
-        "y2": svgport.height
+        "y1": svgport.y - gridSize - (viewport.y * scale - gridSize) % gridSize, // TODO fix bug
+        "y2": svgport.height + gridSize
       });
     });
-  };
+    newGrids = [];
+  }
 
   var maxConnectSlot = 0;
   this.maxConnectSlot = function(_) {
@@ -883,8 +874,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     });
   };
   this.addViewportChangeListener = function(listen) {
-    vpListeners.push(listen);
+    vpListeners.unshift(listen); // earlier added listeners are always called last!
   };
+  this.addViewportChangeListener(function(svgport, viewport, scale, smooth) {
+    updateGrid(svgport, viewport, scale, smooth);
+  });
 
   this.getGroupColor = function(gid) {
     return that.getTypeFor(gid, "").getColor();
