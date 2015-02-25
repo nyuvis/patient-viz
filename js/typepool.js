@@ -718,7 +718,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     }
 
     adjust(vGrids, newGrids, "line", {
-      "opacity": 0.5,
+      "opacity": 0.25,
       "stroke": "black",
       "stroke-width": 0.5,
       "stroke-dasharray": "2, 2"
