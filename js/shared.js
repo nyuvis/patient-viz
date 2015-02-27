@@ -188,9 +188,9 @@ function setupBars(pool, person) {
           types.push(type);
         }
         if(id in counts) {
-          counts[id] += 1;
+          counts[id] += e.cost() || 1;
         } else {
-          counts[id] = 1;
+          counts[id] = e.cost() || 1;
         }
       });
       types.sort(function(a, b) {

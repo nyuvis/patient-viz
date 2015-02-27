@@ -21,7 +21,9 @@ TODO text and comments
 {
   "patient_id": 'DESYNPUF_ID',
   <"born">: 'BENE_BIRTH_DT',
+  <"death">: 'BENE_DEATH_DT',
   <"gender">: 'BENE_SEX_IDENT_CD',
+  <"claim_amount">: 'CLM_PMT_AMT',
   <"claim_from">: 'CLM_FROM_DT',
   <"claim_to">: 'CLM_THRU_DT',
   "diagnosis": [
@@ -36,6 +38,7 @@ TODO text and comments
   ],
   <"prescribed_date">: 'SRVC_DT',
   <"prescribed">: 'PROD_SRVC_ID',
+  <"prescribed_amount">: 'PTNT_PAY_AMT',
   <"lab_date">: 'LAB_RSL_SERVICE_DATE',
   <"lab_code">: 'LOINC',
   <"lab_result">: 'LAB_RSL',
@@ -105,7 +108,8 @@ The events file:
         },
         …
       ],
-      <"weight">: 0.75 // an associated weight to the event (shown as circle)
+      <"weight">: 0.75, // an associated weight to the event (shown as circle)
+      <"cost">: 103.12 // associated cost
     },
     …
   ],

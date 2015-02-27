@@ -15,6 +15,17 @@ function Event(e, pool, dictionary) {
   if(e["weight"]) {
     TypePool.hasWeightedEvent = true;
   }
+  var cost = e["cost"] || 0;
+  if(cost) {
+    cost = +cost;
+    if(!Number.isNaN(cost)) {
+      cost = 0;
+    }
+  }
+  this.cost = function() {
+    return cost;
+  };
+
   var resultFlag = (e["flag"] || "").trim();
   var selected = false;
 
