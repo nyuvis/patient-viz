@@ -40,6 +40,9 @@ function refreshInfo(pid, person) {
     headList.push(li);
   }
 
+  person["info"].sort(function(a, b) {
+    return d3.descending(a["id"], b["id"]);
+  });
   person["info"].forEach(function(item) {
     addItem(item);
   });
@@ -491,7 +494,7 @@ function setupYCluster(pool, sel, typeView) {
   var opts = sel.selectAll("option").data(levels, function(d) { return d; });
   opts.exit().remove();
   opts.enter().append("option").text(function(d) {
-    return "" + d;
+    return "" + (levels.length - d - 1);
   });
 
   function updateYCompress() {

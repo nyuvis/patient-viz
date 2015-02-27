@@ -2,6 +2,8 @@
  * Created by krause on 2014-02-05.
  */
 
+var LABEL_FONT_SIZE = 12;
+var LABEL_FONT_GAP = 12;
 function Labels(pool, updateViewport, blank) {
   var that = this;
   var useLens = false;
@@ -119,9 +121,9 @@ function Labels(pool, updateViewport, blank) {
     var st = type.selectText();
     if(!st) return;
 
-    var gap = 20;
+    var gap = 30;
     var rx = right ? x - gap : x + gap;
-    var fontSize = 8;
+    var fontSize = LABEL_FONT_SIZE;
     st.style({
       "opacity": 1,
       "font-size": fontSize
@@ -173,7 +175,7 @@ Labels.labelsByBars = function(labels, svgport, viewport, scale, smooth) {
   pool.traverseVBars(function(from, to, bar) {
     if(!bar) return;
     var refType = bar.labels[0];
-    var y = 10;
+    var y = LABEL_FONT_GAP;
     bar.labels.sort(function(a, b) {
       return d3.ascending(a.getY(), b.getY());
     });
@@ -184,13 +186,13 @@ Labels.labelsByBars = function(labels, svgport, viewport, scale, smooth) {
         labels.noShow(type);
         return;
       }
-      y = Math.max(y, -10 + (-viewport.y + type.getY()) * scale);
+      y = Math.max(y, -LABEL_FONT_GAP + (-viewport.y + type.getY()) * scale);
       // var event = type.getFirstEventAfter(from);
       var event = type.proxyType().getFirstProxedEvent();
       if(!event) return;
       var x = (pool.getXByEventTime(event) - colW - viewport.x) * scale;
       labels.positionLabel(type, x, y, Math.min(Math.max(x - svgport.x - 4, 0), 200), viewport.x, viewport.y, scale, true, event);
-      y += 10;
+      y += LABEL_FONT_GAP;
     });
   });
 };
@@ -342,13 +344,13 @@ TypePool.labelsLens = function(labels, svgport, viewport, scale, smooth) {
     var y = type.getY();
     var right = lrPref == 0 ? Math.floor(y / rowH) % 2 : lrPref > 0 ? false : true;
     if(right) {
-      y1 = Math.max(y1, -10 + (-viewport.y + y) * scale);
+      y1 = Math.max(y1, -LABEL_FONT_GAP + (-viewport.y + y) * scale);
       rights.push([ type, xLeft((-viewport.y + y) * scale), y1, 200, scale, event ]);
-      y1 += 10;
+      y1 += LABEL_FONT_GAP;
     } else {
-      y2 = Math.max(y2, -10 + (-viewport.y + y) * scale);
+      y2 = Math.max(y2, -LABEL_FONT_GAP + (-viewport.y + y) * scale);
       lefts.push([ type, xRight((-viewport.y + y) * scale), y2, 200, scale, event ]);
-      y2 += 10;
+      y2 += LABEL_FONT_GAP;
     }
   });
   var yHeight1 = y1 - lv.y;
