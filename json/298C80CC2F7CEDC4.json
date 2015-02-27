@@ -1,0 +1,6049 @@
+{
+  "info": [
+    {
+      "id": "pid", 
+      "value": "298C80CC2F7CEDC4", 
+      "name": "Patient"
+    }, 
+    {
+      "id": "born", 
+      "value": 1909, 
+      "name": "Born"
+    }, 
+    {
+      "id": "death", 
+      "value": "N/A", 
+      "name": "Death"
+    }, 
+    {
+      "label": "default", 
+      "id": "gender", 
+      "value": "U", 
+      "name": "Gender"
+    }, 
+    {
+      "id": "event_count", 
+      "value": 1078, 
+      "name": "Events"
+    }
+  ], 
+  "end": 1281499200, 
+  "v_bars": [
+    "auto"
+  ], 
+  "h_bars": [], 
+  "start": 1199336400, 
+  "events": [
+    {
+      "group": "diagnosis", 
+      "id": "4118", 
+      "time": 1199509200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4010", 
+      "time": 1199509200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49390", 
+      "time": 1199509200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5847", 
+      "time": 1199682000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7209", 
+      "time": 1200027600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "412", 
+      "time": 1200200400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "43310", 
+      "time": 1200200400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200200400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78831", 
+      "time": 1201323600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "44381", 
+      "time": 1201323600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "185", 
+      "time": 1201323600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5184", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "32729", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "30272", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1201928400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "0730", 
+      "time": 1202187600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1202446800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1202446800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3949", 
+      "time": 1202706000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1202706000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5939", 
+      "time": 1202706000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7825", 
+      "time": 1202792400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7243", 
+      "time": 1202878800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71941", 
+      "time": 1202878800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7242", 
+      "time": 1202878800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1202878800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5162", 
+      "time": 1202965200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "33829", 
+      "time": 1202965200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1202965200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5722", 
+      "time": 1203570000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5168", 
+      "time": 1203656400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "E8160", 
+      "time": 1203656400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78607", 
+      "time": 1203742800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7823", 
+      "time": 1203742800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "07421", 
+      "time": 1203829200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49121", 
+      "time": 1203829200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1203915600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4423", 
+      "time": 1204002000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1204002000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4582", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6803", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "60000", 
+      "time": 1204866000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6803", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "60000", 
+      "time": 1204952400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2840", 
+      "time": 1205208000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5363", 
+      "time": 1205208000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1205208000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2840", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5363", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1205294400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71536", 
+      "time": 1205726400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2512", 
+      "time": 1205726400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99677", 
+      "time": 1205726400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4364", 
+      "time": 1205726400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "59800", 
+      "time": 1205726400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1205726400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5119", 
+      "time": 1205812800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2765", 
+      "time": 1206072000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1206072000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4243", 
+      "time": 1206158400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "27650", 
+      "time": 1206244800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99673", 
+      "time": 1206244800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V420", 
+      "time": 1206244800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2766", 
+      "time": 1206244800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1962", 
+      "time": 1206590400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42820", 
+      "time": 1206849600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71686", 
+      "time": 1206849600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1206849600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1206849600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1206936000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70715", 
+      "time": 1206936000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V518", 
+      "time": 1207108800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "042", 
+      "time": 1207108800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1551", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "24290", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42760", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5119", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1207368000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42760", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5119", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1207454400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42760", 
+      "time": 1207540800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1207540800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5119", 
+      "time": 1207540800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1207540800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71626", 
+      "time": 1207972800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7218", 
+      "time": 1208318400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71590", 
+      "time": 1208318400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "33821", 
+      "time": 1208318400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71166", 
+      "time": 1208491200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7070", 
+      "time": 1208577600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28260", 
+      "time": 1208577600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78606", 
+      "time": 1208750400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "46611", 
+      "time": 1208750400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1330", 
+      "time": 1208750400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "03840", 
+      "time": 1209441600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1209441600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "03840", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1209528000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3968", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7852", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4293", 
+      "time": 1209614400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78606", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4779", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "490", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "53082", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "56941", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2875", 
+      "time": 1209787200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "0380", 
+      "time": 1210305600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42830", 
+      "time": 1210392000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5856", 
+      "time": 1210392000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4263", 
+      "time": 1210392000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "59080", 
+      "time": 1210392000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4910", 
+      "time": 1211169600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1211169600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4910", 
+      "time": 1211256000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1211256000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4910", 
+      "time": 1211342400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1211342400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4910", 
+      "time": 1211428800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1211428800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4830", 
+      "time": 1211515200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2750", 
+      "time": 1211515200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28521", 
+      "time": 1211515200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4910", 
+      "time": 1211601600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5173", 
+      "time": 1211947200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1212292800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25043", 
+      "time": 1212379200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1212379200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "30000", 
+      "time": 1212379200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28311", 
+      "time": 1212811200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6029", 
+      "time": 1212811200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1212811200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71590", 
+      "time": 1212811200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7249", 
+      "time": 1212811200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5997", 
+      "time": 1212897600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71904", 
+      "time": 1213329600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71946", 
+      "time": 1213329600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1214107200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78937", 
+      "time": 1214712000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78651", 
+      "time": 1215057600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7806", 
+      "time": 1215316800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1215316800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5559", 
+      "time": 1215835200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V726", 
+      "time": 1215835200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41410", 
+      "time": 1216180800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2967", 
+      "time": 1216180800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4439", 
+      "time": 1216267200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1216612800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7870", 
+      "time": 1216699200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7820", 
+      "time": 1216699200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7934", 
+      "time": 1216699200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4270", 
+      "time": 1216699200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7851", 
+      "time": 1216872000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1216872000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25052", 
+      "time": 1217217600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1217476800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1217476800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1217476800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1217476800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99739", 
+      "time": 1217908800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "30989", 
+      "time": 1218600000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4363", 
+      "time": 1218859200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1218427200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1218513600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1218600000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1218686400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1218772800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1218859200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1218945600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1219032000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1219118400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25072", 
+      "time": 1219204800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42821", 
+      "time": 1219377600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7906", 
+      "time": 1219377600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1219377600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1219377600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5119", 
+      "time": 1219377600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7931", 
+      "time": 1219377600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "73605", 
+      "time": 1219636800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72889", 
+      "time": 1219636800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7823", 
+      "time": 1219636800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7851", 
+      "time": 1220673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1220673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1220673600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7851", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25022", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7039", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7030", 
+      "time": 1220760000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4912", 
+      "time": 1222142400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1222142400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5845", 
+      "time": 1222401600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1222401600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5852", 
+      "time": 1222401600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V182", 
+      "time": 1223697600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51881", 
+      "time": 1223697600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1223697600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4548", 
+      "time": 1223697600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V182", 
+      "time": 1223784000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51881", 
+      "time": 1223784000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1223784000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4548", 
+      "time": 1223784000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V182", 
+      "time": 1223870400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51881", 
+      "time": 1223870400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1223870400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4548", 
+      "time": 1223870400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V182", 
+      "time": 1223956800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51881", 
+      "time": 1223956800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1223956800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4548", 
+      "time": 1223956800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V182", 
+      "time": 1224043200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51881", 
+      "time": 1224043200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1224043200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4548", 
+      "time": 1224043200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V182", 
+      "time": 1224129600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51881", 
+      "time": 1224129600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1224129600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4548", 
+      "time": 1224129600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V182", 
+      "time": 1224216000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "51881", 
+      "time": 1224216000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1224216000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4548", 
+      "time": 1224216000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78609", 
+      "time": 1224302400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1224302400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49320", 
+      "time": 1224302400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "37632", 
+      "time": 1224302400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "36501", 
+      "time": 1224302400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42781", 
+      "time": 1224561600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1224561600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1571", 
+      "time": 1224907200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1890", 
+      "time": 1225339200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "44023", 
+      "time": 1226725200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "99660", 
+      "time": 1226811600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78651", 
+      "time": 1226811600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7852", 
+      "time": 1226811600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78651", 
+      "time": 1226984400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78900", 
+      "time": 1226984400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29630", 
+      "time": 1226984400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7851", 
+      "time": 1226984400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5185", 
+      "time": 1227416400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25042", 
+      "time": 1227589200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70714", 
+      "time": 1227589200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5198", 
+      "time": 1227848400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "44382", 
+      "time": 1227934800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71509", 
+      "time": 1227934800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29630", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1227675600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1227675600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1227675600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1227675600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1227762000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1227762000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1227762000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1227762000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1227848400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1227848400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1227848400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1227848400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1227934800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1227934800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1227934800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1227934800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1228021200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1228107600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1228194000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1228280400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71880", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71990", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71516", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "8208", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5198", 
+      "time": 1228366800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71526", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7863", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5789", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72887", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "43491", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1228453200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5789", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72887", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "43491", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1228539600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5789", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72887", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "43491", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1228626000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "44382", 
+      "time": 1229058000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78002", 
+      "time": 1229058000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1229058000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V420", 
+      "time": 1229058000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1229317200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V854", 
+      "time": 1229835600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "490", 
+      "time": 1229835600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1229835600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1229835600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7916", 
+      "time": 1229749200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7916", 
+      "time": 1229835600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7854", 
+      "time": 1230267600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V568", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5883", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "591", 
+      "time": 1230440400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71510", 
+      "time": 1230958800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4918", 
+      "time": 1231045200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1231650000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1231650000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71975", 
+      "time": 1231736400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5362", 
+      "time": 1231736400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V1259", 
+      "time": 1231995600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1232514000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1232773200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42830", 
+      "time": 1232773200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "485", 
+      "time": 1233205200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78944", 
+      "time": 1233637200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6829", 
+      "time": 1233723600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6829", 
+      "time": 1233810000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V7641", 
+      "time": 1233982800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "82030", 
+      "time": 1234069200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1234069200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3310", 
+      "time": 1234069200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "29613", 
+      "time": 1235019600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "30000", 
+      "time": 1235019600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1235451600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4658", 
+      "time": 1235710800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49390", 
+      "time": 1235710800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49301", 
+      "time": 1235710800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25020", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78079", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1101", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7038", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7851", 
+      "time": 1236142800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V6407", 
+      "time": 1236830400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7863", 
+      "time": 1237262400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7210", 
+      "time": 1237348800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "71945", 
+      "time": 1237348800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3529", 
+      "time": 1237348800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V6700", 
+      "time": 1237348800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V561", 
+      "time": 1237867200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28521", 
+      "time": 1237867200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1237867200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2753", 
+      "time": 1237867200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4912", 
+      "time": 1237953600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78720", 
+      "time": 1237953600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7102", 
+      "time": 1237953600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1238040000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V4581", 
+      "time": 1239163200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1239163200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1239163200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78607", 
+      "time": 1239508800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1239508800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5856", 
+      "time": 1239508800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "37611", 
+      "time": 1239854400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1239854400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49120", 
+      "time": 1239854400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V126", 
+      "time": 1239940800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V1589", 
+      "time": 1239940800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "6819", 
+      "time": 1240286400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "1179", 
+      "time": 1240372800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1240372800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7197", 
+      "time": 1240372800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72879", 
+      "time": 1240459200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1240459200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70715", 
+      "time": 1240459200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5859", 
+      "time": 1240459200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1240545600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2865", 
+      "time": 1240545600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "11595", 
+      "time": 1240891200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70707", 
+      "time": 1241064000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7862", 
+      "time": 1241064000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "500", 
+      "time": 1241064000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3920", 
+      "time": 1241755200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1241755200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1241755200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78901", 
+      "time": 1241841600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4550", 
+      "time": 1241841600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1241841600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "72291", 
+      "time": 1242014400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7213", 
+      "time": 1242014400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78651", 
+      "time": 1242187200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1242187200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78605", 
+      "time": 1242187200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "45989", 
+      "time": 1242532800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "27952", 
+      "time": 1242532800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1242532800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1242532800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4270", 
+      "time": 1242792000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1242792000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4928", 
+      "time": 1244779200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "49121", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5180", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V1588", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V462", 
+      "time": 1245384000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4254", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42822", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4149", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2722", 
+      "time": 1246161600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7902", 
+      "time": 1246248000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1246248000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "82131", 
+      "time": 1246593600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1246593600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "E9889", 
+      "time": 1246593600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7851", 
+      "time": 1247976000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4257", 
+      "time": 1248062400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4439", 
+      "time": 1248062400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4139", 
+      "time": 1248062400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5856", 
+      "time": 1248667200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28521", 
+      "time": 1248667200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "58881", 
+      "time": 1248667200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "5856", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "28521", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "58881", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78651", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "2761", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1248753600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "42831", 
+      "time": 1249185600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1249185600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7819", 
+      "time": 1249444800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4401", 
+      "time": 1249617600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4471", 
+      "time": 1249617600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "43330", 
+      "time": 1249617600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1249617600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "V5391", 
+      "time": 1250568000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1250568000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1250568000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "4281", 
+      "time": 1250827200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70713", 
+      "time": 1250827200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "70722", 
+      "time": 1250827200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "04110", 
+      "time": 1250827200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "3488", 
+      "time": 1251604800
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "V5867", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "V4581", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "29680", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "72888", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "procedure", 
+      "id": "4513", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "procedure", 
+      "id": "3310", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "V5867", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "V4581", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "29680", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "2768", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "72888", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "procedure", 
+      "id": "4513", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "2000.00", 
+      "group": "procedure", 
+      "id": "3310", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "49322", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "4588", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "V1582", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "5720", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "04112", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "E9320", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "procedure", 
+      "id": "8607", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "49322", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "4588", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "V1582", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "5720", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "04112", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "E9320", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "procedure", 
+      "id": "8607", 
+      "time": 1218513600
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "49322", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "4588", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "V1582", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "5720", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "04112", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "E9320", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "diagnosis", 
+      "id": "41400", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "8000.00", 
+      "group": "procedure", 
+      "id": "8607", 
+      "time": 1218600000
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "99644", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "2851", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "5533", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "99641", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "71690", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "procedure", 
+      "id": "0080", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "procedure", 
+      "id": "2724", 
+      "time": 1239076800
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "99644", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "2851", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "5533", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "99641", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "71690", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "procedure", 
+      "id": "0080", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "procedure", 
+      "id": "2724", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "99644", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "2851", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "5533", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "99641", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "diagnosis", 
+      "id": "71690", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "procedure", 
+      "id": "0080", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "15000.00", 
+      "group": "procedure", 
+      "id": "2724", 
+      "time": 1239249600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1247457600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1247544000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1247630400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1247716800
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1247803200
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "49122", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "73300", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "V5866", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "6961", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "725", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "30501", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "6000.00", 
+      "group": "diagnosis", 
+      "id": "51889", 
+      "time": 1248062400
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "3384", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "5853", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "30000", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "49320", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "920", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "0066", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "42731", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "311", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "42789", 
+      "time": 1251259200
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "3384", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "5853", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "30000", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "49320", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "920", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "0066", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "42731", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "311", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "42789", 
+      "time": 1251345600
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "41401", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "3384", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "5853", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "30000", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "49320", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "diagnosis", 
+      "id": "920", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "0066", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "42731", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "311", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "11000.00", 
+      "group": "procedure", 
+      "id": "42789", 
+      "time": 1251432000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200373200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200373200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200373200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200373200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200373200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200459600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200459600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200459600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200459600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200459600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200546000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200546000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200546000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200546000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200546000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200632400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200632400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200632400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200632400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200632400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200718800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200718800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200718800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200718800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200718800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200805200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200805200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200805200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200805200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200805200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200891600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200891600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200891600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200891600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200891600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1200978000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1201064400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1201150800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1201150800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1201150800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1201150800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1201150800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "59081", 
+      "time": 1201237200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1201237200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1201237200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2948", 
+      "time": 1201237200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1201237200
+    }, 
+    {
+      "cost": "400.00", 
+      "group": "diagnosis", 
+      "id": "V8404", 
+      "time": 1202792400
+    }, 
+    {
+      "cost": "400.00", 
+      "group": "diagnosis", 
+      "id": "4720", 
+      "time": 1202792400
+    }, 
+    {
+      "cost": "400.00", 
+      "group": "diagnosis", 
+      "id": "78009", 
+      "time": 1202792400
+    }, 
+    {
+      "cost": "400.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1202792400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "5640", 
+      "time": 1206763200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78907", 
+      "time": 1206763200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78650", 
+      "time": 1206763200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42789", 
+      "time": 1214020800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "5990", 
+      "time": 1214020800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1214020800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1214020800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "46619", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "78831", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "7840", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "2859", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "7336", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1223956800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "44421", 
+      "time": 1226293200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "6089", 
+      "time": 1226293200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1226293200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "3051", 
+      "time": 1226293200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "V420", 
+      "time": 1226293200
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "0320", 
+      "time": 1230786000
+    }, 
+    {
+      "cost": "100.00", 
+      "group": "diagnosis", 
+      "id": "2681", 
+      "time": 1231477200
+    }, 
+    {
+      "cost": "100.00", 
+      "group": "diagnosis", 
+      "id": "71590", 
+      "time": 1231477200
+    }, 
+    {
+      "cost": "100.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1231477200
+    }, 
+    {
+      "cost": "100.00", 
+      "group": "diagnosis", 
+      "id": "9239", 
+      "time": 1231477200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42769", 
+      "time": 1233723600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2810", 
+      "time": 1233723600
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1234069200
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "diagnosis", 
+      "id": "7802", 
+      "time": 1234069200
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "7090", 
+      "time": 1236402000
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "V7644", 
+      "time": 1236402000
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "4011", 
+      "time": 1236402000
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "9509", 
+      "time": 1238817600
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "2449", 
+      "time": 1238817600
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "V600", 
+      "time": 1238817600
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "920", 
+      "time": 1238817600
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "7850", 
+      "time": 1240286400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2870", 
+      "time": 1241668800
+    }, 
+    {
+      "cost": "100.00", 
+      "group": "diagnosis", 
+      "id": "70700", 
+      "time": 1241928000
+    }, 
+    {
+      "cost": "70.00", 
+      "group": "diagnosis", 
+      "id": "38643", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "70.00", 
+      "group": "diagnosis", 
+      "id": "78079", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244347200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244347200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244347200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244347200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244347200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244433600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244433600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244433600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244433600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244433600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244520000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244520000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244520000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244520000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244520000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244606400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244606400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244606400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244606400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244606400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244779200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244779200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244779200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244779200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244779200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244865600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244865600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244865600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244865600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244865600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1244952000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1244952000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1244952000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1244952000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1244952000
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1245038400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1245038400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1245038400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1245038400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1245038400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1245124800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "4280", 
+      "time": 1245124800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7993", 
+      "time": 1245124800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "7812", 
+      "time": 1245124800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1245124800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245211200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245211200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245297600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245297600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245384000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245384000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245470400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245470400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245556800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245556800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245643200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245643200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245729600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245729600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245816000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245816000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245902400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245902400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1245988800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1245988800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246075200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246075200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246161600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246161600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246248000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246248000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246334400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246334400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246420800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246420800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246507200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246507200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246593600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246593600
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246680000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246680000
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246766400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246766400
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246852800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246852800
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "72664", 
+      "time": 1246939200
+    }, 
+    {
+      "cost": "500.00", 
+      "group": "diagnosis", 
+      "id": "2720", 
+      "time": 1246939200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "4918", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "78659", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "V1261", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "79902", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "V4582", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "78703", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "53081", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "78079", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "28732", 
+      "time": 1249617600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "diagnosis", 
+      "id": "71930", 
+      "time": 1254024000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1254024000
+    }, 
+    {
+      "cost": "90.00", 
+      "group": "diagnosis", 
+      "id": "46619", 
+      "time": 1260939600
+    }, 
+    {
+      "cost": "90.00", 
+      "group": "diagnosis", 
+      "id": "8488", 
+      "time": 1260939600
+    }, 
+    {
+      "cost": "80.00", 
+      "group": "diagnosis", 
+      "id": "42821", 
+      "time": 1261544400
+    }, 
+    {
+      "cost": "80.00", 
+      "group": "diagnosis", 
+      "id": "25002", 
+      "time": 1261544400
+    }, 
+    {
+      "cost": "80.00", 
+      "group": "diagnosis", 
+      "id": "32723", 
+      "time": 1261544400
+    }, 
+    {
+      "cost": "80.00", 
+      "group": "diagnosis", 
+      "id": "5856", 
+      "time": 1261544400
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "42823", 
+      "time": 1262581200
+    }, 
+    {
+      "cost": "50.00", 
+      "group": "diagnosis", 
+      "id": "78192", 
+      "time": 1262581200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "2866", 
+      "time": 1263358800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1265173200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "diagnosis", 
+      "id": "5762", 
+      "time": 1265173200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "diagnosis", 
+      "id": "07070", 
+      "time": 1265173200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "diagnosis", 
+      "id": "V5869", 
+      "time": 1265173200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "V548", 
+      "time": 1266210000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "V5861", 
+      "time": 1266210000
+    }, 
+    {
+      "cost": "300.00", 
+      "group": "diagnosis", 
+      "id": "78606", 
+      "time": 1269748800
+    }, 
+    {
+      "cost": "300.00", 
+      "group": "diagnosis", 
+      "id": "30000", 
+      "time": 1269748800
+    }, 
+    {
+      "cost": "300.00", 
+      "group": "diagnosis", 
+      "id": "V1011", 
+      "time": 1269748800
+    }, 
+    {
+      "cost": "300.00", 
+      "group": "diagnosis", 
+      "id": "4019", 
+      "time": 1269748800
+    }, 
+    {
+      "cost": "300.00", 
+      "group": "diagnosis", 
+      "id": "4168", 
+      "time": 1269748800
+    }, 
+    {
+      "cost": "300.00", 
+      "group": "diagnosis", 
+      "id": "49392", 
+      "time": 1269748800
+    }, 
+    {
+      "cost": "90.00", 
+      "group": "diagnosis", 
+      "id": "V4585", 
+      "time": 1276920000
+    }, 
+    {
+      "cost": "90.00", 
+      "group": "diagnosis", 
+      "id": "7919", 
+      "time": 1276920000
+    }, 
+    {
+      "cost": "90.00", 
+      "group": "diagnosis", 
+      "id": "30000", 
+      "time": 1276920000
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "7235", 
+      "time": 1281499200
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "7295", 
+      "time": 1281499200
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "71945", 
+      "time": 1281499200
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "diagnosis", 
+      "id": "7213", 
+      "time": 1281499200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "54868410101", 
+      "time": 1199336400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "54868216002", 
+      "time": 1199941200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016066989", 
+      "time": 1200027600
+    }, 
+    {
+      "cost": "150.00", 
+      "group": "prescribed", 
+      "id": "00603580332", 
+      "time": 1200546000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00469170030", 
+      "time": 1200891600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00904076180", 
+      "time": 1201928400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00781507231", 
+      "time": 1203310800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "60429015705", 
+      "time": 1203397200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "42508010104", 
+      "time": 1203570000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55887031204", 
+      "time": 1203570000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "46193065005", 
+      "time": 1203656400
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "58016093579", 
+      "time": 1203915600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "13411016103", 
+      "time": 1204002000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "11722076499", 
+      "time": 1204434000
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "00268650706", 
+      "time": 1205294400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00904584993", 
+      "time": 1205467200
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "58056035510", 
+      "time": 1205726400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "59772369302", 
+      "time": 1205899200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "66303105201", 
+      "time": 1206158400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "58016054380", 
+      "time": 1206244800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "59534000100", 
+      "time": 1207972800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00093093401", 
+      "time": 1208059200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "49999041802", 
+      "time": 1208059200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016076444", 
+      "time": 1208232000
+    }, 
+    {
+      "cost": "70.00", 
+      "group": "prescribed", 
+      "id": "51129275401", 
+      "time": 1208750400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00078023505", 
+      "time": 1210046400
+    }, 
+    {
+      "cost": "170.00", 
+      "group": "prescribed", 
+      "id": "00832103010", 
+      "time": 1210219200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016073384", 
+      "time": 1210564800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "prescribed", 
+      "id": "00536011684", 
+      "time": 1210996800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "65179047340", 
+      "time": 1210996800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016079901", 
+      "time": 1210996800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00045044980", 
+      "time": 1211083200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00904787360", 
+      "time": 1211169600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "63285073091", 
+      "time": 1211256000
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "62447001105", 
+      "time": 1211256000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "60889031302", 
+      "time": 1211688000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55289084330", 
+      "time": 1212638400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00054819116", 
+      "time": 1212724800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00075135699", 
+      "time": 1213329600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "66039012602", 
+      "time": 1213329600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "66689038316", 
+      "time": 1213416000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "59747011771", 
+      "time": 1213416000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "43353031932", 
+      "time": 1213502400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00677040910", 
+      "time": 1214193600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "65729054828", 
+      "time": 1214539200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "36987241002", 
+      "time": 1214884800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "12280033590", 
+      "time": 1216267200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55045146307", 
+      "time": 1216440000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "51129351802", 
+      "time": 1216526400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "49727013305", 
+      "time": 1216785600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "23490615702", 
+      "time": 1217563200
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "67544007553", 
+      "time": 1218427200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00364204005", 
+      "time": 1218945600
+    }, 
+    {
+      "cost": "170.00", 
+      "group": "prescribed", 
+      "id": "00839773097", 
+      "time": 1219204800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "24236039102", 
+      "time": 1219291200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "54868007605", 
+      "time": 1219291200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "60258037116", 
+      "time": 1219377600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "61392076739", 
+      "time": 1219723200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "24196055101", 
+      "time": 1220155200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016055948", 
+      "time": 1220155200
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "58016059706", 
+      "time": 1220328000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "10544037460", 
+      "time": 1221192000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00268126050", 
+      "time": 1221537600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "66105063203", 
+      "time": 1221710400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55390030710", 
+      "time": 1221883200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "51129729201", 
+      "time": 1221883200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "66267049760", 
+      "time": 1222315200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016070726", 
+      "time": 1222488000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00406870004", 
+      "time": 1223006400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "prescribed", 
+      "id": "66267050620", 
+      "time": 1223006400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "49999082060", 
+      "time": 1223524800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55154545400", 
+      "time": 1224907200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "62584002100", 
+      "time": 1224993600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00741000201", 
+      "time": 1224993600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00761085530", 
+      "time": 1225080000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00839511706", 
+      "time": 1225080000
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "62381897101", 
+      "time": 1225339200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00247179460", 
+      "time": 1225512000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00172419860", 
+      "time": 1225774800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "68071024960", 
+      "time": 1226120400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "66466461701", 
+      "time": 1226466000
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "54868462600", 
+      "time": 1227330000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "46193014810", 
+      "time": 1227502800
+    }, 
+    {
+      "cost": "60.00", 
+      "group": "prescribed", 
+      "id": "60429005601", 
+      "time": 1228021200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00223503400", 
+      "time": 1228194000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "12535012310", 
+      "time": 1228366800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016015477", 
+      "time": 1228798800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00002202302", 
+      "time": 1229058000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00115114003", 
+      "time": 1230440400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "68032017016", 
+      "time": 1231477200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00247007977", 
+      "time": 1231995600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00071000124", 
+      "time": 1232427600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00998008005", 
+      "time": 1232686800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "65162057211", 
+      "time": 1233205200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00143215325", 
+      "time": 1233291600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00024100125", 
+      "time": 1233378000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "68115047260", 
+      "time": 1234069200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00247175830", 
+      "time": 1234155600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "68788134509", 
+      "time": 1234587600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "58016098840", 
+      "time": 1234846800
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "68071014630", 
+      "time": 1234846800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "45802001737", 
+      "time": 1235019600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "65125030930", 
+      "time": 1235451600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "61392019739", 
+      "time": 1236056400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "41163042871", 
+      "time": 1236402000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "49999062760", 
+      "time": 1236488400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00405463001", 
+      "time": 1236830400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "23490651302", 
+      "time": 1237003200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "63874035820", 
+      "time": 1237003200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "63304040410", 
+      "time": 1237176000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "55111042060", 
+      "time": 1237608000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "53002038016", 
+      "time": 1237867200
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "00089034110", 
+      "time": 1237867200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "51996000110", 
+      "time": 1238040000
+    }, 
+    {
+      "cost": "80.00", 
+      "group": "prescribed", 
+      "id": "58016057356", 
+      "time": 1238731200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "prescribed", 
+      "id": "00603580310", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00490714789", 
+      "time": 1239163200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "58016075830", 
+      "time": 1239595200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "62540208301", 
+      "time": 1239940800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "33358029420", 
+      "time": 1240027200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016094667", 
+      "time": 1240200000
+    }, 
+    {
+      "cost": "170.00", 
+      "group": "prescribed", 
+      "id": "55887044392", 
+      "time": 1240286400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "49502068985", 
+      "time": 1240286400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016091624", 
+      "time": 1240545600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "68693000403", 
+      "time": 1240718400
+    }, 
+    {
+      "cost": "80.00", 
+      "group": "prescribed", 
+      "id": "58016091050", 
+      "time": 1240977600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "52213007724", 
+      "time": 1241064000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "36987109702", 
+      "time": 1241236800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "49856017009", 
+      "time": 1241236800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "54868553000", 
+      "time": 1241582400
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "prescribed", 
+      "id": "58016097999", 
+      "time": 1241668800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "15330019801", 
+      "time": 1241668800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00247200490", 
+      "time": 1241755200
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "prescribed", 
+      "id": "54569524100", 
+      "time": 1243051200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "65726026525", 
+      "time": 1243137600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00106111060", 
+      "time": 1243224000
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "00006020787", 
+      "time": 1243396800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "19458024801", 
+      "time": 1243483200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00834108591", 
+      "time": 1243483200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "53489029105", 
+      "time": 1243483200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "66828001001", 
+      "time": 1243656000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00004012103", 
+      "time": 1243656000
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "00585067060", 
+      "time": 1244001600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00409766602", 
+      "time": 1244260800
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "prescribed", 
+      "id": "54868497201", 
+      "time": 1244347200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "65841004201", 
+      "time": 1244520000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "66267057690", 
+      "time": 1244520000
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "00031890163", 
+      "time": 1244692800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "52512021706", 
+      "time": 1244779200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "68115096601", 
+      "time": 1245038400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "58016055782", 
+      "time": 1245297600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55887039030", 
+      "time": 1245384000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016037387", 
+      "time": 1245556800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00122122449", 
+      "time": 1245816000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016007603", 
+      "time": 1246075200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00349826601", 
+      "time": 1246852800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00364019102", 
+      "time": 1246939200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00172219080", 
+      "time": 1247025600
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "00339631811", 
+      "time": 1247371200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55111032030", 
+      "time": 1247889600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016057015", 
+      "time": 1247976000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00839714606", 
+      "time": 1248235200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "59604065910", 
+      "time": 1248926400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016087869", 
+      "time": 1248926400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "54868079203", 
+      "time": 1249099200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00182264201", 
+      "time": 1249444800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00121038205", 
+      "time": 1249704000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "66267084306", 
+      "time": 1249790400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00072720010", 
+      "time": 1249876800
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "00028007265", 
+      "time": 1250136000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "67544062431", 
+      "time": 1250308800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "51655025289", 
+      "time": 1250654400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00641000143", 
+      "time": 1251000000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "57664051088", 
+      "time": 1251086400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "55175508503", 
+      "time": 1252209600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00490716318", 
+      "time": 1252728000
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "59604045045", 
+      "time": 1252900800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "10019014221", 
+      "time": 1252987200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00536443201", 
+      "time": 1253419200
+    }, 
+    {
+      "cost": "20.00", 
+      "group": "prescribed", 
+      "id": "61392039191", 
+      "time": 1254542400
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00591236569", 
+      "time": 1254628800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "58016605901", 
+      "time": 1254888000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00091361011", 
+      "time": 1255147200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "58016078600", 
+      "time": 1255147200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "62584009250", 
+      "time": 1255233600
+    }, 
+    {
+      "cost": "30.00", 
+      "group": "prescribed", 
+      "id": "00527104905", 
+      "time": 1255233600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00839649516", 
+      "time": 1255233600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "55567026700", 
+      "time": 1255320000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "00904560340", 
+      "time": 1255406400
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "62037087201", 
+      "time": 1256011200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "61030107202", 
+      "time": 1256097600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00615157353", 
+      "time": 1256097600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00093736810", 
+      "time": 1256184000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "49999090330", 
+      "time": 1256443200
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "67544090673", 
+      "time": 1258174800
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00580053901", 
+      "time": 1258261200
+    }, 
+    {
+      "cost": "40.00", 
+      "group": "prescribed", 
+      "id": "00378112501", 
+      "time": 1258347600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00006764447", 
+      "time": 1258693200
+    }
+  ]
+}

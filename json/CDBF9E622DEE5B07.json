@@ -11,6 +11,11 @@
       "name": "Born"
     }, 
     {
+      "id": "death", 
+      "value": "N/A", 
+      "name": "Death"
+    }, 
+    {
       "label": "default", 
       "id": "gender", 
       "value": "U", 
@@ -2260,3511 +2265,4213 @@
       "time": 1253592000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204347600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204434000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204520400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204606800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204693200
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204779600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204866000
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1204952400
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1205038800
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4111", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "3723", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "2809", 
       "time": 1205121600
     }, 
     {
+      "cost": "10000.00", 
       "group": "procedure", 
       "id": "5781", 
       "time": 1205121600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "71535", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4240", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "40390", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "V5862", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "8154", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "4019", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "40390", 
       "time": 1209528000
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "71535", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4240", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "40390", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "V5862", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "8154", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "4019", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "40390", 
       "time": 1209614400
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "71535", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4240", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "40390", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "V5862", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "8154", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "4019", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "40390", 
       "time": 1209700800
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "71535", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4240", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "40390", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "V5862", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "8154", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "4019", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "40390", 
       "time": 1209787200
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "71535", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4240", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "40390", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "V5862", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "8154", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "4019", 
       "time": 1209873600
     }, 
     {
+      "cost": "11000.00", 
       "group": "procedure", 
       "id": "40390", 
       "time": 1209873600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1218081600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1218081600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1218081600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1218081600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "3310", 
       "time": 1218081600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1218081600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V4573", 
       "time": 1218081600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1218168000
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1218168000
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1218168000
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1218168000
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "3310", 
       "time": 1218168000
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1218168000
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V4573", 
       "time": 1218168000
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1218254400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1218254400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1218254400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1218254400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "3310", 
       "time": 1218254400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1218254400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V4573", 
       "time": 1218254400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1218340800
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1218340800
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1218340800
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1218340800
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "3310", 
       "time": 1218340800
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1218340800
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V4573", 
       "time": 1218340800
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "99642", 
       "time": 1218427200
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1218427200
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1218427200
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1218427200
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "3310", 
       "time": 1218427200
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1218427200
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V4573", 
       "time": 1218427200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "78791", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "2768", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "72252", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "71590", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "25062", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "procedure", 
       "id": "4292", 
       "time": 1235278800
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "78791", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "2768", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "72252", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "71590", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "25062", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "procedure", 
       "id": "4292", 
       "time": 1235365200
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "78791", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "2768", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "72252", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "71590", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "25062", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1235451600
     }, 
     {
+      "cost": "3000.00", 
       "group": "procedure", 
       "id": "4292", 
       "time": 1235451600
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "4321", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "4010", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "34290", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "42789", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "3004", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V4364", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "V4365", 
       "time": 1251518400
     }, 
     {
+      "cost": "5000.00", 
       "group": "diagnosis", 
       "id": "4240", 
       "time": 1251518400
     }, 
     {
+      "cost": "3300.00", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1201669200
     }, 
     {
+      "cost": "3300.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1201669200
     }, 
     {
+      "cost": "3300.00", 
       "group": "diagnosis", 
       "id": "43310", 
       "time": 1201669200
     }, 
     {
+      "cost": "3300.00", 
       "group": "diagnosis", 
       "id": "79439", 
       "time": 1201669200
     }, 
     {
+      "cost": "3300.00", 
       "group": "diagnosis", 
       "id": "53081", 
       "time": 1201669200
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "78703", 
       "time": 1205294400
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1205294400
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1205294400
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "78650", 
       "time": 1205294400
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "7840", 
       "time": 1205294400
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "78703", 
       "time": 1205380800
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1205380800
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1205380800
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "78650", 
       "time": 1205380800
     }, 
     {
+      "cost": "600.00", 
       "group": "diagnosis", 
       "id": "7840", 
       "time": 1205380800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "412", 
       "time": 1210132800
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "V5844", 
       "time": 1213156800
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "7455", 
       "time": 1213156800
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "43400", 
       "time": 1213156800
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1214193600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "V1260", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "79029", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "311", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "78652", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "5533", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "4148", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "586", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "7862", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1216267200
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "V1260", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "79029", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "311", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "78652", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "5533", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "4148", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "586", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "7862", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1216353600
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "V1260", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "79029", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "311", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "78652", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "5533", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "4148", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "586", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "7862", 
       "time": 1216440000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1216440000
     }, 
     {
+      "cost": "900.00", 
       "group": "diagnosis", 
       "id": "73309", 
       "time": 1221883200
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "79029", 
       "time": 1223092800
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "3051", 
       "time": 1223092800
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1223092800
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "7890", 
       "time": 1228626000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1228626000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "53540", 
       "time": 1228626000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "5759", 
       "time": 1228626000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "7873", 
       "time": 1228626000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "3051", 
       "time": 1228626000
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "56400", 
       "time": 1228626000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42840", 
       "time": 1229403600
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1229403600
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "4563", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "V4589", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "5939", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "29680", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "7823", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "70713", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "70710", 
       "time": 1233118800
     }, 
     {
+      "cost": "1400.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1233118800
     }, 
     {
+      "cost": "20.00", 
       "group": "diagnosis", 
       "id": "4271", 
       "time": 1233637200
     }, 
     {
+      "cost": "20.00", 
       "group": "diagnosis", 
       "id": "42841", 
       "time": 1233723600
     }, 
     {
+      "cost": "100.00", 
       "group": "diagnosis", 
       "id": "78602", 
       "time": 1235451600
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1236402000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1236402000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "V433", 
       "time": 1236402000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1236402000
     }, 
     {
+      "cost": "80.00", 
       "group": "diagnosis", 
       "id": "2840", 
       "time": 1237348800
     }, 
     {
+      "cost": "70.00", 
       "group": "diagnosis", 
       "id": "7807", 
       "time": 1237435200
     }, 
     {
+      "cost": "70.00", 
       "group": "diagnosis", 
       "id": "5939", 
       "time": 1237435200
     }, 
     {
+      "cost": "70.00", 
       "group": "diagnosis", 
       "id": "60001", 
       "time": 1237435200
     }, 
     {
+      "cost": "70.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1237435200
     }, 
     {
+      "cost": "70.00", 
       "group": "diagnosis", 
       "id": "79029", 
       "time": 1237435200
     }, 
     {
+      "cost": "0.00", 
       "group": "diagnosis", 
       "id": "07953", 
       "time": 1239076800
     }, 
     {
+      "cost": "60.00", 
       "group": "diagnosis", 
       "id": "7098", 
       "time": 1244088000
     }, 
     {
+      "cost": "60.00", 
       "group": "diagnosis", 
       "id": "V7644", 
       "time": 1244088000
     }, 
     {
+      "cost": "60.00", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1244088000
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "8440", 
       "time": 1247284800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247284800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247284800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247284800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247284800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247371200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247371200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247371200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247371200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247457600
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247457600
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247457600
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247457600
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247544000
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247544000
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247544000
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247544000
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247630400
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247630400
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247630400
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247630400
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247716800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247716800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247716800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247716800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247803200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247803200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247803200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247803200
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7835", 
       "time": 1247889600
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7905", 
       "time": 1247889600
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1247889600
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1247889600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "V5862", 
       "time": 1249185600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1249185600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "1889", 
       "time": 1249185600
     }, 
     {
+      "cost": "100.00", 
       "group": "diagnosis", 
       "id": "0422", 
       "time": 1256011200
     }, 
     {
+      "cost": "100.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1256011200
     }, 
     {
+      "cost": "100.00", 
       "group": "diagnosis", 
       "id": "7910", 
       "time": 1256011200
     }, 
     {
+      "cost": "100.00", 
       "group": "diagnosis", 
       "id": "7906", 
       "time": 1256011200
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "24970", 
       "time": 1257829200
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1257829200
     }, 
     {
+      "cost": "70.00", 
       "group": "diagnosis", 
       "id": "9855", 
       "time": 1261198800
     }, 
     {
+      "cost": "30.00", 
       "group": "diagnosis", 
       "id": "59000", 
       "time": 1263618000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1262754000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1262754000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1262754000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1262840400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1262840400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1262840400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1262926800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1262926800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1262926800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263013200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263013200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263013200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263099600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263099600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263099600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263186000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263186000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263186000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263272400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263272400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263272400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263358800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263358800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263358800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263445200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263445200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263445200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263531600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263531600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263531600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263618000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263618000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263618000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263704400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263704400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263704400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263790800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263790800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263790800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263877200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263877200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263877200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1263963600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1263963600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1263963600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1264050000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1264050000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1264050000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1264136400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1264136400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1264136400
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1264222800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1264222800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1264222800
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1264309200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1264309200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1264309200
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1264395600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1264395600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1264395600
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "72812", 
       "time": 1264482000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "7262", 
       "time": 1264482000
     }, 
     {
+      "cost": "1000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1264482000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1264827600
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1264914000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265000400
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265086800
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265173200
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265259600
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265346000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265432400
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265518800
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265605200
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265691600
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265778000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265864400
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1265950800
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1266037200
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1266123600
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1266210000
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1266296400
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1266382800
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1266469200
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "29594", 
       "time": 1266555600
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "56210", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "2113", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "78720", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "56210", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "6989", 
       "time": 1266728400
     }, 
     {
+      "cost": "90.00", 
       "group": "diagnosis", 
       "id": "78900", 
       "time": 1266728400
     }, 
     {
+      "cost": "200.00", 
       "group": "diagnosis", 
       "id": "81351", 
       "time": 1269921600
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "42841", 
       "time": 1274068800
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "V5883", 
       "time": 1274068800
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "42843", 
       "time": 1274673600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "4148", 
       "time": 1274673600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "V5869", 
       "time": 1274673600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "797", 
       "time": 1274673600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "4259", 
       "time": 1274673600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "7823", 
       "time": 1274673600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "4241", 
       "time": 1274673600
     }, 
     {
+      "cost": "50.00", 
       "group": "diagnosis", 
       "id": "V123", 
       "time": 1274673600
     }, 
     {
+      "cost": "10.00", 
       "group": "diagnosis", 
       "id": "4151", 
       "time": 1275796800
     }, 
     {
+      "cost": "40.00", 
       "group": "diagnosis", 
       "id": "V739", 
       "time": 1279771200
     }, 
     {
+      "cost": "80.00", 
       "group": "prescribed", 
       "id": "66267015714", 
       "time": 1199336400
     }, 
     {
+      "cost": "50.00", 
       "group": "prescribed", 
       "id": "00172422070", 
       "time": 1199422800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00603802010", 
       "time": 1199768400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016096173", 
       "time": 1200027600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "54868122300", 
       "time": 1200546000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00223781010", 
       "time": 1202274000
     }, 
     {
+      "cost": "70.00", 
       "group": "prescribed", 
       "id": "57866493202", 
       "time": 1202706000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "36987206503", 
       "time": 1202965200
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "55953048070", 
       "time": 1203051600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "66267032020", 
       "time": 1203483600
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "63629132601", 
       "time": 1203915600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "53002038230", 
       "time": 1204434000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00046103105", 
       "time": 1204434000
     }, 
     {
+      "cost": "70.00", 
       "group": "prescribed", 
       "id": "11517074106", 
       "time": 1204434000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "21695051510", 
       "time": 1204693200
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "68071041230", 
       "time": 1204693200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "19458059201", 
       "time": 1205208000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00024131402", 
       "time": 1205208000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00083013532", 
       "time": 1205294400
     }, 
     {
+      "cost": "60.00", 
       "group": "prescribed", 
       "id": "17228070200", 
       "time": 1205380800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00723181028", 
       "time": 1205467200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00814632530", 
       "time": 1205726400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "43265075402", 
       "time": 1205812800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "33261001605", 
       "time": 1206244800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00904791940", 
       "time": 1207454400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "55045204307", 
       "time": 1208404800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "18837023960", 
       "time": 1208577600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00490715544", 
       "time": 1208836800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "10135019601", 
       "time": 1209096000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "51079068217", 
       "time": 1209268800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016091006", 
       "time": 1209787200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00025122331", 
       "time": 1209787200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "52544050410", 
       "time": 1209960000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "42549061330", 
       "time": 1210046400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "59632010401", 
       "time": 1210219200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54092019112", 
       "time": 1210219200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "60258044815", 
       "time": 1210996800
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "54383006003", 
       "time": 1211342400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "99207251744", 
       "time": 1211774400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "49999009504", 
       "time": 1211860800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54383005604", 
       "time": 1211860800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "51129291201", 
       "time": 1212379200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "47837006200", 
       "time": 1215230400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00268093410", 
       "time": 1215230400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "63874053200", 
       "time": 1215576000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "55887095224", 
       "time": 1216267200
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "41284006512", 
       "time": 1216526400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "61113045058", 
       "time": 1216612800
     }, 
     {
+      "cost": "170.00", 
       "group": "prescribed", 
       "id": "68071025918", 
       "time": 1217217600
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "00228261303", 
       "time": 1217304000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00781317895", 
       "time": 1217908800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00536464801", 
       "time": 1218081600
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "65243010518", 
       "time": 1218340800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016062224", 
       "time": 1220500800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00008027701", 
       "time": 1220760000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00469215215", 
       "time": 1220760000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00719197610", 
       "time": 1220846400
     }, 
     {
+      "cost": "40.00", 
       "group": "prescribed", 
       "id": "23490532303", 
       "time": 1220932800
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "60505023203", 
       "time": 1220932800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00179167572", 
       "time": 1220932800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58948040572", 
       "time": 1221019200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "64579009941", 
       "time": 1221364800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00268619806", 
       "time": 1221624000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "57866352401", 
       "time": 1221710400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00168002016", 
       "time": 1221796800
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "58016058042", 
       "time": 1222056000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "57480034001", 
       "time": 1222142400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00074765002", 
       "time": 1223092800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58554000205", 
       "time": 1223265600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "55111012601", 
       "time": 1223438400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "53489033210", 
       "time": 1223524800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00536992001", 
       "time": 1223611200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00536492701", 
       "time": 1224129600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "16408271404", 
       "time": 1224129600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00684015905", 
       "time": 1224475200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "11722092299", 
       "time": 1225688400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00364737830", 
       "time": 1225774800
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "55289070407", 
       "time": 1225947600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00182036440", 
       "time": 1226120400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "63874044320", 
       "time": 1226120400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "55045342001", 
       "time": 1226638800
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "47202249402", 
       "time": 1226725200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "58016092444", 
       "time": 1227070800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "36987246904", 
       "time": 1227589200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "10244051163", 
       "time": 1228712400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "11819025690", 
       "time": 1228798800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00363692110", 
       "time": 1229058000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "21091030110", 
       "time": 1229144400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "66267047260", 
       "time": 1229144400
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "00894651402", 
       "time": 1229317200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00781504210", 
       "time": 1229317200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00186113551", 
       "time": 1230094800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00781284801", 
       "time": 1230354000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54868502404", 
       "time": 1231131600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "36987222104", 
       "time": 1231304400
     }, 
     {
+      "cost": "170.00", 
       "group": "prescribed", 
       "id": "36987317301", 
       "time": 1232168400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "61392029890", 
       "time": 1232427600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00779105225", 
       "time": 1232427600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00247008515", 
       "time": 1233032400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54569388700", 
       "time": 1233291600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00228263550", 
       "time": 1233550800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "61553029925", 
       "time": 1233637200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "16590064560", 
       "time": 1233810000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "66267101730", 
       "time": 1233896400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "51079097920", 
       "time": 1233982800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "52297016478", 
       "time": 1234674000
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "00067013430", 
       "time": 1235883600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "52721009510", 
       "time": 1236657600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016037993", 
       "time": 1236744000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00781108013", 
       "time": 1237521600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00031746963", 
       "time": 1237780800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54868118300", 
       "time": 1237953600
     }, 
     {
+      "cost": "40.00", 
       "group": "prescribed", 
       "id": "10221000107", 
       "time": 1238904000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00002751101", 
       "time": 1239249600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "16590058090", 
       "time": 1239681600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58165003101", 
       "time": 1239681600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00228221210", 
       "time": 1239940800
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "47679055135", 
       "time": 1240200000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00641132035", 
       "time": 1240286400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "49288058301", 
       "time": 1241150400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00822153000", 
       "time": 1241150400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00615356613", 
       "time": 1241755200
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "51660078701", 
       "time": 1242014400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016038383", 
       "time": 1242273600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "59930150008", 
       "time": 1242360000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00173045402", 
       "time": 1242705600
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "52493027430", 
       "time": 1242705600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "55289040720", 
       "time": 1243656000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "58864068230", 
       "time": 1243915200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00472076699", 
       "time": 1244174400
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "00349207801", 
       "time": 1244347200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016064816", 
       "time": 1244520000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "53002025260", 
       "time": 1244606400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00904075329", 
       "time": 1244952000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00044012004", 
       "time": 1244952000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54569390000", 
       "time": 1245124800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "59879011501", 
       "time": 1246766400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00157037301", 
       "time": 1246852800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "11845112001", 
       "time": 1246939200
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "36987240801", 
       "time": 1248062400
     }, 
     {
+      "cost": "40.00", 
       "group": "prescribed", 
       "id": "00580034316", 
       "time": 1249012800
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "58177000604", 
       "time": 1249704000
     }, 
     {
+      "cost": "40.00", 
       "group": "prescribed", 
       "id": "38245038120", 
       "time": 1251086400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "51079093101", 
       "time": 1251172800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00065062606", 
       "time": 1252296000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "16252009833", 
       "time": 1252555200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "60505077405", 
       "time": 1252641600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "42549052724", 
       "time": 1252814400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54697004602", 
       "time": 1253592000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58864030590", 
       "time": 1253851200
     }, 
     {
+      "cost": "40.00", 
       "group": "prescribed", 
       "id": "50629092626", 
       "time": 1254110400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "53261003302", 
       "time": 1254283200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58864062530", 
       "time": 1254369600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "67544060753", 
       "time": 1254715200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "60346070312", 
       "time": 1254888000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00349235400", 
       "time": 1254888000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016066982", 
       "time": 1254974400
     }, 
     {
+      "cost": "60.00", 
       "group": "prescribed", 
       "id": "51728004605", 
       "time": 1255233600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016050732", 
       "time": 1255320000
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "58016008393", 
       "time": 1255665600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "61392011832", 
       "time": 1255752000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "36987157701", 
       "time": 1256270400
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "55154435405", 
       "time": 1256529600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00179025150", 
       "time": 1257397200
     }, 
     {
+      "cost": "30.00", 
       "group": "prescribed", 
       "id": "00093521110", 
       "time": 1257483600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "59011043010", 
       "time": 1257656400
     }, 
     {
+      "cost": "110.00", 
       "group": "prescribed", 
       "id": "57866432702", 
       "time": 1257829200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "51432019603", 
       "time": 1258520400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00283088631", 
       "time": 1258520400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "63552025111", 
       "time": 1258693200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "35470036709", 
       "time": 1258779600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "53978069405", 
       "time": 1258779600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "10337066499", 
       "time": 1259038800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "36987239502", 
       "time": 1259125200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "55289031760", 
       "time": 1259384400
     }, 
     {
+      "cost": "40.00", 
       "group": "prescribed", 
       "id": "55289082314", 
       "time": 1259470800
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00169770391", 
       "time": 1259730000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "58016068735", 
       "time": 1260162000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "47679056204", 
       "time": 1260334800
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "58016053732", 
       "time": 1260421200
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "00037052124", 
       "time": 1261112400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "55289089201", 
       "time": 1261285200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "52297024700", 
       "time": 1261544400
     }, 
     {
+      "cost": "20.00", 
       "group": "prescribed", 
       "id": "54868117400", 
       "time": 1262840400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00839570006", 
       "time": 1263013200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "66105012015", 
       "time": 1263013200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00471007508", 
       "time": 1263013200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "55887041490", 
       "time": 1263272400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54569516700", 
       "time": 1263272400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00157088110", 
       "time": 1263704400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "66105051810", 
       "time": 1264050000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "66267001820", 
       "time": 1264827600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00894578402", 
       "time": 1265173200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "38245041310", 
       "time": 1265518800
     }, 
     {
+      "cost": "100.00", 
       "group": "prescribed", 
       "id": "00065021115", 
       "time": 1267074000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54868101100", 
       "time": 1267506000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "52959020600", 
       "time": 1267765200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00480715456", 
       "time": 1268110800
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "17228150200", 
       "time": 1268542800
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "67228044703", 
       "time": 1268798400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00677077110", 
       "time": 1268798400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "54868470005", 
       "time": 1269230400
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00781100301", 
       "time": 1269403200
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "00093066505", 
       "time": 1269921600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00904603652", 
       "time": 1269921600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00904503310", 
       "time": 1270353600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "48695115104", 
       "time": 1270440000
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "12516150607", 
       "time": 1270526400
     }, 
     {
+      "cost": "80.00", 
       "group": "prescribed", 
       "id": "58016091098", 
       "time": 1270699200
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "00781168131", 
       "time": 1271217600
     }, 
     {
+      "cost": "0.00", 
       "group": "prescribed", 
       "id": "23490583802", 
       "time": 1271649600
     }, 
     {
+      "cost": "10.00", 
       "group": "prescribed", 
       "id": "18837011630", 
       "time": 1271649600
