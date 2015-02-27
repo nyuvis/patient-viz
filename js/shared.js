@@ -126,7 +126,7 @@ function loadPerson(pid, person, pool, eventView, typeView, linechart, dictionar
   pool.hasLinechart(linechart.hasContent());
   typeView.updateLists();
   setupBars(pool, person);
-  setupYCluster(pool, d3.select("#pYCluster"));
+  setupYCluster(pool, d3.select("#pYCluster"), typeView);
   pool.updateLook();
   return selId;
 }
@@ -188,9 +188,9 @@ function setupBars(pool, person) {
           types.push(type);
         }
         if(id in counts) {
-          counts[id] += 1;
+          counts[id] += e.cost() || 1;
         } else {
-          counts[id] = 1;
+          counts[id] = e.cost() || 1;
         }
       });
       types.sort(function(a, b) {
@@ -474,43 +474,74 @@ function setupTypeView(pool, typeList) {
 }
 
 var yCompressClustering = false;
-function setupYCluster(pool, sel) {
+function setupYCluster(pool, sel, typeView) {
   var busy = pool.getBusy();
-  sel.on("change", null);
-  sel.node().checked = false;
-  sel.on("change", function() {
-    if(!sel.node().checked) {
-      pool.startBulkValidity();
-      pool.traverseTypes(function(gid, tid, type) {
-        type.proxyType(type);
-      });
-      pool.endBulkValidity();
-    } else {
-      busy.setState(jkjs.busy.state.busy);
-      setTimeout(function() {
-        var error = true;
-        try {
-          if(!yCompressClustering) {
-            pool.startBulkValidity();
-            pool.traverseTypes(function(gid, tid, type) {
-              type.proxyType(type.getParent() || type);
-            });
-            pool.endBulkValidity();
-          } else {
+  var levels = [];
+  if(yCompressClustering) {
+    levels = [ 0, 1 ];
+  } else {
+    typeView.getNodeRoots().forEach(function(root) {
+      root.preorder(function(level, n) {
+        while(level > levels.length) {
+          levels.push(levels.length);
+        }
+      }, 0, false);
+    });
+  }
+  var opts = sel.selectAll("option").data(levels, function(d) { return d; });
+  opts.exit().remove();
+  opts.enter().append("option").text(function(d) {
+    return "" + d;
+  });
+
+  function updateYCompress() {
+    var lvl = sel.node().selectedIndex;
+    if(yCompressClustering) {
+      if(lvl == 0) {
+        pool.startBulkValidity();
+        pool.traverseTypes(function(gid, tid, type) {
+          type.proxyType(type);
+        });
+        pool.endBulkValidity();
+      } else {
+        busy.setState(jkjs.busy.state.busy);
+        setTimeout(function() {
+          var error = true;
+          try {
             computeRowClusters(pool, function(vecA, vecB) {
               // levenshtein, 3, 3 // 10, 5
               // hamming, 5, 3
               // jaccard, 0.5, 1
               return jkjs.stat.edit_distances.hamming(vecA, vecB);
             }, 5, 3);
+            error = false;
+          } finally {
+            busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm);
           }
-          error = false;
-        } finally {
-          busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm);
-        }
-      }, 0);
+        }, 0);
+      }
+    } else {
+      pool.startBulkValidity();
+      var roots = typeView.getNodeRoots();
+      roots.forEach(function(root, ix) {
+        root.preorder(function(level, n, hasChildren) {
+          if(lvl + 1 > level && hasChildren) {
+            n.setExpanded(true);
+          }
+        }, 0, false);
+        root.preorder(function(level, n, hasChildren) {
+          if(lvl + 1 == level && hasChildren) {
+            n.setExpanded(false);
+          }
+        }, 0, false);
+      });
+      pool.endBulkValidity();
+      typeView.updateLists();
     }
-  });
+  }
+
+  sel.on("change", updateYCompress);
+  updateYCompress();
 }
 
 function computeRowClusters(pool, distance, threshold, minCluster) {

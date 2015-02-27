@@ -65,6 +65,10 @@ function Type(p, g, typeId, dictionary) {
     proxedEvents = events;
   }
 
+  this.getFirstProxedEvent = function() {
+    ensureProxedEvents();
+    return proxedEvents.length ? proxedEvents[0] : null;
+  };
   this.traverseProxedEvents = function(cb) {
     ensureProxedEvents();
     proxedEvents.forEach(cb);

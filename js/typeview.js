@@ -59,6 +59,7 @@ function TypeView(pool, sel, sortDropdownSel) {
     sel.selectAll("div.pType").remove();
   };
 
+  var nodeRoots = [];
   var groupIx = 0;
   this.updateLists = function() {
     var groups = {};
@@ -244,6 +245,9 @@ function TypeView(pool, sel, sortDropdownSel) {
           });
         }
       };
+      this.setExpanded = function(expand) {
+        toggle(this, !expand);
+      }
     } // Node
 
     var roots = {};
@@ -308,7 +312,6 @@ function TypeView(pool, sel, sortDropdownSel) {
         }
       }, 0, false);
       pool.endBulkValidity();
-      that.updateLists();
     }
 
     divs.selectAll("div.pT").remove();
@@ -324,6 +327,7 @@ function TypeView(pool, sel, sortDropdownSel) {
           var objs = type.createListEntry(div, level, isInner, isExpanded);
           objs["space"].on("click", function() {
             toggle(node, isExpanded);
+            that.updateLists();
           });
         }
       }, 0, true);
@@ -337,5 +341,12 @@ function TypeView(pool, sel, sortDropdownSel) {
         t.updateListEntry(div, hasSelected, onlyOneTypeSelected);
       }
     });
+
+    nodeRoots = Object.keys(roots).map(function(r) {
+      return roots[r];
+    });
+  };
+  this.getNodeRoots = function() {
+    return nodeRoots;
   };
 } // EventView

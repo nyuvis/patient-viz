@@ -17,14 +17,17 @@ import json
 input_format = {
     "patient_id": 'DESYNPUF_ID',
     "born": 'BENE_BIRTH_DT',
+    "death": 'BENE_DEATH_DT',
     "gender": 'BENE_SEX_IDENT_CD',
+    "claim_amount": 'CLM_PMT_AMT',
     "claim_from": 'CLM_FROM_DT',
     "claim_to": 'CLM_THRU_DT',
     "diagnosis": ['ICD9_DGNS_CD_' + str(n) for n in xrange(1, 11)],
     "procedures": ['ICD9_PRCDR_CD_' + str(n) for n in xrange(1, 7)],
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     "prescribed_date": 'SRVC_DT',
-    "prescribed": 'PROD_SRVC_ID'
+    "prescribed": 'PROD_SRVC_ID',
+    "prescribed_amount": 'PTNT_PAY_AMT'
     #"lab_date": ''
     #"lab_code": ''
     #"lab_result": ''
@@ -104,12 +107,19 @@ def handleEvent(row):
     return res
 
 def handleRow(row, obj):
+
     handleKey(row, "born", MODE_OPTIONAL, lambda value:
-            addInfo(obj, 'born', 'Born', int(str(value)[0:4]))
+            addInfo(obj, 'born', 'Born', int(str(value)[0:4]) if len(str(value)) >= 4 else 'N/A')
+        )
+    handleKey(row, "death", MODE_DEFAULT, lambda value:
+            addInfo(obj, 'death', 'Death', int(str(value)[0:4]) if len(str(value)) >= 4 else 'N/A')
         )
     handleKey(row, "gender", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'gender', 'Gender', gender_map.get(value, 'U'), True, gender_label.get(value, "default"))
         )
+
+    def addCost(event, amount):
+        event['cost'] = amount
 
     def dates(fromDate, toDate):
         if fromDate == '':
@@ -124,6 +134,9 @@ def handleRow(row, obj):
             while curDate <= endDate:
                 for event in handleEvent(row):
                     event['time'] = curDate
+                    handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
+                        addCost(event, amount)
+                    )
                     obj['events'].append(event)
                 curDate = nextDay(curDate)
         else:
@@ -141,6 +154,9 @@ def handleRow(row, obj):
     def emitNDC(date, ndc):
         event = createEntry(TYPE_PRESCRIBED, ndc)
         event['time'] = toTime(date)
+        handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
+            addCost(event, amount)
+        )
         obj['events'].append(event)
 
     handleKey(row, "prescribed_date", MODE_OPTIONAL, lambda date:
