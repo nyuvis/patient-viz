@@ -117,6 +117,7 @@ function Labels(pool, updateViewport, blank) {
     var colW = box[0];
     var rowH = box[1];
     var st = type.selectText();
+    if(!st) return;
 
     var gap = 20;
     var rx = right ? x - gap : x + gap;

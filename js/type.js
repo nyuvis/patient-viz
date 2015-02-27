@@ -295,6 +295,7 @@ function Type(p, g, typeId, dictionary) {
   this.showLabels = function(_) {
     if(!arguments.length) return showLabels;
     showLabels = _;
+    if(destroyed) return;
     if(!showLabels) {
       that.clearText();
       that.selectConnect().style({
@@ -355,7 +356,7 @@ function Type(p, g, typeId, dictionary) {
   var selText = null;
   this.selectText = function() {
     if(destroyed) {
-      console.warn("type already destroyed");
+      // console.warn("type already destroyed"); // TODO bug!!!
       return null;
     }
     if(!selText) {
