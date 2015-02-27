@@ -44,12 +44,12 @@ MODE_DEFAULT = 1
 MODE_ARRAY = 2
 
 gender_label = {
-    1: "primary",
-    2: "danger"
+    "1": "primary",
+    "2": "danger"
 }
 gender_map = {
-    1: "M",
-    2: "W"
+    "1": "M",
+    "2": "W"
 }
 
 def toTime(s):
@@ -112,10 +112,10 @@ def handleRow(row, obj):
             addInfo(obj, 'born', 'Born', int(str(value)[0:4]) if len(str(value)) >= 4 else 'N/A')
         )
     handleKey(row, "death", MODE_DEFAULT, lambda value:
-            addInfo(obj, 'death', 'Death', int(str(value)[0:4]) if len(str(value)) >= 4 else 'N/A')
+            addInfo(obj, 'death', 'Died', int(str(value)[0:4]) if len(str(value)) >= 4 else 'N/A')
         )
     handleKey(row, "gender", MODE_OPTIONAL, lambda value:
-            addInfo(obj, 'gender', 'Gender', gender_map.get(value, 'U'), True, gender_label.get(value, "default"))
+            addInfo(obj, 'gender', 'Gender', gender_map.get(str(value), 'U'), True, gender_label.get(str(value), "default"))
         )
 
     def addCost(event, amount):
