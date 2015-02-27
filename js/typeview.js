@@ -307,7 +307,7 @@ function TypeView(pool, sel, sortDropdownSel) {
         var t = n.getType();
         if(collapse) {
           t.proxyType(type);
-        } else if(level == 1) {
+        } else {
           t.proxyType(t);
         }
       }, 0, false);

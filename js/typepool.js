@@ -481,6 +481,9 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         yMap[group] = {};
       }
       yMap[group][type.getTypeId()] = y;
+      if(type.proxyType() !== type) {
+        setY(type.proxyType(), y);
+      }
     }
 
     var h = yMode["assignY"](displayTypes, setY);
@@ -489,13 +492,20 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         type.setY(-rowH);
         return;
       }
-      var pt = type.proxyType();
-      var pid = pt.getTypeId();
-      if(pid in yMap[pt.getGroup()]) {
-        type.setY(yMap[pt.getGroup()][pid]);
-      } else {
-        console.warn("no mapping for "+pid, pt.getTypeId(), pt.getGroup());
-        type.setY(-rowH);
+      var pt = type;
+      for(;;) {
+        var pid = pt.getTypeId();
+        var grp = pt.getGroup()
+        if(pid in yMap[grp]) {
+          type.setY(yMap[grp][pid]);
+          break;
+        }
+        if(pt === pt.proxyType()) {
+          console.warn("no mapping for "+pid, pid, grp, type.getTypeId(), type.getGroup(), yMap);
+          type.setY(-rowH);
+          break;
+        }
+        pt = pt.proxyType();
       }
     });
     return h;
@@ -783,7 +793,10 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   this.updateLook = function() {
     var displayTypes = {};
     that.traverseTypes(function(gid, tid, type) {
-      var pt = type.proxyType();
+      var pt = type;
+      while(pt !== pt.proxyType()) {
+        pt = pt.proxyType();
+      }
       displayTypes[pt.getTypeId()] = pt;
     });
     displayTypes = Object.keys(displayTypes).map(function(id) {

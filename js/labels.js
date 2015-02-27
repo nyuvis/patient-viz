@@ -179,8 +179,13 @@ Labels.labelsByBars = function(labels, svgport, viewport, scale, smooth) {
     bar.labels.forEach(function(type) {
       if(!type.isValid()) return;
       if(!type.showLabels()) return;
+      if(type.getY() < 0) { // don't show labels for invalid types
+        labels.noShow(type);
+        return;
+      }
       y = Math.max(y, -10 + (-viewport.y + type.getY()) * scale);
-      var event = type.getFirstEventAfter(from);
+      // var event = type.getFirstEventAfter(from);
+      var event = type.proxyType().getFirstProxedEvent();
       if(!event) return;
       var x = (pool.getXByEventTime(event) - colW - viewport.x) * scale;
       labels.positionLabel(type, x, y, Math.min(Math.max(x - svgport.x - 4, 0), 200), viewport.x, viewport.y, scale, true, event);
@@ -211,6 +216,10 @@ Labels.labelsByWeight = function(labels, svgport, viewport, scale, smooth) {
       }
     });
     if(!weightedEvent || !weightedEvent.shown()) {
+      labels.noShow(type);
+      return;
+    }
+    if(type.getY() < 0) { // don't show labels for invalid types
       labels.noShow(type);
       return;
     }
@@ -270,6 +279,10 @@ TypePool.labelsLens = function(labels, svgport, viewport, scale, smooth) {
       return;
     }
     already[type.getTypeId()] = true;
+    if(origType.getY() < 0) { // don'show labels for invalid types
+      labels.noShow(origType);
+      return;
+    }
     // need origType to set all y positions since type doesn't necessarily have the correct values
     type.setY(origType.getY());
     var range = pool.getRangeY(type);
