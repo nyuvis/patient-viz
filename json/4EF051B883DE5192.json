@@ -13,12 +13,12 @@
     {
       "id": "death", 
       "value": "N/A", 
-      "name": "Death"
+      "name": "Died"
     }, 
     {
-      "label": "default", 
+      "label": "danger", 
       "id": "gender", 
-      "value": "U", 
+      "value": "W", 
       "name": "Gender"
     }, 
     {
