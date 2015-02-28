@@ -82,6 +82,10 @@ if [ -z `git branch | grep "* ${master}"` ]; then
   exit 1
 fi
 
+echo "save current patient files"
+zip "json.zip" "patients.txt" "json/"
+test_fail $?
+
 git checkout "${web}" && git merge --no-ff "${master}" --no-commit
 test_fail $?
 
@@ -97,3 +101,8 @@ test_fail $?
 
 git push "${origin}" "${web}" && git checkout "${master}"
 test_fail $?
+
+echo "restore patient files"
+rm -r "json/"
+test_fail $?
+unzip "json.zip"
