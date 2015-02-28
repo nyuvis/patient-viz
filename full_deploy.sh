@@ -77,7 +77,8 @@ if [ -z "${full}" ] && [ -z `git branch -r --no-merged "${web}" | grep "${master
   exit 1
 fi
 
-if [ -z `git branch | grep "* ${master}"` ]; then
+onmaster=`git branch | grep "* ${master}"`
+if [ -z "${onmaster}" ]; then
   echo "not on ${master}"
   exit 1
 fi
@@ -103,6 +104,7 @@ git push "${origin}" "${web}" && git checkout "${master}"
 test_fail $?
 
 echo "restore patient files"
-rm -r "json/"
-test_fail $?
+if [ -d "json" ]; then
+  rm -r "json"
+fi
 unzip "json.zip"
