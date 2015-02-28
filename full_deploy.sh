@@ -20,7 +20,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-git add -f json/9F6F484429DDCC04.json json/AE056C5933AFED18.json json/298C80CC2F7CEDC4.json json/EB704BFBAB4E2B86.json json/B7ECA3897A4AD00D.json json/A9BD9D012E87A360.json json/4EF051B883DE5192.json json/998093F33FE2D940.json json/CDBF9E622DEE5B07.json json/AEF023C2029F05BC.json
+git add -f json/9F6F484429DDCC04.json json/AE056C5933AFED18.json json/298C80CC2F7CEDC4.json json/EB704BFBAB4E2B86.json json/B7ECA3897A4AD00D.json json/A9BD9D012E87A360.json json/4EF051B883DE5192.json json/998093F33FE2D940.json json/CDBF9E622DEE5B07.json json/AEF023C2029F05BC.json json/dictionary.json patients.txt
 if [ $? -ne 0 ]; then
   exit 1
 fi
