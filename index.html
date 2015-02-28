@@ -111,6 +111,9 @@ function start() {
           ps.on("change", tmpChg);
         });
       } else {
+        if(pids.length > 2 && pids[2] === "json/998093F33FE2D940.json") {
+          curId = 2;
+        }
         if(curId < pids.length) {
           loadFile(pids[curId], lastDictionaryFile || dictionaryDefault, true);
         } else {
