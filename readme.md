@@ -64,4 +64,4 @@ can consult the help (`./start.sh -h`) and [the JSON specification](spec.md).
 ## Contributing
 
 Pull requests are highly appreciated :)
-Also, feel free to open issues for any questions or bugs you may encounter.
+Also, feel free to open [issues](issues/) for any questions or bugs you may encounter.
