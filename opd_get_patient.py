@@ -14,25 +14,7 @@ import csv
 #import simplejson as json
 import json
 
-input_format = {
-    "patient_id": 'DESYNPUF_ID',
-    "born": 'BENE_BIRTH_DT',
-    "death": 'BENE_DEATH_DT',
-    "gender": 'BENE_SEX_IDENT_CD',
-    "claim_amount": 'CLM_PMT_AMT',
-    "claim_from": 'CLM_FROM_DT',
-    "claim_to": 'CLM_THRU_DT',
-    "diagnosis": ['ICD9_DGNS_CD_' + str(n) for n in xrange(1, 11)],
-    "procedures": ['ICD9_PRCDR_CD_' + str(n) for n in xrange(1, 7)],
-    # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
-    "prescribed_date": 'SRVC_DT',
-    "prescribed": 'PROD_SRVC_ID',
-    "prescribed_amount": 'PTNT_PAY_AMT'
-    #"lab_date": ''
-    #"lab_code": ''
-    #"lab_result": ''
-    #"lab_flag": ''
-}
+input_format = {}
 
 TYPE_PRESCRIBED = "prescribed"
 TYPE_LABTEST    = "lab-test"
@@ -102,6 +84,7 @@ def handleEvent(row):
         if value != '':
             res.append(createEntry(type, value))
 
+    # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
     return res
@@ -194,12 +177,21 @@ def processDirectory(dir, id, obj):
                 processFile(dir + '/' + file, id, obj)
 
 def usage():
-    print('usage: {} [-h] [-o <output>] -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
+    print('-f <format>: specifies table format file.', file=sys.stderr)
     print('-p <id>: specifies the patient id', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them', file=sys.stderr)
     exit(1)
+
+def read_format(file):
+    global input_format
+    if not os.path.isfile(file):
+        print('invalid format file: {}'.format(file), file=sys.stderr)
+        usage()
+    with open(file) as formatFile:
+        input_format = json.loads(formatFile.read())
 
 if __name__ == '__main__':
     id = None
@@ -212,7 +204,12 @@ if __name__ == '__main__':
             break
         if arg == '-h':
             usage()
-        if arg == '-o':
+        if arg == '-f':
+            if not args:
+                print('-f requires format file', file=sys.stderr)
+                usage()
+            read_format(args.pop(0))
+        elif arg == '-o':
             if not args:
                 print('-o requires output file', file=sys.stderr)
                 usage()

@@ -50,7 +50,7 @@ Patient files can be created manually from the example claims data by
 issuing the following commands:
 
 ```bash
-$ ./opd_get_patient.py -p AEF023C2029F05BC -o json/AEF023C2029F05BC.json -- opd
+$ ./opd_get_patient.py -p AEF023C2029F05BC -f format.json -o json/AEF023C2029F05BC.json -- opd
 $ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 $ ./start.sh --list-update
 ```

@@ -14,6 +14,7 @@ convert_top_n=3
 convert_list=
 dictionary="${JSON_DIR}/dictionary.json"
 config="config.txt"
+format="format.json"
 err_file="err.txt"
 err_dict_file="err_dict.txt"
 server_log="server_log.txt"
@@ -30,11 +31,13 @@ do_convert=
 do_clean=
 do_nop=
 
-USAGE="Usage: $0 -hs [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--do-convert] [--clean] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--do-convert] [--clean] [--nop]"
 
 usage() {
     echo $USAGE
     echo "-h: print help"
+    echo "-c <dictionary config file>: specify the dictionary config file"
+    echo "-f <table format file>: specify the table format file"
     echo "-s: do not prompt the user for input"
     echo "--samples <list of samples>: specify which samples to download (1-20)"
     echo "--samples-all: download all samples"
@@ -58,6 +61,14 @@ while [ $# -gt 0 ]; do
   case "$1" in
   -h)
     usage ;;
+  -c)
+    shift
+    config="$1"
+    ;;
+  -f)
+    shift
+    format="$1"
+    ;;
   -s)
     no_prompt=1
     ;;
@@ -441,12 +452,12 @@ convert_patients() {
     echo "create ${file}"
     echo "config file is ${config}"
     echo "script output can be found in ${err_file} and ${err_dict_file}"
-    ./opd_get_patient.py -p "${id}" -o "${file}" -- "${OPD_DIR}" 2> $err_file || {
+    ./opd_get_patient.py -p "${id}" -f "${format}" -o "${file}" -- "${OPD_DIR}" 2> $err_file || {
       echo "failed during patient conversion"
       cd_back
       exit 1
     }
-    ./build_dictionary.py -p "${file}" -c "$config" -o "${dictionary}" 2> $err_dict_file || {
+    ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2> $err_dict_file || {
       echo "failed during dictionary creation"
       cd_back
       exit 1
