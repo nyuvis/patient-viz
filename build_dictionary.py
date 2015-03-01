@@ -346,8 +346,11 @@ def loadOldDict(file):
 
 def enrichDict(file, mid):
     dict = loadOldDict(file)
-    with open(mid, 'r') as pfile:
-        patient = json.loads(pfile.read())
+    if mid == '-':
+        patient = json.loads(sys.stdin.read())
+    else:
+        with open(mid, 'r') as pfile:
+            patient = json.loads(pfile.read())
     extractEntries(dict, patient)
     if file == sys.stdout:
         print(json.dumps(dict, indent=2), file=file)
@@ -400,7 +403,7 @@ def readConfig(settings, file):
 
 def usage():
     print(sys.argv[0]+": -p <file> -c <config> -o <output> [-h|--help]", file=sys.stderr)
-    print("-p <file>: specify patient json file", file=sys.stderr)
+    print("-p <file>: specify patient json file. '-' uses standard in", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
     print("-h|--help: prints this help.", file=sys.stderr)

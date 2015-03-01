@@ -1,8 +1,12 @@
 # patient-viz
 
-Tool for visualizing timed events of possibly many different types.
-Example data from medical insurance claim data is provided via download.
+*patient-viz* is a tool allowing to view and explore insurance claim
+or other time sequence event data. The web-based tool is mostly written in
+[d3](http://d3js.org/) and uses [python](https://www.python.org/) and shell on the back-end.
+Example data from medical insurance claim data can be downloaded automatically.
 We also have a [live demo](http://nyuvis.github.io/patient-viz/index.html)!
+The project is a joint product of Josua Krause, Narges Sharif Razavian,
+Enrico Bertini, and David Sontag.
 
 ![The tool in action!](overview.png)
 
@@ -50,7 +54,7 @@ Patient files can be created manually from the example claims data by
 issuing the following commands:
 
 ```bash
-$ ./opd_get_patient.py -p AEF023C2029F05BC -o json/AEF023C2029F05BC.json -- opd
+$ ./opd_get_patient.py -p AEF023C2029F05BC -f format.json -o json/AEF023C2029F05BC.json -- opd
 $ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 $ ./start.sh --list-update
 ```
@@ -64,4 +68,4 @@ can consult the help (`./start.sh -h`) and [the JSON specification](spec.md).
 ## Contributing
 
 Pull requests are highly appreciated :)
-Also, feel free to open issues for any questions or bugs you may encounter.
+Also, feel free to open [issues](https://github.com/nyuvis/patient-viz/issues) for any questions or bugs you may encounter.

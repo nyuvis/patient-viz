@@ -1,0 +1,32 @@
+{
+  "patient_id": "DESYNPUF_ID",
+  "born": "BENE_BIRTH_DT",
+  "death": "BENE_DEATH_DT",
+  "gender": "BENE_SEX_IDENT_CD",
+  "claim_amount": "CLM_PMT_AMT",
+  "claim_from": "CLM_FROM_DT",
+  "claim_to": "CLM_THRU_DT",
+  "diagnosis": [
+    "ICD9_DGNS_CD_1",
+    "ICD9_DGNS_CD_2",
+    "ICD9_DGNS_CD_3",
+    "ICD9_DGNS_CD_4",
+    "ICD9_DGNS_CD_5",
+    "ICD9_DGNS_CD_6",
+    "ICD9_DGNS_CD_7",
+    "ICD9_DGNS_CD_8",
+    "ICD9_DGNS_CD_9",
+    "ICD9_DGNS_CD_10"
+  ],
+  "procedures": [
+    "ICD9_PRCDR_CD_1",
+    "ICD9_PRCDR_CD_2",
+    "ICD9_PRCDR_CD_3",
+    "ICD9_PRCDR_CD_4",
+    "ICD9_PRCDR_CD_5",
+    "ICD9_PRCDR_CD_6"
+  ],
+  "prescribed_date": "SRVC_DT",
+  "prescribed": "PROD_SRVC_ID",
+  "prescribed_amount": "PTNT_PAY_AMT"
+}
