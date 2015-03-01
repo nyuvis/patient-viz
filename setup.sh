@@ -143,7 +143,7 @@ cd_back() {
 
 test_fail() {
   if [ $1 -ne 0 ]; then
-    echo "fail!"
+    echo "setup failed!"
     cd_back
     exit 1
   fi
