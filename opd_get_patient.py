@@ -164,9 +164,13 @@ def handleRow(row, obj):
         )
 
 def processFile(inputFile, id, obj):
+    if inputFile == '-':
+        for row in csv.DictReader(sys.stdin):
+            if id == row[input_format["patient_id"]]:
+                handleRow(row, obj)
+        return
     with open(inputFile) as csvFile:
-        reader = csv.DictReader(csvFile)
-        for row in reader:
+        for row in csv.DictReader(csvFile):
             if id == row[input_format["patient_id"]]:
                 handleRow(row, obj)
 
@@ -180,9 +184,9 @@ def usage():
     print('usage: {} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
-    print('-f <format>: specifies table format file.', file=sys.stderr)
+    print('-f <format>: specifies table format file', file=sys.stderr)
     print('-p <id>: specifies the patient id', file=sys.stderr)
-    print('<file or path>: a list of input files or paths containing them', file=sys.stderr)
+    print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
 
 def read_format(file):
@@ -234,7 +238,7 @@ if __name__ == '__main__':
     allPaths = []
     while args:
         path = args.pop(0)
-        if os.path.isfile(path):
+        if os.path.isfile(path) or path == '-':
             allPaths.append((path, True))
         elif os.path.isdir(path):
             allPaths.append((path, False))
