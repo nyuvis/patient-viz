@@ -138,3 +138,5 @@ For this the patient file creation pipeline looks like:
 ```bash
 ./shelve_access.py -p 3045033701 -c config.txt -o - | ./opd_get_patient.py -p 3045033701 -f format.json -o json/3045033701.json -- -
 ```
+
+The list of ids can be obtained with `./shelve_access.py -c config.txt --list`.

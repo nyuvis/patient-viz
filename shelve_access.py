@@ -88,6 +88,14 @@ def readShelve(pid, settings, output):
                 continue
             writeRow(values, out, start, length, id)
 
+def printList(settings):
+    for file in settings['shelve_id_files']:
+        with open(file, 'r') as f:
+            for line in f:
+                if line == '':
+                    continue
+                print(line.strip(), file=sys.stdout)
+
 ### argument API
 
 def readConfig(settings, file):
@@ -103,11 +111,12 @@ def readConfig(settings, file):
             print(json.dumps(settings, indent=2), file=output)
 
 def usage():
-    print(sys.argv[0]+": -p <pid> -c <config> -o <output> [-h|--help]", file=sys.stderr)
+    print(sys.argv[0]+": -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]", file=sys.stderr)
     print("-p <pid>: specify patient id", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
     print("-h|--help: prints this help", file=sys.stderr)
+    print("-l|--list: prints all available patient ids and exits", file=sys.stderr)
     sys.exit(1)
 
 def interpretArgs():
@@ -122,7 +131,11 @@ def interpretArgs():
         'header_lab_rsl': '/m/data/headers/lab_rsl.hdr',
         'header_med_clms': '/m/data/headers/med_clms.hdr',
         'header_rx_clms': '/m/data/headers/rx_clms.hdr',
-        'join_id': 'MEMBER_ID'
+        'join_id': 'MEMBER_ID',
+        'shelve_id_files': [
+            '/m/data/memberIds/mMyeloma.txt',
+            '/m/data/memberIds/mdiabetes.txt'
+        ]
     }
     info = {
         'pid': '',
@@ -130,10 +143,13 @@ def interpretArgs():
     }
     args = sys.argv[:]
     args.pop(0);
+    do_list = False
     while args:
         val = args.pop(0)
         if val == '-h' or val == '--help':
             usage()
+        if val == '-l' or val == '--list':
+            do_list = True
         elif val == '-p':
             if not args:
                 print('-p requires argument', file=sys.stderr)
@@ -152,6 +168,9 @@ def interpretArgs():
         else:
             print('illegal argument '+val, file=sys.stderr)
             usage()
+    if do_list:
+        printList(settings)
+        sys.exit(0)
     if info['pid'] == '':
         print('patient id required', file=sys.stderr)
         usage()
