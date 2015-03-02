@@ -8,6 +8,7 @@ Created on Tue Jan 20 14:10:00 2015
 from __future__ import print_function
 import time as time_lib
 from datetime import datetime, timedelta
+import collections
 import os
 import sys
 import csv
@@ -46,7 +47,7 @@ def nextDay(stamp):
 
 def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     for info in obj["info"]:
-        if info["id"] == id:
+        if info["id"] == id and str(value) != str(info["value"]):
             print('duplicate "'+id+'" new: '+str(value)+' old: '+str(info["value"]), file=sys.stderr)
             return
     node = {
@@ -64,7 +65,7 @@ def is_array(v):
 def handleKey(row, key, mode, hnd):
     if mode == MODE_ARRAY:
         for k in input_format[key]:
-            if k in row:
+            if k in row and row[k] != '':
                 hnd(row[k])
         return
     ignore_missing = mode == MODE_DEFAULT
@@ -73,14 +74,14 @@ def handleKey(row, key, mode, hnd):
         if is_array(k):
             found = False
             for key in k:
-                if k in row and row[k] != '':
-                    hnd(row[k])
+                if key in row and row[key] != '':
+                    hnd(row[key])
                     found = True
                     break
             if not found and ignore_missing:
                 hnd('')
         else:
-            if k in row:
+            if k in row and row[k] != '':
                 hnd(row[k])
     elif ignore_missing:
         hnd('')
