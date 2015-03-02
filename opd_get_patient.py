@@ -84,6 +84,8 @@ def handleKey(row, key, mode, hnd):
         else:
             if k in row and row[k] != '':
                 hnd(row[k])
+            elif ignore_missing:
+                hnd('')
     elif ignore_missing:
         hnd('')
 
