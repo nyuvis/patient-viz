@@ -201,7 +201,7 @@ def processDirectory(dir, id, obj):
                 processFile(dir + '/' + file, id, obj)
 
 def usage():
-    print('usage: {} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
@@ -212,7 +212,7 @@ def usage():
 def read_format(file):
     global input_format
     if not os.path.isfile(file):
-        print('invalid format file: {}'.format(file), file=sys.stderr)
+        print('invalid format file: {0}'.format(file), file=sys.stderr)
         usage()
     with open(file) as formatFile:
         input_format = json.loads(formatFile.read())
