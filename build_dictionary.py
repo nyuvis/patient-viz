@@ -387,19 +387,14 @@ symbolTable = {}
 def readConfig(settings, file):
     if file == '-':
         return
-    if not os.path.isfile(file):
-        print("creating config file: "+file, file=sys.stderr)
+    config = {}
+    if os.path.isfile(file):
+        with open(file, 'r') as input:
+            config = json.loads(input.read())
+    settings.update(config)
+    if set(settings.keys()) - set(config.keys()):
         with open(file, 'w') as output:
             print(json.dumps(settings, indent=2), file=output)
-        return
-    config = {}
-    with open(file, 'r') as input:
-        config = json.loads(input.read())
-    for k in config.keys():
-        if k not in settings:
-            print("unknown setting: "+k, file=sys.stderr)
-        else:
-            settings[k] = config[k]
 
 def usage():
     print(sys.argv[0]+": -p <file> -c <config> -o <output> [-h|--help]", file=sys.stderr)
