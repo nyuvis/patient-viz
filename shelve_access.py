@@ -111,7 +111,7 @@ def readConfig(settings, file):
             print(json.dumps(settings, indent=2), file=output)
 
 def usage():
-    print(sys.argv[0]+": -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]", file=sys.stderr)
+    print("{0}: -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]".format(sys.argv[0]), file=sys.stderr)
     print("-p <pid>: specify patient id", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
