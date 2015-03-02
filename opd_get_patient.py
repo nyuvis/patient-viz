@@ -8,6 +8,7 @@ Created on Tue Jan 20 14:10:00 2015
 from __future__ import print_function
 import time as time_lib
 from datetime import datetime, timedelta
+import collections
 import os
 import sys
 import csv
@@ -27,11 +28,15 @@ MODE_ARRAY = 2
 
 gender_label = {
     "1": "primary",
-    "2": "danger"
+    "2": "danger",
+    "M": "primary",
+    "W": "danger"
 }
 gender_map = {
     "1": "M",
-    "2": "W"
+    "2": "W",
+    "M": "M",
+    "W": "W"
 }
 
 def toTime(s):
@@ -43,7 +48,8 @@ def nextDay(stamp):
 def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     for info in obj["info"]:
         if info["id"] == id:
-            print('duplicate "'+id+'" new: '+str(value)+' old: '+str(info["value"]), file=sys.stderr)
+            if str(value) != str(info["value"]):
+                print('duplicate "'+id+'" new: '+str(value)+' old: '+str(info["value"]), file=sys.stderr)
             return
     node = {
         "id": id,
@@ -54,17 +60,32 @@ def addInfo(obj, id, key, value, hasLabel = False, label = ""):
         node["label"] = label
     obj["info"].append(node)
 
+def is_array(v):
+    return not isinstance(v, (str, unicode)) and isinstance(v, collections.Sequence)
+
 def handleKey(row, key, mode, hnd):
     if mode == MODE_ARRAY:
         for k in input_format[key]:
-            if k in row:
+            if k in row and row[k] != '':
                 hnd(row[k])
         return
     ignore_missing = mode == MODE_DEFAULT
     if key in input_format:
         k = input_format[key]
-        if k in row:
-            hnd(row[k])
+        if is_array(k):
+            found = False
+            for key in k:
+                if key in row and row[key] != '':
+                    hnd(row[key])
+                    found = True
+                    break
+            if not found and ignore_missing:
+                hnd('')
+        else:
+            if k in row and row[k] != '':
+                hnd(row[k])
+            elif ignore_missing:
+                hnd('')
     elif ignore_missing:
         hnd('')
 
@@ -91,6 +112,9 @@ def handleEvent(row):
 
 def handleRow(row, obj):
 
+    handleKey(row, "age", MODE_OPTIONAL, lambda value:
+            addInfo(obj, 'age', 'Age', value)
+        )
     handleKey(row, "born", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'born', 'Born', int(str(value)[0:4]) if len(str(value)) >= 4 else 'N/A')
         )
@@ -181,7 +205,7 @@ def processDirectory(dir, id, obj):
                 processFile(dir + '/' + file, id, obj)
 
 def usage():
-    print('usage: {} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
@@ -192,7 +216,7 @@ def usage():
 def read_format(file):
     global input_format
     if not os.path.isfile(file):
-        print('invalid format file: {}'.format(file), file=sys.stderr)
+        print('invalid format file: {0}'.format(file), file=sys.stderr)
         usage()
     with open(file) as formatFile:
         input_format = json.loads(formatFile.read())

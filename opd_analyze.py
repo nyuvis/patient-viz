@@ -30,7 +30,7 @@ def analyzeDirectory(dir, counter):
                 analyzeFile(dir + '/' + file, counter)
 
 def usage():
-    print('usage: {} [-h] [-m] <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-m] <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-m: batch compatible output', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them', file=sys.stderr)

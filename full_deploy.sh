@@ -36,7 +36,7 @@ fi
 
 test_fail() {
   if [ $1 -ne 0 ]; then
-    echo "fail!"
+    echo "deploying failed!"
     exit 1
   fi
 }
