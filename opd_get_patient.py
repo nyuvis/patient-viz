@@ -27,11 +27,15 @@ MODE_ARRAY = 2
 
 gender_label = {
     "1": "primary",
-    "2": "danger"
+    "2": "danger",
+    "M": "primary",
+    "W": "danger"
 }
 gender_map = {
     "1": "M",
-    "2": "W"
+    "2": "W",
+    "M": "M",
+    "W": "W"
 }
 
 def toTime(s):
@@ -54,6 +58,9 @@ def addInfo(obj, id, key, value, hasLabel = False, label = ""):
         node["label"] = label
     obj["info"].append(node)
 
+def is_array(v):
+    return not isinstance(v, (str, unicode)) and isinstance(v, collections.Sequence)
+
 def handleKey(row, key, mode, hnd):
     if mode == MODE_ARRAY:
         for k in input_format[key]:
@@ -63,8 +70,18 @@ def handleKey(row, key, mode, hnd):
     ignore_missing = mode == MODE_DEFAULT
     if key in input_format:
         k = input_format[key]
-        if k in row:
-            hnd(row[k])
+        if is_array(k):
+            found = False
+            for key in k:
+                if k in row and row[k] != '':
+                    hnd(row[k])
+                    found = True
+                    break
+            if not found and ignore_missing:
+                hnd('')
+        else:
+            if k in row:
+                hnd(row[k])
     elif ignore_missing:
         hnd('')
 
@@ -91,6 +108,9 @@ def handleEvent(row):
 
 def handleRow(row, obj):
 
+    handleKey(row, "age", MODE_OPTIONAL, lambda value:
+            addInfo(obj, 'age', 'Age', value)
+        )
     handleKey(row, "born", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'born', 'Born', int(str(value)[0:4]) if len(str(value)) >= 4 else 'N/A')
         )

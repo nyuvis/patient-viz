@@ -16,33 +16,35 @@ Timestamps are UNIX timestamps in seconds since standard epoch.
 ## Patient file creation format
 
 TODO text and comments
+TODO arrays for first match
 
 ```javascript
 {
-  "patient_id": 'DESYNPUF_ID',
-  <"born">: 'BENE_BIRTH_DT',
-  <"death">: 'BENE_DEATH_DT',
-  <"gender">: 'BENE_SEX_IDENT_CD',
-  <"claim_amount">: 'CLM_PMT_AMT',
-  <"claim_from">: 'CLM_FROM_DT',
-  <"claim_to">: 'CLM_THRU_DT',
+  "patient_id": "DESYNPUF_ID",
+  <"age">: "ELIG_AGE",
+  <"born">: "BENE_BIRTH_DT",
+  <"death">: "BENE_DEATH_DT",
+  <"gender">: "BENE_SEX_IDENT_CD",
+  <"claim_amount">: "CLM_PMT_AMT",
+  <"claim_from">: "CLM_FROM_DT",
+  <"claim_to">: "CLM_THRU_DT",
   "diagnosis": [
-    'ICD9_DGNS_CD_1',
-    'ICD9_DGNS_CD_2',
+    "ICD9_DGNS_CD_1",
+    "ICD9_DGNS_CD_2",
     …
   ],
   "procedures": [
-    'ICD9_PRCDR_CD_1',
-    'ICD9_PRCDR_CD_2',
+    "ICD9_PRCDR_CD_1",
+    "ICD9_PRCDR_CD_2",
     …
   ],
-  <"prescribed_date">: 'SRVC_DT',
-  <"prescribed">: 'PROD_SRVC_ID',
-  <"prescribed_amount">: 'PTNT_PAY_AMT',
-  <"lab_date">: 'LAB_RSL_SERVICE_DATE',
-  <"lab_code">: 'LOINC',
-  <"lab_result">: 'LAB_RSL',
-  <"lab_flag">: 'LAB_NORMAL'
+  <"prescribed_date">: "SRVC_DT",
+  <"prescribed">: "PROD_SRVC_ID",
+  <"prescribed_amount">: "PTNT_PAY_AMT",
+  <"lab_date">: "LAB_RSL_SERVICE_DATE",
+  <"lab_code">: "LOINC",
+  <"lab_result">: "LAB_RSL",
+  <"lab_flag">: "LAB_NORMAL"
 }
 ```
 
@@ -136,7 +138,7 @@ Besides CSV files patient files can also be created using a shelve database.
 For this the patient file creation pipeline looks like:
 
 ```bash
-./shelve_access.py -p 3045033701 -c config.txt -o - | ./opd_get_patient.py -p 3045033701 -f format.json -o json/3045033701.json -- -
+./shelve_access.py -p 3045033701 -c config.txt -o - | ./opd_get_patient.py -p 3045033701 -f format_shelve.json -o json/3045033701.json -- -
 ```
 
 The list of ids can be obtained with `./shelve_access.py -c config.txt --list`.
