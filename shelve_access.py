@@ -86,7 +86,7 @@ def readShelve(pid, settings, output):
             if len(values) != row_def['col_num']:
                 print("column mismatch! expected {0} got {1}: {2}".format(str(row_def['col_num']), str(len(values)), row), file=sys.stderr)
                 continue
-            writeRow(row, out, start, length, id)
+            writeRow(values, out, start, length, id)
 
 ### argument API
 
@@ -126,7 +126,7 @@ def interpretArgs():
     }
     info = {
         'pid': '',
-        'output': '-' 
+        'output': '-'
     }
     args = sys.argv[:]
     args.pop(0);
