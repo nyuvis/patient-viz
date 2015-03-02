@@ -25,7 +25,7 @@ def writeRow(cols, out, start, length, colZero):
     str = doQuote(colZero) + delim;
     if start > 0:
         str += start * delim
-    str += map(doQuote, cols).join(delim)
+    str += delim.join(map(doQuote, cols))
     remain = length - start - len(cols)
     if remain > 0:
         str += remain * delim
@@ -40,7 +40,7 @@ def openDB(pid, data, out):
     def processHeader(file, db_key):
         hdrs = []
         with open(file, 'r') as hnd:
-            hdrs = hnd.read().split(settings['hdr_split'])
+            hdrs = hnd.read().strip().split(settings['hdr_split'])
         skip = -1
         start = len(all_hdrs)
         for ix, head in enumerate(hdrs):
@@ -81,11 +81,11 @@ def readShelve(pid, settings, output):
         for row in row_def['data']:
             if row == '':
                 continue
-            values = row.split(splitter)
+            values = row.strip().split(splitter)
+            id = values.pop(skip)
             if len(values) != row_def['col_num']:
-                print("column mismatch! expected {} got {}: {}".format(row_def['col_num'], len(values), row), file=sys.stderr)
+                print("column mismatch! expected {0} got {1}: {2}".format(str(row_def['col_num']), str(len(values)), row), file=sys.stderr)
                 continue
-            id = row.pop(skip)
             writeRow(row, out, start, length, id)
 
 ### argument API
@@ -126,7 +126,7 @@ def interpretArgs():
     }
     info = {
         'pid': '',
-        'output': sys.stdout
+        'output': '-' 
     }
     args = sys.argv[:]
     args.pop(0);
@@ -149,8 +149,6 @@ def interpretArgs():
                 print('-o requires argument', file=sys.stderr)
                 usage()
             info['output'] = args.pop(0)
-            if info['output'] == '-':
-                info['output'] = sys.stdout
         else:
             print('illegal argument '+val, file=sys.stderr)
             usage()
