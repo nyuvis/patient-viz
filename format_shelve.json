@@ -1,5 +1,6 @@
 {
   "patient_id": "MEMBER_ID",
+  "age": "ELIG_AGE",
   "gender": "ELIG_GENDER",
   "claim_amount": [
     "ENCS_CHARGE_AMT",
