@@ -47,8 +47,9 @@ def nextDay(stamp):
 
 def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     for info in obj["info"]:
-        if info["id"] == id and str(value) != str(info["value"]):
-            print('duplicate "'+id+'" new: '+str(value)+' old: '+str(info["value"]), file=sys.stderr)
+        if info["id"] == id:
+            if str(value) != str(info["value"]):
+                print('duplicate "'+id+'" new: '+str(value)+' old: '+str(info["value"]), file=sys.stderr)
             return
     node = {
         "id": id,

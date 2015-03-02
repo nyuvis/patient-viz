@@ -138,7 +138,9 @@ Besides CSV files patient files can also be created using a shelve database.
 For this the patient file creation pipeline looks like:
 
 ```bash
-./shelve_access.py -p 3045033701 -c config.txt -o - | ./opd_get_patient.py -p 3045033701 -f format_shelve.json -o json/3045033701.json -- -
+$ ./shelve_access.py -p 3045033701 -c config.txt -o - | ./opd_get_patient.py -p 3045033701 -f format_shelve.json -o json/3045033701.json -- -
+$ ./build_dictionary.py -p json/3045033701.json -c config.txt -o json/dictionary.json
+$ ./start.sh --list-update
 ```
 
 The list of ids can be obtained with `./shelve_access.py -c config.txt --list`.
