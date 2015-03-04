@@ -78,7 +78,15 @@ if [ ! -z $no_open ]; then
 else
   mac_chrome="/Applications/Google Chrome.app"
   mac_firefox="/Applications/Firefox.app"
-  if [ `command -v google-chrome 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
+  if [ `command -v firefox 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
+    # linux firefox
+    if [[ -z `ps | grep [f]irefox` ]]; then
+      print "open window: ${url}"
+      firefox -new-window "${url}" &
+    else
+      print "open url: ${url}"
+      firefox -remote "openURL(${url})" &
+  elif [ `command -v google-chrome 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
     # linux chrome
     print "open window: ${url}"
     google-chrome "${url}"
@@ -90,15 +98,6 @@ else
     # mac firefox
     print "open window: ${url}"
     open "${mac_firefox}" "${url}"
-  elif [ `command -v firefox 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
-    # linux firefox
-    if [[ -z `ps | grep [f]irefox` ]]; then
-      print "open window: ${url}"
-      firefox -new-window "${url}" &
-    else
-      print "open url: ${url}"
-      firefox -remote "openURL(${url})" &
-    fi
   else
     echo "Could not find chrome or firefox..."
     echo "${url}"
