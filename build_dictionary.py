@@ -164,7 +164,7 @@ diag_parents = {}
 def createDiagnosisEntry(symbols, type, id):
     prox_id = id
     pid = ""
-    while len(prox_id) > 3:
+    while len(prox_id) >= 3:
         pid = diag_parents[prox_id] if prox_id in diag_parents else pid
         if prox_id in symbols:
             return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
@@ -184,7 +184,7 @@ proc_parents = {}
 def createProcedureEntry(symbols, type, id):
     prox_id = id
     pid = ""
-    while len(prox_id) > 3:
+    while len(prox_id) >= 3:
         pid = proc_parents[prox_id] if prox_id in proc_parents else pid
         if prox_id in symbols:
             return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
@@ -269,12 +269,16 @@ def initICD9():
                 continue
             if not line[1].isdigit():
                 if line[0] == ' ' and lastCode != "":
+                    noDot = lastCode.replace(".", "")
                     codes[lastCode] = codes[lastCode] + " " + line.strip()
+                    codes[noDot] = codes[noDot] + " " + line.strip()
                 continue
             spl = line.split(None, 1)
             if len(spl) == 2:
-                lastCode = spl[0].replace(".", "")
+                lastCode = spl[0].strip()
+                noDot = lastCode.replace(".", "")
                 codes[lastCode] = spl[1].rstrip()
+                codes[noDot] = spl[1].rstrip()
             else:
                 print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
     return codes
