@@ -9,6 +9,7 @@ from __future__ import print_function
 import shelve
 import sys
 import os.path
+import csv
 #import simplejson as json
 import json
 import BitVector
@@ -27,7 +28,7 @@ def handleRow(row, id, cb):
     }
     opd_get_patient.handleRow(row, obj)
     dict = {}
-    build_dictionary.extractEntries(dict, obj["events"])
+    build_dictionary.extractEntries(dict, obj)
     for group in dict.keys():
         for type in dict[group]:
             cb(id, group, type["id"])
@@ -136,7 +137,7 @@ if __name__ == '__main__':
                 print('-o requires output file', file=sys.stderr)
                 usage()
             output = args.pop(0)
-        elif val == '-c':
+        elif arg == '-c':
             if not args or args[0] == '--':
                 print('-c requires argument', file=sys.stderr)
                 usage()
