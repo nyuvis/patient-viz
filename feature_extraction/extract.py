@@ -58,7 +58,7 @@ def processFile(inputFile, id_column, cb):
     def processDict(events, id):
         if len(events) == 0:
             return
-        print("processing {0} events for {1}".format(len(events), id), file=sys.stderr)
+        print("processing {1} with {0} events".format(len(events), id), file=sys.stderr)
         obj = {
             "events": events
         }
@@ -73,8 +73,15 @@ def processFile(inputFile, id_column, cb):
         with open(inputFile) as csvFile:
             handleRows(csv.DictReader(csvFile))
 
+    num_total = len(id_event_cache.keys())
+    num = 0
+    last_print = 0
     for id in id_event_cache.keys():
         processDict(id_event_cache[id], id)
+        num += 1
+        if num / num_total > last_print + 0.01 or num == num_total:
+            last_print = num / num_total
+            print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
 
 def processDirectory(dir, id_column, cb):
     for (_, _, files) in os.walk(dir):
