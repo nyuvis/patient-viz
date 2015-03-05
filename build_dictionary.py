@@ -131,7 +131,7 @@ def initPrescribed():
             ndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
             desc = row['PACKAGEDESCRIPTION'].strip()
             if uid not in uidLookup:
-                print("warning missing uid: " + uid, file=sys.stderr)
+                #print("warning missing uid: " + uid, file=sys.stderr) // not that important since the non-packaged version is already added
                 continue
             l = uidLookup[uid]
             if ndc in prescribeLookup:
@@ -283,7 +283,8 @@ def initICD9():
                 codes[lastCode] = spl[1].rstrip()
                 codes[noDot] = spl[1].rstrip()
             else:
-                print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
+                if line[0] != '(':
+                    print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
     return codes
 
 ### ccs ###
