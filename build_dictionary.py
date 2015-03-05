@@ -17,6 +17,8 @@ import csv
 import json
 import os.path
 
+reportMissingEntries = True
+
 def toEntry(id, pid, name, desc):
     return {
         "id": id,
@@ -201,7 +203,8 @@ def initProcedure():
 ### unknown ###
 
 def createUnknownEntry(_, type, id, pid):
-    print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
+    if reportMissingEntries:
+        print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
     return toEntry(id, pid, id, type + " " + id)
 
 ### type ###
