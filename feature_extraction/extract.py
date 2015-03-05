@@ -22,7 +22,7 @@ import build_dictionary
 import opd_get_patient
 
 path_correction = '../'
-flush_threshold = 500
+flush_threshold = 650
 
 from_time = -inf
 to_time = inf
@@ -36,7 +36,7 @@ def handleRow(row, id, eventCache):
         "events": []
     }
     opd_get_patient.handleRow(row, obj)
-    eventCache.extend(obj["events"])
+    eventCache.extend(filter(lambda e: e['time'] >= from_time and e['time'] <= to_time, obj["events"]))
 
 def processFile(inputFile, id_column, cb):
     print("processing file: {0}".format(inputFile), file=sys.stderr)
@@ -60,7 +60,7 @@ def processFile(inputFile, id_column, cb):
             return
         print("processing {0} events for {1}".format(len(events), id), file=sys.stderr)
         obj = {
-            "events": filter(lambda e: e['time'] >= from_time and e['time'] <= to_time, events)
+            "events": events
         }
         dict = {}
         build_dictionary.extractEntries(dict, obj)
