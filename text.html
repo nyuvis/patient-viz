@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patient Viz - Text</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="lib/colorbrewer/colorbrewer.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/busy.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/zui.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/time.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/text.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/path.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/stat.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
+  <script src="js/cluster.js" charset="utf-8"></script>
+</head>
+<body onload="start()">
+
+<div id="pContent">
+</div>
+
+<script>
+var SLOW_MODE = false;
+
+function start() {
+  jkjs.busy.imgBusy = "jk-js/jkjs/img/busy.gif";
+  jkjs.busy.imgWarn = "jk-js/jkjs/img/warning.png";
+  jkjs.text.exact(!SLOW_MODE);
+
+  function Type(group_id, type_id, type_lookup) {
+    var that = this;
+    var de = dictionary[group_id][type_id];
+    this.shortHand = function() {
+      return group_id + "__" + type_id;
+    };
+    this.name = function() {
+      return de["name"];
+    };
+    this.desc = function() {
+      return de["desc"];
+    };
+    this.parent = function() {
+      if(type_id === "") return null;
+      var parent = de["parent"];
+      return type_lookup(group_id, parent);
+    };
+    this.isRoot = function() {
+      return !that.parent();
+    };
+    var color = null;
+    this.color = function() {
+      if(!color) {
+        if("color" in de) {
+          color = de["color"];
+        } else if(that.isRoot()) {
+          color = "black";
+        } else {
+          color = that.parent().color();
+        }
+      }
+      return color;
+    };
+    var slots = null;
+    this.fillSlots = function(eventTimes, fromTime, toTime, step) {
+      if(slots) {
+        console.warn("overwriting slots!");
+      }
+      slots = new Uint8Array(Math.ceil((toTime - fromTime) / step));
+      eventTimes.forEach(function(time) {
+        var slot = Math.ceil((time - fromTime) / step);
+        slots[slot] += 1;
+      });
+    };
+    this.slots = function() {
+      return slots;
+    };
+    var text = null;
+    this.createText = function(sel) {
+      if(text) return;
+      text = sel.append("text").text(that.name());
+    };
+    this.text = function() {
+      return text;
+    };
+  } // Type
+
+  function createTypeLookup() {
+    var types = {};
+    var type_lookup = function(group_id, type_id) {
+      if(!(group_id in types)) {
+        types[group_id] = {};
+      }
+      var grp = types[group_id];
+      if(!(type_id in grp)) {
+        grp[type_id] = new Type(group_id, type_id, type_lookup);
+      }
+      return grp[type_id];
+    };
+    return type_lookup;
+  }
+
+  function loadEvents(json, type_lookup) {
+    var events = json["events"];
+    var minTime = Number.POSITIVE_INFINITY;
+    var maxTime = Number.NEGATIVE_INFINITY;
+    var allTimes = [];
+    var times = {};
+    events.forEach(function(e) {
+      var time = +e["time"];
+      allTimes.push(time);
+      minTime = Math.min(minTime, time);
+      maxTime = Math.max(maxTime, time);
+
+      var group_id = e["group"];
+      var type_id = e["id"];
+      if(!(group_id in times)) {
+        times[group_id] = {};
+      }
+      var grp = times[group_id];
+      if(!(type_id in grp)) {
+        grp[type_id] = [];
+      }
+      var type_times = grp[type_id];
+      type_times.push(time);
+    });
+    allTimes.sort(function(a, b) {
+      return d3.ascending(a, b);
+    });
+    var step = Number.POSITIVE_INFINITY;
+    var prevTime = minTime;
+    allTimes.forEach(function(time) {
+      if(prevTime === time) return;
+      var diff = time - prevTime;
+      step = Math.min(step, diff);
+      prevTime = time;
+    });
+    var resultTypes = [];
+    Object.keys(times).forEach(function(group_id) {
+      var grp = times[group_id];
+      Object.keys(grp).forEach(function(type_id) {
+        var times = grp[type_id];
+        var type = type_lookup(group_id, type_id);
+        type.fillSlots(times, minTime, maxTime, step);
+        resultTypes.push(type);
+      });
+    });
+    return resultTypes;
+  }
+
+  function Group() {
+    var that = this;
+    var types = [];
+    this.addType = function(type) {
+      types.push(type);
+    };
+    this.size = function() {
+      return types.length;
+    };
+    this.eachType = function(cb) {
+      types.forEach(function(type) {
+        cb(type);
+      });
+    };
+    var fingerprint = null;
+    this.createFingerprint = function(sel) {
+      if(fingerprint) return;
+      fingerprint = sel.append("foreignObject").attr({
+        "width": 100,
+        "height": 20,
+        "x": 50,
+        "y": (that.size() - 1) * 20 * 0.5
+      }).append("xhtml:canvas").attr({
+        "width": 100,
+        "height": 20
+      });
+    };
+    this.fingerprint = function() {
+      return fingerprint;
+    };
+    this.updateFingerprint = function() {
+      var ctx = fingerprint.node().getContext("2d");
+      ctx.globalAlpha = 1;
+      var border = 1;
+      var w = 100 - border * 2;
+      var h = 20  - border * 2;
+      ctx.clearRect(0, 0, w + 2 * border, h + 2 * border);
+      ctx.lineWidth = 1;
+
+      ctx.save();
+      ctx.lineWidth = border;
+      ctx.strokeStyle = "black";
+      ctx.strokeRect(0.5 * border, 0.5 * border, w + border, h + border);
+      ctx.restore();
+
+      ctx.translate(border, border);
+      types.forEach(function(type) {
+        ctx.save();
+        ctx.strokeStyle = type.color();
+        var slots = type.slots();
+        for(var ix = 0;ix < slots.length;ix += 1) {
+          var num = slots[ix];
+          if(!num) continue;
+          var x = ix / slots.length * w;
+          ctx.globalAlpha = Math.min(1, 0.3 * num);
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, h);
+          ctx.stroke();
+        }
+        ctx.restore();
+      });
+    };
+  } // Group
+
+  var dictionary = null;
+  var lastDictionaryFile = "";
+
+  function load(pid, dictionaryFile) {
+    if(!dictionary || lastDictionaryFile != dictionaryFile) {
+      d3.json(dictionaryFile, function(err, json) {
+        if(err) {
+          console.warn("Failed loading dictionary: '"+dictionaryFile+"'");
+          return console.warn(err);
+        }
+        dictionary = json;
+        lastDictionaryFile = dictionaryFile;
+        load(pid, dictionaryFile);
+        return;
+      });
+      return;
+    }
+    d3.json(pid, function(err, json) {
+      if(err) {
+        console.warn("Failed loading patient: '"+pid+"'");
+        return console.warn(err);
+      }
+      var error = true;
+      try {
+        var types = loadEvents(json, createTypeLookup());
+        var groups = [];
+        types.forEach(function(type) {
+          var group = new Group();
+          group.addType(type);
+          groups.push(group);
+        });
+        var groupSVGs = d3.select("#pContent").selectAll("svg").data(groups);
+        groupSVGs.exit().remove();
+        groupSVGs.enter().append("svg").attr({
+          "width": 150,
+          "height": function(group) {
+            return 20 * group.size();
+          }
+        });
+        groupSVGs.each(function(group) {
+          var sel = d3.select(this);
+          var y = 0;
+          group.eachType(function(type) {
+            y += 20;
+            type.createText(sel);
+            type.text().attr({
+              "y": y - 5
+            });
+          });
+          group.createFingerprint(sel);
+          group.updateFingerprint();
+        });
+        error = false;
+      } finally {
+        if(error) {
+          console.warn("error loading");
+        }
+      }
+    });
+  }
+
+  load("json/A9BD9D012E87A360.json", "json/dictionary.json");
+}
+
+</script>
+
+</body>
+</html>
