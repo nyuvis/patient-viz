@@ -511,12 +511,12 @@ function setupYCluster(pool, sel, typeView) {
         setTimeout(function() {
           var error = true;
           try {
-            computeRowClusters(pool, function(vecA, vecB) {
+            new EventClusterer().distance(function(vecA, vecB) {
               // levenshtein, 3, 3 // 10, 5
               // hamming, 5, 3
               // jaccard, 0.5, 1
               return jkjs.stat.edit_distances.hamming(vecA, vecB);
-            }, 5, 3);
+            }).threshold(5).minCluster(3).compute(pool).assignProxies();
             error = false;
           } finally {
             busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm);
@@ -545,85 +545,4 @@ function setupYCluster(pool, sel, typeView) {
 
   sel.on("change", updateYCompress);
   updateYCompress();
-}
-
-function computeRowClusters(pool, distance, threshold, minCluster) {
-  // init types
-  console.log("init");
-  var types = [];
-  pool.traverseTypes(function(gid, tid, type) {
-    if(type.hasEvents()) {
-      types.push({
-        type: type,
-        vec: pool.toBitVector(type),
-        neighbors: [],
-        cluster: type,
-        visited: false
-      });
-    }
-  });
-  // compute distances
-  console.log("distances");
-  var total = (types.length * types.length - types.length) * 0.5;
-  var count = 0;
-  var lastTime = new Date().getTime();
-  for(var ix = 0;ix < types.length;ix += 1) {
-    var objA = types[ix];
-    var vecA = objA.vec;
-    var curTime = new Date().getTime();
-    if(curTime - lastTime > 1000) {
-      console.log((count / total) * 100 + "%");
-      lastTime = curTime;
-    }
-    for(var k = ix + 1;k < types.length;k += 1) {
-      var objB = types[k];
-      var vecB = objB.vec;
-      var dist = distance(vecA, vecB);
-      if(dist < threshold) {
-        objA.neighbors.push(objB);
-        objB.neighbors.push(objA);
-      }
-      count += 1;
-    }
-  }
-  // dbscan
-  console.log("dbscan");
-  function expandCluster(obj, cluster) {
-    obj.cluster = cluster;
-    var list = [ obj.neighbors ];
-    while(list.length) {
-      list.shift().forEach(function(p) {
-        if(!p.visited) {
-          p.visited = true;
-          if(p.neighbors.length >= minCluster) {
-            list.push(p.neighbors);
-          }
-        }
-        if(p.cluster === p.type) { // not in any other cluster yet
-          p.cluster = cluster;
-        }
-      });
-    }
-  }
-
-  function scan() {
-    types.forEach(function(obj) {
-      if(obj.visited) {
-        return;
-      }
-      obj.visited = true;
-      if(obj.neighbors.length >= minCluster) {
-        expandCluster(obj, obj.cluster);
-      }
-    });
-  }
-
-  scan();
-  // assign proxies
-  console.log("assign proxies");
-  pool.startBulkValidity();
-  types.forEach(function(obj) {
-    obj.type.proxyType(obj.cluster);
-  });
-  pool.endBulkValidity();
 }
