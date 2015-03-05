@@ -30,7 +30,7 @@ to_time = inf
 def toTime(s):
     return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
 
-def handleRow(row, id, cb, eventCache):
+def handleRow(row, id, eventCache):
     obj = {
         "info": [],
         "events": []
@@ -49,7 +49,7 @@ def processFile(inputFile, id_column, cb):
                 eventCache = id_event_cache[id]
             else:
                 eventCache = []
-            handleRow(row, id, cb, eventCache)
+            handleRow(row, id, eventCache)
             if len(eventCache) > flush_threshold:
                 processDict(eventCache, id)
                 eventCache = []
@@ -65,8 +65,7 @@ def processFile(inputFile, id_column, cb):
         dict = {}
         build_dictionary.extractEntries(dict, obj)
         for group in dict.keys():
-            for type in dict[group].keys():
-                cb(id, group, type)
+            cb(id, group, dict[group].keys())
 
     if inputFile == '-':
         handleRows(csv.DictReader(sys.stdin))
@@ -95,20 +94,23 @@ def getBitVector(vectors, header_list, id):
     return bitvec
 
 def getHead(group, type):
-    if "__" in group:
-        print("group name is using __: {0}".format(group), file=sys.stderr)
     return group + "__" + type
 
 def processAll(vectors, header_list, path_tuples):
     header = {}
 
-    def handle(id, group, type):
-        head = getHead(group, type)
-        if head not in header:
-            header[head] = len(header_list)
-            header_list.append(head)
+    def handle(id, group, types):
+        if "__" in group:
+            print("group name is using __: {0}".format(group), file=sys.stderr)
+        for type in types:
+            head = getHead(group, type)
+            if head not in header:
+                header[head] = len(header_list)
+                header_list.append(head)
         bitvec = getBitVector(vectors, header_list, id)
-        bitvec[header[head]] = True
+        for type in types:
+            head = getHead(group, type)
+            bitvec[header[head]] = True
 
     id_column = opd_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
@@ -169,12 +171,12 @@ if __name__ == '__main__':
                 print('--from requires a date', file=sys.stderr)
                 usage()
             from_time = toTime(args.pop(0))
-        if arg == '--to':
+        elif arg == '--to':
             if not args or args[0] == '--':
                 print('--to requires a date', file=sys.stderr)
                 usage()
             to_time = toTime(args.pop(0))
-        if arg == '-f':
+        elif arg == '-f':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
