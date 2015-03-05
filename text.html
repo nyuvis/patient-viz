@@ -41,6 +41,12 @@ function start() {
     this.desc = function() {
       return de["desc"];
     };
+    this.group_id = function() {
+      return group_id;
+    };
+    this.type_id = function() {
+      return type_id;
+    };
     this.parent = function() {
       if(type_id === "") return null;
       var parent = de["parent"];
@@ -70,8 +76,14 @@ function start() {
       slots = new Uint8Array(Math.ceil((toTime - fromTime) / step));
       eventTimes.forEach(function(time) {
         var slot = Math.ceil((time - fromTime) / step);
-        slots[slot] += 1;
+        slots[slot] = 1; // don't report multiple times
       });
+    };
+    this.hasSlots = function() {
+      return !!slots;
+    };
+    this.hasEvents = function() {
+      return that.hasSlots();
     };
     this.slots = function() {
       return slots;
@@ -196,14 +208,16 @@ function start() {
 
       ctx.translate(border, border);
       types.forEach(function(type) {
+        if(!type.hasSlots()) return;
         ctx.save();
         ctx.strokeStyle = type.color();
+        ctx.globalAlpha = 0.3;
         var slots = type.slots();
         for(var ix = 0;ix < slots.length;ix += 1) {
           var num = slots[ix];
           if(!num) continue;
           var x = ix / slots.length * w;
-          ctx.globalAlpha = Math.min(1, 0.3 * num);
+          //ctx.globalAlpha = Math.min(1, 0.3 * num); // we report events only once
           ctx.beginPath();
           ctx.moveTo(x, 0);
           ctx.lineTo(x, h);
@@ -213,6 +227,38 @@ function start() {
       });
     };
   } // Group
+
+  function createGroups(types) {
+    var clusterTypes = new EventClusterer().distance(function(vecA, vecB) {
+      // levenshtein, 3, 3 // 10, 5
+      // hamming, 5, 3
+      // jaccard, 0.5, 1
+      return jkjs.stat.edit_distances.hamming(vecA, vecB);
+    }).threshold(5).minCluster(3).compute({
+      "traverseTypes": function(cb) {
+        types.forEach(function(type) {
+          cb(type.group_id(), type.type_id(), type);
+        });
+      },
+      "toBitVector": function(type) {
+        return type.slots();
+      }
+    }).clusterTypes();
+    var groups = {};
+    clusterTypes.forEach(function(cluster) {
+      var type = cluster["type"];
+      var cluster = cluster["cluster"];
+      var sh = cluster.shortHand();
+      if(!(sh in groups)) {
+        groups[sh] = new Group();
+      }
+      var group = groups[sh];
+      group.addType(type);
+    });
+    return Object.keys(groups).map(function(sh) {
+      return groups[sh];
+    });
+  }
 
   var dictionary = null;
   var lastDictionaryFile = "";
@@ -239,12 +285,7 @@ function start() {
       var error = true;
       try {
         var types = loadEvents(json, createTypeLookup());
-        var groups = [];
-        types.forEach(function(type) {
-          var group = new Group();
-          group.addType(type);
-          groups.push(group);
-        });
+        var groups = createGroups(types);
         var groupSVGs = d3.select("#pContent").selectAll("svg").data(groups);
         groupSVGs.exit().remove();
         groupSVGs.enter().append("svg").attr({

@@ -124,5 +124,12 @@ function EventClusterer() {
     assignProxies(clusterTypes);
     return that;
   };
-
+  this.clusterTypes = function() {
+    return clusterTypes.map(function(type) {
+      return {
+        type: type["type"],
+        cluster: type["cluster"]
+      };
+    });
+  };
 } // EventClusterer
