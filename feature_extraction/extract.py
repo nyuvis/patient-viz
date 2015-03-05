@@ -20,29 +20,54 @@ import build_dictionary
 import opd_get_patient
 
 path_correction = '../'
+flush_threshold = 500
 
-def handleRow(row, id, cb):
+def handleRow(row, id, cb, eventCache):
     obj = {
         "info": [],
-        "events": [],
-        "h_bars": [],
-        "v_bars": [ "auto" ]
+        "events": []
     }
     opd_get_patient.handleRow(row, obj)
-    dict = {}
-    build_dictionary.extractEntries(dict, obj)
-    for group in dict.keys():
-        for type in dict[group].keys():
-            cb(id, group, type)
+    eventCache.extend(obj["events"])
 
 def processFile(inputFile, id_column, cb):
+    print("processing file: {0}".format(inputFile), file=sys.stderr)
+    id_event_cache = {}
+
+    def handleRows(csvDictReader):
+        for row in csvDictReader:
+            id = row[id_column]
+            if id in id_event_cache:
+                eventCache = id_event_cache[id]
+            else:
+                eventCache = []
+            handleRow(row, id, cb, eventCache)
+            if len(eventCache) > flush_threshold:
+                processDict(eventCache, id)
+                eventCache = []
+            id_event_cache[id] = eventCache
+
+    def processDict(events, id):
+        if len(events) == 0:
+            return
+        print("processing {0} events for {1}".format(len(events), id), file=sys.stderr)
+        obj = {
+            "events": events
+        }
+        dict = {}
+        build_dictionary.extractEntries(dict, obj)
+        for group in dict.keys():
+            for type in dict[group].keys():
+                cb(id, group, type)
+
     if inputFile == '-':
-        for row in csv.DictReader(sys.stdin):
-            handleRow(row, row[id_column], cb)
-        return
-    with open(inputFile) as csvFile:
-        for row in csv.DictReader(csvFile):
-            handleRow(row, row[id_column], cb)
+        handleRows(csv.DictReader(sys.stdin))
+    else:
+        with open(inputFile) as csvFile:
+            handleRows(csv.DictReader(csvFile))
+
+    for id in id_event_cache.keys():
+        processDict(id_event_cache[id], id)
 
 def processDirectory(dir, id_column, cb):
     for (_, _, files) in os.walk(dir):
