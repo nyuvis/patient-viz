@@ -471,6 +471,9 @@ if __name__ == '__main__':
         dict = {}
         for e in rest:
             spl = e.split('__', 1)
+            if len(spl) != 2:
+                print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
+                sys.exit(1)
             createEntry(dict, spl[0].strip(), spl[1].strip())
         file = info['output']
         if file == sys.stdout:
