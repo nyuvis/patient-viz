@@ -29,6 +29,17 @@ function start() {
   jkjs.busy.imgWarn = "jk-js/jkjs/img/warning.png";
   jkjs.text.exact(!SLOW_MODE);
 
+  var pid = "json/A9BD9D012E87A360.json";
+  var dict = "json/dictionary.json";
+  var aggr = 2;
+  var ignore = {
+    "prescribed": true
+  };
+  var blockWidth = 200;
+  var fingerWidth = 200;
+  var lineHeight = 11;
+  var fontSize = 10;
+
   function Type(group_id, type_id, type_lookup) {
     var that = this;
     var de = dictionary[group_id][type_id];
@@ -54,6 +65,17 @@ function start() {
     };
     this.isRoot = function() {
       return !that.parent();
+    };
+    var level = -1;
+    this.level = function() {
+      if(level < 0) {
+        level = that.isRoot() ? 0 : that.parent().level() + 1;
+      }
+      return level;
+    };
+    this.atLevel = function(level) {
+      if(that.level() > level && !that.isRoot()) return that.parent().atLevel(level);
+      return that;
     };
     var color = null;
     this.color = function() {
@@ -88,14 +110,6 @@ function start() {
     this.slots = function() {
       return slots;
     };
-    var text = null;
-    this.createText = function(sel) {
-      if(text) return;
-      text = sel.append("text").text(that.name());
-    };
-    this.text = function() {
-      return text;
-    };
   } // Type
 
   function createTypeLookup() {
@@ -120,6 +134,9 @@ function start() {
     var allTimes = [];
     var times = {};
     events.forEach(function(e) {
+      if(e["group"] in ignore) {
+        return;
+      }
       var time = +e["time"];
       allTimes.push(time);
       minTime = Math.min(minTime, time);
@@ -164,28 +181,42 @@ function start() {
   function Group() {
     var that = this;
     var types = [];
+    var aggrTypes = {};
     this.addType = function(type) {
       types.push(type);
+      var t = type.atLevel(aggr);
+      aggrTypes[t.shortHand()] = t;
     };
     this.size = function() {
-      return types.length;
+      return Object.keys(aggrTypes).length;
     };
     this.eachType = function(cb) {
-      types.forEach(function(type) {
-        cb(type);
+      Object.keys(aggrTypes).forEach(function(sh) {
+        cb(aggrTypes[sh]);
       });
+    };
+    var texts = {};
+    this.createText = function(type, sel) {
+      if(type.shortHand() in texts) return;
+      texts[type.shortHand()] = sel.append("text").text(type.name()).attr({
+        "font-size": fontSize,
+        "font-family": "monospace"
+      });
+    };
+    this.text = function(type) {
+      return texts[type.shortHand()];
     };
     var fingerprint = null;
     this.createFingerprint = function(sel) {
       if(fingerprint) return;
       fingerprint = sel.append("foreignObject").attr({
-        "width": 100,
-        "height": 20,
-        "x": 50,
-        "y": (that.size() - 1) * 20 * 0.5
+        "width": fingerWidth,
+        "height": lineHeight,
+        "x": blockWidth - fingerWidth,
+        "y": that.size() * lineHeight
       }).append("xhtml:canvas").attr({
-        "width": 100,
-        "height": 20
+        "width": fingerWidth,
+        "height": lineHeight
       });
     };
     this.fingerprint = function() {
@@ -195,8 +226,8 @@ function start() {
       var ctx = fingerprint.node().getContext("2d");
       ctx.globalAlpha = 1;
       var border = 1;
-      var w = 100 - border * 2;
-      var h = 20  - border * 2;
+      var w = fingerWidth - border * 2;
+      var h = lineHeight - border * 2;
       ctx.clearRect(0, 0, w + 2 * border, h + 2 * border);
       ctx.lineWidth = 1;
 
@@ -206,6 +237,7 @@ function start() {
       ctx.strokeRect(0.5 * border, 0.5 * border, w + border, h + border);
       ctx.restore();
 
+      ctx.save();
       ctx.translate(border, border);
       types.forEach(function(type) {
         if(!type.hasSlots()) return;
@@ -225,16 +257,12 @@ function start() {
         }
         ctx.restore();
       });
+      ctx.restore();
     };
   } // Group
 
   function createGroups(types) {
-    var clusterTypes = new EventClusterer().distance(function(vecA, vecB) {
-      // levenshtein, 3, 3 // 10, 5
-      // hamming, 5, 3
-      // jaccard, 0.5, 1
-      return jkjs.stat.edit_distances.hamming(vecA, vecB);
-    }).threshold(5).minCluster(3).compute({
+    var clusterTypes = new EventClusterer().distance(jkjs.stat.edit_distances.move_window(2)).threshold(2).minCluster(3).compute({
       "traverseTypes": function(cb) {
         types.forEach(function(type) {
           cb(type.group_id(), type.type_id(), type);
@@ -289,19 +317,32 @@ function start() {
         var groupSVGs = d3.select("#pContent").selectAll("svg").data(groups);
         groupSVGs.exit().remove();
         groupSVGs.enter().append("svg").attr({
-          "width": 150,
+          "width": blockWidth,
           "height": function(group) {
-            return 20 * group.size();
+            return lineHeight * (group.size() + 1);
           }
+        }).style({
+          "width": blockWidth + "px",
+          "height": function(group) {
+            return lineHeight * (group.size() + 1) + "px";
+          }
+        });
+        groupSVGs.append("rect").attr({
+          "width": blockWidth,
+          "height": function(group) {
+            return lineHeight * (group.size() + 1);
+          },
+          "fill": "none",
+          "stroke": "black"
         });
         groupSVGs.each(function(group) {
           var sel = d3.select(this);
           var y = 0;
           group.eachType(function(type) {
-            y += 20;
-            type.createText(sel);
-            type.text().attr({
-              "y": y - 5
+            y += lineHeight;
+            group.createText(type, sel);
+            group.text(type).attr({
+              "y": y
             });
           });
           group.createFingerprint(sel);
@@ -316,7 +357,7 @@ function start() {
     });
   }
 
-  load("json/A9BD9D012E87A360.json", "json/dictionary.json");
+  load(pid, dict);
 }
 
 </script>
