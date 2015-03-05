@@ -30,8 +30,8 @@ def handleRow(row, id, cb):
     dict = {}
     build_dictionary.extractEntries(dict, obj)
     for group in dict.keys():
-        for type in dict[group]:
-            cb(id, group, type["id"])
+        for type in dict[group].keys():
+            cb(id, group, type)
 
 def processFile(inputFile, id_column, cb):
     if inputFile == '-':
