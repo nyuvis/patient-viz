@@ -6,6 +6,8 @@ Created on 2015-03-04
 @author: joschi
 """
 from __future__ import print_function
+import time as time_lib
+from datetime import datetime, timedelta
 import shelve
 import sys
 import os.path
@@ -21,6 +23,12 @@ import opd_get_patient
 
 path_correction = '../'
 flush_threshold = 500
+
+from_time = -inf
+to_time = inf
+
+def toTime(s):
+    return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
 
 def handleRow(row, id, cb, eventCache):
     obj = {
@@ -52,7 +60,7 @@ def processFile(inputFile, id_column, cb):
             return
         print("processing {0} events for {1}".format(len(events), id), file=sys.stderr)
         obj = {
-            "events": events
+            "events": filter(lambda e: e['time'] >= from_time and e['time'] <= to_time, events)
         }
         dict = {}
         build_dictionary.extractEntries(dict, obj)
@@ -126,8 +134,10 @@ def printResult(vectors, header_list, delim, quote, out):
         print(str, file=out)
 
 def usage():
-    print('usage: {0} [-h] [-o <output>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
+    print('--to <date>: specifies the end date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
@@ -154,8 +164,18 @@ if __name__ == '__main__':
             break
         if arg == '-h':
             usage()
-        if arg == '-f' or args[0] == '--':
-            if not args:
+        if arg == '--from':
+            if not args or args[0] == '--':
+                print('--from requires a date', file=sys.stderr)
+                usage()
+            from_time = toTime(args.pop(0))
+        if arg == '--to':
+            if not args or args[0] == '--':
+                print('--to requires a date', file=sys.stderr)
+                usage()
+            to_time = toTime(args.pop(0))
+        if arg == '-f':
+            if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
             opd_get_patient.read_format(args.pop(0))
