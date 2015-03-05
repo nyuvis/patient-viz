@@ -157,8 +157,8 @@ function Event(e, pool, dictionary) {
     }
     that.select().attr({
       "fill": that.getColor(),
-      // "stroke": that.isSelected() ? "gray" : "black",
-      // "stroke-width": 1
+      "stroke": that.isSelected() ? "gray" : "gray",
+      "stroke-width": 0.1
     });
     if(connections.length && !connectionsPath) {
       connectionsPath = pool.select().append("g").datum(that);
