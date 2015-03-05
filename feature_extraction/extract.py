@@ -77,7 +77,9 @@ def processFile(inputFile, id_column, cb):
     num = 0
     last_print = 0
     for id in id_event_cache.keys():
-        processDict(id_event_cache[id], id)
+        eventCache = id_event_cache[id]
+        processDict(eventCache, id)
+        del eventCache[:]
         num += 1
         if num / num_total > last_print + 0.01 or num == num_total:
             last_print = num / num_total
@@ -137,9 +139,11 @@ def printResult(vectors, header_list, delim, quote, out):
     str = doQuote("id") + delim + delim.join(map(doQuote, header_list))
     print(str, file=out)
 
+    empty = BitVector.BitVector(size=0)
     for id in vectors.keys():
-        bitvec = vectors[id]
+        bitvec = getBitVector(vectors, header_list, id)
         str = doQuote(id) + delim + delim.join(map(doQuote, map(lambda v: 1 if v else 0, bitvec)))
+        vectors[id] = empty
         print(str, file=out)
 
 def usage():
