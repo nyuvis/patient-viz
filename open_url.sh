@@ -86,6 +86,7 @@ else
     else
       print "open url: ${url}"
       firefox -remote "openURL(${url})" &
+    fi
   elif [ `command -v google-chrome 2>/dev/null 1>&2; echo $?` -eq 0 ]; then
     # linux chrome
     print "open window: ${url}"

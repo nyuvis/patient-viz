@@ -451,11 +451,11 @@ def interpretArgs():
 
 if __name__ == '__main__':
     (settings, info) = interpretArgs()
-    init()
     globalSymbolsFile = settings['filename']
     icd9File = settings['icd9']
     ccs_diag_file = settings['ccs_diag']
     ccs_proc_file = settings['ccs_proc']
     productFile = settings['ndc_prod']
     packageFile = settings['ndc_package']
+    init()
     enrichDict(info['output'], info['mid'])

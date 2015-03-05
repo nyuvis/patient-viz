@@ -233,26 +233,20 @@ if __name__ == '__main__':
         if arg == '-h':
             usage()
         if arg == '-f':
-            if not args:
+            if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
             read_format(args.pop(0))
         elif arg == '-o':
-            if not args:
+            if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
                 usage()
             output = args.pop(0)
-            if output == '--':
-                print('-o requires output file', file=sys.stderr)
-                usage()
         elif arg == '-p':
-            if not args:
+            if not args or args[0] == '--':
                 print('no id specified', file=sys.stderr)
                 usage()
             id = args.pop(0)
-            if id == '--':
-                print('no id specified', file=sys.stderr)
-                usage()
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -299,4 +293,3 @@ if __name__ == '__main__':
     else:
         with open(file, 'w') as ofile:
             print(json.dumps(obj, indent=2), file=ofile)
-        ofile.close()
