@@ -24,8 +24,8 @@ import opd_get_patient
 path_correction = '../'
 flush_threshold = 650
 
-from_time = -inf
-to_time = inf
+from_time = -float('Inf')
+to_time = float('Inf')
 
 def toTime(s):
     return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
