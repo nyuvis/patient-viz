@@ -404,10 +404,11 @@ def readConfig(settings, file):
             print(json.dumps(settings, indent=2), file=output)
 
 def usage():
-    print("{0}: -p <file> -c <config> -o <output> [-h|--help]".format(sys.argv[0]), file=sys.stderr)
+    print("{0}: -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
     print("-p <file>: specify patient json file. '-' uses standard in", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
+    print("--lookup <id...>: lookup mode. translates ids in shorthand notation '${group_id}__${type_id}'", file=sys.stderr)
     print("-h|--help: prints this help.", file=sys.stderr)
     sys.exit(1)
 
@@ -424,6 +425,7 @@ def interpretArgs():
         'mid': globalMid,
         'output': sys.stdout
     }
+    lookupMode = False
     args = sys.argv[:]
     args.pop(0);
     while args:
@@ -447,13 +449,16 @@ def interpretArgs():
             info['output'] = args.pop(0)
             if info['output'] == '-':
                 info['output'] = sys.stdout
+        elif val == '--lookup':
+            lookupMode = True
+            break
         else:
             print('illegal argument '+val, file=sys.stderr)
             usage()
-    return (settings, info)
+    return (settings, info, lookupMode, args)
 
 if __name__ == '__main__':
-    (settings, info) = interpretArgs()
+    (settings, info, lookupMode, rest) = interpretArgs()
     globalSymbolsFile = settings['filename']
     icd9File = settings['icd9']
     ccs_diag_file = settings['ccs_diag']
@@ -461,4 +466,16 @@ if __name__ == '__main__':
     productFile = settings['ndc_prod']
     packageFile = settings['ndc_package']
     init()
-    enrichDict(info['output'], info['mid'])
+    if lookupMode:
+        dict = {}
+        for e in rest:
+            spl = e.split('__', 1)
+            createEntry(dict, spl[0].strip(), spl[1].strip())
+        file = info['output']
+        if file == sys.stdout:
+            print(json.dumps(dict, indent=2), file=file)
+        else:
+            with open(file, 'w') as output:
+                print(json.dumps(dict, indent=2), file=output)
+    else:
+        enrichDict(info['output'], info['mid'])

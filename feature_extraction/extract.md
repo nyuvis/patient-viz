@@ -9,3 +9,5 @@ The output is a CSV table with columns `id` and named after the event types:
 ./extract.py -o output.csv -f ../format.json -c ../config.txt -- ../opd
 ```
 
+You can use `./build_dictionary.py -c config.txt --lookup ${column_name...}`
+to look up proper names for the columns.
