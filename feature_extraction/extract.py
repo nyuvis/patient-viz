@@ -178,15 +178,15 @@ def printResult(vectors, header_list, delim, quote, out):
             return cell
         return  quote + cell.replace(quote, quote + quote) + quote
 
-    str = doQuote("id") + delim + delim.join(map(doQuote, header_list))
-    print(str, file=out)
+    s = doQuote("id") + delim + delim.join(map(doQuote, header_list))
+    print(s, file=out)
 
     empty = BitVector.BitVector(size=0)
     for id in vectors.keys():
         bitvec = getBitVector(vectors, header_list, id)
-        str = doQuote(id) + delim + delim.join(map(doQuote, map(lambda v: 1 if v else 0, bitvec)))
+        s = doQuote(id) + delim + delim.join(map(doQuote, map(lambda v: 1 if v else 0, bitvec)))
         vectors[id] = empty
-        print(str, file=out)
+        print(s, file=out)
 
 def usage():
     print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
