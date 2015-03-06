@@ -43,6 +43,26 @@ function start() {
   function Type(group_id, type_id, type_lookup) {
     var that = this;
     var de = dictionary[group_id][type_id];
+    var children = {};
+
+    function addToParent() {
+      var t = that;
+      while(t) {
+        var p = t.parent();
+        if(p && !p.addChild(t)) {
+          break;
+        }
+        t = p;
+      }
+    }
+
+    this.addChild = function(type) {
+      var sh = type.shortHand();
+      if(sh in children) return false;
+      children[sh] = type;
+      return true;
+    };
+
     this.shortHand = function() {
       return group_id + "__" + type_id;
     };
@@ -106,18 +126,28 @@ function start() {
         slots[slot] = 1; // don't report multiple times
       });
     };
-    this.hasSlots = function() {
-      return !!slots;
-    };
-    this.hasEvents = function() {
-      return that.hasSlots();
-    };
     this.slots = function() {
+      if(!slots && Object.keys(children).length) {
+        var s = null;
+        Object.keys(children).forEach(function(c) {
+          var cs = children[c].slots();
+          if(!cs) return;
+          if(!s) {
+            s = new Uint8Array(cs.length);
+          }
+          for(var ix = 0;ix < cs.length;ix += 1) {
+            s[ix] = Math.max(s[ix], cs[ix]); // don't report multiple times
+          }
+        });
+        slots = s;
+      }
       return slots;
     };
     this.minSlot = function() {
       return minSlot;
     };
+
+    addToParent();
   } // Type
 
   function createTypeLookup() {
@@ -186,52 +216,51 @@ function start() {
     return resultTypes;
   }
 
-  function Group() {
+  function Group(name, ord) {
     var that = this;
     var types = [];
-    var aggrTypes = {};
     this.addType = function(type) {
       types.push(type);
-      var t = type.atLevel(aggr);
-      aggrTypes[t.shortHand()] = t;
     };
     this.size = function() {
-      return Object.keys(aggrTypes).length;
+      return types.length;
     };
     this.eachType = function(cb) {
-      Object.keys(aggrTypes).forEach(function(sh) {
-        cb(aggrTypes[sh]);
+      types.forEach(function(type) {
+        cb(type);
       });
     };
     var texts = {};
     this.createText = function(type, sel) {
       if(type.shortHand() in texts) return;
-      texts[type.shortHand()] = sel.append("text").text(type.name()).attr({
-        "font-size": fontSize,
-        "font-family": "monospace"
+      texts[type.shortHand()] = sel.append("span").text(type.name()).style({
+        "font-family": "Consolas, monaco, monospace",
+        "font-size": fontSize + "px",
+        "vertical-align": "middle",
+        "display": "inline-block"
       });
     };
     this.text = function(type) {
       return texts[type.shortHand()];
     };
-    var fingerprint = null;
-    this.createFingerprint = function(sel) {
-      if(fingerprint) return;
-      fingerprint = sel.append("foreignObject").attr({
-        "width": fingerWidth,
-        "height": lineHeight,
-        "x": blockWidth - fingerWidth,
-        "y": that.size() * lineHeight
-      }).append("xhtml:canvas").attr({
+    var fingerprints = {};
+    this.createFingerprint = function(type, sel) {
+      if(type.shortHand() in fingerprints) return;
+      fingerprints[type.shortHand()] = sel.append("canvas").attr({
         "width": fingerWidth,
         "height": lineHeight
+      }).style({
+        "width": fingerWidth + "px",
+        "height": lineHeight + "px",
+        "vertical-align": "baseline",
+        "display": "inline-block"
       });
     };
-    this.fingerprint = function() {
-      return fingerprint;
+    this.fingerprint = function(type) {
+      return fingerprints[type.shortHand()];
     };
-    this.updateFingerprint = function() {
-      var ctx = fingerprint.node().getContext("2d");
+    this.updateFingerprint = function(type) {
+      var ctx = fingerprints[type.shortHand()].node().getContext("2d");
       ctx.globalAlpha = 1;
       var border = 1;
       var w = fingerWidth - border * 2;
@@ -247,12 +276,10 @@ function start() {
 
       ctx.save();
       ctx.translate(border, border);
-      types.forEach(function(type) {
-        if(!type.hasSlots()) return;
+      var slots = type.slots();
+      if(slots) {
         ctx.save();
         ctx.strokeStyle = type.color();
-        ctx.globalAlpha = 0.3;
-        var slots = type.slots();
         for(var ix = 0;ix < slots.length;ix += 1) {
           var num = slots[ix];
           if(!num) continue;
@@ -264,24 +291,36 @@ function start() {
           ctx.stroke();
         }
         ctx.restore();
-      });
+      }
       ctx.restore();
+    };
+    this.name = function() {
+      return name;
+    };
+    this.ord = function() {
+      return ord;
     };
   } // Group
 
   function createGroups(types) {
     var groups = {};
     types.forEach(function(type) {
-      var ms = Math.floor(type.minSlot() / 30);
+      var t = type.atLevel(aggr);
+      var ms = Math.floor(t.minSlot() / 30);
       if(!(ms in groups)) {
-        groups[ms] = new Group();
+        var name = "";
+        groups[ms] = new Group(name, ms);
       }
       var group = groups[ms];
-      group.addType(type);
+      group.addType(t);
     });
-    return Object.keys(groups).map(function(sh) {
+    var res = Object.keys(groups).map(function(sh) {
       return groups[sh];
     });
+    res.sort(function(a, b) {
+      return d3.ascending(a.ord(), b.ord());
+    });
+    return res;
   }
 
   var dictionary = null;
@@ -310,39 +349,31 @@ function start() {
       try {
         var types = loadEvents(json, createTypeLookup());
         var groups = createGroups(types);
-        var groupSVGs = d3.select("#pContent").selectAll("svg").data(groups);
+        var groupSVGs = d3.select("#pContent").selectAll("div").data(groups);
         groupSVGs.exit().remove();
-        groupSVGs.enter().append("svg").attr({
-          "width": blockWidth,
-          "height": function(group) {
-            return lineHeight * (group.size() + 1);
-          }
-        }).style({
-          "width": blockWidth + "px",
-          "height": function(group) {
-            return lineHeight * (group.size() + 1) + "px";
-          }
-        });
-        groupSVGs.append("rect").attr({
-          "width": blockWidth,
-          "height": function(group) {
-            return lineHeight * (group.size() + 1);
-          },
-          "fill": "none",
-          "stroke": "black"
+        groupSVGs.enter().append("div").style({
+          "display": "inline-block",
+          "border": "solid 1px lightgray",
+          "width": (blockWidth + fingerWidth) + "px",
+          "box-sizing": "content-box"
         });
         groupSVGs.each(function(group) {
           var sel = d3.select(this);
-          var y = 0;
           group.eachType(function(type) {
-            y += lineHeight;
-            group.createText(type, sel);
-            group.text(type).attr({
-              "y": y
+            var line = sel.append("div").style({
+              "width": "100%"
             });
+            group.createText(type, line);
+            group.text(type).style({
+              "width": blockWidth + "px",
+              "overflow": "hidden",
+              "height": "1.5em"
+            }).attr({
+              "title": type.desc()
+            });
+            group.createFingerprint(type, line);
+            group.updateFingerprint(type);
           });
-          group.createFingerprint(sel);
-          group.updateFingerprint();
         });
         error = false;
       } finally {
