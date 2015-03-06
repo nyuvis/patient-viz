@@ -37,7 +37,7 @@ def toTime(s):
 
 def toAge(s):
     # TODO there could be a more precise way
-    return datetime.fromtimestamp(toTime(str(s) + "0101")).year - datetime.fromtimestamp(age_time).year
+    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(toTime(str(s) + "0101")).year
 
 def handleRow(row, id, eventCache, infoCache):
     obj = {
