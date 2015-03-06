@@ -26,21 +26,53 @@ flush_threshold = 650
 
 from_time = -float('Inf')
 to_time = float('Inf')
+age_time = None
+age_bin = 7
+ignore = {
+    "prescribed": True
+}
 
 def toTime(s):
     return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
 
-def handleRow(row, id, eventCache):
+def toAge(s):
+    # TODO there could be a more precise way
+    return datetime.fromtimestamp(toTime(s + "0101")).year - datetime.fromtimestamp(age_time).year
+
+def handleRow(row, id, eventCache, infoCache):
     obj = {
         "info": [],
         "events": []
     }
     opd_get_patient.handleRow(row, obj)
-    eventCache.extend(filter(lambda e: e['time'] >= from_time and e['time'] <= to_time, obj["events"]))
+    eventCache.extend(filter(lambda e: e['time'] >= from_time and e['time'] <= to_time and e['group'] not in ignore, obj["events"]))
+    for info in obj["info"]:
+        if info["id"] == "age":
+            try:
+                bin = (int(info["value"]) // age_bin) * age_bin
+                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin))
+            except ValueError:
+                pass
+        elif info["id"] == "born":
+            try:
+                if info["value"] != "N/A" and age_time is not None:
+                    bin = (toAge(info["value"]) // age_bin) * age_bin
+                    infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin))
+            except ValueError:
+                pass
+        elif info["id"] == "death" and info["value"] != "N/A":
+            infoCache.append("dead")
+        elif info["id"] == "gender":
+            if info["value"] == "M":
+                infoCache.append("sex_m")
+            elif info["value"] == "F":
+                infoCache.append("sex_f")
+
 
 def processFile(inputFile, id_column, cb):
     print("processing file: {0}".format(inputFile), file=sys.stderr)
     id_event_cache = {}
+    id_info_cache = {}
 
     def handleRows(csvDictReader):
         for row in csvDictReader:
@@ -49,11 +81,17 @@ def processFile(inputFile, id_column, cb):
                 eventCache = id_event_cache[id]
             else:
                 eventCache = []
-            handleRow(row, id, eventCache)
+            if id in id_info_cache:
+                infoCache = id_info_cache[id]
+            else:
+                infoCache = []
+            handleRow(row, id, eventCache, infoCache)
             if len(eventCache) > flush_threshold:
                 processDict(eventCache, id)
                 eventCache = []
             id_event_cache[id] = eventCache
+            if len(infoCache) > 0:
+                id_info_cache[id] = infoCache
 
     def processDict(events, id):
         if len(events) == 0:
@@ -84,6 +122,9 @@ def processFile(inputFile, id_column, cb):
         if num / num_total > last_print + 0.01 or num == num_total:
             last_print = num / num_total
             print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
+    for id in id_info_cache.keys():
+        infoCache = id_info_cache[id]
+        cb(id, "info", infoCache)
 
 def processDirectory(dir, id_column, cb):
     for (_, _, files) in os.walk(dir):
@@ -150,6 +191,7 @@ def printResult(vectors, header_list, delim, quote, out):
 def usage():
     print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--to <date>: specifies the end date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
@@ -178,7 +220,12 @@ if __name__ == '__main__':
             break
         if arg == '-h':
             usage()
-        if arg == '--from':
+        if arg == '--age-time':
+            if not args or args[0] == '--':
+                print('--age-time requires a date', file=sys.stderr)
+                usage()
+            age_time = toTime(args.pop(0))
+        elif arg == '--from':
             if not args or args[0] == '--':
                 print('--from requires a date', file=sys.stderr)
                 usage()
