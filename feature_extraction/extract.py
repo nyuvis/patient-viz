@@ -181,12 +181,21 @@ def printResult(vectors, header_list, delim, quote, out):
     s = doQuote("id") + delim + delim.join(map(doQuote, header_list))
     print(s, file=out)
 
+    num_total = len(vectors.keys())
+    num = 0
+    last_print = 0
+
     empty = BitVector.BitVector(size=0)
     for id in vectors.keys():
         bitvec = getBitVector(vectors, header_list, id)
         s = doQuote(id) + delim + delim.join(map(doQuote, map(lambda v: 1 if v else 0, bitvec)))
         vectors[id] = empty
         print(s, file=out)
+
+        num += 1
+        if num / num_total > last_print + 0.01 or num == num_total:
+            last_print = num / num_total
+            print("writing file: {0:.2%} complete".format(last_print), file=sys.stderr)
 
 def usage():
     print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
