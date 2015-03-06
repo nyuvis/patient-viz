@@ -132,6 +132,7 @@ def processAll(vectors, header_list, path_tuples):
 def printResult(vectors, header_list, delim, quote, out):
 
     def doQuote(cell):
+        cell = str(cell)
         if cell.find(delim) < 0 and cell.find(quote) < 0:
             return cell
         return  quote + cell.replace(quote, quote + quote) + quote

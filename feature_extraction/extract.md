@@ -10,6 +10,7 @@ The script needs to be run from this folder.
 ./extract.py --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
 ```
 
+Be aware that the run time is approximately ~20h.
 For more information about arguments call `./extract.py -h`.
 You can use `./build_dictionary.py -c config.txt --lookup ${column_name...}`
 to look up proper names for the columns.
