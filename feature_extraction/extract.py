@@ -27,7 +27,7 @@ flush_threshold = 650
 from_time = -float('Inf')
 to_time = float('Inf')
 age_time = None
-age_bin = 7
+age_bin = 10
 ignore = {
     "prescribed": True
 }
