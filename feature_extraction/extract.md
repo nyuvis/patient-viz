@@ -7,10 +7,13 @@ The output is a CSV table with columns `id` and named after the event types:
 The script needs to be run from this folder.
 
 ```bash
-./extract.py --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
+./extract.py --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
 ```
 
 Be aware that the run time is approximately ~20h.
+
+TODO Currently medication is ignored -> needs a way to specify age bin size and ignored groups
+
 For more information about arguments call `./extract.py -h`.
 You can use `./build_dictionary.py -c config.txt --lookup ${column_name...}`
 to look up proper names for the columns.
