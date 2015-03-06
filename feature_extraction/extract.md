@@ -10,7 +10,7 @@ The script needs to be run from this folder.
 ./extract.py --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
 ```
 
-Be aware that the run time is approximately ~20h.
+Be aware that the run time is approximately ~4h.
 
 TODO Currently medication is ignored -> needs a way to specify age bin size and ignored groups
 
