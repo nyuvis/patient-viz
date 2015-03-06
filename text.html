@@ -90,14 +90,19 @@ function start() {
       }
       return color;
     };
+    var minSlot = Number.POSITIVE_INFINITY;
     var slots = null;
     this.fillSlots = function(eventTimes, fromTime, toTime, step) {
       if(slots) {
         console.warn("overwriting slots!");
       }
+      minSlot = Number.POSITIVE_INFINITY;
       slots = new Uint8Array(Math.ceil((toTime - fromTime) / step));
       eventTimes.forEach(function(time) {
         var slot = Math.ceil((time - fromTime) / step);
+        if(slot < minSlot) {
+          minSlot = slot;
+        }
         slots[slot] = 1; // don't report multiple times
       });
     };
@@ -109,6 +114,9 @@ function start() {
     };
     this.slots = function() {
       return slots;
+    };
+    this.minSlot = function() {
+      return minSlot;
     };
   } // Type
 
@@ -262,25 +270,13 @@ function start() {
   } // Group
 
   function createGroups(types) {
-    var clusterTypes = new EventClusterer().distance(jkjs.stat.edit_distances.move_window(2)).threshold(2).minCluster(3).compute({
-      "traverseTypes": function(cb) {
-        types.forEach(function(type) {
-          cb(type.group_id(), type.type_id(), type);
-        });
-      },
-      "toBitVector": function(type) {
-        return type.slots();
-      }
-    }).clusterTypes();
     var groups = {};
-    clusterTypes.forEach(function(cluster) {
-      var type = cluster["type"];
-      var cluster = cluster["cluster"];
-      var sh = cluster.shortHand();
-      if(!(sh in groups)) {
-        groups[sh] = new Group();
+    types.forEach(function(type) {
+      var ms = Math.floor(type.minSlot() / 30);
+      if(!(ms in groups)) {
+        groups[ms] = new Group();
       }
-      var group = groups[sh];
+      var group = groups[ms];
       group.addType(type);
     });
     return Object.keys(groups).map(function(sh) {
