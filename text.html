@@ -29,14 +29,14 @@ function start() {
   jkjs.busy.imgWarn = "jk-js/jkjs/img/warning.png";
   jkjs.text.exact(!SLOW_MODE);
 
-  var pid = "json/A9BD9D012E87A360.json";
+  var pid = "json/998093F33FE2D940.json";
   var dict = "json/dictionary.json";
   var aggr = 2;
   var ignore = {
     "prescribed": true
   };
-  var blockWidth = 200;
-  var fingerWidth = 200;
+  var blockWidth = 150;
+  var fingerWidth = 50;
   var lineHeight = 11;
   var fontSize = 10;
 
@@ -129,9 +129,11 @@ function start() {
     this.slots = function() {
       if(!slots && Object.keys(children).length) {
         var s = null;
+        minSlot = Number.POSITIVE_INFINITY;
         Object.keys(children).forEach(function(c) {
           var cs = children[c].slots();
           if(!cs) return;
+          minSlot = Math.min(minSlot, children[c].minSlot());
           if(!s) {
             s = new Uint8Array(cs.length);
           }
@@ -144,6 +146,7 @@ function start() {
       return slots;
     };
     this.minSlot = function() {
+      that.slots(); // make sure to initialize minSlot
       return minSlot;
     };
 
@@ -213,11 +216,17 @@ function start() {
         resultTypes.push(type);
       });
     });
-    return resultTypes;
+    return [ resultTypes, minTime, maxTime, step ];
   }
 
   function Group(name, ord) {
     var that = this;
+    this.name = function() {
+      return name;
+    };
+    this.ord = function() {
+      return ord;
+    };
     var types = [];
     this.addType = function(type) {
       types.push(type);
@@ -228,6 +237,13 @@ function start() {
     this.eachType = function(cb) {
       types.forEach(function(type) {
         cb(type);
+      });
+    };
+    var title = null;
+    this.createTitle = function(sel) {
+      if(title) return;
+      title = sel.append("div").text(name).style({
+        "text-align": "center"
       });
     };
     var texts = {};
@@ -294,24 +310,31 @@ function start() {
       }
       ctx.restore();
     };
-    this.name = function() {
-      return name;
-    };
-    this.ord = function() {
-      return ord;
-    };
   } // Group
 
-  function createGroups(types) {
+  function createGroups(types, minTime, maxTime, step) {
+    var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    function toKey(slot) {
+      var date = new Date((minTime + slot * step) * 1000);
+      return ("000" + date.getFullYear()).substr(-4) + "_" + ("0" + date.getMonth()).substr(-2)
+    }
+
+    function toName(slot) {
+      var date = new Date((minTime + slot * step) * 1000);
+      return months[date.getMonth()] + " " + date.getFullYear();
+    }
+
     var groups = {};
     types.forEach(function(type) {
       var t = type.atLevel(aggr);
-      var ms = Math.floor(t.minSlot() / 30);
-      if(!(ms in groups)) {
-        var name = "";
-        groups[ms] = new Group(name, ms);
+      var ms = t.minSlot();
+      var key = toKey(ms);
+      if(!(key in groups)) {
+        var name = toName(ms);
+        groups[key] = new Group(name, key);
       }
-      var group = groups[ms];
+      var group = groups[key];
       group.addType(t);
     });
     var res = Object.keys(groups).map(function(sh) {
@@ -347,8 +370,8 @@ function start() {
       }
       var error = true;
       try {
-        var types = loadEvents(json, createTypeLookup());
-        var groups = createGroups(types);
+        var arr = loadEvents(json, createTypeLookup());
+        var groups = createGroups(arr[0], arr[1], arr[2], arr[3]);
         var groupSVGs = d3.select("#pContent").selectAll("div").data(groups);
         groupSVGs.exit().remove();
         groupSVGs.enter().append("div").style({
@@ -359,6 +382,7 @@ function start() {
         });
         groupSVGs.each(function(group) {
           var sel = d3.select(this);
+          group.createTitle(sel);
           group.eachType(function(type) {
             var line = sel.append("div").style({
               "width": "100%"
@@ -367,7 +391,8 @@ function start() {
             group.text(type).style({
               "width": blockWidth + "px",
               "overflow": "hidden",
-              "height": "1.5em"
+              "height": "1.5em",
+              "white-space": "nowrap"
             }).attr({
               "title": type.desc()
             });
