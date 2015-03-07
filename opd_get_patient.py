@@ -199,10 +199,17 @@ def processFile(inputFile, id, obj):
                 handleRow(row, obj)
 
 def processDirectory(dir, id, obj):
-    for (_, _, files) in os.walk(dir):
+    for (root, _, files) in os.walk(dir):
         for file in files:
+            if '/' in file:
+                segs = file.split('/') # **/A/4/2/*.csv
+                if len(segs) >= 4:
+                    segs = segs[-4:-2]
+                    if len(segs[0]) == 1 and len(segs[1]) == 1 and len(segs[2]) == 1 and
+                        (segs[0][0] != id[0] or segs[1][0] != id[1] or segs[2][0] != id[2]):
+                        continue
             if file.endswith(".csv"):
-                processFile(dir + '/' + file, id, obj)
+                processFile(os.path.join(root, file), id, obj)
 
 def usage():
     print('usage: {0} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
