@@ -7,7 +7,7 @@ ICD9_DIR="code/icd9"
 CCS_DIR="code/ccs"
 OPD_DIR="opd"
 JSON_DIR="json"
-OPD_SAMPLE_ALL=`seq -s " " -t "" 1 20`
+OPD_SAMPLE_ALL=`seq -s " " 1 20`
 
 base_dir=`pwd`
 convert_top_n=3
