@@ -205,8 +205,16 @@ def processDirectory(dir, id, obj):
                 segs = file.split('/') # **/A/4/2/*.csv
                 if len(segs) >= 4:
                     segs = segs[-4:-2]
-                    if len(segs[0]) == 1 and len(segs[1]) == 1 and len(segs[2]) == 1 and
-                        (segs[0][0] != id[0] or segs[1][0] != id[1] or segs[2][0] != id[2]):
+                    if (
+                            len(segs[0]) == 1 and
+                            len(segs[1]) == 1 and
+                            len(segs[2]) == 1 and
+                            (
+                                segs[0][0] != id[0] or
+                                segs[1][0] != id[1] or
+                                segs[2][0] != id[2]
+                            )
+                        ):
                         continue
             if file.endswith(".csv"):
                 processFile(os.path.join(root, file), id, obj)
