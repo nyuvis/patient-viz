@@ -12,6 +12,10 @@ Enrico Bertini, and David Sontag.
 
 ## Setup
 
+Setting up the project can be done without prerequisites on *MacOS* and *linux*.
+For windows you need to install [git](https://msysgit.github.io/).
+You can use *git BASH* to execute the shell commands.
+
 In order to set up the tool please run the following command:
 
 ```bash
