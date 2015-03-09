@@ -29,6 +29,7 @@ age_bin = 10
 ignore = {
     "prescribed": True
 }
+num_cutoff = 500
 
 def toTime(s):
     return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
@@ -151,7 +152,7 @@ def getBitVector(vectors, header_list, id):
 def getHead(group, type):
     return group + "__" + type
 
-def processAll(vectors, header_list, path_tuples, whitelist):
+def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
     header = {}
 
     def handle(id, group, types):
@@ -162,6 +163,10 @@ def processAll(vectors, header_list, path_tuples, whitelist):
             if head not in header:
                 header[head] = len(header_list)
                 header_list.append(head)
+            if head not in header_counts:
+                header_counts[head] = 0
+            else:
+                header_counts[head] += 1
         bitvec = getBitVector(vectors, header_list, id)
         for type in types:
             head = getHead(group, type)
@@ -175,7 +180,7 @@ def processAll(vectors, header_list, path_tuples, whitelist):
         else:
             processDirectory(path, id_column, eventHandle, whitelist)
 
-def printResult(vectors, header_list, delim, quote, out):
+def printResult(vectors, header_list, header_counts, delim, quote, out):
 
     def doQuote(cell):
         cell = str(cell)
@@ -183,17 +188,23 @@ def printResult(vectors, header_list, delim, quote, out):
             return cell
         return  quote + cell.replace(quote, quote + quote) + quote
 
-    s = doQuote("id") + delim + delim.join(map(doQuote, header_list))
+    num_total = len(vectors.keys())
+    columns = []
+    for (h, ix) in enumerate(header_list):
+        n = header_counts[h]
+        if n > num_cutoff and n < num_total - num_cutoff:
+            columns.append(ix)
+
+    s = doQuote("id") + delim + delim.join(map(lambda c: doQuote(header_list[c]), columns))
     print(s, file=out)
 
-    num_total = len(vectors.keys())
     num = 0
     last_print = 0
 
     empty = emptyBitVector()
     for id in vectors.keys():
         bitvec = getBitVector(vectors, header_list, id)
-        s = doQuote(id) + delim + delim.join(map(doQuote, map(lambda (v, ix): 1 if ix in bitvec else 0, enumerate(header_list))))
+        s = doQuote(id) + delim + delim.join(map(doQuote, map(lambda c: 1 if c in bitvec else 0, columns)))
         vectors[id] = empty
         print(s, file=out)
 
@@ -303,9 +314,10 @@ if __name__ == '__main__':
 
     vectors = {}
     header_list = []
-    processAll(vectors, header_list, allPaths, whitelist)
+    header_counts = {}
+    processAll(vectors, header_list, header_counts, allPaths, whitelist)
     if output == '-':
-        printResult(vectors, header_list, settings['delim'], settings['quote'], sys.stdout)
+        printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], sys.stdout)
     else:
         with open(output, 'w') as file:
-            printResult(vectors, header_list, settings['delim'], settings['quote'], file)
+            printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], file)
