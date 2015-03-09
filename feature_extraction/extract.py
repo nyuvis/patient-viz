@@ -106,7 +106,7 @@ def createEventHandler(cb):
         def processDict(events, id):
             if len(events) == 0:
                 return
-            print("processing {1} with {0} events".format(len(events), id), file=sys.stderr)
+            #print("processing {1} with {0} events".format(len(events), id), file=sys.stderr)
             obj = {
                 "events": events
             }
@@ -123,7 +123,7 @@ def createEventHandler(cb):
             processDict(eventCache, id)
             del eventCache[:]
             num += 1
-            if num / num_total > last_print + 0.01 or num == num_total:
+            if num / num_total >= last_print + 0.01 or num == num_total:
                 last_print = num / num_total
                 print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
         for id in id_info_cache.keys():
