@@ -14,7 +14,6 @@ import os.path
 import csv
 #import simplejson as json
 import json
-import BitVector
 
 sys.path.append('..')
 
@@ -22,7 +21,6 @@ import build_dictionary
 import opd_get_patient
 
 path_correction = '../'
-flush_threshold = 650
 
 from_time = -float('Inf')
 to_time = float('Inf')
@@ -69,7 +67,7 @@ def handleRow(row, id, eventCache, infoCache):
                 infoCache.append("sex_f")
 
 
-def processFile(inputFile, id_column, cb, whitelist):
+def processFile(inputFile, id_column, eventHandle, whitelist):
     print("processing file: {0}".format(inputFile), file=sys.stderr)
     id_event_cache = {}
     id_info_cache = {}
@@ -88,24 +86,9 @@ def processFile(inputFile, id_column, cb, whitelist):
             else:
                 infoCache = []
             handleRow(row, id, eventCache, infoCache)
-            if len(eventCache) > flush_threshold:
-                processDict(eventCache, id)
-                eventCache = []
             id_event_cache[id] = eventCache
             if len(infoCache) > 0:
                 id_info_cache[id] = infoCache
-
-    def processDict(events, id):
-        if len(events) == 0:
-            return
-        print("processing {1} with {0} events".format(len(events), id), file=sys.stderr)
-        obj = {
-            "events": events
-        }
-        dict = {}
-        build_dictionary.extractEntries(dict, obj)
-        for group in dict.keys():
-            cb(id, group, dict[group].keys())
 
     if inputFile == '-':
         handleRows(csv.DictReader(sys.stdin))
@@ -113,20 +96,40 @@ def processFile(inputFile, id_column, cb, whitelist):
         with open(inputFile) as csvFile:
             handleRows(csv.DictReader(csvFile))
 
-    num_total = len(id_event_cache.keys())
-    num = 0
-    last_print = 0
-    for id in id_event_cache.keys():
-        eventCache = id_event_cache[id]
-        processDict(eventCache, id)
-        del eventCache[:]
-        num += 1
-        if num / num_total > last_print + 0.01 or num == num_total:
-            last_print = num / num_total
-            print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
-    for id in id_info_cache.keys():
-        infoCache = id_info_cache[id]
-        cb(id, "info", infoCache)
+    eventHandle(eventCache, infoCache)
+
+def createEventHandler(cb):
+
+    def handleEvent(eventCache, infoCache):
+
+        def processDict(events, id):
+            if len(events) == 0:
+                return
+            print("processing {1} with {0} events".format(len(events), id), file=sys.stderr)
+            obj = {
+                "events": events
+            }
+            dict = {}
+            build_dictionary.extractEntries(dict, obj)
+            for group in dict.keys():
+                cb(id, group, dict[group].keys())
+
+        num_total = len(id_event_cache.keys())
+        num = 0
+        last_print = 0
+        for id in id_event_cache.keys():
+            eventCache = id_event_cache[id]
+            processDict(eventCache, id)
+            del eventCache[:]
+            num += 1
+            if num / num_total > last_print + 0.01 or num == num_total:
+                last_print = num / num_total
+                print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
+        for id in id_info_cache.keys():
+            infoCache = id_info_cache[id]
+            cb(id, "info", infoCache)
+
+    return handleEvent
 
 def processDirectory(dir, id_column, cb, whitelist):
     for (_, _, files) in os.walk(dir):
@@ -134,15 +137,15 @@ def processDirectory(dir, id_column, cb, whitelist):
             if file.endswith(".csv"):
                 processFile(dir + '/' + file, id_column, cb, whitelist)
 
+def emptyBitVector():
+    return set([])
+
 def getBitVector(vectors, header_list, id):
     if id in vectors:
         bitvec = vectors[id]
     else:
-        bitvec = BitVector.BitVector(size=0)
-    if len(bitvec) < len(header_list):
-        diff = len(header_list) - len(bitvec)
-        bitvec = bitvec + BitVector.BitVector(size=diff)
-    vectors[id] = bitvec
+        bitvec = emptyBitVector()
+        vectors[id] = bitvec
     return bitvec
 
 def getHead(group, type):
@@ -162,15 +165,15 @@ def processAll(vectors, header_list, path_tuples, whitelist):
         bitvec = getBitVector(vectors, header_list, id)
         for type in types:
             head = getHead(group, type)
-            bitvec[header[head]] = True
+            bitvec.add(header[head])
 
+    eventHandle = createEventHandler(handle)
     id_column = opd_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, handle, whitelist)
+            processFile(path, id_column, eventHandle, whitelist)
         else:
-            processDirectory(path, id_column, handle, whitelist)
-
+            processDirectory(path, id_column, eventHandle, whitelist)
 
 def printResult(vectors, header_list, delim, quote, out):
 
@@ -187,10 +190,10 @@ def printResult(vectors, header_list, delim, quote, out):
     num = 0
     last_print = 0
 
-    empty = BitVector.BitVector(size=0)
+    empty = emptyBitVector()
     for id in vectors.keys():
         bitvec = getBitVector(vectors, header_list, id)
-        s = doQuote(id) + delim + delim.join(map(doQuote, map(lambda v: 1 if v else 0, bitvec)))
+        s = doQuote(id) + delim + delim.join(map(doQuote, map(lambda (v, ix): 1 if ix in bitvec else 0, enumerate(header_list))))
         vectors[id] = empty
         print(s, file=out)
 
