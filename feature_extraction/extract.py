@@ -96,11 +96,11 @@ def processFile(inputFile, id_column, eventHandle, whitelist):
         with open(inputFile) as csvFile:
             handleRows(csv.DictReader(csvFile))
 
-    eventHandle(eventCache, infoCache)
+    eventHandle(inputFile, id_event_cache, id_info_cache)
 
 def createEventHandler(cb):
 
-    def handleEvent(eventCache, infoCache):
+    def handleEvent(inputFile, id_event_cache, id_info_cache):
 
         def processDict(events, id):
             if len(events) == 0:
