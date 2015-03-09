@@ -190,7 +190,7 @@ def printResult(vectors, header_list, header_counts, delim, quote, out):
 
     num_total = len(vectors.keys())
     columns = []
-    for (h, ix) in enumerate(header_list):
+    for (ix, h) in enumerate(header_list):
         n = header_counts[h]
         if n > num_cutoff and n < num_total - num_cutoff:
             columns.append(ix)
