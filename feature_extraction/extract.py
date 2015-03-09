@@ -69,7 +69,7 @@ def handleRow(row, id, eventCache, infoCache):
                 infoCache.append("sex_f")
 
 
-def processFile(inputFile, id_column, cb):
+def processFile(inputFile, id_column, cb, whitelist):
     print("processing file: {0}".format(inputFile), file=sys.stderr)
     id_event_cache = {}
     id_info_cache = {}
@@ -77,6 +77,8 @@ def processFile(inputFile, id_column, cb):
     def handleRows(csvDictReader):
         for row in csvDictReader:
             id = row[id_column]
+            if whitelist is not None and id not in whitelist:
+                continue
             if id in id_event_cache:
                 eventCache = id_event_cache[id]
             else:
@@ -126,11 +128,11 @@ def processFile(inputFile, id_column, cb):
         infoCache = id_info_cache[id]
         cb(id, "info", infoCache)
 
-def processDirectory(dir, id_column, cb):
+def processDirectory(dir, id_column, cb, whitelist):
     for (_, _, files) in os.walk(dir):
         for file in files:
             if file.endswith(".csv"):
-                processFile(dir + '/' + file, id_column, cb)
+                processFile(dir + '/' + file, id_column, cb, whitelist)
 
 def getBitVector(vectors, header_list, id):
     if id in vectors:
@@ -146,7 +148,7 @@ def getBitVector(vectors, header_list, id):
 def getHead(group, type):
     return group + "__" + type
 
-def processAll(vectors, header_list, path_tuples):
+def processAll(vectors, header_list, path_tuples, whitelist):
     header = {}
 
     def handle(id, group, types):
@@ -165,9 +167,9 @@ def processAll(vectors, header_list, path_tuples):
     id_column = opd_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, handle)
+            processFile(path, id_column, handle, whitelist)
         else:
-            processDirectory(path, id_column, handle)
+            processDirectory(path, id_column, handle, whitelist)
 
 
 def printResult(vectors, header_list, delim, quote, out):
@@ -198,11 +200,12 @@ def printResult(vectors, header_list, delim, quote, out):
             print("writing file: {0:.2%} complete".format(last_print), file=sys.stderr)
 
 def usage():
-    print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--to <date>: specifies the end date as "YYYYMMDD". can be omitted', file=sys.stderr)
+    print('-w <whitelist>: specifies a patient whitelist. all patients if omitted (warning: slow)', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
@@ -221,6 +224,7 @@ if __name__ == '__main__':
         'ccs_diag': build_dictionary.ccs_diag_file,
         'ccs_proc': build_dictionary.ccs_proc_file
     }
+    whitelist = None
     args = sys.argv[:]
     args.pop(0)
     while args:
@@ -244,6 +248,18 @@ if __name__ == '__main__':
                 print('--to requires a date', file=sys.stderr)
                 usage()
             to_time = toTime(args.pop(0))
+        elif arg == '-w':
+            if not args or args[0] == '--':
+                print('-w requires whitelist file', file=sys.stderr)
+                usage()
+            if whitelist is None:
+                whitelist = set([])
+            else:
+                whitelist = set(whitelist)
+            with open(args.pop(0), 'r') as wl:
+                for w in wl:
+                    whitelist.add(w.strip())
+            whitelist = frozenset(whitelist)
         elif arg == '-f':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
@@ -284,7 +300,7 @@ if __name__ == '__main__':
 
     vectors = {}
     header_list = []
-    processAll(vectors, header_list, allPaths)
+    processAll(vectors, header_list, allPaths, whitelist)
     if output == '-':
         printResult(vectors, header_list, settings['delim'], settings['quote'], sys.stdout)
     else:

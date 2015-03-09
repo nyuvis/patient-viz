@@ -7,7 +7,7 @@ The output is a CSV table with columns `id` and named after the event types:
 The script needs to be run from this folder.
 
 ```bash
-./extract.py --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
+./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
 ```
 
 Be aware that the run time is approximately ~4h.
