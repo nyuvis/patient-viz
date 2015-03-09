@@ -10,9 +10,9 @@ The script needs to be run from this folder.
 ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
 ```
 
-Be aware that the run time is approximately ~4h.
+Be aware that the run time is approximately ~1h.
 
-TODO Currently medication is ignored -> needs a way to specify age bin size and ignored groups
+TODO Currently medication is ignored -> needs a command line way to specify age bin size and ignored groups
 
 For more information about arguments call `./extract.py -h`.
 You can use `./build_dictionary.py -c config.txt --lookup ${column_name...}`

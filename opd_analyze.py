@@ -10,10 +10,13 @@ import time
 import os
 import sys
 import csv
+#import simplejson as json
+import json
 
-idField = 'DESYNPUF_ID'
+input_format = {}
 
 def analyzeFile(inputFile, counter):
+    idField = input_format["patient_id"]
     with open(inputFile) as csvFile:
         reader = csv.DictReader(csvFile)
         for row in reader:
@@ -29,37 +32,63 @@ def analyzeDirectory(dir, counter):
             if file.endswith(".csv"):
                 analyzeFile(dir + '/' + file, counter)
 
+def read_format(file):
+    global input_format
+    if not os.path.isfile(file):
+        print('invalid format file: {0}'.format(file), file=sys.stderr)
+        usage()
+    with open(file) as formatFile:
+        input_format = json.loads(formatFile.read())
+
 def usage():
-    print('usage: {0} [-h] [-m] <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-m] -f <format> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-m: batch compatible output', file=sys.stderr)
+    print('-f <format>: specifies table format file', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them', file=sys.stderr)
     exit(1)
 
 if __name__ == '__main__':
-    has_path = False
     human_readable = True
     starttime = time.clock()
     counter = {}
+    allPaths = []
     args = sys.argv[:]
     args.pop(0)
     while args:
-        path = args.pop(0)
-        if path == '-h':
+        arg = args.pop(0)
+        if arg == '--':
+            break
+        if arg == '-h':
             usage()
-        elif path == '-m':
+        elif arg == '-m':
             human_readable = False
-        elif os.path.isfile(path):
-            analyzeFile(path, counter)
-            has_path = True
+        elif arg == '-f':
+            if not args or args[0] == "--":
+                print('-f requires format file', file=sys.stderr)
+                usage()
+            read_format(args.pop(0))
+        else:
+            print('illegal argument: '+arg, file=sys.stderr)
+            usage()
+    while args:
+        path = args.pop(0)
+        if os.path.isfile(path) or path == '-':
+            allPaths.append((path, True))
         elif os.path.isdir(path):
-            analyzeDirectory(path, counter)
-            has_path = True
+            allPaths.append((path, False))
         else:
             print('illegal argument: '+path+' is neither file nor directory', file=sys.stderr)
-            usage()
-    if not has_path:
-        print('warning: no path given', file=sys.stderr)
+    if not len(allPaths):
+        print('no path given', file=sys.stderr)
+        usage()
+
+    for (path, isfile) in allPaths:
+        if isfile:
+            analyzeFile(path, counter)
+        else:
+            analyzeDirectory(path, counter)
+
     list = counter.keys()
     list.sort(key = lambda k: counter[k])
     padding = len(str(counter[list[len(list) - 1]])) if list else 0
