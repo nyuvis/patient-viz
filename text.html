@@ -253,6 +253,11 @@ function start() {
     var types = [];
     this.addType = function(type) {
       types.push(type);
+      minSlot = Math.min(minSlot, type.minSlot());
+    };
+    var minSlot = Number.POSITIVE_INFINITY;
+    this.minSlot = function() {
+      return minSlot;
     };
     var assocType = null;
     this.associatedType = function(_) {
@@ -266,8 +271,8 @@ function start() {
       types.sort(function(a, b) {
         if(a.isRoot()) return -1;
         if(b.isRoot()) return 1;
-        var tmp = d3.ascending(a.parent().hierarchy_id(), b.parent().hierarchy_id());
-        if(tmp !== 0) return tmp;
+        var cmp = d3.ascending(a.parent().hierarchy_id(), b.parent().hierarchy_id());
+        if(cmp !== 0) return cmp;
         return d3.ascending(a.minSlot(), b.minSlot());
       });
       types.forEach(function(type) {
@@ -449,7 +454,8 @@ function start() {
           levelSVGs.exit().remove();
           levelSVGs.enter().append("div").classed("levelDiv", true).style({
             "width": Math.max(blockWidth, fingerWidth) + "px",
-            "box-sizing": "content-box"
+            "box-sizing": "content-box",
+            "vertical-align": "top"
           });
           levelSVGs.style({
             "display": function(lvl) {
@@ -461,7 +467,9 @@ function start() {
           levelSVGs.each(function(lvl) {
             var groups = levels[lvl];
             groups.sort(function(a, b) {
-              return d3.ascending(a.ord(), b.ord());
+              var cmp = d3.ascending(a.ord(), b.ord());
+              if(cmp !== 0) return cmp;
+              return d3.ascending(a.minSlot(), b.minSlot());
             });
             var groupSVGs = d3.select(this).selectAll("div.groupDiv").data(groups, function(_) { return _.uid(); });
             groupSVGs.exit().remove();
