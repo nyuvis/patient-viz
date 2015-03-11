@@ -17,6 +17,8 @@ import csv
 import json
 import os.path
 
+reportMissingEntries = True
+
 def toEntry(id, pid, name, desc):
     return {
         "id": id,
@@ -129,7 +131,7 @@ def initPrescribed():
             ndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
             desc = row['PACKAGEDESCRIPTION'].strip()
             if uid not in uidLookup:
-                print("warning missing uid: " + uid, file=sys.stderr)
+                #print("warning missing uid: " + uid, file=sys.stderr) // not that important since the non-packaged version is already added
                 continue
             l = uidLookup[uid]
             if ndc in prescribeLookup:
@@ -201,7 +203,8 @@ def initProcedure():
 ### unknown ###
 
 def createUnknownEntry(_, type, id, pid):
-    print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
+    if reportMissingEntries:
+        print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
     return toEntry(id, pid, id, type + " " + id)
 
 ### type ###
@@ -280,7 +283,8 @@ def initICD9():
                 codes[lastCode] = spl[1].rstrip()
                 codes[noDot] = spl[1].rstrip()
             else:
-                print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
+                if line[0] != '(':
+                    print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
     return codes
 
 ### ccs ###
@@ -401,10 +405,11 @@ def readConfig(settings, file):
             print(json.dumps(settings, indent=2), file=output)
 
 def usage():
-    print("{0}: -p <file> -c <config> -o <output> [-h|--help]".format(sys.argv[0]), file=sys.stderr)
+    print("{0}: -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
     print("-p <file>: specify patient json file. '-' uses standard in", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
+    print("--lookup <id...>: lookup mode. translates ids in shorthand notation '${group_id}__${type_id}'", file=sys.stderr)
     print("-h|--help: prints this help.", file=sys.stderr)
     sys.exit(1)
 
@@ -421,6 +426,7 @@ def interpretArgs():
         'mid': globalMid,
         'output': sys.stdout
     }
+    lookupMode = False
     args = sys.argv[:]
     args.pop(0);
     while args:
@@ -444,18 +450,36 @@ def interpretArgs():
             info['output'] = args.pop(0)
             if info['output'] == '-':
                 info['output'] = sys.stdout
+        elif val == '--lookup':
+            lookupMode = True
+            break
         else:
             print('illegal argument '+val, file=sys.stderr)
             usage()
-    return (settings, info)
+    return (settings, info, lookupMode, args)
 
 if __name__ == '__main__':
-    (settings, info) = interpretArgs()
-    init()
+    (settings, info, lookupMode, rest) = interpretArgs()
     globalSymbolsFile = settings['filename']
     icd9File = settings['icd9']
     ccs_diag_file = settings['ccs_diag']
     ccs_proc_file = settings['ccs_proc']
     productFile = settings['ndc_prod']
     packageFile = settings['ndc_package']
-    enrichDict(info['output'], info['mid'])
+    init()
+    if lookupMode:
+        dict = {}
+        for e in rest:
+            spl = e.split('__', 1)
+            if len(spl) != 2:
+                print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
+                sys.exit(1)
+            createEntry(dict, spl[0].strip(), spl[1].strip())
+        file = info['output']
+        if file == sys.stdout:
+            print(json.dumps(dict, indent=2), file=file)
+        else:
+            with open(file, 'w') as output:
+                print(json.dumps(dict, indent=2), file=output)
+    else:
+        enrichDict(info['output'], info['mid'])

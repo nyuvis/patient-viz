@@ -7,7 +7,7 @@ ICD9_DIR="code/icd9"
 CCS_DIR="code/ccs"
 OPD_DIR="opd"
 JSON_DIR="json"
-OPD_SAMPLE_ALL=`seq -s " " -t "" 1 20`
+OPD_SAMPLE_ALL=`seq -s " " 1 20`
 
 base_dir=`pwd`
 convert_top_n=3
@@ -27,11 +27,12 @@ ndc=
 opd=
 icd9=
 ccs=
+pip=
 do_convert=
 do_clean=
 do_nop=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--do-convert] [--clean] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--do-convert] [--clean] [--pip] [--nop]"
 
 usage() {
     echo $USAGE
@@ -50,6 +51,7 @@ usage() {
     echo "--opd: downloads the patient claims data"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
+    echo "--pip: install python packages. (not required for all use cases)"
     echo "--nop: performs no operation besides basic setup tasks"
     exit 1
 }
@@ -112,6 +114,9 @@ while [ $# -gt 0 ]; do
   --clean)
     do_clean=1
     ;;
+  --pip)
+    pip=1
+    ;;
   --nop)
     do_nop=1
     ;;
@@ -131,6 +136,16 @@ git_submodule=`git submodule status | grep "^-"`
 if [ ! -z "${git_submodule}" ]; then
   git submodule init
   git submodule update
+fi
+
+if [ ! -z "${pip}" ]; then
+  probe_pip=`command -v pip 2>/dev/null 1>&2; echo $?`
+  if [ "${probe_pip}" -ne 0 ]; then
+    echo "pip is required to install python dependencies"
+    # TODO install pip and exit
+    exit 0
+  fi
+  # pip install # TODO
 fi
 
 if [ ! -z "${do_nop}" ]; then

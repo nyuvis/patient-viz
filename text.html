@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patient Viz - Text</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="lib/colorbrewer/colorbrewer.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/busy.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/zui.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/time.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/text.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/path.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/stat.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
+  <script src="js/cluster.js" charset="utf-8"></script>
+</head>
+<body onload="start()">
+
+<div id="pContent">
+</div>
+
+<script>
+var SLOW_MODE = false;
+
+var LAYOUT_TIME = 0;
+var LAYOUT_TREE = 1;
+
+function start() {
+  jkjs.busy.imgBusy = "jk-js/jkjs/img/busy.gif";
+  jkjs.busy.imgWarn = "jk-js/jkjs/img/warning.png";
+  jkjs.text.exact(!SLOW_MODE);
+
+  var pid = "json/998093F33FE2D940.json";
+  var dict = "json/dictionary.json";
+  var aggr = 2;
+  var ignore = {
+    "prescribed": true
+  };
+  var blockWidth = 200;
+  var fingerWidth = 200;
+  var lineHeight = 11;
+  var fontSize = 10;
+  var layout = LAYOUT_TREE;
+
+  function Type(group_id, type_id, type_lookup) {
+    var that = this;
+    var de = dictionary[group_id][type_id];
+    var children = {};
+
+    function addToParent() {
+      var t = that;
+      while(t) {
+        var p = t.parent();
+        if(p && !p.addChild(t)) {
+          break;
+        }
+        t = p;
+      }
+    }
+
+    this.addChild = function(type) {
+      var sh = type.shortHand();
+      if(sh in children) return false;
+      children[sh] = type;
+      return true;
+    };
+
+    this.shortHand = function() {
+      return group_id + "__" + type_id;
+    };
+    this.name = function() {
+      return de["name"];
+    };
+    this.desc = function() {
+      return de["desc"];
+    };
+    this.group_id = function() {
+      return group_id;
+    };
+    this.type_id = function() {
+      return type_id;
+    };
+    this.hierarchy_id = function() {
+      if(that.isRoot()) return that.group_id();
+      return that.parent().hierarchy_id() + "__" + that.type_id();
+    };
+    this.parent = function() {
+      if(type_id === "") return null;
+      var parent = de["parent"];
+      return type_lookup(group_id, parent);
+    };
+    this.isRoot = function() {
+      return !that.parent();
+    };
+    var level = -1;
+    this.level = function() {
+      if(level < 0) {
+        level = that.isRoot() ? 0 : that.parent().level() + 1;
+      }
+      return level;
+    };
+    this.atLevel = function(level) {
+      if(that.level() > level && !that.isRoot()) return that.parent().atLevel(level);
+      return that;
+    };
+    var assocGrp = null;
+    this.associatedGroup = function(_) {
+      if(!arguments.length) return assocGrp;
+      assocGrp = _;
+    };
+    var color = null;
+    this.color = function() {
+      if(!color) {
+        if("color" in de) {
+          color = de["color"];
+        } else if(that.isRoot()) {
+          color = "black";
+        } else {
+          color = that.parent().color();
+        }
+      }
+      return color;
+    };
+    var minSlot = Number.POSITIVE_INFINITY;
+    var slots = null;
+    this.fillSlots = function(eventTimes, fromTime, toTime, step) {
+      if(slots) {
+        console.warn("overwriting slots!");
+      }
+      minSlot = Number.POSITIVE_INFINITY;
+      slots = new Uint8Array(Math.ceil((toTime - fromTime) / step));
+      eventTimes.forEach(function(time) {
+        var slot = Math.ceil((time - fromTime) / step);
+        if(slot < minSlot) {
+          minSlot = slot;
+        }
+        slots[slot] = 1; // don't report multiple times
+      });
+    };
+    this.slots = function() {
+      if(!slots && Object.keys(children).length) {
+        var s = null;
+        minSlot = Number.POSITIVE_INFINITY;
+        Object.keys(children).forEach(function(c) {
+          var cs = children[c].slots();
+          if(!cs) return;
+          minSlot = Math.min(minSlot, children[c].minSlot());
+          if(!s) {
+            s = new Uint8Array(cs.length);
+          }
+          for(var ix = 0;ix < cs.length;ix += 1) {
+            s[ix] = Math.max(s[ix], cs[ix]); // don't report multiple times
+          }
+        });
+        slots = s;
+      }
+      return slots;
+    };
+    this.minSlot = function() {
+      that.slots(); // make sure to initialize minSlot
+      return minSlot;
+    };
+
+    addToParent();
+  } // Type
+
+  function createTypeLookup() {
+    var types = {};
+    var type_lookup = function(group_id, type_id) {
+      if(!(group_id in types)) {
+        types[group_id] = {};
+      }
+      var grp = types[group_id];
+      if(!(type_id in grp)) {
+        grp[type_id] = new Type(group_id, type_id, type_lookup);
+      }
+      return grp[type_id];
+    };
+    return type_lookup;
+  }
+
+  function loadEvents(json, type_lookup) {
+    var events = json["events"];
+    var minTime = Number.POSITIVE_INFINITY;
+    var maxTime = Number.NEGATIVE_INFINITY;
+    var allTimes = [];
+    var times = {};
+    events.forEach(function(e) {
+      if(e["group"] in ignore) {
+        return;
+      }
+      var time = +e["time"];
+      allTimes.push(time);
+      minTime = Math.min(minTime, time);
+      maxTime = Math.max(maxTime, time);
+
+      var group_id = e["group"];
+      var type_id = e["id"];
+      if(!(group_id in times)) {
+        times[group_id] = {};
+      }
+      var grp = times[group_id];
+      if(!(type_id in grp)) {
+        grp[type_id] = [];
+      }
+      var type_times = grp[type_id];
+      type_times.push(time);
+    });
+    allTimes.sort(function(a, b) {
+      return d3.ascending(a, b);
+    });
+    var step = Number.POSITIVE_INFINITY;
+    var prevTime = minTime;
+    allTimes.forEach(function(time) {
+      if(prevTime === time) return;
+      var diff = time - prevTime;
+      step = Math.min(step, diff);
+      prevTime = time;
+    });
+    var resultTypes = [];
+    Object.keys(times).forEach(function(group_id) {
+      var grp = times[group_id];
+      Object.keys(grp).forEach(function(type_id) {
+        var times = grp[type_id];
+        var type = type_lookup(group_id, type_id);
+        type.fillSlots(times, minTime, maxTime, step);
+        resultTypes.push(type);
+      });
+    });
+    return [ resultTypes, minTime, maxTime, step ];
+  }
+
+  var uniqID = 0;
+  function Group(name, ord) {
+    var that = this;
+    var uid = uniqID++;
+    this.uid = function() {
+      return uid;
+    }
+    this.name = function() {
+      return name;
+    };
+    this.ord = function() {
+      return ord;
+    };
+    var visible = true;
+    this.visible = function(_) {
+      if(!arguments.length) return visible;
+      visible = _;
+    };
+    var types = [];
+    this.addType = function(type) {
+      types.push(type);
+      minSlot = Math.min(minSlot, type.minSlot());
+    };
+    var minSlot = Number.POSITIVE_INFINITY;
+    this.minSlot = function() {
+      return minSlot;
+    };
+    var assocType = null;
+    this.associatedType = function(_) {
+      if(!arguments.length) return assocType;
+      assocType = _;
+    };
+    this.size = function() {
+      return types.length;
+    };
+    this.eachType = function(cb) {
+      types.sort(function(a, b) {
+        if(a.isRoot()) return -1;
+        if(b.isRoot()) return 1;
+        var cmp = d3.ascending(a.parent().hierarchy_id(), b.parent().hierarchy_id());
+        if(cmp !== 0) return cmp;
+        return d3.ascending(a.minSlot(), b.minSlot());
+      });
+      types.forEach(function(type) {
+        cb(type);
+      });
+    };
+    var title = null;
+    this.createTitle = function(sel) {
+      if(title) return;
+      title = sel.append("div").text(name).style({
+        "text-align": "center"
+      });
+    };
+    this.title = function() {
+      return title;
+    };
+    var texts = {};
+    this.createText = function(type, sel) {
+      if(type.shortHand() in texts) return;
+      texts[type.shortHand()] = sel.append("span").text(type.name()).style({
+        "font-family": "Consolas, monaco, monospace",
+        "font-size": fontSize + "px",
+        "vertical-align": "middle",
+        "display": "block",
+        "text-align": "center"
+      });
+    };
+    this.text = function(type) {
+      return texts[type.shortHand()];
+    };
+    var fingerprints = {};
+    this.createFingerprint = function(type, sel) {
+      if(type.shortHand() in fingerprints) return;
+      fingerprints[type.shortHand()] = sel.append("canvas").attr({
+        "width": fingerWidth,
+        "height": lineHeight
+      }).style({
+        "width": fingerWidth + "px",
+        "height": lineHeight + "px",
+        "vertical-align": "baseline",
+        "display": "block"
+      });
+    };
+    this.fingerprint = function(type) {
+      return fingerprints[type.shortHand()];
+    };
+    this.updateFingerprint = function(type) {
+      var ctx = fingerprints[type.shortHand()].node().getContext("2d");
+      ctx.globalAlpha = 1;
+      var border = 1;
+      var w = fingerWidth - border * 2;
+      var h = lineHeight - border * 2;
+      ctx.clearRect(0, 0, w + 2 * border, h + 2 * border);
+      ctx.lineWidth = 1;
+
+      ctx.save();
+      ctx.lineWidth = border;
+      ctx.strokeStyle = "gray";
+      ctx.strokeRect(0.5 * border, 0.5 * border, w + border, h + border);
+      ctx.restore();
+
+      ctx.save();
+      ctx.translate(border, border);
+      var slots = type.slots();
+      if(slots) {
+        ctx.save();
+        ctx.strokeStyle = type.color();
+        for(var ix = 0;ix < slots.length;ix += 1) {
+          var num = slots[ix];
+          if(!num) continue;
+          var x = ix / slots.length * w;
+          //ctx.globalAlpha = Math.min(1, 0.3 * num); // we report events only once
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, h);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+      ctx.restore();
+    };
+  } // Group
+
+  function createTimeGroups(types, minTime, maxTime, step) {
+    var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    function toKey(slot) {
+      var date = new Date((minTime + slot * step) * 1000);
+      return ("000" + date.getFullYear()).substr(-4) + "_" + ("0" + date.getMonth()).substr(-2)
+    }
+
+    function toName(slot) {
+      var date = new Date((minTime + slot * step) * 1000);
+      return months[date.getMonth()] + " " + date.getFullYear();
+    }
+
+    var groups = {};
+    types.forEach(function(type) {
+      var t = type.atLevel(aggr);
+      var ms = t.minSlot();
+      var key = toKey(ms);
+      if(!(key in groups)) {
+        var name = toName(ms);
+        groups[key] = new Group(name, key);
+      }
+      var group = groups[key];
+      group.addType(t);
+    });
+    var res = Object.keys(groups).map(function(sh) {
+      return groups[sh];
+    });
+    return res;
+  }
+
+  var dictionary = null;
+  var lastDictionaryFile = "";
+
+  function load(pid, dictionaryFile) {
+    if(!dictionary || lastDictionaryFile != dictionaryFile) {
+      d3.json(dictionaryFile, function(err, json) {
+        if(err) {
+          console.warn("Failed loading dictionary: '"+dictionaryFile+"'");
+          return console.warn(err);
+        }
+        dictionary = json;
+        lastDictionaryFile = dictionaryFile;
+        load(pid, dictionaryFile);
+        return;
+      });
+      return;
+    }
+    d3.json(pid, function(err, json) {
+      if(err) {
+        console.warn("Failed loading patient: '"+pid+"'");
+        return console.warn(err);
+      }
+      var error = true;
+      try {
+        var arr = loadEvents(json, createTypeLookup());
+        var levels = {};
+        if(layout === LAYOUT_TIME) {
+          createTimeGroups(arr[0], arr[1], arr[2], arr[3]).forEach(function(g) {
+            levels[g.ord()] = [ g ];
+          });
+        } else if(layout === LAYOUT_TREE) {
+          var types = arr[0];
+          var tmp = {};
+          types.forEach(function(type) {
+            var t = type;
+            var p = t.parent();
+            while(p) {
+              var sh = t.shortHand();
+              var key = p.shortHand();
+              if(!(key in tmp)) {
+                var name = p.name();
+                tmp[key] = new Group(name, p.hierarchy_id());
+                p.associatedGroup(tmp[key]);
+                if(p.level() >= 1) {
+                  tmp[key].associatedType(p);
+                }
+                tmp[key].visible(p.level() < 1);
+                var lvl = p.group_id() + "__" + ("000" + p.level()).substr(-3);
+                if(!(lvl in levels)) {
+                  levels[lvl] = [];
+                }
+                levels[lvl].push(tmp[key]);
+              }
+              tmp[key].addType(t);
+              t = p;
+              p = p.parent();
+            }
+          });
+        }
+
+        function updateAll() {
+          var lvls = Object.keys(levels);
+          lvls.sort(d3.ascending);
+          var levelSVGs = d3.select("#pContent").selectAll("div.levelDiv").data(lvls, function(_) { return _; });
+          levelSVGs.exit().remove();
+          levelSVGs.enter().append("div").classed("levelDiv", true).style({
+            "width": Math.max(blockWidth, fingerWidth) + "px",
+            "box-sizing": "content-box",
+            "vertical-align": "top"
+          });
+          levelSVGs.style({
+            "display": function(lvl) {
+              var groups = levels[lvl];
+              return groups.some(function(g) { return g.visible(); }) ? "inline-block" : "none";
+            }
+          });
+          levelSVGs.order();
+          levelSVGs.each(function(lvl) {
+            var groups = levels[lvl];
+            groups.sort(function(a, b) {
+              var cmp = d3.ascending(a.ord(), b.ord());
+              if(cmp !== 0) return cmp;
+              return d3.ascending(a.minSlot(), b.minSlot());
+            });
+            var groupSVGs = d3.select(this).selectAll("div.groupDiv").data(groups, function(_) { return _.uid(); });
+            groupSVGs.exit().remove();
+            groupSVGs.enter().append("div").classed("groupDiv", true).style({
+              "width": "100%",
+              "border": "solid 1px lightgray"
+            });
+            groupSVGs.style({
+              "display": function(g) {
+                return g.visible() ? "block" : "none";
+              }
+            }).on("click", function(g) {
+              if(g.associatedType()) {
+                var open = false;
+                g.eachType(function(type) {
+                  var ag = type.associatedGroup();
+                  if(ag && ag.visible()) {
+                    open = true;
+                  }
+                });
+                if(!open) {
+                  g.visible(false);
+                  setTimeout(updateAll, 0);
+                }
+              }
+            });
+            groupSVGs.order();
+            groupSVGs.each(function(group) {
+              var sel = d3.select(this);
+              group.createTitle(sel);
+              group.title().style({
+                "background-color": "lightgray"
+              });
+              group.eachType(function(type) {
+                var line = sel.append("div").style({
+                  "width": "100%"
+                }).on("click", function() {
+                  var g = type.associatedGroup();
+                  if(g) {
+                    g.visible(true);
+                    setTimeout(updateAll, 0);
+                  }
+                });
+                group.createText(type, line);
+                group.text(type).style({
+                  "width": blockWidth + "px",
+                  "overflow": "hidden",
+                  "height": "1.5em",
+                  "white-space": "nowrap"
+                }).attr({
+                  "title": type.desc()
+                });
+                group.createFingerprint(type, line);
+                group.fingerprint(type).style({
+                  "margin": "0 auto"
+                });
+                group.updateFingerprint(type);
+              });
+            });
+          });
+        }
+
+        updateAll();
+        error = false;
+      } finally {
+        if(error) {
+          console.warn("error loading");
+        }
+      }
+    });
+  }
+
+  load(pid, dict);
+}
+
+</script>
+
+</body>
+</html>

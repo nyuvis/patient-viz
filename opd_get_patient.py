@@ -199,10 +199,25 @@ def processFile(inputFile, id, obj):
                 handleRow(row, obj)
 
 def processDirectory(dir, id, obj):
-    for (_, _, files) in os.walk(dir):
+    for (root, _, files) in os.walk(dir):
         for file in files:
+            if '/' in file:
+                segs = file.split('/') # **/A/4/2/*.csv
+                if len(segs) >= 4:
+                    segs = segs[-4:-2]
+                    if (
+                            len(segs[0]) == 1 and
+                            len(segs[1]) == 1 and
+                            len(segs[2]) == 1 and
+                            (
+                                segs[0][0] != id[0] or
+                                segs[1][0] != id[1] or
+                                segs[2][0] != id[2]
+                            )
+                        ):
+                        continue
             if file.endswith(".csv"):
-                processFile(dir + '/' + file, id, obj)
+                processFile(os.path.join(root, file), id, obj)
 
 def usage():
     print('usage: {0} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
@@ -233,26 +248,20 @@ if __name__ == '__main__':
         if arg == '-h':
             usage()
         if arg == '-f':
-            if not args:
+            if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
             read_format(args.pop(0))
         elif arg == '-o':
-            if not args:
+            if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
                 usage()
             output = args.pop(0)
-            if output == '--':
-                print('-o requires output file', file=sys.stderr)
-                usage()
         elif arg == '-p':
-            if not args:
+            if not args or args[0] == '--':
                 print('no id specified', file=sys.stderr)
                 usage()
             id = args.pop(0)
-            if id == '--':
-                print('no id specified', file=sys.stderr)
-                usage()
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -299,4 +308,3 @@ if __name__ == '__main__':
     else:
         with open(file, 'w') as ofile:
             print(json.dumps(obj, indent=2), file=ofile)
-        ofile.close()

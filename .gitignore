@@ -10,3 +10,4 @@
 /server_err.txt
 /patients.txt
 json.zip
+**/*.pyc

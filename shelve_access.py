@@ -18,6 +18,7 @@ def writeRow(cols, out, start, length, colZero):
     quote = out['quote'];
 
     def doQuote(cell):
+        cell = str(cell)
         if cell.find(delim) < 0 and cell.find(quote) < 0:
             return cell
         return  quote + cell.replace(quote, quote + quote) + quote

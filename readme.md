@@ -12,6 +12,10 @@ Enrico Bertini, and David Sontag.
 
 ## Setup
 
+Setting up the project can be done without prerequisites on *MacOS* and *linux*.
+For windows you need to install [git](https://msysgit.github.io/).
+You can use *git BASH* to execute the shell commands.
+
 In order to set up the tool please run the following command:
 
 ```bash
@@ -59,7 +63,7 @@ $ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dict
 $ ./start.sh --list-update
 ```
 
-`./opd_analyze.py opd` can be used to see which patient ids for `-p` are available.
+`./opd_analyze.py -f format.json -- opd` can be used to see which patient ids for `-p` are available.
 
 Own data can be loaded by passing the event sequence file as argument to `-p`
 and the dictionary file as argument to `-d`. For further information you
