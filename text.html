@@ -32,8 +32,10 @@ function start() {
   jkjs.busy.imgWarn = "jk-js/jkjs/img/warning.png";
   jkjs.text.exact(!SLOW_MODE);
 
-  var pid = "json/998093F33FE2D940.json";
-  var dict = "json/dictionary.json";
+  var urlArgs = jkjs.util.getQueryStrings();
+
+  var pid = "p" in urlArgs ? urlArgs["p"] : "json/998093F33FE2D940.json";
+  var dict = "dict" in urlArgs ? urlArgs["dict"] : "json/dictionary.json";
   var aggr = 2;
   var ignore = {
     "prescribed": true
@@ -42,7 +44,7 @@ function start() {
   var fingerWidth = 200;
   var lineHeight = 11;
   var fontSize = 10;
-  var layout = LAYOUT_TREE;
+  var layout = !("l" in urlArgs) ? LAYOUT_TREE : urlArgs["l"] === "time" ? LAYOUT_TIME : LAYOUT_TREE;
 
   function Type(group_id, type_id, type_lookup) {
     var that = this;
