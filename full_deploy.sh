@@ -34,9 +34,21 @@ if [[ $# -gt 1 ]]; then
   usage
 fi
 
+do_restore=
+restore() {
+  if [ ! -z "${do_restore}" ] && [ -f "json.zip" ]; then
+    echo "restore patient files"
+    if [ -d "json" ]; then
+      rm -r "json"
+    fi
+    unzip "json.zip"
+  fi
+}
+
 test_fail() {
   if [ $1 -ne 0 ]; then
     echo "deploying failed!"
+    restore
     exit 1
   fi
 }
@@ -87,6 +99,8 @@ echo "save current patient files"
 zip "json.zip" "patients.txt" "json/"
 test_fail $?
 
+do_restore=1
+
 git checkout "${web}" && git merge --no-ff "${master}" --no-commit
 test_fail $?
 
@@ -103,8 +117,4 @@ test_fail $?
 git push "${origin}" "${web}" && git checkout "${master}"
 test_fail $?
 
-echo "restore patient files"
-if [ -d "json" ]; then
-  rm -r "json"
-fi
-unzip "json.zip"
+restore
