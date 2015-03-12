@@ -31,8 +31,9 @@ pip=
 do_convert=
 do_clean=
 do_nop=
+do_burst=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--do-convert] [--clean] [--pip] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
 
 usage() {
     echo $USAGE
@@ -49,6 +50,7 @@ usage() {
     echo "--ccs: downloads CCS ICD9 hierarchies"
     echo "--ndc: downloads NDC definitions"
     echo "--opd: downloads the patient claims data"
+    echo "--burst: splits the patient claim files for faster individual access"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
     echo "--pip: install python packages. (not required for all use cases)"
@@ -108,6 +110,9 @@ while [ $# -gt 0 ]; do
   --opd)
     opd=1
     ;;
+  --burst)
+    do_burst=1
+    ;;
   --do-convert)
     do_convert=1
     ;;
@@ -142,10 +147,10 @@ if [ ! -z "${pip}" ]; then
   probe_pip=`command -v pip 2>/dev/null 1>&2; echo $?`
   if [ "${probe_pip}" -ne 0 ]; then
     echo "pip is required to install python dependencies"
-    # TODO install pip and exit
+    echo "TODO pip install is not implemented yet!"
     exit 0
   fi
-  # pip install # TODO
+  echo "TODO python packages install is not implemented yet!"
 fi
 
 if [ ! -z "${do_nop}" ]; then
@@ -442,6 +447,10 @@ fetch_opd() {
   cd_back
 }
 
+burst() {
+  echo "TODO burst not implemented yet!"
+}
+
 allow_convert=
 ask_convert() {
   prompt_echo "Converting patient files can take a while."
@@ -458,7 +467,7 @@ convert_patients() {
 
   if [ -z "${convert_list}" ]; then
     echo "find top ${convert_top_n} patients"
-    ids=`./opd_analyze.py -m ${OPD_DIR} | tail -n ${convert_top_n}`
+    ids=`./opd_analyze.py -m -f "${format}" -- ${OPD_DIR} | tail -n ${convert_top_n}`
   else
     ids="${convert_list}"
   fi
@@ -520,6 +529,9 @@ if [ ! -z $allow_ccs ]; then
 fi
 if [ ! -z $allow_ndc ]; then
   fetch_ndc
+fi
+if [ ! -z $do_burst ]; then
+  burst
 fi
 if [ ! -z $allow_convert ]; then
   convert_patients
