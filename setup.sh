@@ -467,7 +467,7 @@ convert_patients() {
 
   if [ -z "${convert_list}" ]; then
     echo "find top ${convert_top_n} patients"
-    ids=`./opd_analyze.py -m ${OPD_DIR} | tail -n ${convert_top_n}`
+    ids=`./opd_analyze.py -m -f "${format}" -- ${OPD_DIR} | tail -n ${convert_top_n}`
   else
     ids="${convert_list}"
   fi
