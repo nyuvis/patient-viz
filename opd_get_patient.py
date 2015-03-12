@@ -306,5 +306,7 @@ if __name__ == '__main__':
     if file == sys.stdout:
         print(json.dumps(obj, indent=2), file=file)
     else:
+        if not os.path.exists(os.path.dirname(file)):
+            os.makedirs(os.path.dirname(file))
         with open(file, 'w') as ofile:
             print(json.dumps(obj, indent=2), file=ofile)
