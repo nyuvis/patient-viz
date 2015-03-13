@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # @author Joschi <josua.krause@gmail.com>
 # created 2015-02-27 10:39
 
