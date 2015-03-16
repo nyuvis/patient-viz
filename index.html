@@ -85,7 +85,8 @@ function start() {
     }
     d3.text("patients.txt", "text/plain", function(error, data) {
       if(error) {
-        busy.setState(jkjs.busy.state.warn);
+        busy.setState(jkjs.busy.state.warn, "Error loading file list.");
+        console.warn(error);
         return;
       }
       var pids = data.split("\n").map(function(pid) {
@@ -119,7 +120,7 @@ function start() {
           loadFile(pids[curId], lastDictionaryFile || dictionaryDefault, true);
         } else {
           console.warn("no patients found!");
-          busy.setState(jkjs.busy.state.warn);
+          busy.setState(jkjs.busy.state.warn, "No file list found.");
         }
       }
     });
@@ -181,7 +182,7 @@ function start() {
     var visRect = jkjs.zui.computeVisibleRect(translate, scale, w, h);
     overview.updateCameraRect(canvasRect, visRect, isSmooth);
     pool.onViewportChange(box, visRect, scale, isSmooth);
-  }, [ 1e-2, 3 ]);
+  }, [ 1e-6, 12 ]); // be generous with zooming! FIXME: adapt zoom extent depending on minTimeDiff #34
 
   function updateViewport() {
     zui.move(0, 0, false);
@@ -332,7 +333,7 @@ function start() {
       d3.json(dictionaryFile, function(err, json) {
         if(err) {
           console.warn("Failed loading dictionary: '"+dictionaryFile+"'");
-          busy.setState(jkjs.busy.state.warn);
+          busy.setState(jkjs.busy.state.warn, "Invalid dictionary file.");
           return console.warn(err);
         }
         dictionary = json;
@@ -357,7 +358,7 @@ function start() {
     d3.json(inputFile, function(err, json) {
       if(err) {
         console.warn("Failed loading patient: '"+inputFile+"' Note: Give the patient file as argument 'p'");
-        busy.setState(jkjs.busy.state.warn);
+        busy.setState(jkjs.busy.state.warn, "Failed loading file: '"+inputFile+"' Note: Put the file as argument 'p'.");
         return console.warn(err);
       }
       var error = true;
@@ -369,7 +370,7 @@ function start() {
         error = false;
       } finally {
         if(error) {
-          busy.setState(jkjs.busy.state.warn);
+          busy.setState(jkjs.busy.state.warn, "Error while loading file.");
         }
       }
     });

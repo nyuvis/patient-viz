@@ -12,6 +12,10 @@ apply and they must be globally unique).
 Colors are all valid CSS colors (named, hexadecimal, rgb, …)
 A set of good colors is `["#80b1d3", "#4daf4a", "#fb8072", "#ff7f00", "#eb9adb"]`.
 Timestamps are UNIX timestamps in seconds since standard epoch.
+Keep in mind that the unit for positions is determined by the smallest difference
+between events. It might be better to bin timestamps into coarser steps when
+the input times are too granular (the visualization might become flat or invisible).
+Binning also helps to make co-occurring events behave more intuitive.
 
 ## Patient file creation format
 

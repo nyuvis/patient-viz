@@ -356,7 +356,7 @@ function Type(p, g, typeId, dictionary) {
   var selText = null;
   this.selectText = function() {
     if(destroyed) {
-      // console.warn("type already destroyed"); // TODO bug!!!
+      // console.warn("type already destroyed"); // TODO bug!!! #21
       return null;
     }
     if(!selText) {
@@ -443,9 +443,25 @@ function Type(p, g, typeId, dictionary) {
           e.setSelected(false);
         });
       }
-      that.traverseEvents(function(e) {
+      var none = true;
+      that.traverseProxedEvents(function(e) {
         e.setSelected(true);
+        none = false;
       });
+      if(none) {
+        // we clicked on an inner node
+        // we can determine selection through parenthood
+        pool.traverseEvents(function(gid, tid, e) {
+          var type = e.getType().proxyType();
+          while(type) {
+            if(type === that) {
+              e.setSelected(true);
+              break;
+            }
+            type = type.getParent();
+          }
+        });
+      }
       pool.endBulkSelection();
     });
     return {

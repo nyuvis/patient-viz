@@ -630,13 +630,13 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       "height": rowH,
       "x": 0
     }).style({
-      "fill": "silver"
+      "fill": "darkgray"
     });
     helpV = sel.append("rect").attr({
       "width": colW,
       "y": 0
     }).style({
-      "fill": "silver"
+      "fill": "darkgray"
     });
     jkjs.util.toFront(helpH, false);
     jkjs.util.toFront(helpV, false);
@@ -707,7 +707,13 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   var hGrids = [];
   var newHGrids = [];
   var gridSize = 100;
-  function updateGrid(svgport, viewport, scale, smooth) {
+  function updateGrid(_ /*svgport*/, viewport, scale, smooth) {
+    var vrect = {
+      x: 0,
+      y: 0,
+      width: viewport.width * scale,
+      height: viewport.height * scale
+    };
     if(smooth || inTransition) {
       vGrids.forEach(function(s) {
         s.remove();
@@ -746,8 +752,8 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       s.attr({
         "x1": x,
         "x2": x,
-        "y1": svgport.y - gridSize - (viewport.y * scale - gridSize) % gridSize,
-        "y2": svgport.height + gridSize
+        "y1": vrect.y - gridSize - (viewport.y * scale - gridSize) % gridSize,
+        "y2": vrect.y + vrect.height + gridSize
       });
     });
     newVGrids = [];
@@ -760,8 +766,8 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     while(dist > gridSize * 1.5) {
       dist /= 2;
     }
-    var yStart = svgport.y - dist - (viewport.y * scale - dist) % dist;
-    for(var yPos = yStart;yPos < svgport.y + svgport.height;yPos += dist) {
+    var yStart = vrect.y - dist - (viewport.y * scale - dist) % dist;
+    for(var yPos = yStart;yPos <= vrect.y + vrect.height;yPos += dist) {
       newHGrids.push(yPos);
     }
     adjust(hGrids, newHGrids, "line", {
@@ -773,8 +779,8 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     hGrids.forEach(function(s, ix) {
       var y = newHGrids[ix];
       s.attr({
-        "x1": svgport.x - gridSize - (viewport.x * scale - gridSize) % gridSize,
-        "x2": svgport.width + gridSize,
+        "x1": vrect.x - gridSize - (viewport.x * scale - gridSize) % gridSize,
+        "x2": vrect.width + gridSize,
         "y1": y,
         "y2": y
       });
@@ -885,7 +891,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         jkjs.util.toFront(newBar, false);
         bar.hBar(newBar);
       }
-      var y = bar.getY();
+      var y = bar.getProxed()[0].getY();
       bar.hBar().attr({
         "y": y
       });
@@ -988,9 +994,16 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
           onlyTime = Number.POSITIVE_INFINITY;
           repr = null;
         }
-        if(!(tid in types)) {
-          types[tid] = type;
+
+        function addType(type) {
+          var at = type.proxyType();
+          var atid = at.getId();
+          if(!(atid in types)) {
+            types[atid] = at;
+          }
         }
+
+        addType(type);
         events.push(e);
       }
     });
@@ -1009,14 +1022,14 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       helpV.attr({
         "x": singleSlot ? that.getXByEventTime(repr) : 0
       }).style({
-        "opacity": singleSlot ? 0.5 : 0
+        "opacity": singleSlot ? 1 : 0
       });
     }
     if(helpH) {
       helpH.attr({
-        "y": singleType ? onlyType.getY() : 0
+        "y": singleType ? onlyType.getProxed()[0].getY() : 0
       }).style({
-        "opacity": singleType ? 0.5 : 0
+        "opacity": singleType ? 1 : 0
       });
     }
     // ===== notify listeners =====
@@ -1060,7 +1073,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         error = false;
       } finally {
         inValidityChange = false;
-        busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm);
+        busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm, error ? "Error during validity change." : "");
       }
     }, 0);
   };
