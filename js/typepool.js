@@ -630,13 +630,13 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       "height": rowH,
       "x": 0
     }).style({
-      "fill": "silver"
+      "fill": "darkgray"
     });
     helpV = sel.append("rect").attr({
       "width": colW,
       "y": 0
     }).style({
-      "fill": "silver"
+      "fill": "darkgray"
     });
     jkjs.util.toFront(helpH, false);
     jkjs.util.toFront(helpV, false);
@@ -891,7 +891,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         jkjs.util.toFront(newBar, false);
         bar.hBar(newBar);
       }
-      var y = bar.getY();
+      var y = bar.getProxed()[0].getY();
       bar.hBar().attr({
         "y": y
       });
@@ -994,9 +994,16 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
           onlyTime = Number.POSITIVE_INFINITY;
           repr = null;
         }
-        if(!(tid in types)) {
-          types[tid] = type;
+
+        function addType(type) {
+          var at = type.proxyType();
+          var atid = at.getId();
+          if(!(atid in types)) {
+            types[atid] = at;
+          }
         }
+
+        addType(type);
         events.push(e);
       }
     });
@@ -1015,14 +1022,14 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       helpV.attr({
         "x": singleSlot ? that.getXByEventTime(repr) : 0
       }).style({
-        "opacity": singleSlot ? 0.5 : 0
+        "opacity": singleSlot ? 1 : 0
       });
     }
     if(helpH) {
       helpH.attr({
-        "y": singleType ? onlyType.getY() : 0
+        "y": singleType ? onlyType.getProxed()[0].getY() : 0
       }).style({
-        "opacity": singleType ? 0.5 : 0
+        "opacity": singleType ? 1 : 0
       });
     }
     // ===== notify listeners =====
@@ -1066,7 +1073,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         error = false;
       } finally {
         inValidityChange = false;
-        busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm);
+        busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm, error ? "Error during validity change." : "");
       }
     }, 0);
   };

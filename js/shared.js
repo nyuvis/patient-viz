@@ -519,7 +519,7 @@ function setupYCluster(pool, sel, typeView) {
             }).threshold(5).minCluster(3).compute(pool).assignProxies();
             error = false;
           } finally {
-            busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm);
+            busy.setState(error ? jkjs.busy.state.warn : jkjs.busy.state.norm, error ? "Error while clustering." : "");
           }
         }, 0);
       }
@@ -543,6 +543,7 @@ function setupYCluster(pool, sel, typeView) {
     }
   }
 
+  sel.node().selectedIndex = Math.floor(levels.length / 2);
   sel.on("change", updateYCompress);
   updateYCompress();
 }

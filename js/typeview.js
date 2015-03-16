@@ -335,8 +335,13 @@ function TypeView(pool, sel, sortDropdownSel) {
 
     divs.selectAll("div.pT").each(function(t) {
       var div = d3.select(this);
-      var hasSelected = t.getTypeId() in selectedTypes;
-      var onlyOneTypeSelected = Object.keys(selectedTypes).length;
+      var pt = t.proxyType();
+      var hasSelected = pt.getId() in selectedTypes;
+      while(pt.getParent() && !hasSelected) {
+        pt = pt.getParent();
+        hasSelected = pt.getId() in selectedTypes;
+      }
+      var onlyOneTypeSelected = Object.keys(selectedTypes).length == 1;
       if("updateListEntry" in t) {
         t.updateListEntry(div, hasSelected, onlyOneTypeSelected);
       }
