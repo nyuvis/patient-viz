@@ -96,7 +96,7 @@ if [ -z "${onmaster}" ]; then
 fi
 
 echo "save current patient files"
-zip "json.zip" "patients.txt" "json/"
+zip -r "json.zip" "patients.txt" "json"
 test_fail $?
 
 do_restore=1
