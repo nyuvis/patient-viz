@@ -707,7 +707,13 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   var hGrids = [];
   var newHGrids = [];
   var gridSize = 100;
-  function updateGrid(svgport, viewport, scale, smooth) {
+  function updateGrid(_ /*svgport*/, viewport, scale, smooth) {
+    var vrect = {
+      x: 0,
+      y: 0,
+      width: viewport.width * scale,
+      height: viewport.height * scale
+    };
     if(smooth || inTransition) {
       vGrids.forEach(function(s) {
         s.remove();
@@ -746,8 +752,8 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       s.attr({
         "x1": x,
         "x2": x,
-        "y1": svgport.y - gridSize - (viewport.y * scale - gridSize) % gridSize,
-        "y2": svgport.height + gridSize
+        "y1": vrect.y - gridSize - (viewport.y * scale - gridSize) % gridSize,
+        "y2": vrect.y + vrect.height + gridSize
       });
     });
     newVGrids = [];
@@ -760,8 +766,8 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     while(dist > gridSize * 1.5) {
       dist /= 2;
     }
-    var yStart = svgport.y - dist - (viewport.y * scale - dist) % dist;
-    for(var yPos = yStart;yPos < svgport.y + svgport.height;yPos += dist) {
+    var yStart = vrect.y - dist - (viewport.y * scale - dist) % dist;
+    for(var yPos = yStart;yPos <= vrect.y + vrect.height;yPos += dist) {
       newHGrids.push(yPos);
     }
     adjust(hGrids, newHGrids, "line", {
@@ -773,8 +779,8 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     hGrids.forEach(function(s, ix) {
       var y = newHGrids[ix];
       s.attr({
-        "x1": svgport.x - gridSize - (viewport.x * scale - gridSize) % gridSize,
-        "x2": svgport.width + gridSize,
+        "x1": vrect.x - gridSize - (viewport.x * scale - gridSize) % gridSize,
+        "x2": vrect.width + gridSize,
         "y1": y,
         "y2": y
       });

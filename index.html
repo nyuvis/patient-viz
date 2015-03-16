@@ -181,7 +181,7 @@ function start() {
     var visRect = jkjs.zui.computeVisibleRect(translate, scale, w, h);
     overview.updateCameraRect(canvasRect, visRect, isSmooth);
     pool.onViewportChange(box, visRect, scale, isSmooth);
-  }, [ 1e-2, 3 ]);
+  }, [ 1e-6, 12 ]); // be generous with zooming! FIXME: adapt zoom extent depending on minTimeDiff #34
 
   function updateViewport() {
     zui.move(0, 0, false);
