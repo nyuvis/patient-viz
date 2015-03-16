@@ -41,7 +41,10 @@ restore() {
     if [ -d "json" ]; then
       rm -r "json"
     fi
+    do_restore=
     unzip "json.zip"
+    test_fail $?
+    rm "json.zip"
   fi
 }
 
