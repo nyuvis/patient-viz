@@ -269,6 +269,23 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       }
       distinctTypes += 1;
     });
+    if(!Number.isFinite(minTimeDiff)) {
+      // slow way of getting minTimeDiff -- collecting all times
+      var allEventTimes = [];
+      that.traverseAllEvents(function(_, _, e) {
+        allEventTimes.push(e.getTime());
+      });
+      allEventTimes.sort(d3.ascending);
+      var lastTime = Number.NEGATIVE_INFINITY;
+      allEventTimes.forEach(function(t) {
+        if(t === lastTime) return;
+        var diff = t - lastTime;
+        if(diff < minTimeDiff) {
+          minTimeDiff = diff;
+        }
+        lastTime = t;
+      });
+    }
     that.traverseEvents(function(gid, tid, e) {
       e.topoX(topoTimes[e.getTime()]);
     });

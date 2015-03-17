@@ -5,8 +5,8 @@ or other time sequence event data. The web-based tool is mostly written in
 [d3](http://d3js.org/) and uses [python](https://www.python.org/) and shell on the back-end.
 Example data from medical insurance claim data can be downloaded automatically.
 We also have a [live demo](http://nyuvis.github.io/patient-viz/index.html)!
-The project is a joint product of Josua Krause, Narges Sharif Razavian,
-Enrico Bertini, and David Sontag.
+The project is a joint product of [Josua Krause](http://josuakrause.github.io/info/), Narges Sharif Razavian,
+Enrico Bertini, and [David Sontag](http://cs.nyu.edu/~dsontag/).
 
 ![The tool in action!](overview.png)
 
