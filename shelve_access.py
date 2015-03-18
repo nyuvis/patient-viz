@@ -23,14 +23,14 @@ def writeRow(cols, out, start, length, colZero):
             return cell
         return  quote + cell.replace(quote, quote + quote) + quote
 
-    str = doQuote(colZero) + delim;
+    s = doQuote(colZero) + delim;
     if start > 0:
-        str += start * delim
-    str += delim.join(map(doQuote, cols))
+        s += start * delim
+    s += delim.join(map(doQuote, cols))
     remain = length - start - len(cols)
     if remain > 0:
-        str += remain * delim
-    print(str, file=out['out'])
+        s += remain * delim
+    print(s, file=out['out'])
 
 def openDB(pid, data, out):
     db = shelve.open(settings['database'])
