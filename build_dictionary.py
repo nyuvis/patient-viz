@@ -17,7 +17,7 @@ import csv
 import json
 import os.path
 
-reportMissingEntries = True
+reportMissingEntries = False # only for debugging
 
 def toEntry(id, pid, name, desc):
     return {
@@ -202,7 +202,7 @@ def initProcedure():
 
 ### unknown ###
 
-def createUnknownEntry(_, type, id, pid):
+def createUnknownEntry(_, type, id, pid = ""):
     if reportMissingEntries:
         print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
     return toEntry(id, pid, id, type + " " + id)
@@ -409,7 +409,7 @@ def usage():
     print("-p <file>: specify patient json file. '-' uses standard in", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
-    print("--lookup <id...>: lookup mode. translates ids in shorthand notation '${group_id}__${type_id}'", file=sys.stderr)
+    print("--lookup <id...>: lookup mode. translates ids in shorthand notation '${group_id}__${type_id}'. '-' uses standard in with ids separated by spaces", file=sys.stderr)
     print("-h|--help: prints this help.", file=sys.stderr)
     sys.exit(1)
 
@@ -469,12 +469,22 @@ if __name__ == '__main__':
     init()
     if lookupMode:
         dict = {}
-        for e in rest:
+
+        def addEntry(e):
             spl = e.split('__', 1)
             if len(spl) != 2:
                 print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
                 sys.exit(1)
             createEntry(dict, spl[0].strip(), spl[1].strip())
+
+        for e in rest:
+            if e == "-":
+                for eid in sys.stdin.read().split(" "):
+                    if len(eid) > 0 and eid != "id":
+                        addEntry(eid)
+            else:
+                addEntry(e)
+
         file = info['output']
         if file == sys.stdout:
             print(json.dumps(dict, indent=2), file=file)

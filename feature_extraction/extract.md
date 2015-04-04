@@ -16,4 +16,8 @@ TODO Currently medication is ignored -> needs a command line way to specify age 
 
 For more information about arguments call `./extract.py -h`.
 You can use `./build_dictionary.py -c config.txt --lookup ${column_name...}`
-to look up proper names for the columns.
+from the root folder to look up proper names for the columns.
+Alternatively you can dump all column names with:
+`head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -`
+Or only a subset (1976 in this case):
+`head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | tr " " "\n" | head -n 1976 | tr "\n" " " | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -`
