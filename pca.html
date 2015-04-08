@@ -21,8 +21,11 @@ function start() {
   var bitvecs = "fs" in urlArgs ? urlArgs["fs"] : "feature_extraction/output_small.csv";
   var COL_ID = "id";
   var COL_TARGET = "diagnosis__25000";
-  var size = 200;
-  var radius = 5;
+  var PROJ_PCA = "pca";
+  var PROJ_MDS = "mds";
+  var PROJ = "proj" in urlArgs ? urlArgs["proj"] : PROJ_PCA;
+  var size = 500;
+  var radius = 3;
 
   function Patient(id, ix, outcome) {
     var that = this;
@@ -51,7 +54,8 @@ function start() {
           "height": size
         }).style({
           "width": size + "px",
-          "height": size + "px"
+          "height": size + "px",
+          "cursor": "crosshair"
         });
         svg.append("rect").attr({
           "fill": "none",
@@ -76,11 +80,51 @@ function start() {
           });
           var outcome = !!(+row[COL_TARGET]);
           patients.push(new Patient(id, matArr.length, outcome));
-          matArr.push(vec.slice());
+          matArr.push(vec);
         });
-        var mat = mdsjs.convertToMatrix(matArr);
-        mdsjs.pcaAsync(mat, function(pcs) {
-          var points = mat.mul(pcs);
+
+        if(PROJ === PROJ_PCA) {
+          var mat = mdsjs.convertToMatrix(matArr);
+          mdsjs.pcaAsync(mat, function(pcs) {
+            var points = mat.mul(pcs);
+            assignPos(pcs);
+          });
+        } else if(PROJ === PROJ_MDS) {
+          var dm = patients.map(function() {
+            var res = [];
+            res.length = patients.length;
+            return res;
+          });
+          patients.forEach(function(p) {
+            patients.forEach(function(q) {
+              var pi = p.ix();
+              var qi = q.ix();
+              if(pi > qi) return;
+              if(pi === qi) {
+                dm[pi][pi] = 0;
+                return;
+              }
+              var vecA = matArr[pi];
+              var vecB = matArr[qi];
+              var sum = 0;
+              for(var ix = 0;ix < vecA.length;ix += 1) {
+                var a = vecA[ix];
+                var b = vecB[ix];
+                sum += (a - b) * (a - b);
+              }
+              sum = Math.sqrt(sum);
+              dm[pi][qi] = sum;
+              dm[qi][pi] = sum;
+            });
+          });
+          var dmMat = mdsjs.convertToMatrix(dm, true);
+          var points = mdsjs.landmarkMDS(dmMat, 2);
+          assignPos(points);
+        } else {
+          console.warn("invalid projection: " + PROJ);
+        }
+
+        function assignPos(points) {
           var minX = Number.POSITIVE_INFINITY;
           var minY = Number.POSITIVE_INFINITY;
           var maxX = Number.NEGATIVE_INFINITY;
@@ -106,6 +150,10 @@ function start() {
               return p.outcome() ? "crimson" : "cornflowerblue"
             },
             "r": radius
+          }).on("click", function(p) {
+            window.open("index.html?p=json/"+p.id()+".json&dict=json/dictionary.json", "_blank");
+          }).append("svg:title").text(function(p) {
+            return p.id();
           });
 
           function get(p, x) {
@@ -122,7 +170,8 @@ function start() {
               return get(p, false);
             }
           });
-        });
+        }
+
         error = false;
       } finally {
         if(error) {
