@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patients</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
+  <script src="mdsjs/mdsjs.js" charset="utf-8"></script>
+</head>
+<body onload="start()">
+
+<div id="pContent">
+</div>
+
+<script>
+function start() {
+  var urlArgs = jkjs.util.getQueryStrings();
+
+  var bitvecs = "fs" in urlArgs ? urlArgs["fs"] : "feature_extraction/output_small.csv";
+  var COL_ID = "id";
+  var COL_TARGET = "diagnosis__25000";
+  var size = 200;
+  var radius = 5;
+
+  function Patient(id, ix, outcome) {
+    var that = this;
+
+    this.id = function() {
+      return id;
+    };
+    this.outcome = function() {
+      return outcome;
+    };
+    this.ix = function() {
+      return ix;
+    };
+  } // Patient
+
+  function load(bitvecs) {
+    d3.csv(bitvecs, function(err, csv) {
+      if(err) {
+        console.warn("Failed loading bitvectors: '"+bitvecs+"'");
+        return console.warn(err);
+      }
+      var error = true;
+      try {
+        var svg = d3.select("#pContent").append("svg").attr({
+          "width": size,
+          "height": size
+        }).style({
+          "width": size + "px",
+          "height": size + "px"
+        });
+        svg.append("rect").attr({
+          "fill": "none",
+          "stroke": "black",
+          "width": size,
+          "height": size,
+          "x": 0,
+          "y": 0
+        });
+        var matArr = [];
+        var patients = [];
+        var cols = null;
+        csv.forEach(function(row) {
+          if(!cols) {
+            cols = Object.keys(row).filter(function(c) {
+              return c != COL_ID && c != COL_TARGET;
+            });
+          }
+          var id = row[COL_ID];
+          var vec = cols.map(function(c) {
+            return +row[c];
+          });
+          var outcome = !!(+row[COL_TARGET]);
+          patients.push(new Patient(id, matArr.length, outcome));
+          matArr.push(vec.slice());
+        });
+        var mat = mdsjs.convertToMatrix(matArr);
+        mdsjs.pcaAsync(mat, function(pcs) {
+          var points = mat.mul(pcs);
+          var minX = Number.POSITIVE_INFINITY;
+          var minY = Number.POSITIVE_INFINITY;
+          var maxX = Number.NEGATIVE_INFINITY;
+          var maxY = Number.NEGATIVE_INFINITY;
+          var pos = [];
+          pos.length = points.rows();
+          points.rowsIter(function(row, ix) {
+            var x = row[0];
+            var y = row[1];
+            minX = Math.min(minX, x);
+            maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y);
+            maxY = Math.max(maxY, y);
+            pos[ix] = [ x, y ];
+          });
+          var circles = svg.selectAll("circle").data(patients, function(p) {
+            return p.id();
+          });
+          circles.exit().remove();
+          circles.enter().append("circle").attr({
+            "stroke": "black",
+            "fill": function(p) {
+              return p.outcome() ? "crimson" : "cornflowerblue"
+            },
+            "r": radius
+          });
+
+          function get(p, x) {
+            var min = x ? minX : minY;
+            var max = x ? maxX : maxY;
+            return (pos[p.ix()][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
+          }
+
+          circles.attr({
+            "cx": function(p) {
+              return get(p, true);
+            },
+            "cy": function(p) {
+              return get(p, false);
+            }
+          });
+        });
+        error = false;
+      } finally {
+        if(error) {
+          console.warn("error loading");
+        }
+      }
+    });
+  }
+
+  load(bitvecs);
+}
+</script>
+
+</body>
+</html>
