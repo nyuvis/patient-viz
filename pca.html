@@ -20,10 +20,14 @@ function start() {
 
   var bitvecs = "fs" in urlArgs ? urlArgs["fs"] : "feature_extraction/output_small.csv";
   var COL_ID = "id";
-  var COL_TARGET = "diagnosis__25000";
+  var COL_TARGET = "diagnosis__20500";
+  var IGNORE = /^diagnosis__205.*/;
   var PROJ_PCA = "pca";
   var PROJ_MDS = "mds";
   var PROJ = "proj" in urlArgs ? urlArgs["proj"] : PROJ_PCA;
+  var DIST_EUCLID = "euclid";
+  var DIST_TANIMOTO = "tanimoto";
+  var DIST = DIST_TANIMOTO;
   var size = 500;
   var radius = 3;
 
@@ -71,7 +75,7 @@ function start() {
         csv.forEach(function(row) {
           if(!cols) {
             cols = Object.keys(row).filter(function(c) {
-              return c != COL_ID && c != COL_TARGET;
+              return c != COL_ID && c != COL_TARGET && !c.match(IGNORE);
             });
           }
           var id = row[COL_ID];
@@ -107,12 +111,31 @@ function start() {
               var vecA = matArr[pi];
               var vecB = matArr[qi];
               var sum = 0;
-              for(var ix = 0;ix < vecA.length;ix += 1) {
-                var a = vecA[ix];
-                var b = vecB[ix];
-                sum += (a - b) * (a - b);
+              if(DIST === DIST_EUCLID) {
+                for(var ix = 0;ix < vecA.length;ix += 1) {
+                  var a = vecA[ix];
+                  var b = vecB[ix];
+                  sum += (a - b) * (a - b);
+                }
+                sum = Math.sqrt(sum);
+              } else if(DIST === DIST_TANIMOTO) {
+                var union = 0;
+                var intersect = 0;
+                for(var ix = 0;ix < vecA.length;ix += 1) {
+                  var a = vecA[ix];
+                  var b = vecB[ix];
+                  union += (a || b) ? 1 : 0;
+                  intersect += (a && b) ? 1 : 0;
+                }
+                if(union) {
+                  sum = 1 - intersect / union;
+                } else {
+                  sum = 0;
+                }
+              } else {
+                console.warn("invalid distance function: " + DIST);
+                throw new Error();
               }
-              sum = Math.sqrt(sum);
               dm[pi][qi] = sum;
               dm[qi][pi] = sum;
             });
