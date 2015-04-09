@@ -32,6 +32,9 @@ class Range:
         self.start = start
         self.end = end
 
+    def __str__(self):
+        return "[{0}:{1}]".format(str(self.start), str(self.end))
+
     def inRange(self, value):
         if self.start is None:
             return self.end > value if self.end is not None else True
@@ -225,12 +228,12 @@ def parseQuery(query):
         if peek("<") or peek(">"):
             c = cmp()
             num = number()
-            return [ {
+            return {
                 "<": Range(None, num),
                 "<=": Range(None, num + 1),
                 ">": Range(num + 1, None),
                 ">=": Range(num, None)
-            }[c] ]
+            }[c]
         start = number()
         if peek("-"):
             char("-")
@@ -260,12 +263,12 @@ def parseQuery(query):
         if peek("<") or peek(">"):
             c = cmp()
             d = date()
-            return [ {
+            return {
                 "<": Range(None, d),
                 "<=": Range(None, d + 1), # 1s is enough
                 ">": Range(d + 1, None), # 1s is enough
                 ">=": Range(d, None)
-            }[c] ]
+            }[c]
         start = date()
         if peek("-"):
             char("-")
@@ -303,7 +306,7 @@ def parseQuery(query):
                     raise NotImplementedError("special casing for special types")
                 if group != groupId:
                     return False
-                return any(tid == typeId for tid in t["id"])
+                return any(typeId.startswith(tid) for tid in t["id"])
 
             if not any(checkType(t) for t in ts):
                 return
@@ -445,7 +448,7 @@ def processFile(inputFile, id_column, qm, candidates):
         num += 1
         if num / num_total > last_print + 0.1 or num == num_total:
             last_print = num / num_total
-            print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
+            print("processing: {0} {1:.2%}".format(inputFile, last_print), file=sys.stderr)
     """ FIXME no info handling yet
     for id in id_info_cache.keys():
         infoCache = id_info_cache[id]
@@ -477,11 +480,13 @@ def printResult(cohort, out):
 
 def usage():
     print('usage: {0} [-h] [-o <output>] -f <format> -c <config> -q <query> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-o <output>] -f <format> -c <config> --query-file <file> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
     print('-q <query>: specifies the query', file=sys.stderr)
+    print('--query-file <file>: specifies a file containing the query', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
 
@@ -514,6 +519,15 @@ if __name__ == '__main__':
                 print('only one query allowed', file=sys.stderr)
                 usage()
             query = args.pop(0)
+        elif arg == '--query-file':
+            if not args or args[0] == '--':
+                print('--query-file requires file', file=sys.stderr)
+                usage()
+            if len(query):
+                print('only one query allowed', file=sys.stderr)
+                usage()
+            with open(args.pop(0), 'r') as qf:
+                query = qf.read()
         elif arg == '-f':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
@@ -532,6 +546,10 @@ if __name__ == '__main__':
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
+
+    if not len(query):
+        print('query is required', file=sys.stderr)
+        usage()
 
     build_dictionary.globalSymbolsFile = path_correction + settings['filename']
     build_dictionary.icd9File = path_correction + settings['icd9']

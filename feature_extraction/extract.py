@@ -125,7 +125,7 @@ def createEventHandler(cb):
             num += 1
             if num / num_total >= last_print + 0.01 or num == num_total:
                 last_print = num / num_total
-                print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
+                print("processing: {0} {1:.2%}".format(inputFile, last_print), file=sys.stderr)
         for id in id_info_cache.keys():
             infoCache = id_info_cache[id]
             cb(id, "info", infoCache)

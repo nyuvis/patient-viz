@@ -21,3 +21,13 @@ Alternatively you can dump all column names with:
 `head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -`
 Or only a subset (1976 in this case):
 `head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | tr " " "\n" | head -n 1976 | tr "\n" " " | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -`
+
+Cohorts can be constructed using `./cohort.py`:
+
+```bash
+./cohort.py --query-file cases.txt -f ../format.json -c ../config.txt -o cohort_cases.txt -- ../opd
+./cohort.py --query-file control.txt -f ../format.json -c ../config.txt -o cohort_control.txt -- ../opd
+```
+
+Creates two cohorts of patients the case group and the control group.
+The syntax for the queries can be found [here](cohort.py#l=105-118).
