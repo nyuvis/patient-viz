@@ -30,4 +30,4 @@ Cohorts can be constructed using `./cohort.py`:
 ```
 
 Creates two cohorts of patients the case group and the control group.
-The syntax for the queries can be found [here](cohort.py#l=105-118).
+The syntax for the queries can be found [here](cohort.py#L105-118).
