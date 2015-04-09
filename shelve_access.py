@@ -103,7 +103,7 @@ def getAll(settings):
             for line in f:
                 if line == '':
                     continue
-                pids.append(line.strip().split(num=1)[0])
+                pids.append(line.strip().split()[0])
     return pids
 
 def printList(settings):
