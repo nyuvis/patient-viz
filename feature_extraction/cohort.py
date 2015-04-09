@@ -6,6 +6,7 @@ Created on 2015-03-08
 @author: joschi
 """
 from __future__ import print_function
+from __future__ import division
 import time as time_lib
 from datetime import datetime, timedelta
 import re
@@ -442,7 +443,7 @@ def processFile(inputFile, id_column, qm, candidates):
         processDict(eventCache, id)
         del eventCache[:]
         num += 1
-        if num / num_total > last_print + 0.01 or num == num_total:
+        if num / num_total > last_print + 0.1 or num == num_total:
             last_print = num / num_total
             print("processing file: {0} {1:.2%} complete".format(inputFile, last_print), file=sys.stderr)
     """ FIXME no info handling yet

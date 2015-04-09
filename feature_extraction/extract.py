@@ -6,9 +6,9 @@ Created on 2015-03-04
 @author: joschi
 """
 from __future__ import print_function
+from __future__ import division
 import time as time_lib
 from datetime import datetime, timedelta
-import shelve
 import sys
 import os.path
 import csv
@@ -209,7 +209,7 @@ def printResult(vectors, header_list, header_counts, delim, quote, out):
         print(s, file=out)
 
         num += 1
-        if num / num_total >= last_print + 0.01 or num == num_total:
+        if num / num_total >= last_print + 0.1 or num == num_total:
             last_print = num / num_total
             print("writing file: {0:.2%} complete".format(last_print), file=sys.stderr)
 
