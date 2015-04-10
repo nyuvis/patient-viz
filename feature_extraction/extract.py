@@ -118,15 +118,16 @@ def createEventHandler(cb):
 
         num_total = len(id_event_cache.keys())
         num = 0
-        last_print = 0
         for id in id_event_cache.keys():
             eventCache = id_event_cache[id]
             processDict(eventCache, id)
             del eventCache[:]
             num += 1
-            if num / num_total >= last_print + 0.01 or num == num_total:
-                last_print = num / num_total
-                print("processing: {0} {1:.2%}".format(inputFile, last_print), file=sys.stderr)
+            if sys.stderr.isatty():
+                sys.stderr.write("processing: {0} {1:.2%}\r".format(inputFile, num / num_total))
+                sys.stderr.flush()
+        if sys.stderr.isatty():
+            print("", file=sys.stderr)
         for id in id_info_cache.keys():
             infoCache = id_info_cache[id]
             cb(id, "info", infoCache)
@@ -204,7 +205,6 @@ def printResult(vectors, header_list, header_counts, delim, quote, whitelist, ou
     print(s, file=out)
 
     num = 0
-    last_print = 0
 
     empty = emptyBitVector()
     for id in vectors.keys():
@@ -214,9 +214,11 @@ def printResult(vectors, header_list, header_counts, delim, quote, whitelist, ou
         print(s, file=out)
 
         num += 1
-        if num / num_total >= last_print + 0.1 or num == num_total:
-            last_print = num / num_total
-            print("writing file: {0:.2%} complete".format(last_print), file=sys.stderr)
+        if sys.stderr.isatty():
+            sys.stderr.write("writing file: {0:.2%} complete\r".format(num / num_total))
+            sys.stderr.flush()
+    if sys.stderr.isatty():
+        print("", file=sys.stderr)
 
 def usage():
     print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)

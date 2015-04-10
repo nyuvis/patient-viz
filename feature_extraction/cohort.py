@@ -441,15 +441,16 @@ def processFile(inputFile, id_column, qm, candidates):
 
     num_total = len(id_event_cache.keys())
     num = 0
-    last_print = 0
     for id in id_event_cache.keys():
         eventCache = id_event_cache[id]
         processDict(eventCache, id)
         del eventCache[:]
         num += 1
-        if num / num_total > last_print + 0.1 or num == num_total:
-            last_print = num / num_total
-            print("processing: {0} {1:.2%}".format(inputFile, last_print), file=sys.stderr)
+        if sys.stderr.isatty():
+            sys.stderr.write("processing: {0} {1:.2%}\r".format(inputFile, num / num_total))
+            sys.stderr.flush()
+    if sys.stderr.isatty():
+        print("", file=sys.stderr)
     """ FIXME no info handling yet
     for id in id_info_cache.keys():
         infoCache = id_info_cache[id]
