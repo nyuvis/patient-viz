@@ -480,7 +480,7 @@ if __name__ == '__main__':
         for e in rest:
             if e == "-":
                 for eid in sys.stdin.read().split(" "):
-                    if len(eid) > 0 and eid != "id":
+                    if len(eid) > 0 and eid != "id" and eid != "outcome" and eid != "test":
                         addEntry(eid)
             else:
                 addEntry(e)

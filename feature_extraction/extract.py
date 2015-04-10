@@ -180,13 +180,17 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
         else:
             processDirectory(path, id_column, eventHandle, whitelist)
 
-def printResult(vectors, header_list, header_counts, delim, quote, out):
+def printResult(vectors, header_list, header_counts, delim, quote, whitelist, out):
 
     def doQuote(cell):
         cell = str(cell)
         if cell.find(delim) < 0 and cell.find(quote) < 0:
             return cell
         return  quote + cell.replace(quote, quote + quote) + quote
+
+    wkeys = whitelist.values()[0] if whitelist is not None and len(whitelist.values()) else []
+    wl_header = delim + delim.join(map(lambda k: doQuote(k), wkeys)) if whitelist is not None else ""
+    wl_row = lambda id: delim + delim.join(map(lambda k: doQuote(whitelist[id][k]), wkeys)) if whitelist is not None else ""
 
     num_total = len(vectors.keys())
     columns = []
@@ -195,7 +199,7 @@ def printResult(vectors, header_list, header_counts, delim, quote, out):
         if n > num_cutoff and n < num_total - num_cutoff:
             columns.append(ix)
 
-    s = doQuote("id") + delim + delim.join(map(lambda c: doQuote(header_list[c]), columns))
+    s = doQuote("id") + wl_header + delim + delim.join(map(lambda c: doQuote(header_list[c]), columns))
     print(s, file=out)
 
     num = 0
@@ -204,7 +208,7 @@ def printResult(vectors, header_list, header_counts, delim, quote, out):
     empty = emptyBitVector()
     for id in vectors.keys():
         bitvec = getBitVector(vectors, header_list, id)
-        s = doQuote(id) + delim + delim.join(map(doQuote, map(lambda c: 1 if c in bitvec else 0, columns)))
+        s = doQuote(id) + wl_row(id) + delim + delim.join(map(doQuote, map(lambda c: 1 if c in bitvec else 0, columns)))
         vectors[id] = empty
         print(s, file=out)
 
@@ -267,13 +271,17 @@ if __name__ == '__main__':
                 print('-w requires whitelist file', file=sys.stderr)
                 usage()
             if whitelist is None:
-                whitelist = set([])
-            else:
-                whitelist = set(whitelist)
+                whitelist = {}
             with open(args.pop(0), 'r') as wl:
                 for w in wl:
-                    whitelist.add(w.strip())
-            whitelist = frozenset(whitelist)
+                    w = w.strip()
+                    if not len(w):
+                        continue
+                    sw = w.split(' ')
+                    whitelist[sw[0]] = {
+                        "outcome": sw[1] if len(sw) > 1 else "0",
+                        "test": sw[2] if len(sw) > 2 else "0",
+                    }
         elif arg == '-f':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
@@ -317,7 +325,7 @@ if __name__ == '__main__':
     header_counts = {}
     processAll(vectors, header_list, header_counts, allPaths, whitelist)
     if output == '-':
-        printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], sys.stdout)
+        printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, sys.stdout)
     else:
         with open(output, 'w') as file:
-            printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], file)
+            printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, file)
