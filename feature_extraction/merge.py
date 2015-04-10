@@ -13,6 +13,10 @@ import os.path
 import csv
 import random
 
+sys.path.append('..')
+
+import util
+
 def doMerge(input, casesFlag, testPerc, sanity, out):
     with open(input, 'r') as fin:
         for line in fin:
@@ -88,10 +92,6 @@ if __name__ == '__main__':
     random.seed(seed)
 
     sanity = {}
-    if output == '-':
-        doMerge(cases, 1, testPerc, sanity, sys.stdout)
-        doMerge(control, 0, testPerc, sanity, sys.stdout)
-    else:
-        with open(output, 'w') as file:
-            doMerge(cases, "1", testPerc, sanity, file)
-            doMerge(control, "0", testPerc, sanity, file)
+    with util.OutWrapper(output) as out:
+        doMerge(cases, "1", testPerc, sanity, out)
+        doMerge(control, "0", testPerc, sanity, out)

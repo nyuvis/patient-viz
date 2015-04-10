@@ -13,6 +13,8 @@ import os.path
 #import simplejson as json
 import json
 
+import util
+
 def writeRow(cols, out, start, length, colZero):
     delim = out['delim'];
     quote = out['quote'];
@@ -199,8 +201,5 @@ def interpretArgs():
 
 if __name__ == '__main__':
     (settings, info) = interpretArgs()
-    if info['output'] == '-':
-        readShelve(info['pid'], settings, sys.stdout)
-    else:
-        with open(info['output'], 'w') as output:
-            readShelve(info['pid'], settings, output)
+    with util.OutWrapper(info['output']) as output:
+        readShelve(info['pid'], settings, output)

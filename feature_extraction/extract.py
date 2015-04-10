@@ -19,6 +19,7 @@ sys.path.append('..')
 
 import build_dictionary
 import opd_get_patient
+import util
 
 path_correction = '../'
 
@@ -324,8 +325,5 @@ if __name__ == '__main__':
     header_list = []
     header_counts = {}
     processAll(vectors, header_list, header_counts, allPaths, whitelist)
-    if output == '-':
-        printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, sys.stdout)
-    else:
-        with open(output, 'w') as file:
-            printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, file)
+    with util.OutWrapper(output) as out:
+        printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, out)

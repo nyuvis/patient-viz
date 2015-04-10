@@ -20,6 +20,7 @@ sys.path.append('..')
 
 import build_dictionary
 import opd_get_patient
+import util
 
 path_correction = '../'
 
@@ -573,8 +574,5 @@ if __name__ == '__main__':
     qm = parseQuery(query)
     cohort = []
     processAll(qm, cohort, allPaths)
-    if output == '-':
-        printResult(cohort, sys.stdout)
-    else:
-        with open(output, 'w') as file:
-            printResult(cohort, file)
+    with util.OutWrapper(output) as out:
+        printResult(cohort, out)
