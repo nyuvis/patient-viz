@@ -94,13 +94,13 @@ class ParseException(Exception):
         before = q[:start]
         middle = q[start:end]
         after  = q[end:]
-        context = 10
+        context = 20
         ws = "\n" # TODO handle other white space characters
         before = before[ max(before.rfind(ws) + 1, len(before) - context) :]
         aix = after.find(ws)
         after = after[: min(aix, context) if aix >= 0 else context ]
         line = before + middle + after
-        last = " " * len(before) + ("^" if len(middle) == 0 else "~" * len(middle))
+        last = " " * len(before) + ("^" if not len(middle) else "^" + "~" * (len(middle) - 1))
         return res + "\n" + line + "\n" + last
 
 ### grammar
