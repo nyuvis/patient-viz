@@ -302,11 +302,7 @@ if __name__ == '__main__':
     obj["start"] = min_time
     obj["end"] = max_time
     addInfo(obj, "event_count", "Events", len(obj["events"]))
-    file = sys.stdout if output == '-' else output
-    if file == sys.stdout:
-        print(json.dumps(obj, indent=2), file=file)
-    else:
-        if not os.path.exists(os.path.dirname(file)):
-            os.makedirs(os.path.dirname(file))
-        with open(file, 'w') as ofile:
-            print(json.dumps(obj, indent=2), file=ofile)
+    if output != '-' and not os.path.exists(os.path.dirname(output)):
+        os.makedirs(os.path.dirname(output))
+    with util.OutWrapper(output) as out:
+        print(json.dumps(obj, indent=2), file=out)

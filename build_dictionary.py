@@ -17,6 +17,8 @@ import csv
 import json
 import os.path
 
+import util
+
 reportMissingEntries = False # only for debugging
 
 def toEntry(id, pid, name, desc):
@@ -346,7 +348,7 @@ def extractEntries(dict, patient):
 
 def loadOldDict(file):
     dict = {}
-    if file == sys.stdout or not os.path.isfile(file):
+    if file == '-' or not os.path.isfile(file):
         return dict
     with open(file, 'r') as input:
         dict = json.loads(input.read())
@@ -360,11 +362,8 @@ def enrichDict(file, mid):
         with open(mid, 'r') as pfile:
             patient = json.loads(pfile.read())
     extractEntries(dict, patient)
-    if file == sys.stdout:
-        print(json.dumps(dict, indent=2), file=file)
-    else:
-        with open(file, 'w') as output:
-            print(json.dumps(dict, indent=2), file=output)
+    with util.OutWrapper(file) as out:
+        print(json.dumps(dict, indent=2), file=out)
 
 ### argument API
 
@@ -424,7 +423,7 @@ def interpretArgs():
     }
     info = {
         'mid': globalMid,
-        'output': sys.stdout
+        'output': '-'
     }
     lookupMode = False
     args = sys.argv[:]
@@ -448,8 +447,6 @@ def interpretArgs():
                 print('-o requires argument', file=sys.stderr)
                 usage()
             info['output'] = args.pop(0)
-            if info['output'] == '-':
-                info['output'] = sys.stdout
         elif val == '--lookup':
             lookupMode = True
             break
@@ -480,16 +477,13 @@ if __name__ == '__main__':
         for e in rest:
             if e == "-":
                 for eid in sys.stdin.read().split(" "):
-                    if len(eid) > 0 and eid != "id":
+                    if len(eid) > 0 and eid != "id" and eid != "outcome" and eid != "test":
                         addEntry(eid)
             else:
                 addEntry(e)
 
         file = info['output']
-        if file == sys.stdout:
-            print(json.dumps(dict, indent=2), file=file)
-        else:
-            with open(file, 'w') as output:
-                print(json.dumps(dict, indent=2), file=output)
+        with util.OutWrapper(file) as out:
+            print(json.dumps(dict, indent=2), file=out)
     else:
         enrichDict(info['output'], info['mid'])

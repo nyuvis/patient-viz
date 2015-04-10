@@ -93,16 +93,20 @@ if __name__ == '__main__':
     list.sort(key = lambda k: counter[k])
     padding = len(str(counter[list[len(list) - 1]])) if list else 0
     total = 0
-    for id in list:
-        num = counter[id]
-        total += num
+    try:
+        for id in list:
+            num = counter[id]
+            total += num
+            if human_readable:
+                print('{0:{width}}'.format(num, width=padding) + ' ' + id, file=sys.stdout)
+            else:
+                print(id, file=sys.stdout)
         if human_readable:
-            print('{0:{width}}'.format(num, width=padding) + ' ' + id, file=sys.stdout)
-        else:
-            print(id, file=sys.stdout)
-    if human_readable:
-        print('', file=sys.stdout)
-        print('time: '+str(time.clock() - starttime)+'s', file=sys.stdout)
-        print('ids: '+str(len(list)), file=sys.stdout)
-        print('entries: '+str(total), file=sys.stdout)
-        print('mean: '+str(total / len(list)), file=sys.stdout)
+            print('', file=sys.stdout)
+            print('time: '+str(time.clock() - starttime)+'s', file=sys.stdout)
+            print('ids: '+str(len(list)), file=sys.stdout)
+            print('entries: '+str(total), file=sys.stdout)
+            print('mean: '+str(total / len(list)), file=sys.stdout)
+    except IOError as e:
+        if e.errno != 32:
+            raise
