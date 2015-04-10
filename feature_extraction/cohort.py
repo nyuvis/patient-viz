@@ -447,7 +447,7 @@ def processFile(inputFile, id_column, qm, candidates):
         del eventCache[:]
         num += 1
         if sys.stderr.isatty():
-            sys.stderr.write("processing: {0} {1:.2%}\r".format(inputFile, num / num_total))
+            sys.stderr.write("processing: {1:.2%}\r".format(num / num_total))
             sys.stderr.flush()
     if sys.stderr.isatty():
         print("", file=sys.stderr)

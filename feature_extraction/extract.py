@@ -103,6 +103,7 @@ def processFile(inputFile, id_column, eventHandle, whitelist):
 def createEventHandler(cb):
 
     def handleEvent(inputFile, id_event_cache, id_info_cache):
+        print("processing file: {0}".format(inputFile), file=sys.stderr)
 
         def processDict(events, id):
             if len(events) == 0:
@@ -124,7 +125,7 @@ def createEventHandler(cb):
             del eventCache[:]
             num += 1
             if sys.stderr.isatty():
-                sys.stderr.write("processing: {0} {1:.2%}\r".format(inputFile, num / num_total))
+                sys.stderr.write("processing: {1:.2%}\r".format(num / num_total))
                 sys.stderr.flush()
         if sys.stderr.isatty():
             print("", file=sys.stderr)
