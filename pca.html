@@ -20,8 +20,9 @@ function start() {
 
   var bitvecs = "fs" in urlArgs ? urlArgs["fs"] : "feature_extraction/output_small.csv";
   var COL_ID = "id";
-  var COL_TARGET = "diagnosis__20500";
-  var IGNORE = /^diagnosis__205.*/;
+  var COL_TARGET = "outcome";
+  var COL_TEST = "test";
+  var IGNORE = /id|outcome|test/;
   var PROJ_PCA = "pca";
   var PROJ_MDS = "mds";
   var PROJ = "proj" in urlArgs ? urlArgs["proj"] : PROJ_PCA;
@@ -75,9 +76,11 @@ function start() {
         csv.forEach(function(row) {
           if(!cols) {
             cols = Object.keys(row).filter(function(c) {
-              return c != COL_ID && c != COL_TARGET && !c.match(IGNORE);
+              return c != COL_ID && c != COL_TARGET && c != COL_TEST && !c.match(IGNORE);
             });
           }
+          var skip = !!(+row[COL_TEST]);
+          if(skip) return;
           var id = row[COL_ID];
           var vec = cols.map(function(c) {
             return +row[c];
