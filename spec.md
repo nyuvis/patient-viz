@@ -75,7 +75,8 @@ The dictionary file:
           "color": "#bbccdd" // the color to use when the flag $flag_id is specified
         },
         …
-      }
+      },
+      <"alias">: $type_id // an optional alias for this type -- if the alias type is present it replaces the type description
     },
     …
   },

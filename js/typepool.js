@@ -47,7 +47,34 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     var id = e["id"];
     var res;
     if(!(id in grp)) {
-      res = new Type(that, g, id, dictionary);
+
+      function getAliasType(id) {
+        if(!(id in dictionary[g])) {
+          return null;
+        }
+        var t = null;
+        if("alias" in dictionary[g][id]) {
+          var alias = dictionary[g][id]["alias"];
+          if(!(alias in grp)) {
+            t = getAliasType(alias);
+            if(t) {
+              grp[alias] = t;
+            }
+          } else {
+            t = grp[alias];
+          }
+        }
+        if(!t && id in dictionary[g]) {
+          t = new Type(that, g, id, dictionary);
+        }
+        return t;
+      }
+
+      res = getAliasType(id);
+      if(!res) {
+        console.warn("unknown type: "+g+" "+id);
+      }
+
       grp[id] = res;
       // create all subtypes as well
       var t = res;

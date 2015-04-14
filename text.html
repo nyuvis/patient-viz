@@ -175,8 +175,32 @@ function start() {
         types[group_id] = {};
       }
       var grp = types[group_id];
+
+      function getAliasType(id) {
+        var t = null;
+        if(!(id in dictionary[group_id])) {
+          return null;
+        }
+        if("alias" in dictionary[group_id][id]) {
+          var alias = dictionary[group_id][id]["alias"];
+          if(!(alias in grp)) {
+            t = getAliasType(alias);
+            if(t) {
+              grp[alias] = t;
+            }
+          } else {
+            t = grp[alias];
+          }
+        }
+        if(!t && id in dictionary[group_id]) {
+          t = new Type(group_id, id, type_lookup);
+        }
+        return t;
+      }
+
       if(!(type_id in grp)) {
-        grp[type_id] = new Type(group_id, type_id, type_lookup);
+        grp[type_id] = getAliasType(type_id);
+        grp[type_id] || console.warn("unknown type: "+group_id+" "+type_id);
       }
       return grp[type_id];
     };
