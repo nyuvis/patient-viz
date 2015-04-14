@@ -144,8 +144,9 @@ function start() {
             });
           });
           var dmMat = mdsjs.convertToMatrix(dm, true);
-          var points = mdsjs.landmarkMDS(dmMat, 2);
-          assignPos(points);
+          mdsjs.landmarkMDSAsync(dmMat, 2, function(points) {
+            assignPos(points);
+          });
         } else {
           console.warn("invalid projection: " + PROJ);
         }
