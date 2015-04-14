@@ -130,6 +130,13 @@ The events file:
   <"v_bars">: [ // to highlight special times
     "auto" // auto detect interesting times —- otherwise a list of timestamps
   ],
+  <"v_spans">: [ // to highlight special time spans
+    {
+      "from": 1288756800, // timestamp
+      <"to">: 1366503400, // the end of the span -- otherwise one unit of the granularity is used
+      <"color">: "#e78ac3" // optional color of the span -- gray otherwise
+    }
+  ],
   <"total">: [ // shows a continuous line chart below the event display
     [ 1306757400, 0.75 ], // pairs of timestamps and values
     …
