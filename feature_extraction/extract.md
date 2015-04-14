@@ -54,10 +54,10 @@ the patient data into your scripts. The following commands assume you updated
 your `config.txt` (absolute file paths are recommended) and `format_shelve.json` has the correct headers.
 
 ```bash
-../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file cases.txt -f ../format.json -c ../config.txt -o cohort_cases.txt -- -
-../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file control.txt -f ../format.json -c ../config.txt -o cohort_control.txt -- -
+../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file cases.txt -f ../format_shelve.json -c ../config.txt -o cohort_cases.txt -- -
+../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file control.txt -f ../format_shelve.json -c ../config.txt -o cohort_control.txt -- -
 ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
-../shelve_access.py --all -c ../config.txt | ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- -
+../shelve_access.py --all -c ../config.txt | ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format_shelve.json -c ../config.txt -- -
 cd ..
 head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
 cd -
