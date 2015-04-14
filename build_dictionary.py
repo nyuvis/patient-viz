@@ -21,13 +21,16 @@ import util
 
 reportMissingEntries = False # only for debugging
 
-def toEntry(id, pid, name, desc):
-    return {
+def toEntry(id, pid, name, desc, alias=None):
+    res = {
         "id": id,
         "parent": pid,
         "name": name,
         "desc": desc
     }
+    if alias is not None and alias != id:
+        res["alias"] = alias
+    return res
 
 def createEntry(dict, type, id):
     if not id:
@@ -52,7 +55,7 @@ def createPrescribedEntry(symbols, type, id):
     pid = id[:-2] if len(id) == 11 else ""
     if id in symbols:
         l = symbols[id]
-        return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"])
+        return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
     return createUnknownEntry(symbols, type, id, pid)
 
 def initPrescribed():
@@ -103,7 +106,8 @@ def initPrescribed():
                 "prop": l["prop"],
                 "nonp": l["nonp"],
                 "subst": l["subst"],
-                "pharm": l["pharm"]
+                "pharm": l["pharm"],
+                "alias": normndc
             }
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
@@ -144,7 +148,8 @@ def initPrescribed():
                 "prop": l["prop"],
                 "nonp": l["nonp"],
                 "subst": l["subst"],
-                "pharm": l["pharm"]
+                "pharm": l["pharm"],
+                "alias": normndc
             }
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
@@ -171,7 +176,7 @@ def createDiagnosisEntry(symbols, type, id):
     while len(prox_id) >= 3:
         pid = diag_parents[prox_id] if prox_id in diag_parents else pid
         if prox_id in symbols:
-            return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
+            return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
         prox_id = prox_id[:-1]
     return createUnknownEntry(symbols, type, id, pid)
 
@@ -191,7 +196,7 @@ def createProcedureEntry(symbols, type, id):
     while len(prox_id) >= 3:
         pid = proc_parents[prox_id] if prox_id in proc_parents else pid
         if prox_id in symbols:
-            return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
+            return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
         prox_id = prox_id[:-1]
     return createUnknownEntry(symbols, type, id, pid)
 
@@ -275,15 +280,15 @@ def initICD9():
             if not line[1].isdigit():
                 if line[0] == ' ' and lastCode != "":
                     noDot = lastCode.replace(".", "")
-                    codes[lastCode] = codes[lastCode] + " " + line.strip()
-                    codes[noDot] = codes[noDot] + " " + line.strip()
+                    codes[lastCode] = codes[lastCode] + " " + line.strip().rstrip('- ').rstrip()
+                    codes[noDot] = codes[noDot] + " " + line.strip().rstrip('- ').rstrip()
                 continue
             spl = line.split(None, 1)
             if len(spl) == 2:
                 lastCode = spl[0].strip()
                 noDot = lastCode.replace(".", "")
-                codes[lastCode] = spl[1].rstrip()
-                codes[noDot] = spl[1].rstrip()
+                codes[lastCode] = spl[1].rstrip().rstrip('- ').rstrip()
+                codes[noDot] = spl[1].rstrip().rstrip('- ').rstrip()
             else:
                 if line[0] != '(':
                     print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
@@ -309,8 +314,8 @@ def readCCS(ccsFile, codes):
             spl = line.split(None, 1)
             if len(spl) == 2:
                 par = spl[0].rstrip('0123456789').rstrip('.')
-                cur = "HIERARCHY_" + spl[0]
-                parents[cur] = "HIERARCHY_" + par if len(par) > 0 else ""
+                cur = "HIERARCHY." + spl[0]
+                parents[cur] = "HIERARCHY." + par if len(par) > 0 else ""
                 codes[cur] = spl[1].rstrip('0123456789 \t\n\r')
             else:
                 print("invalid CCS line: '" + line.rstrip() + "'", file=sys.stderr)
