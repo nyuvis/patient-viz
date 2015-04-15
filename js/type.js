@@ -487,9 +487,18 @@ function Type(p, g, typeId, dictionary) {
 } // Type
 Type.typeDesc = function(group, id, asId, dictionary, full) {
   if(asId) {
-    return (group+"__"+"id").replace(/[.#*]/gi, "_");
+    return (group+"__"+id).replace(/[.#*]/gi, "_");
   } else if(group in dictionary && id in dictionary[group]) {
-    return dictionary[group][id][full ? "desc" : "name"];
+    var desc = dictionary[group][id][full ? "desc" : "name"];
+    if(group != "diagnosis" && group != "procedure") return desc;
+    if(id.startsWith("HIERARCHY")) return desc;
+    if(desc == id) {
+      desc = "";
+    }
+    var letterstart = Number.isNaN(+id.substring(0, 1));
+    var pre = id.substring(0, letterstart ? 4 : 3);
+    var post = id.substring(letterstart ? 4 : 3);
+    return pre + "." + post + (desc != "" ? ": " + desc : "");
   } else {
     return (full ? group + " " : "") + id
   }
