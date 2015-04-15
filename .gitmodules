@@ -3,4 +3,4 @@
 	url = https://github.com/JosuaKrause/jk-js.git
 [submodule "mdsjs"]
 	path = mdsjs
-	url = git@github.com:JosuaKrause/mdsjs.git
+	url = https://github.com/JosuaKrause/mdsjs.git

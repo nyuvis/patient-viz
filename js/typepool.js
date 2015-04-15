@@ -74,6 +74,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       res = getAliasType(id);
       if(!res) {
         console.warn("unknown type: "+g+" "+id);
+        res = new Type(that, g, id, dictionary);
       }
 
       grp[id] = res;
