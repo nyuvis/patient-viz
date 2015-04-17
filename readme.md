@@ -67,7 +67,29 @@ $ ./start.sh --list-update
 
 Own data can be loaded by passing the event sequence file as argument to `-p`
 and the dictionary file as argument to `-d`. For further information you
-can consult the help (`./start.sh -h`) and [the JSON specification](spec.md).
+can consult the help (`./start.sh -h`) and the [JSON specification](spec.md).
+
+## Using Shelve Input
+
+The system can also handle data stored in a shelve db. However, you need to manually convert
+patients stored this way and update the `config.txt` file.
+
+```bash
+$ ./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./opd_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/AEF023C2029F05BC.json -- -
+$ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
+$ ./start.sh --list-update
+```
+
+The list of available patient ids can be seen using:
+
+```bash
+$ ./shelve_access.py -c config.txt -l
+```
+
+## Feature Extraction and Model Creation
+
+The data can also be used for predictive modeling.
+Please refer to the [documentation](feature_extraction/extract.md).
 
 ## Contributing
 

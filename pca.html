@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patients</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
+  <script src="mdsjs/mdsjs.js" charset="utf-8"></script>
+</head>
+<body onload="start()">
+
+<div id="pContent">
+</div>
+
+<script>
+function start() {
+  var urlArgs = jkjs.util.getQueryStrings();
+
+  var bitvecs = "fs" in urlArgs ? urlArgs["fs"] : "feature_extraction/output_small.csv";
+  var COL_ID = "id";
+  var COL_TARGET = "outcome";
+  var COL_TEST = "test";
+  var IGNORE = /id|outcome|test/;
+  var PROJ_PCA = "pca";
+  var PROJ_MDS = "mds";
+  var PROJ = "proj" in urlArgs ? urlArgs["proj"] : PROJ_PCA;
+  var DIST_EUCLID = "euclid";
+  var DIST_TANIMOTO = "tanimoto";
+  var DIST = DIST_TANIMOTO;
+  var size = 500;
+  var radius = 3;
+
+  function Patient(id, ix, outcome) {
+    var that = this;
+
+    this.id = function() {
+      return id;
+    };
+    this.outcome = function() {
+      return outcome;
+    };
+    this.ix = function() {
+      return ix;
+    };
+  } // Patient
+
+  function load(bitvecs) {
+    d3.csv(bitvecs, function(err, csv) {
+      if(err) {
+        console.warn("Failed loading bitvectors: '"+bitvecs+"'");
+        return console.warn(err);
+      }
+      var error = true;
+      try {
+        var svg = d3.select("#pContent").append("svg").attr({
+          "width": size,
+          "height": size
+        }).style({
+          "width": size + "px",
+          "height": size + "px",
+          "cursor": "crosshair"
+        });
+        svg.append("rect").attr({
+          "fill": "none",
+          "stroke": "black",
+          "width": size,
+          "height": size,
+          "x": 0,
+          "y": 0
+        });
+        var matArr = [];
+        var patients = [];
+        var cols = null;
+        csv.forEach(function(row) {
+          if(!cols) {
+            cols = Object.keys(row).filter(function(c) {
+              return c != COL_ID && c != COL_TARGET && c != COL_TEST && !c.match(IGNORE);
+            });
+          }
+          var skip = !!(+row[COL_TEST]);
+          if(skip) return;
+          var id = row[COL_ID];
+          var vec = cols.map(function(c) {
+            return +row[c];
+          });
+          var outcome = !!(+row[COL_TARGET]);
+          patients.push(new Patient(id, matArr.length, outcome));
+          matArr.push(vec);
+        });
+
+        if(PROJ === PROJ_PCA) {
+          var mat = mdsjs.convertToMatrix(matArr);
+          mdsjs.pcaAsync(mat, function(pcs) {
+            var points = mat.mul(pcs);
+            assignPos(pcs);
+          });
+        } else if(PROJ === PROJ_MDS) {
+          var dm = patients.map(function() {
+            var res = [];
+            res.length = patients.length;
+            return res;
+          });
+          patients.forEach(function(p) {
+            patients.forEach(function(q) {
+              var pi = p.ix();
+              var qi = q.ix();
+              if(pi > qi) return;
+              if(pi === qi) {
+                dm[pi][pi] = 0;
+                return;
+              }
+              var vecA = matArr[pi];
+              var vecB = matArr[qi];
+              var sum = 0;
+              if(DIST === DIST_EUCLID) {
+                for(var ix = 0;ix < vecA.length;ix += 1) {
+                  var a = vecA[ix];
+                  var b = vecB[ix];
+                  sum += (a - b) * (a - b);
+                }
+                sum = Math.sqrt(sum);
+              } else if(DIST === DIST_TANIMOTO) {
+                var union = 0;
+                var intersect = 0;
+                for(var ix = 0;ix < vecA.length;ix += 1) {
+                  var a = vecA[ix];
+                  var b = vecB[ix];
+                  union += (a || b) ? 1 : 0;
+                  intersect += (a && b) ? 1 : 0;
+                }
+                if(union) {
+                  sum = 1 - intersect / union;
+                } else {
+                  sum = 0;
+                }
+              } else {
+                console.warn("invalid distance function: " + DIST);
+                throw new Error();
+              }
+              dm[pi][qi] = sum;
+              dm[qi][pi] = sum;
+            });
+          });
+          var dmMat = mdsjs.convertToMatrix(dm, true);
+          mdsjs.landmarkMDSAsync(dmMat, 2, function(points) {
+            assignPos(points);
+          });
+        } else {
+          console.warn("invalid projection: " + PROJ);
+        }
+
+        function assignPos(points) {
+          var minX = Number.POSITIVE_INFINITY;
+          var minY = Number.POSITIVE_INFINITY;
+          var maxX = Number.NEGATIVE_INFINITY;
+          var maxY = Number.NEGATIVE_INFINITY;
+          var pos = [];
+          pos.length = points.rows();
+          points.rowsIter(function(row, ix) {
+            var x = row[0];
+            var y = row[1];
+            minX = Math.min(minX, x);
+            maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y);
+            maxY = Math.max(maxY, y);
+            pos[ix] = [ x, y ];
+          });
+          var circles = svg.selectAll("circle").data(patients, function(p) {
+            return p.id();
+          });
+          circles.exit().remove();
+          circles.enter().append("circle").attr({
+            "stroke": "black",
+            "fill": function(p) {
+              return p.outcome() ? "crimson" : "cornflowerblue"
+            },
+            "r": radius
+          }).on("click", function(p) {
+            window.open("index.html?p=json/"+p.id()+".json&dict=json/dictionary.json", "_blank");
+          }).append("svg:title").text(function(p) {
+            return p.id();
+          });
+
+          function get(p, x) {
+            var min = x ? minX : minY;
+            var max = x ? maxX : maxY;
+            return (pos[p.ix()][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
+          }
+
+          circles.attr({
+            "cx": function(p) {
+              return get(p, true);
+            },
+            "cy": function(p) {
+              return get(p, false);
+            }
+          });
+        }
+
+        error = false;
+      } finally {
+        if(error) {
+          console.warn("error loading");
+        }
+      }
+    });
+  }
+
+  load(bitvecs);
+}
+</script>
+
+</body>
+</html>

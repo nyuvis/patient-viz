@@ -17,15 +17,20 @@ import csv
 import json
 import os.path
 
-reportMissingEntries = True
+import util
 
-def toEntry(id, pid, name, desc):
-    return {
+reportMissingEntries = False # only for debugging
+
+def toEntry(id, pid, name, desc, alias=None):
+    res = {
         "id": id,
         "parent": pid,
         "name": name,
         "desc": desc
     }
+    if alias is not None and alias != id:
+        res["alias"] = alias
+    return res
 
 def createEntry(dict, type, id):
     if not id:
@@ -50,7 +55,7 @@ def createPrescribedEntry(symbols, type, id):
     pid = id[:-2] if len(id) == 11 else ""
     if id in symbols:
         l = symbols[id]
-        return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"])
+        return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
     return createUnknownEntry(symbols, type, id, pid)
 
 def initPrescribed():
@@ -101,7 +106,8 @@ def initPrescribed():
                 "prop": l["prop"],
                 "nonp": l["nonp"],
                 "subst": l["subst"],
-                "pharm": l["pharm"]
+                "pharm": l["pharm"],
+                "alias": normndc
             }
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
@@ -142,7 +148,8 @@ def initPrescribed():
                 "prop": l["prop"],
                 "nonp": l["nonp"],
                 "subst": l["subst"],
-                "pharm": l["pharm"]
+                "pharm": l["pharm"],
+                "alias": normndc
             }
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
@@ -169,7 +176,7 @@ def createDiagnosisEntry(symbols, type, id):
     while len(prox_id) >= 3:
         pid = diag_parents[prox_id] if prox_id in diag_parents else pid
         if prox_id in symbols:
-            return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
+            return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
         prox_id = prox_id[:-1]
     return createUnknownEntry(symbols, type, id, pid)
 
@@ -189,7 +196,7 @@ def createProcedureEntry(symbols, type, id):
     while len(prox_id) >= 3:
         pid = proc_parents[prox_id] if prox_id in proc_parents else pid
         if prox_id in symbols:
-            return toEntry(id, pid, symbols[prox_id], symbols[prox_id])
+            return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
         prox_id = prox_id[:-1]
     return createUnknownEntry(symbols, type, id, pid)
 
@@ -202,7 +209,7 @@ def initProcedure():
 
 ### unknown ###
 
-def createUnknownEntry(_, type, id, pid):
+def createUnknownEntry(_, type, id, pid = ""):
     if reportMissingEntries:
         print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
     return toEntry(id, pid, id, type + " " + id)
@@ -273,15 +280,15 @@ def initICD9():
             if not line[1].isdigit():
                 if line[0] == ' ' and lastCode != "":
                     noDot = lastCode.replace(".", "")
-                    codes[lastCode] = codes[lastCode] + " " + line.strip()
-                    codes[noDot] = codes[noDot] + " " + line.strip()
+                    codes[lastCode] = codes[lastCode] + " " + line.strip().rstrip('- ').rstrip()
+                    codes[noDot] = codes[noDot] + " " + line.strip().rstrip('- ').rstrip()
                 continue
             spl = line.split(None, 1)
             if len(spl) == 2:
                 lastCode = spl[0].strip()
                 noDot = lastCode.replace(".", "")
-                codes[lastCode] = spl[1].rstrip()
-                codes[noDot] = spl[1].rstrip()
+                codes[lastCode] = spl[1].rstrip().rstrip('- ').rstrip()
+                codes[noDot] = spl[1].rstrip().rstrip('- ').rstrip()
             else:
                 if line[0] != '(':
                     print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
@@ -307,8 +314,8 @@ def readCCS(ccsFile, codes):
             spl = line.split(None, 1)
             if len(spl) == 2:
                 par = spl[0].rstrip('0123456789').rstrip('.')
-                cur = "HIERARCHY_" + spl[0]
-                parents[cur] = "HIERARCHY_" + par if len(par) > 0 else ""
+                cur = "HIERARCHY." + spl[0]
+                parents[cur] = "HIERARCHY." + par if len(par) > 0 else ""
                 codes[cur] = spl[1].rstrip('0123456789 \t\n\r')
             else:
                 print("invalid CCS line: '" + line.rstrip() + "'", file=sys.stderr)
@@ -346,7 +353,7 @@ def extractEntries(dict, patient):
 
 def loadOldDict(file):
     dict = {}
-    if file == sys.stdout or not os.path.isfile(file):
+    if file == '-' or not os.path.isfile(file):
         return dict
     with open(file, 'r') as input:
         dict = json.loads(input.read())
@@ -360,11 +367,8 @@ def enrichDict(file, mid):
         with open(mid, 'r') as pfile:
             patient = json.loads(pfile.read())
     extractEntries(dict, patient)
-    if file == sys.stdout:
-        print(json.dumps(dict, indent=2), file=file)
-    else:
-        with open(file, 'w') as output:
-            print(json.dumps(dict, indent=2), file=output)
+    with util.OutWrapper(file) as out:
+        print(json.dumps(dict, indent=2), file=out)
 
 ### argument API
 
@@ -409,7 +413,7 @@ def usage():
     print("-p <file>: specify patient json file. '-' uses standard in", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
-    print("--lookup <id...>: lookup mode. translates ids in shorthand notation '${group_id}__${type_id}'", file=sys.stderr)
+    print("--lookup <id...>: lookup mode. translates ids in shorthand notation '${group_id}__${type_id}'. '-' uses standard in with ids separated by spaces", file=sys.stderr)
     print("-h|--help: prints this help.", file=sys.stderr)
     sys.exit(1)
 
@@ -424,7 +428,7 @@ def interpretArgs():
     }
     info = {
         'mid': globalMid,
-        'output': sys.stdout
+        'output': '-'
     }
     lookupMode = False
     args = sys.argv[:]
@@ -448,8 +452,6 @@ def interpretArgs():
                 print('-o requires argument', file=sys.stderr)
                 usage()
             info['output'] = args.pop(0)
-            if info['output'] == '-':
-                info['output'] = sys.stdout
         elif val == '--lookup':
             lookupMode = True
             break
@@ -469,17 +471,24 @@ if __name__ == '__main__':
     init()
     if lookupMode:
         dict = {}
-        for e in rest:
+
+        def addEntry(e):
             spl = e.split('__', 1)
             if len(spl) != 2:
                 print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
                 sys.exit(1)
             createEntry(dict, spl[0].strip(), spl[1].strip())
+
+        for e in rest:
+            if e == "-":
+                for eid in sys.stdin.read().split(" "):
+                    if len(eid) > 0 and eid != "id" and eid != "outcome" and eid != "test":
+                        addEntry(eid)
+            else:
+                addEntry(e)
+
         file = info['output']
-        if file == sys.stdout:
-            print(json.dumps(dict, indent=2), file=file)
-        else:
-            with open(file, 'w') as output:
-                print(json.dumps(dict, indent=2), file=output)
+        with util.OutWrapper(file) as out:
+            print(json.dumps(dict, indent=2), file=out)
     else:
         enrichDict(info['output'], info['mid'])

@@ -16,6 +16,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   var helpV = null;
   var hBars = [];
   var vBars = [];
+  var vSpan = [];
 
   this.getBusy = function() {
     return busy;
@@ -47,7 +48,35 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     var id = e["id"];
     var res;
     if(!(id in grp)) {
-      res = new Type(that, g, id, dictionary);
+
+      function getAliasType(id) {
+        if(!(id in dictionary[g])) {
+          return null;
+        }
+        var t = null;
+        if("alias" in dictionary[g][id]) {
+          var alias = dictionary[g][id]["alias"];
+          if(!(alias in grp)) {
+            t = getAliasType(alias);
+            if(t) {
+              grp[alias] = t;
+            }
+          } else {
+            t = grp[alias];
+          }
+        }
+        if(!t && id in dictionary[g]) {
+          t = new Type(that, g, id, dictionary);
+        }
+        return t;
+      }
+
+      res = getAliasType(id);
+      if(!res) {
+        console.warn("unknown type: "+g+" "+id);
+        res = new Type(that, g, id, dictionary);
+      }
+
       grp[id] = res;
       // create all subtypes as well
       var t = res;
@@ -680,6 +709,25 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       that.updateLook();
     }
   };
+  this.addVSpan = function(from, to, color, noUpdate) {
+    var start = from;
+    var end = Number.isNaN(to) ? from + minTimeDiff : to;
+    var c = color ? color : "gray";
+    var newBar = sel.append("rect").attr({
+      "y": -jkjs.util.BIG_NUMBER * 0.5,
+      "height": jkjs.util.BIG_NUMBER
+    }).style({
+      "fill": c
+    });
+    vSpan.push({
+      sel: newBar,
+      start: start,
+      end: end
+    });
+    if(!noUpdate) {
+      that.updateLook();
+    }
+  }
   this.addVBar = function(time, noUpdate) {
     var newBar = sel.append("rect").attr({
       "width": colW,
@@ -922,6 +970,18 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       var x = that.getXByTime(bar.time);
       bar.sel.attr({
         "x": x
+      });
+    });
+    vSpan.forEach(function(span) {
+      span.sel.style({
+        "opacity": vis ? 0.2 : 0
+      });
+      if(!vis) return;
+      var x1 = that.getXByTime(span.start);
+      var x2 = that.getXByTime(span.end);
+      span.sel.attr({
+        "x": x1,
+        "width": (x2 - x1)
       });
     });
   };

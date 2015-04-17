@@ -143,20 +143,6 @@ if [ ! -z "${git_submodule}" ]; then
   git submodule update
 fi
 
-if [ ! -z "${pip}" ]; then
-  probe_pip=`command -v pip 2>/dev/null 1>&2; echo $?`
-  if [ "${probe_pip}" -ne 0 ]; then
-    echo "pip is required to install python dependencies"
-    echo "TODO pip install is not implemented yet!"
-    exit 0
-  fi
-  echo "TODO python packages install is not implemented yet!"
-fi
-
-if [ ! -z "${do_nop}" ]; then
-  exit 0
-fi
-
 cd_back() {
   cd "${base_dir}"
 }
@@ -165,7 +151,7 @@ test_fail() {
   if [ $1 -ne 0 ]; then
     echo "setup failed!"
     cd_back
-    exit 1
+    exit 2
   fi
 }
 
@@ -241,7 +227,7 @@ prompt() {
           ;;
         [Qq]* )
           cd_back
-          exit 0
+          exit 3
           ;;
       esac
     done
@@ -252,6 +238,54 @@ prompt() {
   fi
   return 0
 }
+
+pip_install() {
+  probe_pip=`command -v pip 2>/dev/null 1>&2; echo $?`
+  if [ "${probe_pip}" -ne 0 ]; then
+    echo "pip is required to install python dependencies."
+    echo "This script will attempt to install a user local version."
+    echo "If you want to install pip yourself follow the instructions at [i]"
+    echo "and use [n] after the installation to continue with the setup."
+    prompt "Do you want to install pip?" 'https://pip.pypa.io/en/latest/installing.html'
+    if [ $? -eq 0 ]; then
+      PIP_INSTALL_FILE="get-pip.py"
+      curl -# -o "${PIP_INSTALL_FILE}" 'https://bootstrap.pypa.io/get-pip.py'
+      test_fail $?
+      ### patching for user installation leaves pip in a state where it cannot be
+      ### accessed without knowing where it is and also it cannot be installed
+      ### normally -- we need to ask for super-user :/
+#      cat << EOF | patch "${PIP_INSTALL_FILE}"
+#130c130
+#<         sys.exit(pip.main(["install", "--upgrade"] + packages + args))
+#---
+#>         sys.exit(pip.main(["install", "--user", "--upgrade"] + packages + args))
+#EOF
+#      test_fail $?
+      chmod u+x "${PIP_INSTALL_FILE}"
+      test_fail $?
+      echo "Installing pip requires super-user rights. Please confirm the"
+      echo "integrity of ${PIP_INSTALL_FILE} and enter your password for super-user rights."
+      echo "This script will exit afterwards for security reasons and"
+      echo "you need to re-run it in order to proceed."
+      sudo ./get-pip.py
+      test_fail $?
+      rm -r -- "${PIP_INSTALL_FILE}" 2> /dev/null
+      test_fail $?
+      echo "Please re-run the script in order to proceed!"
+      exit 4
+    fi
+  fi
+  pip install --user -r requirements.txt
+  test_fail $?
+}
+
+if [ ! -z "${pip}" ]; then
+  pip_install
+fi
+
+if [ ! -z "${do_nop}" ]; then
+  exit 0
+fi
 
 allow_clean=
 allow_stop=
@@ -305,7 +339,7 @@ ask_clean() {
           break
           ;;
         [Qq]* )
-          exit 0
+          exit 5
           ;;
       esac
     done
@@ -342,6 +376,17 @@ fetch_icd9() {
     cd "${ICD9_DIR}"
     echo "downloading ICD9 definitions"
     curl -# -o "ucod.txt" "${ICD9_URL}"
+    # temporary quick fix for encoding issues
+    grep 386.0 ucod.txt | hexdump | grep 82 > /dev/null
+    if [ $? -eq 0 ]; then
+      echo "fixing encoding issues"
+      iconv -f ibm437 -t utf-8 ucod.txt > ucod2.txt
+      test_fail $?
+      mv ucod.txt ucod_old.txt
+      test_fail $?
+      mv ucod2.txt ucod.txt
+      test_fail $?
+    fi
     cd_back
   fi
 }
@@ -479,12 +524,12 @@ convert_patients() {
     ./opd_get_patient.py -p "${id}" -f "${format}" -o "${file}" -- "${OPD_DIR}" 2> $err_file || {
       echo "failed during patient conversion"
       cd_back
-      exit 1
+      exit 6
     }
     ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2> $err_dict_file || {
       echo "failed during dictionary creation"
       cd_back
-      exit 1
+      exit 7
     }
     echo "conversion successful"
   done

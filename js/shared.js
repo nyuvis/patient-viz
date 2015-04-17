@@ -150,6 +150,14 @@ function setupBars(pool, person) {
       }
     });
   }
+  if("v_spans" in person) {
+    person["v_spans"].forEach(function(span) {
+      var from = +span["from"];
+      var to = "to" in span ? +span["to"] : Number.NaN;
+      var color = span["color"];
+      pool.addVSpan(from, to, color, true);
+    });
+  }
   if(auto) {
     // find areas of interest
     var windowSize = 3;

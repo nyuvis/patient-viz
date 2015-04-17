@@ -112,13 +112,13 @@ if [ ! -z $do_stop ]; then
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then
     server_pid=`cat "${server_pid_file}"`
     print "Server pid: ${server_pid}"
-    chk_pid=`ps -p ${server_pid} | grep "python -m SimpleHTTPServer" | grep -v grep`
+    chk_pid=`ps -p ${server_pid} | grep "python" | grep -v grep`
     if [ -z "${chk_pid}" ]; then
       echo "${server_pid} is not a python server!"
     else
       kill "${server_pid}"
+      rm -- "${server_pid_file}" 2> /dev/null
     fi
-    rm -- "${server_pid_file}" 2> /dev/null
   else
     print "No server running..."
   fi

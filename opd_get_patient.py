@@ -15,6 +15,8 @@ import csv
 #import simplejson as json
 import json
 
+import util
+
 input_format = {}
 
 TYPE_PRESCRIBED = "prescribed"
@@ -219,12 +221,38 @@ def processDirectory(dir, id, obj):
             if file.endswith(".csv"):
                 processFile(os.path.join(root, file), id, obj)
 
+def processLine(obj, line):
+    sp = line.strip().split(':', 2)
+    if len(sp) < 2:
+        print('invalid line in line file: '+line, file=sys.stderr)
+        return
+    lid = sp[0]
+    if lid != id and len(lid):
+        return
+    if "__" in sp[1]:
+        sps = sp[1].split('__', 1)
+        obj["h_bars"].append({
+            "group": sps[0],
+            "id": sps[1]
+        })
+    else:
+        sps = sp[1].split('-', 1)
+        o = {
+            "from": toTime(sps[0])
+        }
+        if len(sps) > 1:
+            o["to"] = toTime(sps[1])
+        if len(sp) > 2:
+            o["color"] = sp[2]
+        obj["v_spans"].append(o)
+
 def usage():
-    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-p <id>: specifies the patient id', file=sys.stderr)
+    print('-l <file>: specifies a file for line and span infos', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
 
@@ -237,6 +265,7 @@ def read_format(file):
         input_format = json.loads(formatFile.read())
 
 if __name__ == '__main__':
+    lineFile = None
     id = None
     output = '-'
     args = sys.argv[:]
@@ -262,6 +291,11 @@ if __name__ == '__main__':
                 print('no id specified', file=sys.stderr)
                 usage()
             id = args.pop(0)
+        elif arg == '-l':
+            if not args or args[0] == '--':
+                print('no file specified', file=sys.stderr)
+                usage()
+            lineFile = args.pop(0)
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -281,8 +315,14 @@ if __name__ == '__main__':
         "info": [],
         "events": [],
         "h_bars": [],
-        "v_bars": [ "auto" ]
+        "v_bars": [ "auto" ],
+        "v_spans": []
     }
+    if lineFile is not None:
+        with open(lineFile, 'r') as lf:
+            for line in lf:
+                processLine(obj, line)
+
     addInfo(obj, "pid", "Patient", id)
     if len(allPaths) == 0:
         print('warning: no path given', file=sys.stderr)
@@ -302,11 +342,7 @@ if __name__ == '__main__':
     obj["start"] = min_time
     obj["end"] = max_time
     addInfo(obj, "event_count", "Events", len(obj["events"]))
-    file = sys.stdout if output == '-' else output
-    if file == sys.stdout:
-        print(json.dumps(obj, indent=2), file=file)
-    else:
-        if not os.path.exists(os.path.dirname(file)):
-            os.makedirs(os.path.dirname(file))
-        with open(file, 'w') as ofile:
-            print(json.dumps(obj, indent=2), file=ofile)
+    if output != '-' and not os.path.exists(os.path.dirname(output)):
+        os.makedirs(os.path.dirname(output))
+    with util.OutWrapper(output) as out:
+        print(json.dumps(obj, indent=2), file=out)

@@ -13,6 +13,8 @@ import os.path
 #import simplejson as json
 import json
 
+import util
+
 def writeRow(cols, out, start, length, colZero):
     delim = out['delim'];
     quote = out['quote'];
@@ -23,16 +25,16 @@ def writeRow(cols, out, start, length, colZero):
             return cell
         return  quote + cell.replace(quote, quote + quote) + quote
 
-    str = doQuote(colZero) + delim;
+    s = doQuote(colZero) + delim;
     if start > 0:
-        str += start * delim
-    str += delim.join(map(doQuote, cols))
+        s += start * delim
+    s += delim.join(map(doQuote, cols))
     remain = length - start - len(cols)
     if remain > 0:
-        str += remain * delim
-    print(str, file=out['out'])
+        s += remain * delim
+    print(s, file=out['out'])
 
-def openDB(pid, data, out):
+def openDB(pid, data, out, writeHeader):
     db = shelve.open(settings['database'])
     data = db[pid.strip()]
     all_hdrs = [
@@ -64,30 +66,47 @@ def openDB(pid, data, out):
         processHeader(settings['header_rx_clms'], 'RX_CLMS'),
     ]
     db.close()
-    writeRow(all_hdrs, out, 0, len(all_hdrs), settings['join_id'])
+    if writeHeader:
+        writeRow(all_hdrs, out, 0, len(all_hdrs), settings['join_id'])
     return (row_definitions, len(all_hdrs))
 
 def readShelve(pid, settings, output):
+    pids = [ pid ]
+    if pid == '--all':
+        pids = getAll(settings)
     out = {
         'delim': settings['delim'],
         'quote': settings['quote'],
         'out': output
     }
-    join_id = settings['join_id']
-    splitter = settings['row_split']
-    (row_defs, length) = openDB(pid, settings, out)
-    for row_def in row_defs:
-        start = row_def['start']
-        skip = row_def['skip']
-        for row in row_def['data']:
-            if row == '':
-                continue
-            values = row.strip().split(splitter)
-            id = values.pop(skip)
-            if len(values) != row_def['col_num']:
-                print("column mismatch! expected {0} got {1}: {2}".format(str(row_def['col_num']), str(len(values)), row), file=sys.stderr)
-                continue
-            writeRow(values, out, start, length, id)
+    first = True
+    for patientId in pids:
+        join_id = settings['join_id']
+        splitter = settings['row_split']
+        (row_defs, length) = openDB(patientId, settings, out, first)
+        first = False
+        for row_def in row_defs:
+            start = row_def['start']
+            skip = row_def['skip']
+            for row in row_def['data']:
+                if row == '':
+                    continue
+                values = row.strip().split(splitter)
+                id = values.pop(skip)
+                if len(values) != row_def['col_num']:
+                    print("column mismatch! expected {0} got {1}: {2}".format(str(row_def['col_num']), str(len(values)), row), file=sys.stderr)
+                    continue
+                writeRow(values, out, start, length, id)
+
+def getAll(settings):
+    pids = []
+    for file in settings['shelve_id_files']:
+        with open(file, 'r') as f:
+            for line in f:
+                if line == '':
+                    continue
+                pids.append(line.strip().split()[0])
+    return pids
 
 def printList(settings):
     for file in settings['shelve_id_files']:
@@ -112,7 +131,8 @@ def readConfig(settings, file):
             print(json.dumps(settings, indent=2), file=output)
 
 def usage():
-    print("{0}: -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]".format(sys.argv[0]), file=sys.stderr)
+    print("{0}: --all | -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]".format(sys.argv[0]), file=sys.stderr)
+    print("--all: print all patients", file=sys.stderr)
     print("-p <pid>: specify patient id", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
@@ -156,6 +176,8 @@ def interpretArgs():
                 print('-p requires argument', file=sys.stderr)
                 usage()
             info['pid'] = args.pop(0)
+        elif val == '--all':
+            info['pid'] = '--all'
         elif val == '-c':
             if not args:
                 print('-c requires argument', file=sys.stderr)
@@ -179,8 +201,5 @@ def interpretArgs():
 
 if __name__ == '__main__':
     (settings, info) = interpretArgs()
-    if info['output'] == '-':
-        readShelve(info['pid'], settings, sys.stdout)
-    else:
-        with open(info['output'], 'w') as output:
-            readShelve(info['pid'], settings, output)
+    with util.OutWrapper(info['output']) as output:
+        readShelve(info['pid'], settings, output)
