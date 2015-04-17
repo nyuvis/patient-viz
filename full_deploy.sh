@@ -104,7 +104,7 @@ if [ -z "${onmaster}" ]; then
   exit 5
 fi
 
-if [ -d "json" && -f patients.txt ]; then
+if [ -d "json" ] && [ -f patients.txt ]; then
   echo "save current patient files"
   zip -r "json.zip" "patients.txt" "json"
   test_fail $?
