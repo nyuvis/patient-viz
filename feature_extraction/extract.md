@@ -10,7 +10,7 @@ this patient is used for model verification). The script needs to be run
 from this folder.
 
 ```bash
-$ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
+$ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../cms
 ```
 
 Be aware that the run time is approximately ~1h.
@@ -36,10 +36,10 @@ assuming the cohort queries are in `cases.txt` and `control.txt`
 respectively.
 
 ```bash
-$ ./cohort.py --query-file cases.txt -f ../format.json -c ../config.txt -o cohort_cases.txt -- ../opd
-$ ./cohort.py --query-file control.txt -f ../format.json -c ../config.txt -o cohort_control.txt -- ../opd
+$ ./cohort.py --query-file cases.txt -f ../format.json -c ../config.txt -o cohort_cases.txt -- ../cms
+$ ./cohort.py --query-file control.txt -f ../format.json -c ../config.txt -o cohort_control.txt -- ../cms
 $ ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
-$ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
+$ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../cms
 $ cd ..
 $ head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
 $ cd -

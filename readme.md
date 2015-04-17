@@ -58,12 +58,12 @@ Patient files can be created manually from the example claims data by
 issuing the following commands:
 
 ```bash
-$ ./opd_get_patient.py -p AEF023C2029F05BC -f format.json -o json/AEF023C2029F05BC.json -- opd
+$ ./cms_get_patient.py -p AEF023C2029F05BC -f format.json -o json/AEF023C2029F05BC.json -- cms
 $ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 $ ./start.sh --list-update
 ```
 
-`./opd_analyze.py -f format.json -- opd` can be used to see which patient ids for `-p` are available.
+`./cms_analyze.py -f format.json -- cms` can be used to see which patient ids for `-p` are available.
 
 Own data can be loaded by passing the event sequence file as argument to `-p`
 and the dictionary file as argument to `-d`. For further information you
@@ -75,7 +75,7 @@ The system can also handle data stored in a shelve db. However, you need to manu
 patients stored this way and update the `config.txt` file.
 
 ```bash
-$ ./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./opd_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/AEF023C2029F05BC.json -- -
+$ ./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./cms_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/AEF023C2029F05BC.json -- -
 $ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 $ ./start.sh --list-update
 ```
