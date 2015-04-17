@@ -151,7 +151,7 @@ test_fail() {
   if [ $1 -ne 0 ]; then
     echo "setup failed!"
     cd_back
-    exit 1
+    exit 2
   fi
 }
 
@@ -227,7 +227,7 @@ prompt() {
           ;;
         [Qq]* )
           cd_back
-          exit 0
+          exit 3
           ;;
       esac
     done
@@ -272,7 +272,7 @@ pip_install() {
       rm -r -- "${PIP_INSTALL_FILE}" 2> /dev/null
       test_fail $?
       echo "Please re-run the script in order to proceed!"
-      exit 0
+      exit 4
     fi
   fi
   pip install --user -r requirements.txt
@@ -339,7 +339,7 @@ ask_clean() {
           break
           ;;
         [Qq]* )
-          exit 0
+          exit 5
           ;;
       esac
     done
@@ -524,12 +524,12 @@ convert_patients() {
     ./opd_get_patient.py -p "${id}" -f "${format}" -o "${file}" -- "${OPD_DIR}" 2> $err_file || {
       echo "failed during patient conversion"
       cd_back
-      exit 1
+      exit 6
     }
     ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2> $err_dict_file || {
       echo "failed during dictionary creation"
       cd_back
-      exit 1
+      exit 7
     }
     echo "conversion successful"
   done
