@@ -67,7 +67,7 @@ $ ./start.sh --list-update
 
 Own data can be loaded by passing the event sequence file as argument to `-p`
 and the dictionary file as argument to `-d`. For further information you
-can consult the help (`./start.sh -h`) and [the JSON specification](spec.md).
+can consult the help (`./start.sh -h`) and the [JSON specification](spec.md).
 
 ## Using Shelve Input
 
@@ -86,10 +86,10 @@ The list of available patient ids can be seen using:
 $ ./shelve_access.py -c config.txt -l
 ```
 
-## Feature Extraction
+## Feature Extraction and Model Creation
 
-The data can also be used for predictive modeling. In order to prepare the data
-for that please refer to [the feature extraction documentation](feature_extraction/extract.md).
+The data can also be used for predictive modeling.
+Please refer to the [documentation](feature_extraction/extract.md).
 
 ## Contributing
 
