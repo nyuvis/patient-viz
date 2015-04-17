@@ -45,10 +45,20 @@ def parsedata(cohort):
         testsety = data[(test_ix==1),1]
         trainsetx = data[(test_ix==0),2:]
         trainsety = data[(test_ix==0),1]
-    return trainsety, trainsetx, testsety, testsetx
+    return trainsety, trainsetx, testsety, testsetx, head[2:]
 
-def buildmodel(cohort, model, validPercentage, seed, modeloutput):
-    trainsety, trainsetx, testsety, testsetx = parsedata(cohort)
+def getsavefile(filename, ext, overwrite):
+    save_name = filename
+    if not overwrite:
+        count = 0
+        while os.path.exists(save_name + ext):
+            save_name = filename + "_" + str(count)
+            count += 1
+        print('{0} file exists. saving as {1}{2}'.format(filename, save_name, ext), file=sys.stderr)
+    return save_name + ext
+
+def buildmodel(cohort, model, validPercentage, seed, modeloutput, overwrite):
+    trainsety, trainsetx, testsety, testsetx, header = parsedata(cohort)
 
     if model == 'reg':
         # c_list can come from a config file eventually.
@@ -83,25 +93,13 @@ def buildmodel(cohort, model, validPercentage, seed, modeloutput):
         print("best average score during cross validation was:", mean_scores[mean_scores_ix], "with c =", best_c, file=sys.stderr)
         #----
         print('saving the model in directory: ', modeloutput, file=sys.stderr)
-        if not(os.path.exists(modeloutput)):
+        if not os.path.exists(modeloutput):
             os.makedirs(modeloutput)
-        save_name = modeloutput + "/reg_model_scklearn"
-        if ( os.path.exists(save_name+ ".pkl")):
-            save_name = save_name + "_new"
-            print('model file exists. saving as', save_name, file=sys.stderr)
-        save_name = save_name + ".pkl"
+        save_name = getsavefile(modeloutput + "/reg_model_scklearn", ".pkl", overwrite)
         cPickle.dump(model_best_c, open(save_name, 'wb'), -1)
-        save_name = modeloutput + "/reg_model_weights"
-        if ( os.path.exists(save_name+ ".txt")):
-            save_name = save_name + "_new"
-            print('weight file exists. saving as', save_name, file=sys.stderr)
-        save_name = save_name + ".txt"
-        np.savetxt(save_name, model_best_c.coef_)
-        save_name = modeloutput + "/reg_model_bias"
-        if ( os.path.exists(save_name+ ".txt")):
-            save_name = save_name + "_new"
-            print('bias file exists. saving as', save_name, file=sys.stderr)
-        save_name = save_name + ".txt"
+        save_name = getsavefile(modeloutput + "/reg_model_weights", ".txt", overwrite)
+        np.savetxt(save_name, model_best_c.coef_, delimiter=',', header=','.join(header))
+        save_name = getsavefile(modeloutput + "/reg_model_bias", ".txt", overwrite)
         np.savetxt(save_name, model_best_c.intercept_)
     elif model == 'SVM' or model == 'randForest':
         print('{0} model not implemented yet'.format(model), file=sys.stderr)
@@ -111,8 +109,9 @@ def buildmodel(cohort, model, validPercentage, seed, modeloutput):
         exit(1)
 
 def usage():
-    print('usage: {0} [-h] --in <input file> --out <output dir> [-v <validation size>] [--seed <seed>] [--model <model type>]'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-hw] --in <input file> --out <output dir> [-v <validation size>] [--seed <seed>] [--model <model type>]'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('-w: if set output files get overwritten', file=sys.stderr)
     print('-v <percentage>: specifies the percentage (0-100) of patients in the training set, used for tuning parameters of the model. default is 20', file=sys.stderr)
     print('--in <input file>: specifies the feature vectors', file=sys.stderr)
     print('--out <output dir>: specifies model output directory', file=sys.stderr)
@@ -121,6 +120,7 @@ def usage():
     exit(1)
 
 if __name__ == '__main__':
+    overwrite = False
     seed = int(np.random.rand(1)*1000) #randomly initialize, unless specified
     validPercentage = 20
     cohort = ""
@@ -132,7 +132,9 @@ if __name__ == '__main__':
         arg = args.pop(0)
         if arg == '-h':
             usage()
-        if arg == '--in':
+        if arg == '-w':
+            overwrite = True
+        elif arg == '--in':
             if not len(args):
                 print('--in requires input file ', file=sys.stderr)
                 usage()
@@ -157,6 +159,7 @@ if __name__ == '__main__':
                 usage()
             try:
                 seed = int(args.pop(0))
+                np.random.seed(seed)
             except:
                 print('--seed requires integer seed', file=sys.stderr)
                 usage()
@@ -177,4 +180,4 @@ if __name__ == '__main__':
         print('requires output directory', file=sys.stderr)
         usage()
 
-    buildmodel(cohort, model, validPercentage, seed, modeloutput)
+    buildmodel(cohort, model, validPercentage, seed, modeloutput, overwrite)

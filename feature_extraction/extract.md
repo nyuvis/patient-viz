@@ -73,3 +73,17 @@ in order to install the required python libraries.
 ```bash
 $ ./train.py --in output.csv --out model --seed 0 --model reg -v 20
 ```
+
+For the linear regression model the output consists of 3 files.
+`reg_model_scklearn.pkl` contains the model as python pickle.
+`reg_model_bias.txt` contains the bias of the model and
+`reg_model_weights.txt` contains the feature weights as a CSV table
+where the column names equal the feature names.
+The prediction for one patient can be computed by the following formula
+
+```javascript
+1 / (1 + Math.exp( -( bias + w_a + w_b + w_e + w_h + ...) )) > 0.5
+```
+
+Where `bias` is the bias of the model and `w_a` is the weight of feature `a`
+and so on. Features are only summed up if the patient had an occurrence of them.
