@@ -98,7 +98,7 @@ def buildmodel(cohort, model, validPercentage, seed, modeloutput, overwrite):
         save_name = getsavefile(modeloutput + "/reg_model_scklearn", ".pkl", overwrite)
         cPickle.dump(model_best_c, open(save_name, 'wb'), -1)
         save_name = getsavefile(modeloutput + "/reg_model_weights", ".txt", overwrite)
-        np.savetxt(save_name, model_best_c.coef_, delimiter=',', header=','.join(header))
+        np.savetxt(save_name, model_best_c.coef_, delimiter=',', header=','.join(header), comments='')
         save_name = getsavefile(modeloutput + "/reg_model_bias", ".txt", overwrite)
         np.savetxt(save_name, model_best_c.intercept_)
     elif model == 'SVM' or model == 'randForest':
