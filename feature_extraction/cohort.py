@@ -19,7 +19,7 @@ import json
 sys.path.append('..')
 
 import build_dictionary
-import opd_get_patient
+import cms_get_patient
 import util
 
 path_correction = '../'
@@ -367,7 +367,7 @@ def handleRow(row, id, eventCache, infoCache):
         "info": [],
         "events": []
     }
-    opd_get_patient.handleRow(row, obj)
+    cms_get_patient.handleRow(row, obj)
     eventCache.extend(obj["events"])
     """ FIXME no info handling yet
     for info in obj["info"]:
@@ -465,7 +465,7 @@ def processDirectory(dir, id_column, qm, candidates):
 
 def processAll(qm, cohort, path_tuples):
     candidates = {}
-    id_column = opd_get_patient.input_format["patient_id"]
+    id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
             processFile(path, id_column, qm, candidates)
@@ -534,7 +534,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            opd_get_patient.read_format(args.pop(0))
+            cms_get_patient.read_format(args.pop(0))
         elif arg == '-o':
             if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
