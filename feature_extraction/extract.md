@@ -38,7 +38,7 @@ respectively.
 ```bash
 $ ./cohort.py --query-file cases.txt -f ../format.json -c ../config.txt -o cohort_cases.txt -- ../opd
 $ ./cohort.py --query-file control.txt -f ../format.json -c ../config.txt -o cohort_control.txt -- ../opd
-$ ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 20 --seed 0
+$ ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
 $ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../opd
 $ cd ..
 $ head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
@@ -56,7 +56,7 @@ your `config.txt` (absolute file paths are recommended) and `format_shelve.json`
 ```bash
 $ ../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file cases.txt -f ../format_shelve.json -c ../config.txt -o cohort_cases.txt -- -
 $ ../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file control.txt -f ../format_shelve.json -c ../config.txt -o cohort_control.txt -- -
-$ ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 20 --seed 0
+$ ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
 $ ../shelve_access.py --all -c ../config.txt | ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format_shelve.json -c ../config.txt -- -
 $ cd ..
 $ head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
@@ -86,4 +86,4 @@ The prediction for one patient can be computed by the following formula
 ```
 
 Where `bias` is the bias of the model and `w_a` is the weight of feature `a`
-and so on. Features are only summed up if the patient had an occurrence of them.
+and so on. Features are only included in the sum if the patient had an occurrence of them.
