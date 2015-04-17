@@ -495,6 +495,7 @@ Type.typeDesc = function(group, id, asId, dictionary, full) {
     if(desc == id) {
       desc = "";
     }
+    if(id.indexOf('.') >= 0) return id + (desc != "" ? ": " + desc : "");
     var letterstart = Number.isNaN(+id.substring(0, 1));
     var pre = id.substring(0, letterstart ? 4 : 3);
     var post = id.substring(letterstart ? 4 : 3);

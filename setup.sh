@@ -5,9 +5,9 @@
 NDC_DIR="code/ndc"
 ICD9_DIR="code/icd9"
 CCS_DIR="code/ccs"
-OPD_DIR="opd"
+CMS_DIR="cms"
 JSON_DIR="json"
-OPD_SAMPLE_ALL=`seq -s " " 1 20`
+CMS_SAMPLE_ALL=`seq -s " " 1 20`
 
 base_dir=`pwd`
 convert_top_n=3
@@ -24,7 +24,7 @@ fetch_samples="10"
 
 no_prompt=
 ndc=
-opd=
+cms=
 icd9=
 ccs=
 pip=
@@ -33,7 +33,7 @@ do_clean=
 do_nop=
 do_burst=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--opd] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
 
 usage() {
     echo $USAGE
@@ -45,11 +45,11 @@ usage() {
     echo "--samples-all: download all samples"
     echo "--convert <list of ids>: specify which patients to convert"
     echo "--convert-num <top n>: specify how many patients to convert (top n by the total number of events)"
-    echo "--default: use default settings (equal to --icd9 --ccs --ndc --opd --do-convert)"
+    echo "--default: use default settings (equal to --icd9 --ccs --ndc --cms --do-convert)"
     echo "--icd9: downloads ICD9 definitions"
     echo "--ccs: downloads CCS ICD9 hierarchies"
     echo "--ndc: downloads NDC definitions"
-    echo "--opd: downloads the patient claims data"
+    echo "--cms: downloads the patient claims data"
     echo "--burst: splits the patient claim files for faster individual access"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
@@ -81,7 +81,7 @@ while [ $# -gt 0 ]; do
     fetch_samples="$1"
     ;;
   --samples-all)
-    fetch_samples="${OPD_SAMPLE_ALL}"
+    fetch_samples="${CMS_SAMPLE_ALL}"
     ;;
   --convert)
     shift
@@ -95,7 +95,7 @@ while [ $# -gt 0 ]; do
     icd9=1
     ccs=1
     ndc=1
-    opd=1
+    cms=1
     do_convert=1
     ;;
   --icd9)
@@ -108,7 +108,11 @@ while [ $# -gt 0 ]; do
     ndc=1
     ;;
   --opd)
-    opd=1
+    echo "--opd is now --cms"
+    exit 8
+    ;;
+  --cms)
+    cms=1
     ;;
   --burst)
     do_burst=1
@@ -306,7 +310,7 @@ ask_all_clean() {
   ask_for_clean "ICD9 definitions" "${ICD9_DIR}"
   ask_for_clean "CCS hierarchies" "${CCS_DIR}"
   ask_for_clean "NDC definitions" "${NDC_DIR}"
-  ask_for_clean "claims data" "${OPD_DIR}"
+  ask_for_clean "claims data" "${CMS_DIR}"
   ask_for_clean "patient files" "${JSON_DIR}" "${file_list}"
   ask_for_clean "error output files" "${err_file}" "${err_dict_file}"
   ask_for_clean "server logs" "${server_log}" "${server_err}"
@@ -443,33 +447,33 @@ fetch_ndc() {
   fi
 }
 
-allow_opd=
-ask_opd() {
-  OPD_INFO="http://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html"
-  OPD_DISCLAIMER="http://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/BSAPUFS/Downloads/PUF_Disclaimer.pdf"
-  OPD_DISCLAIMER_FILE="disclaimer.pdf"
-  if [ ! -d "${OPD_DIR}" ]; then
-    mkdir -p "${OPD_DIR}"
+allow_cms=
+ask_cms() {
+  CMS_INFO="http://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html"
+  CMS_DISCLAIMER="http://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/BSAPUFS/Downloads/PUF_Disclaimer.pdf"
+  CMS_DISCLAIMER_FILE="disclaimer.pdf"
+  if [ ! -d "${CMS_DIR}" ]; then
+    mkdir -p "${CMS_DIR}"
   fi
-  cd "${OPD_DIR}"
+  cd "${CMS_DIR}"
   samples="$1"
   sample_count=`echo "${samples}" | wc -w | tr -d "[[:space:]]"`
   approx_gb=`echo "${samples}" | wc -w | sed -e "s/$/*3/" | bc` # pessimistic estimate of 3GB per sample
   prompt_echo "Preparing to download ${sample_count} sample[s] of the patient claims data."
   prompt_echo "The download may take a while (~${approx_gb}GB)."
-  prompt "Do you want to download claims data?" "${OPD_INFO}" "${OPD_DISCLAIMER_FILE}" "${OPD_DISCLAIMER}"
+  prompt "Do you want to download claims data?" "${CMS_INFO}" "${CMS_DISCLAIMER_FILE}" "${CMS_DISCLAIMER}"
   if [ $? -eq 0 ]; then
-    allow_opd=1
+    allow_cms=1
   fi
 
   cd_back
 }
 
-fetch_opd() {
-  if [ ! -d "${OPD_DIR}" ]; then
-    mkdir -p "${OPD_DIR}"
+fetch_cms() {
+  if [ ! -d "${CMS_DIR}" ]; then
+    mkdir -p "${CMS_DIR}"
   fi
-  cd "${OPD_DIR}"
+  cd "${CMS_DIR}"
   samples="$1"
   for i in $samples; do
     valid_sample=`echo $i | grep -E "[1-9]|1[0-9]|20"`
@@ -512,7 +516,7 @@ convert_patients() {
 
   if [ -z "${convert_list}" ]; then
     echo "find top ${convert_top_n} patients"
-    ids=`./opd_analyze.py -m -f "${format}" -- ${OPD_DIR} | tail -n ${convert_top_n}`
+    ids=`./cms_analyze.py -m -f "${format}" -- ${CMS_DIR} | tail -n ${convert_top_n}`
   else
     ids="${convert_list}"
   fi
@@ -521,7 +525,7 @@ convert_patients() {
     echo "create ${file}"
     echo "config file is ${config}"
     echo "script output can be found in ${err_file} and ${err_dict_file}"
-    ./opd_get_patient.py -p "${id}" -f "${format}" -o "${file}" -- "${OPD_DIR}" 2> $err_file || {
+    ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -- "${CMS_DIR}" 2> $err_file || {
       echo "failed during patient conversion"
       cd_back
       exit 6
@@ -541,8 +545,8 @@ convert_patients() {
 if [ ! -z $do_clean ]; then
   ask_clean
 fi
-if [ ! -z $opd ]; then
-  ask_opd "${fetch_samples}"
+if [ ! -z $cms ]; then
+  ask_cms "${fetch_samples}"
 fi
 if [ ! -z $icd9 ]; then
   ask_icd9
@@ -563,8 +567,8 @@ prompt_echo "=== no user input required after this point ==="
 if [ ! -z $allow_clean ]; then
   clean
 fi
-if [ ! -z $allow_opd ]; then
-  fetch_opd "${fetch_samples}"
+if [ ! -z $allow_cms ]; then
+  fetch_cms "${fetch_samples}"
 fi
 if [ ! -z $allow_icd9 ]; then
   fetch_icd9
