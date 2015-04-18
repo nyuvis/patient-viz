@@ -491,7 +491,7 @@ Type.typeDesc = function(group, id, asId, dictionary, full) {
   } else if(group in dictionary && id in dictionary[group]) {
     var desc = dictionary[group][id][full ? "desc" : "name"];
     if(group != "diagnosis" && group != "procedure") return desc;
-    if(id.startsWith("HIERARCHY")) return desc;
+    if(id.startsWith("HIERARCHY") || id == '') return desc;
     if(desc == id) {
       desc = "";
     }
