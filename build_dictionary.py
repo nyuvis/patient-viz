@@ -32,7 +32,7 @@ def toEntry(id, pid, name, desc, alias=None):
         res["alias"] = alias
     return res
 
-def createEntry(dict, type, id):
+def createEntry(dict, type, id, onlyAddMapped=False):
     if not id:
         entry = createRootEntry(type)
     else:
@@ -40,10 +40,16 @@ def createEntry(dict, type, id):
         entry = creator(symbolTable.get(type, {}), type, id)
     if type not in dict:
         dict[type] = {}
+    if onlyAddMapped and 'unmapped' in entry and entry['unmapped']:
+        return
     dict[type][id] = entry
     pid = entry['parent']
     if pid not in dict[type]:
-        createEntry(dict, type, pid)
+        createEntry(dict, type, pid, False)
+    if 'alias' in entry:
+        aid = entry['alias']
+        if aid not in dict[type]:
+            createEntry(dict, type, aid, True)
 
 def init():
     for key in initLookup.keys():
@@ -212,7 +218,9 @@ def initProcedure():
 def createUnknownEntry(_, type, id, pid = ""):
     if reportMissingEntries:
         print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
-    return toEntry(id, pid, id, type + " " + id)
+    res = toEntry(id, pid, id, type + " " + id)
+    res["unmapped"] = True
+    return res
 
 ### type ###
 

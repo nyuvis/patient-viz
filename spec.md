@@ -76,6 +76,8 @@ The dictionary file:
         },
         …
       },
+      <"unmapped">: false, // marker for types that are not in the dictionary and just have
+                           // the id as name -- when creating your own dictionary this field should be missing or at least be false
       <"alias">: $type_id // an optional alias for this type -- if the alias type is present it replaces the type description
     },
     …
