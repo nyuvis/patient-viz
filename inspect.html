@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patient Viz - Inspect</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="lib/colorbrewer/colorbrewer.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/busy.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/zui.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/time.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/text.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/path.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/stat.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
+</head>
+<body onload="start()">
+
+<div id="pContent">
+</div>
+
+<script>
+var SLOW_MODE = false;
+
+function start() {
+  jkjs.busy.imgBusy = "jk-js/jkjs/img/busy.gif";
+  jkjs.busy.imgWarn = "jk-js/jkjs/img/warning.png";
+  jkjs.text.exact(!SLOW_MODE);
+
+  var urlArgs = jkjs.util.getQueryStrings();
+
+  var pid = "p" in urlArgs ? urlArgs["p"] : "json/998093F33FE2D940.json";
+  var dict = "dict" in urlArgs ? urlArgs["dict"] : "json/dictionary.json";
+  var aggr = 2;
+  var ignore = {
+    "prescribed": true
+  };
+  var width = 1300;
+  var lineHeight = 11;
+  var fontSize = 10;
+  var smallBlockSize = 10;
+
+  function Type(group_id, type_id, type_lookup) {
+    var that = this;
+    var de = dictionary[group_id][type_id];
+    var children = {};
+
+    function addToParent() {
+      var t = that;
+      while(t) {
+        var p = t.parent();
+        if(p && !p.addChild(t)) {
+          break;
+        }
+        t = p;
+      }
+    }
+
+    this.addChild = function(type) {
+      var sh = type.shortHand();
+      if(sh in children) return false;
+      children[sh] = type;
+      return true;
+    };
+
+    this.shortHand = function() {
+      return group_id + "__" + type_id;
+    };
+    this.name = function() {
+      return de["name"];
+    };
+    this.desc = function() {
+      return de["desc"];
+    };
+    this.group_id = function() {
+      return group_id;
+    };
+    this.type_id = function() {
+      return type_id;
+    };
+    this.hierarchy_id = function() {
+      if(that.isRoot()) return that.group_id();
+      return that.parent().hierarchy_id() + "__" + that.type_id();
+    };
+    this.parent = function() {
+      if(type_id === "") return null;
+      var parent = de["parent"];
+      return type_lookup(group_id, parent);
+    };
+    this.isRoot = function() {
+      return !that.parent();
+    };
+    var level = -1;
+    this.level = function() {
+      if(level < 0) {
+        level = that.isRoot() ? 0 : that.parent().level() + 1;
+      }
+      return level;
+    };
+    this.atLevel = function(level) {
+      if(that.level() > level && !that.isRoot()) return that.parent().atLevel(level);
+      return that;
+    };
+    var assocGrp = null;
+    this.associatedGroup = function(_) {
+      if(!arguments.length) return assocGrp;
+      assocGrp = _;
+    };
+    var color = null;
+    this.color = function() {
+      if(!color) {
+        if("color" in de) {
+          color = de["color"];
+        } else if(that.isRoot()) {
+          color = "black";
+        } else {
+          color = that.parent().color();
+        }
+      }
+      return color;
+    };
+    var minSlot = Number.POSITIVE_INFINITY;
+    var slots = null;
+    this.fillSlots = function(eventTimes, fromTime, toTime, step, allSlots) {
+      if(slots) {
+        console.warn("overwriting slots!");
+      }
+      minSlot = Number.POSITIVE_INFINITY;
+      slots = new Uint8Array(Math.ceil((toTime - fromTime) / step));
+      eventTimes.forEach(function(time) {
+        var slot = Math.ceil((time - fromTime) / step);
+        if(slot < minSlot) {
+          minSlot = slot;
+        }
+        slots[slot] = 1; // don't report multiple times
+        var slotObj = allSlots[slot];
+        slotObj[that.shortHand()] = that;
+      });
+    };
+    this.slots = function() {
+      if(!slots && Object.keys(children).length) {
+        var s = null;
+        minSlot = Number.POSITIVE_INFINITY;
+        Object.keys(children).forEach(function(c) {
+          var cs = children[c].slots();
+          if(!cs) return;
+          minSlot = Math.min(minSlot, children[c].minSlot());
+          if(!s) {
+            s = new Uint8Array(cs.length);
+          }
+          for(var ix = 0;ix < cs.length;ix += 1) {
+            s[ix] = Math.max(s[ix], cs[ix]); // don't report multiple times
+          }
+        });
+        slots = s;
+      }
+      return slots;
+    };
+    this.minSlot = function() {
+      that.slots(); // make sure to initialize minSlot
+      return minSlot;
+    };
+
+    addToParent();
+  } // Type
+
+  function createTypeLookup() {
+    var types = {};
+    var type_lookup = function(group_id, type_id) {
+      if(!(group_id in types)) {
+        types[group_id] = {};
+      }
+      var grp = types[group_id];
+
+      function getAliasType(id) {
+        var t = null;
+        if(!(id in dictionary[group_id])) {
+          return null;
+        }
+        if("alias" in dictionary[group_id][id]) {
+          var alias = dictionary[group_id][id]["alias"];
+          if(!(alias in grp)) {
+            t = getAliasType(alias);
+            if(t) {
+              grp[alias] = t;
+            }
+          } else {
+            t = grp[alias];
+          }
+        }
+        if(!t && id in dictionary[group_id]) {
+          t = new Type(group_id, id, type_lookup);
+        }
+        return t;
+      }
+
+      if(!(type_id in grp)) {
+        grp[type_id] = getAliasType(type_id);
+        grp[type_id] || console.warn("unknown type: "+group_id+" "+type_id);
+      }
+      return grp[type_id];
+    };
+    return type_lookup;
+  }
+
+  function loadEvents(json, type_lookup) {
+    var events = json["events"];
+    var minTime = Number.POSITIVE_INFINITY;
+    var maxTime = Number.NEGATIVE_INFINITY;
+    var allTimes = [];
+    var times = {};
+    events.forEach(function(e) {
+      if(e["group"] in ignore) {
+        return;
+      }
+      var time = +e["time"];
+      allTimes.push(time);
+      minTime = Math.min(minTime, time);
+      maxTime = Math.max(maxTime, time);
+
+      var group_id = e["group"];
+      var type_id = e["id"];
+      if(!(group_id in times)) {
+        times[group_id] = {};
+      }
+      var grp = times[group_id];
+      if(!(type_id in grp)) {
+        grp[type_id] = [];
+      }
+      var type_times = grp[type_id];
+      type_times.push(time);
+    });
+    allTimes.sort(function(a, b) {
+      return d3.ascending(a, b);
+    });
+    var step = Number.POSITIVE_INFINITY;
+    var prevTime = minTime;
+    allTimes.forEach(function(time) {
+      if(prevTime === time) return;
+      var diff = time - prevTime;
+      step = Math.min(step, diff);
+      prevTime = time;
+    });
+    var allSlots = [];
+    for(var slot = 0;slot <= Math.ceil((maxTime - minTime) / step);slot += 1) {
+      allSlots.push({});
+    }
+    var resultTypes = [];
+    Object.keys(times).forEach(function(group_id) {
+      var grp = times[group_id];
+      Object.keys(grp).forEach(function(type_id) {
+        var times = grp[type_id];
+        var type = type_lookup(group_id, type_id);
+        type.fillSlots(times, minTime, maxTime, step, allSlots);
+        resultTypes.push(type);
+      });
+    });
+    return [ resultTypes, minTime, maxTime, step, allSlots ];
+  }
+
+  var uniqID = 0;
+  function Group(name, ord) {
+    var that = this;
+    var uid = uniqID++;
+    this.uid = function() {
+      return uid;
+    }
+    this.name = function() {
+      return name;
+    };
+    this.ord = function() {
+      return ord;
+    };
+    var visible = true;
+    this.visible = function(_) {
+      if(!arguments.length) return visible;
+      visible = _;
+    };
+    var types = [];
+    this.addType = function(type) {
+      types.push(type);
+      minSlot = Math.min(minSlot, type.minSlot());
+    };
+    var minSlot = Number.POSITIVE_INFINITY;
+    this.minSlot = function() {
+      return minSlot;
+    };
+    var assocType = null;
+    this.associatedType = function(_) {
+      if(!arguments.length) return assocType;
+      assocType = _;
+    };
+    this.size = function() {
+      return types.length;
+    };
+    this.eachType = function(cb) {
+      types.sort(function(a, b) {
+        if(a.isRoot()) return -1;
+        if(b.isRoot()) return 1;
+        var cmp = d3.ascending(a.parent().hierarchy_id(), b.parent().hierarchy_id());
+        if(cmp !== 0) return cmp;
+        return d3.ascending(a.minSlot(), b.minSlot());
+      });
+      types.forEach(function(type) {
+        cb(type);
+      });
+    };
+  } // Group
+
+  function Skyline(sel, onWnd) {
+    var that = this;
+    var overview = sel.append("svg").attr({
+      "width": width
+    }).style({
+      "width": width + "px"
+    });
+
+    function mousePos() {
+      var pos = d3.mouse(ovG.node());
+      return [ pos[0], pos[1] ];
+    }
+
+    var height = 1;
+    var scaleX = 1;
+    var ovG = overview.append("g");
+    var wnd = overview.append("rect");
+    var wndShd = overview.append("rect");
+    var drag = d3.behavior.drag();
+    var dragX = Number.NaN;
+    drag.on("dragstart", function() {
+      dragX = mousePos()[0];
+    });
+    drag.on("drag", function() {
+      if(Number.isNaN(dragX)) return;
+      var x = mousePos()[0];
+      var diff = (x - dragX) / smallBlockSize;
+      that.wnd(wndMin + diff, wndSize);
+      dragX = x;
+    });
+    drag.on("dragend", function() {
+      if(Number.isNaN(dragX)) return;
+      dragX = Number.NaN;
+    });
+    wndShd.call(drag);
+
+    var wndMin = 0;
+    var wndSize = 0;
+    this.wnd = function(m, size) {
+      var min = m < fromSlot ? fromSlot : m + size >= toSlot ? toSlot - size : m;
+      var chg = min !== wndMin || size !== wndSize;
+      wndMin = min;
+      wndSize = size;
+      var rect = {
+        "x": (wndMin * smallBlockSize + 0.5) * scaleX,
+        "width": (wndSize * smallBlockSize - 1) * scaleX,
+        "y": 0.5,
+        "height": height - 1
+      };
+      wnd.attr({
+        "fill": "none",
+        "stroke": "black",
+        "stroke-width": 0.5,
+        "opacity": wndSize ? 1 : 0
+      });
+      if(wndSize) {
+        wnd.attr(rect);
+        wndShd.attr(rect);
+      }
+      wndShd.attr({
+        "fill": "white",
+        "stroke": "black",
+        "stroke-width": 0.5,
+        "opacity": 0
+      });
+      if(chg) {
+        onWnd && onWnd(wndMin, wndSize);
+      }
+    };
+    var level = Number.NaN;
+    this.level = function(_) {
+      if(!arguments.length) return level;
+      level = _;
+    };
+    var ar = 1;
+    this.aspectRatio = function(_) {
+      if(!arguments.length) return ar;
+      ar = _;
+    };
+    var allSlots = [];
+    var fromSlot = 0;
+    var toSlot = 1;
+    var maxCol = 0;
+    this.maxCol = function(_) {
+      if(!arguments.length) return maxCol;
+      maxCol = _;
+    }
+    this.setSlots = function(slots, from, to) {
+      allSlots = slots.map(function(slot, ix) {
+        return [ix, slot];
+      }).filter(function(s) {
+        return Object.keys(s[1]).length;
+      }).filter(function(s) {
+        return s[0] >= from && s[0] < to;
+      });
+      fromSlot = from;
+      toSlot = to;
+    };
+
+    this.update = function() {
+      var sCols = ovG.selectAll("g.cols").data(allSlots, function(s) {
+        return s[0];
+      });
+      sCols.exit().remove();
+      sCols.enter().append("g").classed("cols", true);
+      sCols.attr({
+        "transform": function(s) {
+          return "translate(" + ((s[0] - fromSlot)*smallBlockSize) + " 0)";
+        }
+      });
+      sCols.each(function(s) {
+        var d = s[1];
+        var types;
+        if(Number.isNaN(level)) {
+          types = d;
+        } else {
+          types = {};
+          Object.keys(d).forEach(function(t) {
+            var type = d[t].atLevel(level);
+            types[type.shortHand()] = type;
+          });
+        }
+        var typeKeys = Object.keys(types);
+        if(typeKeys.length > maxCol) {
+          maxCol = typeKeys.length;
+        }
+        typeKeys.sort(function(a, b) {
+          return d3.ascending(types[a].minSlot(), types[b].minSlot());
+        });
+        var sDot = d3.select(this).selectAll("rect.dot").data(typeKeys, function(t) {
+          return types[t].shortHand();
+        });
+        sDot.exit().remove();
+        sDot.enter().append("rect").classed("dot", true).attr({
+          "fill": function(t) {
+            return types[t].color();
+          },
+          "width": smallBlockSize,
+          "height": smallBlockSize,
+          "x": 0
+        }).append("title").text(function(t) {
+          return types[t].desc();
+        });
+        sDot.attr({
+          "y": function(_, ix) {
+            return -ix * smallBlockSize;
+          }
+        });
+      });
+      scaleX = allSlots.length ? width / (toSlot - fromSlot) / smallBlockSize : 1;
+      var scaleY = scaleX * ar;
+      height = maxCol*smallBlockSize * scaleY;
+      ovG.attr({
+        "transform": "translate(0 " + height + ") scale(" + scaleX + " " + scaleY + ")"
+      });
+      overview.attr({
+        "height": height
+      }).style({
+        "height": height + "px"
+      });
+      that.wnd(wndMin, wndSize);
+    };
+  } // Skyline
+
+  function Relief() {
+
+  } // Relief
+
+  var dictionary = null;
+  var lastDictionaryFile = "";
+
+  var fullSlots = [];
+  var pContent = d3.select("#pContent");
+  var mainSkyline = new Skyline(pContent, function(wndMin, wndSize) {
+    secSkyline.setSlots(fullSlots, Math.floor(wndMin), Math.ceil(wndMin + wndSize));
+    secSkyline.update();
+  });
+  var secSkyline = new Skyline(pContent);
+
+  function load(pid, dictionaryFile) {
+    if(!dictionary || lastDictionaryFile != dictionaryFile) {
+      d3.json(dictionaryFile, function(err, json) {
+        if(err) {
+          console.warn("Failed loading dictionary: '"+dictionaryFile+"'");
+          return console.warn(err);
+        }
+        dictionary = json;
+        lastDictionaryFile = dictionaryFile;
+        load(pid, dictionaryFile);
+        return;
+      });
+      return;
+    }
+    d3.json(pid, function(err, json) {
+      if(err) {
+        console.warn("Failed loading patient: '"+pid+"'");
+        return console.warn(err);
+      }
+      var error = true;
+      try {
+        var arr = loadEvents(json, createTypeLookup());
+        fullSlots = arr[4];
+        mainSkyline.maxCol(0);
+        mainSkyline.level(aggr);
+        mainSkyline.aspectRatio(2);
+        mainSkyline.setSlots(fullSlots, 0, fullSlots.length);
+        var mc = 0;
+        fullSlots.forEach(function(s) {
+          if(Object.keys(s).length > mc) {
+            mc = Object.keys(s).length;
+          }
+        });
+        secSkyline.maxCol(mc);
+        secSkyline.aspectRatio(0.125);
+        mainSkyline.wnd(0, 30);
+
+        function updateAll() {
+          mainSkyline.update();
+        }
+
+        updateAll();
+        error = false;
+      } finally {
+        if(error) {
+          console.warn("error loading");
+        }
+      }
+    });
+  }
+
+  load(pid, dict);
+}
+
+</script>
+
+</body>
+</html>
