@@ -32,7 +32,7 @@ function start() {
 
   var pid = "p" in urlArgs ? urlArgs["p"] : "json/998093F33FE2D940.json";
   var dict = "dict" in urlArgs ? urlArgs["dict"] : "json/dictionary.json";
-  var aggr = 2;
+  var aggr = Number.NaN;//2;
   var ignore = {
     "prescribed": true
   };
@@ -67,11 +67,26 @@ function start() {
     this.shortHand = function() {
       return group_id + "__" + type_id;
     };
+
+    function goodDesc(field) {
+      var desc = de[field];
+      if(group_id != "diagnosis" && group_id != "procedure") return desc;
+      if(type_id.startsWith("HIERARCHY") || type_id == '') return desc;
+      if(desc == type_id) {
+        desc = "";
+      }
+      if(type_id.indexOf('.') >= 0) return type_id + (desc != "" ? ": " + desc : "");
+      var letterstart = Number.isNaN(+type_id.substring(0, 1));
+      var pre = type_id.substring(0, letterstart ? 4 : 3);
+      var post = type_id.substring(letterstart ? 4 : 3);
+      return pre + "." + post + (desc != "" ? ": " + desc : "");
+    }
+
     this.name = function() {
-      return de["name"];
+      return goodDesc("name");
     };
     this.desc = function() {
-      return de["desc"];
+      return goodDesc("desc");
     };
     this.group_id = function() {
       return group_id;
@@ -323,6 +338,10 @@ function start() {
 
     var height = 1;
     var scaleX = 1;
+    overview.on("click", function() {
+      var x = mousePos()[0] / smallBlockSize;
+      that.wnd(x + fromSlot - wndSize * 0.5, wndSize);
+    });
     var ovG = overview.append("g");
     var wnd = overview.append("rect");
     var wndShd = overview.append("rect");
@@ -352,7 +371,7 @@ function start() {
       wndMin = min;
       wndSize = size;
       var rect = {
-        "x": (wndMin * smallBlockSize + 0.5) * scaleX,
+        "x": ((wndMin - fromSlot) * smallBlockSize + 0.5) * scaleX,
         "width": (wndSize * smallBlockSize - 1) * scaleX,
         "y": 0.5,
         "height": height - 1
@@ -472,8 +491,109 @@ function start() {
     };
   } // Skyline
 
-  function Relief() {
+  function Relief(sel) {
+    var that = this;
+    var svg = sel.append("svg").attr({
+      "width": width
+    }).style({
+      "width": width + "px"
+    });
+    var height = 1;
+    var allTypes = [];
+    var fromSlot = 0;
+    var toSlot = 1;
 
+    var min = {};
+    this.setTypes = function(slots, from, to) {
+      var types = {};
+      slots.filter(function(_, ix) {
+        return ix >= from && ix < to;
+      }).forEach(function(slot) {
+        Object.keys(slot).forEach(function(t) {
+          types[t] = slot[t];
+        });
+      });
+      allTypes = Object.keys(types).map(function(t) {
+        return types[t];
+      });
+      min = {};
+      allTypes.forEach(function(t) {
+        getMin(t); // ensure all types
+      });
+
+      function getMin(t) {
+        if(t.shortHand() in min) return min[t.shortHand()];
+        var minSlot = from;
+        var slots = t.slots();
+        while(minSlot < to) {
+          if(slots[minSlot]) {
+            break;
+          }
+          minSlot += 1;
+        }
+        min[t.shortHand()] = minSlot;
+        return min[t.shortHand()];
+      }
+
+      allTypes.sort(function(a, b) {
+        return d3.ascending(getMin(a), getMin(b));
+      });
+      fromSlot = from;
+      toSlot = to;
+      height = allTypes.length * lineHeight;
+    };
+    var slotW = 1;
+    this.update = function() {
+      svg.attr({
+        "height": height
+      }).style({
+        "height": height + "px"
+      });
+      slotW = width / (toSlot - fromSlot);
+      var sr = svg.selectAll("g.rows").data(allTypes, function(t) {
+        return t.shortHand();
+      });
+      sr.exit().remove();
+      sr.enter().append("g").classed("rows", true);
+      sr.select("text.desc").remove();
+      sr.order();
+      sr.attr({
+        "transform": function(_, ix) {
+          return "translate(0 " + (height - (ix + 1) * lineHeight) + ")";
+        }
+      }).each(function(t) {
+        var dots = [];
+        var slots = t.slots();
+        for(var ix = 0;ix < slots.length;ix += 1) {
+          if(!slots[ix]) {
+            continue;
+          }
+          dots.push(ix);
+        }
+        var rects = d3.select(this).selectAll("rect").data(dots);
+        rects.exit().remove();
+        rects.enter().append("rect");
+        rects.attr({
+          "x": function(s) {
+            return (s - fromSlot) * slotW;
+          },
+          "width": slotW,
+          "height": lineHeight,
+          "y": 0,
+          "fill": t.color()
+        });
+      });
+      sr.append("text").classed("desc", true).attr({
+        "x": function(t) {
+          return (min[t.shortHand()] - fromSlot) * slotW;
+        },
+        "y": lineHeight * 0.5,
+        "alignment-baseline": "middle",
+        "font-size": fontSize
+      }).text(function(t) {
+        return t.desc();
+      });
+    };
   } // Relief
 
   var dictionary = null;
@@ -483,9 +603,14 @@ function start() {
   var pContent = d3.select("#pContent");
   var mainSkyline = new Skyline(pContent, function(wndMin, wndSize) {
     secSkyline.setSlots(fullSlots, Math.floor(wndMin), Math.ceil(wndMin + wndSize));
+    secSkyline.wnd(Math.floor(wndMin + (wndSize - 10) * 0.5), 10);
     secSkyline.update();
   });
-  var secSkyline = new Skyline(pContent);
+  var secSkyline = new Skyline(pContent, function(wndMin, wndSize) {
+    relief.setTypes(fullSlots, Math.floor(wndMin), Math.ceil(wndMin + wndSize));
+    relief.update();
+  });
+  var relief = new Relief(pContent);
 
   function load(pid, dictionaryFile) {
     if(!dictionary || lastDictionaryFile != dictionaryFile) {
