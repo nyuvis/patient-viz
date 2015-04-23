@@ -1,0 +1,9 @@
+{
+  "occurrence": {
+    "fill": "red",
+    "opacity": 0.5
+  },
+  "in_hospital": {
+    "fill": "cornflowerblue"
+  }
+}

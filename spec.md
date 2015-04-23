@@ -129,16 +129,23 @@ The events file:
     },
     …
   ],
-  <"v_bars">: [ // to highlight special times
-    "auto" // auto detect interesting times —- otherwise a list of timestamps
+  <"v_bars">: [ // to split the time line into segments
+    "auto" // auto detect segments —- otherwise a list of timestamps
   ],
   <"v_spans">: [ // to highlight special time spans
     {
       "from": 1288756800, // timestamp
       <"to">: 1366503400, // the end of the span -- otherwise one unit of the granularity is used
-      <"color">: "#e78ac3" // optional color of the span -- gray otherwise
+      <"class">: $class_names // optional classes of the span, separated by space -- classes are defined below
     }
   ],
+  <"classes">: {
+    $class_name: { // the name of style classes separated by space
+      $style: $value // style/value pairs that are valid for SVG rect
+      …
+    }
+    …
+  },
   <"total">: [ // shows a continuous line chart below the event display
     [ 1306757400, 0.75 ], // pairs of timestamps and values
     …

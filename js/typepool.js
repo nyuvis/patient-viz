@@ -709,20 +709,18 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       that.updateLook();
     }
   };
-  this.addVSpan = function(from, to, color, noUpdate) {
+  this.addVSpan = function(from, to, styleClass, noUpdate) {
     var start = from;
     var end = Number.isNaN(to) ? from + minTimeDiff : to;
-    var c = color ? color : "gray";
     var newBar = sel.append("rect").attr({
       "y": -jkjs.util.BIG_NUMBER * 0.5,
       "height": jkjs.util.BIG_NUMBER
-    }).style({
-      "fill": c
     });
     vSpan.push({
       sel: newBar,
       start: start,
-      end: end
+      end: end,
+      styleClass: styleClass
     });
     if(!noUpdate) {
       that.updateLook();
@@ -964,7 +962,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     var vis = that.linearTime();
     vBars.forEach(function(bar) {
       bar.sel.style({
-        "opacity": vis ? 0.5 : 0
+        "opacity": vis && DEBUG_V_SEGMENTS ? 0.5 : 0
       });
       if(!vis) return;
       var x = that.getXByTime(bar.time);
@@ -973,9 +971,15 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       });
     });
     vSpan.forEach(function(span) {
-      span.sel.style({
-        "opacity": vis ? 0.2 : 0
-      });
+      span.sel.style(that.getStyleClass(span.styleClass, {
+        "opacity": 0.2,
+        "color": "gray"
+      }));
+      if(!vis) {
+        span.sel.style({
+          "opacity": 0
+        });
+      };
       if(!vis) return;
       var x1 = that.getXByTime(span.start);
       var x2 = that.getXByTime(span.end);
@@ -987,6 +991,35 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   };
   this.boxSize = function() {
     return [ colW, rowH ];
+  };
+
+  var styleClasses = {};
+  this.addStyleClass = function(names, styles) {
+    names.split(" ").forEach(function(name) {
+      var n = name.trim();
+      if(!n.length) return;
+      var obj = n in styleClasses ? styleClasses[n] : {};
+      Object.keys(styles).forEach(function(k) {
+        obj[k] = styles[k];
+      });
+      styleClasses[n] = obj;
+    });
+  };
+  this.getStyleClass = function(names, defaults) {
+    var res = {};
+    Object.keys(defaults).forEach(function(k) {
+      res[k] = defaults[k];
+    });
+    names.split(" ").forEach(function(name) {
+      var n = name.trim();
+      if(!n.length) return;
+      if(n in styleClasses) {
+        Object.keys(styleClasses[n]).forEach(function(k) {
+          res[k] = styleClasses[n][k];
+        });
+      }
+    });
+    return res;
   };
 
   var szListeners = [];

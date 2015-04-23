@@ -243,16 +243,17 @@ def processLine(obj, line):
         if len(sps) > 1:
             o["to"] = toTime(sps[1])
         if len(sp) > 2:
-            o["color"] = sp[2]
+            o["class"] = sp[2]
         obj["v_spans"].append(o)
 
 def usage():
-    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] [-c <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-p <id>: specifies the patient id', file=sys.stderr)
     print('-l <file>: specifies a file for line and span infos', file=sys.stderr)
+    print('-c <file>: specifies a file for class definitions as json object', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
 
@@ -266,6 +267,7 @@ def read_format(file):
 
 if __name__ == '__main__':
     lineFile = None
+    classFile = None
     id = None
     output = '-'
     args = sys.argv[:]
@@ -296,6 +298,11 @@ if __name__ == '__main__':
                 print('no file specified', file=sys.stderr)
                 usage()
             lineFile = args.pop(0)
+        elif arg == '-c':
+            if not args or args[0] == '--':
+                print('no file specified', file=sys.stderr)
+                usage()
+            classFile = args.pop(0)
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -316,12 +323,16 @@ if __name__ == '__main__':
         "events": [],
         "h_bars": [],
         "v_bars": [ "auto" ],
-        "v_spans": []
+        "v_spans": [],
+        "classes": {}
     }
     if lineFile is not None:
         with open(lineFile, 'r') as lf:
             for line in lf:
                 processLine(obj, line)
+    if classFile is not None:
+        with open(classFile, 'r') as cf:
+            obj["classes"] = json.loads(cf.read())
 
     addInfo(obj, "pid", "Patient", id)
     if len(allPaths) == 0:
