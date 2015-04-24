@@ -28,6 +28,10 @@ MODE_OPTIONAL = 0
 MODE_DEFAULT = 1
 MODE_ARRAY = 2
 
+STATUS_UNKNOWN = 0
+STATUS_IN = 1
+STATUS_OUT = -1
+
 gender_label = {
     "1": "primary",
     "2": "danger",
@@ -112,7 +116,8 @@ def handleEvent(row):
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
     return res
 
-def handleRow(row, obj):
+def handleRow(row, obj, statusMap, status):
+    curStatus = status
 
     handleKey(row, "age", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'age', 'Age', value)
@@ -129,6 +134,15 @@ def handleRow(row, obj):
 
     def addCost(event, amount):
         event['cost'] = amount
+
+    def handleStatusEvent(date):
+        if date in statusMap:
+            if statusMap[date] != STATUS_IN and curStatus == STATUS_IN:
+                statusMap[date] = curStatus
+            elif statusMap[date] == STATUS_UNKNOWN:
+                statusMap[date] = curStatus
+        elif curStatus != STATUS_UNKNOWN:
+            statusMap[date] = curStatus
 
     def dates(fromDate, toDate):
         if fromDate == '':
@@ -147,12 +161,14 @@ def handleRow(row, obj):
                         addCost(event, amount)
                     )
                     obj['events'].append(event)
+                handleStatusEvent(curDate)
                 curDate = nextDay(curDate)
         else:
             # single event
             for event in handleEvent(row):
                 event['time'] = curDate
                 obj['events'].append(event)
+            handleStatusEvent(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
             handleKey(row, "claim_to", MODE_DEFAULT, lambda toDate:
@@ -189,18 +205,23 @@ def handleRow(row, obj):
             )
         )
 
-def processFile(inputFile, id, obj):
+def processFile(inputFile, id, obj, statusMap):
     if inputFile == '-':
         for row in csv.DictReader(sys.stdin):
             if id == row[input_format["patient_id"]]:
-                handleRow(row, obj)
+                handleRow(row, obj, statusMap, STATUS_UNKNOWN)
         return
     with open(inputFile) as csvFile:
         for row in csv.DictReader(csvFile):
             if id == row[input_format["patient_id"]]:
-                handleRow(row, obj)
+                status = STATUS_UNKNOWN
+                if "inpatient" in inputFile.lower():
+                    status = STATUS_IN
+                elif "outpatient" in inputFile.lower():
+                    status = STATUS_OUT
+                handleRow(row, obj, statusMap, status)
 
-def processDirectory(dir, id, obj):
+def processDirectory(dir, id, obj, statusMap):
     for (root, _, files) in os.walk(dir):
         for file in files:
             if '/' in file:
@@ -219,7 +240,7 @@ def processDirectory(dir, id, obj):
                         ):
                         continue
             if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id, obj)
+                processFile(os.path.join(root, file), id, obj, statusMap)
 
 def processLine(obj, line):
     sp = line.strip().split(':', 2)
@@ -337,11 +358,26 @@ if __name__ == '__main__':
     addInfo(obj, "pid", "Patient", id)
     if len(allPaths) == 0:
         print('warning: no path given', file=sys.stderr)
+    statusMap = {}
     for (path, isfile) in allPaths:
         if isfile:
-            processFile(path, id, obj)
+            processFile(path, id, obj, statusMap)
         else:
-            processDirectory(path, id, obj)
+            processDirectory(path, id, obj, statusMap)
+    curInStart = None
+    for k in sorted(statusMap):
+        status = statusMap[k]
+        if status == STATUS_IN:
+            if curInStart is None:
+                curInStart = k
+        elif status == STATUS_OUT:
+            if curInStart is not None:
+                obj["v_spans"].append({
+                    "from": curInStart,
+                    "to": k,
+                    "class": "in_hospital"
+                })
+                curInStart = None
     min_time = sys.maxint
     max_time = -sys.maxint-1
     for e in obj["events"]:
