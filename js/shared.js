@@ -135,6 +135,11 @@ function loadPerson(pid, person, pool, eventView, typeView, linechart, dictionar
 }
 
 function setupBars(pool, person) {
+  if("classes" in person) {
+    Object.keys(person["classes"]).forEach(function(key) {
+      pool.addStyleClass(key, person["classes"][key]);
+    });
+  }
   if("h_bars" in person) {
     person["h_bars"].forEach(function(obj) {
       pool.addHBar(obj["group"], obj["id"], true);
@@ -154,8 +159,8 @@ function setupBars(pool, person) {
     person["v_spans"].forEach(function(span) {
       var from = +span["from"];
       var to = "to" in span ? +span["to"] : Number.NaN;
-      var color = span["color"];
-      pool.addVSpan(from, to, color, true);
+      var styleClass = "class" in span ? span["class"] : "";
+      pool.addVSpan(from, to, styleClass, true);
     });
   }
   if(auto) {

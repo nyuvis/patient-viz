@@ -28,6 +28,10 @@ MODE_OPTIONAL = 0
 MODE_DEFAULT = 1
 MODE_ARRAY = 2
 
+STATUS_UNKNOWN = 0
+STATUS_IN = 1
+STATUS_OUT = -1
+
 gender_label = {
     "1": "primary",
     "2": "danger",
@@ -91,28 +95,39 @@ def handleKey(row, key, mode, hnd):
     elif ignore_missing:
         hnd('')
 
-def createEntry(group, id, hasResult = False, resultFlag = False, result = ""):
+def createEntry(group, id, claim_id, hasResult = False, resultFlag = False, result = ""):
     res = {
         "id": id,
         "group": group
     }
+    if claim_id is not None:
+        res["row_id"] = claim_id
     if hasResult:
         res["flag_value"] = result
         res["flag"] = resultFlag
     return res
 
-def handleEvent(row):
+def handleEvent(row, claim_id):
     res = []
     def emit(type, value):
         if value != '':
-            res.append(createEntry(type, value))
+            res.append(createEntry(type, value, claim_id))
 
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
     return res
 
-def handleRow(row, obj):
+def handleRow(row, obj, statusMap, status):
+    curStatus = status
+    claim_id = None
+
+    def setClaimId(cid):
+        claim_id = cid
+
+    handleKey(row, "claim_id", MODE_OPTIONAL, lambda value:
+            setClaimId(value)
+        )
 
     handleKey(row, "age", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'age', 'Age', value)
@@ -130,6 +145,15 @@ def handleRow(row, obj):
     def addCost(event, amount):
         event['cost'] = amount
 
+    def handleStatusEvent(date):
+        if date in statusMap:
+            if statusMap[date] != STATUS_IN and curStatus == STATUS_IN:
+                statusMap[date] = curStatus
+            elif statusMap[date] == STATUS_UNKNOWN:
+                statusMap[date] = curStatus
+        elif curStatus != STATUS_UNKNOWN:
+            statusMap[date] = curStatus
+
     def dates(fromDate, toDate):
         if fromDate == '':
             if toDate == '':
@@ -141,18 +165,20 @@ def handleRow(row, obj):
             # time span
             endDate = toTime(toDate)
             while curDate <= endDate:
-                for event in handleEvent(row):
+                for event in handleEvent(row, claim_id):
                     event['time'] = curDate
                     handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
                         addCost(event, amount)
                     )
                     obj['events'].append(event)
+                handleStatusEvent(curDate)
                 curDate = nextDay(curDate)
         else:
             # single event
-            for event in handleEvent(row):
+            for event in handleEvent(row, claim_id):
                 event['time'] = curDate
                 obj['events'].append(event)
+            handleStatusEvent(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
             handleKey(row, "claim_to", MODE_DEFAULT, lambda toDate:
@@ -161,7 +187,7 @@ def handleRow(row, obj):
         )
 
     def emitNDC(date, ndc):
-        event = createEntry(TYPE_PRESCRIBED, ndc)
+        event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
         event['time'] = toTime(date)
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
             addCost(event, amount)
@@ -175,7 +201,7 @@ def handleRow(row, obj):
         )
 
     def emitLab(date, loinc, result, resultFlag):
-        event = createEntry(TYPE_LABTEST, loinc, result != '' or resultFlag != '', resultFlag, result)
+        event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
         event['time'] = toTime(date)
         obj['events'].append(event)
 
@@ -189,18 +215,23 @@ def handleRow(row, obj):
             )
         )
 
-def processFile(inputFile, id, obj):
+def processFile(inputFile, id, obj, statusMap):
     if inputFile == '-':
         for row in csv.DictReader(sys.stdin):
             if id == row[input_format["patient_id"]]:
-                handleRow(row, obj)
+                handleRow(row, obj, statusMap, STATUS_UNKNOWN)
         return
     with open(inputFile) as csvFile:
         for row in csv.DictReader(csvFile):
             if id == row[input_format["patient_id"]]:
-                handleRow(row, obj)
+                status = STATUS_UNKNOWN
+                if "inpatient" in inputFile.lower():
+                    status = STATUS_IN
+                elif "outpatient" in inputFile.lower():
+                    status = STATUS_OUT
+                handleRow(row, obj, statusMap, status)
 
-def processDirectory(dir, id, obj):
+def processDirectory(dir, id, obj, statusMap):
     for (root, _, files) in os.walk(dir):
         for file in files:
             if '/' in file:
@@ -219,7 +250,7 @@ def processDirectory(dir, id, obj):
                         ):
                         continue
             if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id, obj)
+                processFile(os.path.join(root, file), id, obj, statusMap)
 
 def processLine(obj, line):
     sp = line.strip().split(':', 2)
@@ -243,16 +274,17 @@ def processLine(obj, line):
         if len(sps) > 1:
             o["to"] = toTime(sps[1])
         if len(sp) > 2:
-            o["color"] = sp[2]
+            o["class"] = sp[2]
         obj["v_spans"].append(o)
 
 def usage():
-    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] [-c <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-p <id>: specifies the patient id', file=sys.stderr)
     print('-l <file>: specifies a file for line and span infos', file=sys.stderr)
+    print('-c <file>: specifies a file for class definitions as json object', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
 
@@ -266,6 +298,7 @@ def read_format(file):
 
 if __name__ == '__main__':
     lineFile = None
+    classFile = None
     id = None
     output = '-'
     args = sys.argv[:]
@@ -296,6 +329,11 @@ if __name__ == '__main__':
                 print('no file specified', file=sys.stderr)
                 usage()
             lineFile = args.pop(0)
+        elif arg == '-c':
+            if not args or args[0] == '--':
+                print('no file specified', file=sys.stderr)
+                usage()
+            classFile = args.pop(0)
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -316,21 +354,42 @@ if __name__ == '__main__':
         "events": [],
         "h_bars": [],
         "v_bars": [ "auto" ],
-        "v_spans": []
+        "v_spans": [],
+        "classes": {}
     }
     if lineFile is not None:
         with open(lineFile, 'r') as lf:
             for line in lf:
                 processLine(obj, line)
+    if classFile is not None:
+        with open(classFile, 'r') as cf:
+            obj["classes"] = json.loads(cf.read())
 
     addInfo(obj, "pid", "Patient", id)
     if len(allPaths) == 0:
         print('warning: no path given', file=sys.stderr)
+    statusMap = {}
     for (path, isfile) in allPaths:
         if isfile:
-            processFile(path, id, obj)
+            processFile(path, id, obj, statusMap)
         else:
-            processDirectory(path, id, obj)
+            processDirectory(path, id, obj, statusMap)
+    curInStart = None
+    curInEnd = None
+    for k in sorted(statusMap):
+        status = statusMap[k]
+        if status == STATUS_IN:
+            if curInStart is None:
+                curInStart = k
+            curInEnd = k
+        elif status == STATUS_OUT:
+            if curInStart is not None:
+                obj["v_spans"].append({
+                    "from": curInStart,
+                    "to": nextDay(curInEnd),
+                    "class": "in_hospital"
+                })
+                curInStart = None
     min_time = sys.maxint
     max_time = -sys.maxint-1
     for e in obj["events"]:

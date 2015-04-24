@@ -28,12 +28,37 @@
     }
   ], 
   "end": 1293253200, 
-  "v_spans": [], 
+  "v_spans": [
+    {
+      "to": 1205985600, 
+      "from": 1205380800, 
+      "class": "in_hospital"
+    }, 
+    {
+      "to": 1206763200, 
+      "from": 1206158400, 
+      "class": "in_hospital"
+    }, 
+    {
+      "to": 1244174400, 
+      "from": 1243224000, 
+      "class": "in_hospital"
+    }
+  ], 
   "v_bars": [
     "auto"
   ], 
   "h_bars": [], 
   "start": 1202792400, 
+  "classes": {
+    "in_hospital": {
+      "fill": "cornflowerblue"
+    }, 
+    "occurrence": {
+      "opacity": 0.5, 
+      "fill": "red"
+    }
+  }, 
   "events": [
     {
       "group": "diagnosis", 
