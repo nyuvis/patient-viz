@@ -23,7 +23,8 @@ def writeRow(outFile, delim, doQuote, write_cache, header, row):
     write_cache[outFile].append(delim.join(map(lambda h: doQuote(row[h]), header)))
 
 def flush_write_cache(delim, doQuote, write_cache, header):
-    sys.stderr.write('\rflush cache')
+    if sys.stderr.isatty():
+        sys.stderr.write('\rflush cache')
     for outFile in write_cache.keys():
         lines = write_cache[outFile]
         if not os.path.isfile(outFile):
@@ -36,7 +37,8 @@ def flush_write_cache(delim, doQuote, write_cache, header):
                 for line in lines:
                     print(line, file=file)
     write_cache.clear()
-    sys.stderr.write('\r           ')
+    if sys.stderr.isatty():
+        sys.stderr.write('\r           ')
 
 def processFile(inPath, outPath, filename, out):
     delim = out['delim'];
@@ -64,12 +66,16 @@ def processFile(inPath, outPath, filename, out):
             outFile = os.path.join(curPath, filename)
             writeRow(outFile, delim, doQuote, write_cache, header, row)
             count += 1
-            if count % 100 == 0:
+            if count % 100 == 0 and sys.stderr.isatty():
                 sys.stderr.write('\r{0} rows'.format(str(count)))
             if count % FLUSH_THRESHOLD == 0:
                 flush_write_cache(delim, doQuote, write_cache, header)
     flush_write_cache(delim, doQuote, write_cache, header)
-    print(' -- done', file=sys.stderr)
+    if sys.stderr.isatty():
+        sys.stderr.write('\r{0} rows'.format(str(count)))
+        print(' -- done', file=sys.stderr)
+    else:
+        print('{0} rows'.format(str(count)), file=sys.stderr)
     os.remove(inFile)
 
 def processDirectory(dir, outPath, out):
