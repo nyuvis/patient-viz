@@ -498,7 +498,8 @@ fetch_cms() {
 }
 
 burst() {
-  echo "TODO burst not implemented yet!"
+  echo "bursting samples for faster random access"
+  ./burst.py --path "${CMS_DIR}" -c "${config}" -f "${format}"
 }
 
 allow_convert=
