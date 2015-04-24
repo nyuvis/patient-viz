@@ -80,9 +80,9 @@ def processFile(inPath, outPath, filename, out):
 
 def processDirectory(dir, outPath, out):
     for (root, _, files) in os.walk(dir):
+        if root != dir:
+            continue
         for file in files:
-            if '/' in file:
-                continue
             if file.endswith(".csv"):
                 processFile(root, outPath, file, out)
 
