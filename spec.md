@@ -25,6 +25,7 @@ TODO arrays for first match
 ```javascript
 {
   "patient_id": "DESYNPUF_ID",
+  <"claim_id">: "CLM_ID",
   <"age">: "ELIG_AGE",
   <"born">: "BENE_BIRTH_DT",
   <"death">: "BENE_DEATH_DT",
@@ -106,6 +107,7 @@ The events file:
       "group": $group_id,
       "id": $type_id,
       "time": 1288756800, // timestamp
+      <"row_id">: $row_id, // groups events of the same row together
       <"flag">: $flag_id, // optional event flag
       <"flag_value">: "4mg", // optional event flag display value
       <"event_id">: $event_id, // optional id for this event

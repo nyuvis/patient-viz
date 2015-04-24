@@ -15,6 +15,7 @@ convert_list=
 dictionary="${JSON_DIR}/dictionary.json"
 config="config.txt"
 format="format.json"
+style_classes="style_classes.json"
 err_file="err.txt"
 err_dict_file="err_dict.txt"
 server_log="server_log.txt"
@@ -525,7 +526,7 @@ convert_patients() {
     echo "create ${file}"
     echo "config file is ${config}"
     echo "script output can be found in ${err_file} and ${err_dict_file}"
-    ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -- "${CMS_DIR}" 2> $err_file || {
+    ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2> $err_file || {
       echo "failed during patient conversion"
       cd_back
       exit 6

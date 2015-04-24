@@ -1,5 +1,10 @@
 {
   "patient_id": "MEMBER_ID",
+  "claim_id": [
+    "ENCS_CLAIM_NUMBER",
+    "MED_CLMS_CLAIM_NUMBER",
+    "RX_CLMS_CLAIM_NUMBER"
+  ],
   "age": "ELIG_AGE",
   "gender": "ELIG_GENDER",
   "claim_amount": [

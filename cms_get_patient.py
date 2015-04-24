@@ -95,21 +95,23 @@ def handleKey(row, key, mode, hnd):
     elif ignore_missing:
         hnd('')
 
-def createEntry(group, id, hasResult = False, resultFlag = False, result = ""):
+def createEntry(group, id, claim_id, hasResult = False, resultFlag = False, result = ""):
     res = {
         "id": id,
         "group": group
     }
+    if claim_id is not None:
+        res["row_id"] = claim_id
     if hasResult:
         res["flag_value"] = result
         res["flag"] = resultFlag
     return res
 
-def handleEvent(row):
+def handleEvent(row, claim_id):
     res = []
     def emit(type, value):
         if value != '':
-            res.append(createEntry(type, value))
+            res.append(createEntry(type, value, claim_id))
 
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
@@ -118,6 +120,14 @@ def handleEvent(row):
 
 def handleRow(row, obj, statusMap, status):
     curStatus = status
+    claim_id = None
+
+    def setClaimId(cid):
+        claim_id = cid
+
+    handleKey(row, "claim_id", MODE_OPTIONAL, lambda value:
+            setClaimId(value)
+        )
 
     handleKey(row, "age", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'age', 'Age', value)
@@ -155,7 +165,7 @@ def handleRow(row, obj, statusMap, status):
             # time span
             endDate = toTime(toDate)
             while curDate <= endDate:
-                for event in handleEvent(row):
+                for event in handleEvent(row, claim_id):
                     event['time'] = curDate
                     handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
                         addCost(event, amount)
@@ -165,7 +175,7 @@ def handleRow(row, obj, statusMap, status):
                 curDate = nextDay(curDate)
         else:
             # single event
-            for event in handleEvent(row):
+            for event in handleEvent(row, claim_id):
                 event['time'] = curDate
                 obj['events'].append(event)
             handleStatusEvent(curDate)
@@ -177,7 +187,7 @@ def handleRow(row, obj, statusMap, status):
         )
 
     def emitNDC(date, ndc):
-        event = createEntry(TYPE_PRESCRIBED, ndc)
+        event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
         event['time'] = toTime(date)
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
             addCost(event, amount)
@@ -191,7 +201,7 @@ def handleRow(row, obj, statusMap, status):
         )
 
     def emitLab(date, loinc, result, resultFlag):
-        event = createEntry(TYPE_LABTEST, loinc, result != '' or resultFlag != '', resultFlag, result)
+        event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
         event['time'] = toTime(date)
         obj['events'].append(event)
 
@@ -365,16 +375,18 @@ if __name__ == '__main__':
         else:
             processDirectory(path, id, obj, statusMap)
     curInStart = None
+    curInEnd = None
     for k in sorted(statusMap):
         status = statusMap[k]
         if status == STATUS_IN:
             if curInStart is None:
                 curInStart = k
+            curInEnd = k
         elif status == STATUS_OUT:
             if curInStart is not None:
                 obj["v_spans"].append({
                     "from": curInStart,
-                    "to": k,
+                    "to": nextDay(curInEnd),
                     "class": "in_hospital"
                 })
                 curInStart = None
