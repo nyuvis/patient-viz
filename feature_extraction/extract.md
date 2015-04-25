@@ -6,8 +6,11 @@ The output is a CSV table with columns `id` and named after the event types:
 [in the specification](../spec.md).
 Additionally, if a tagged cohort (as returned by `./merge.py`) is used there are
 two more columns `outcome` (`1` indicates a case) and `test` (`1` indicates that
-this patient is used for model verification). The script needs to be run
-from this folder.
+this patient is used for model verification). Normally, you want to define
+patient cohorts first and then extract features as mentioned in the chapters below
+(Note: all commands in this file need to be run from this folder).
+However, if you really want to create feature vectors for all patients you can run
+the following command:
 
 ```bash
 $ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../cms
