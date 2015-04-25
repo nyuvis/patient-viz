@@ -118,7 +118,7 @@ def handleEvent(row, claim_id):
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
     return res
 
-def handleRow(row, obj, statusMap, status):
+def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     curStatus = status
     claim_id = None
 
