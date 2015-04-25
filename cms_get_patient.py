@@ -236,7 +236,7 @@ def processDirectory(dir, id, obj, statusMap):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
             if len(segs) >= 4:
-                segs = segs[-4:-2]
+                segs = segs[-3:]
                 if (
                         len(segs[0]) == 1 and
                         len(segs[1]) == 1 and

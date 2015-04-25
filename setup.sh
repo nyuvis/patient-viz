@@ -500,6 +500,7 @@ fetch_cms() {
 burst() {
   echo "bursting samples for faster random access"
   ./burst.py --path "${CMS_DIR}" -c "${config}" -f "${format}"
+  test_fail $?
 }
 
 allow_convert=
