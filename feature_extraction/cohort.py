@@ -447,7 +447,7 @@ def processFile(inputFile, id_column, qm, candidates):
         del eventCache[:]
         num += 1
         if sys.stderr.isatty():
-            sys.stderr.write("processing: {1:.2%}\r".format(num / num_total))
+            sys.stderr.write("processing: {0:.2%}\r".format(num / num_total))
             sys.stderr.flush()
     if sys.stderr.isatty():
         print("", file=sys.stderr)
@@ -458,10 +458,10 @@ def processFile(inputFile, id_column, qm, candidates):
     """
 
 def processDirectory(dir, id_column, qm, candidates):
-    for (_, _, files) in os.walk(dir):
+    for (root, _, files) in os.walk(dir):
         for file in files:
             if file.endswith(".csv"):
-                processFile(dir + '/' + file, id_column, qm, candidates)
+                processFile(os.path.join(root, file), id_column, qm, candidates)
 
 def processAll(qm, cohort, path_tuples):
     candidates = {}
