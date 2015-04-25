@@ -13,7 +13,7 @@ However, if you really want to create feature vectors for all patients you can r
 the following command:
 
 ```bash
-$ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../cms
+./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../cms
 ```
 
 Be aware that the run time is approximately ~1h.
@@ -39,13 +39,13 @@ assuming the cohort queries are in `cases.txt` and `control.txt`
 respectively.
 
 ```bash
-$ ./cohort.py --query-file cases.txt -f ../format.json -c ../config.txt -o cohort_cases.txt -- ../cms
-$ ./cohort.py --query-file control.txt -f ../format.json -c ../config.txt -o cohort_control.txt -- ../cms
-$ ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
-$ ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../cms
-$ cd ..
-$ head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
-$ cd -
+./cohort.py --query-file cases.txt -f ../format.json -c ../config.txt -o cohort_cases.txt -- ../cms
+./cohort.py --query-file control.txt -f ../format.json -c ../config.txt -o cohort_control.txt -- ../cms
+./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
+./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format.json -c ../config.txt -- ../cms
+cd ..
+head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
+cd -
 ```
 
 This creates the feature vectors in `output.csv` and readable column headers in `headers.json`.
@@ -57,13 +57,13 @@ the patient data into your scripts. The following commands assume you updated
 your `config.txt` (absolute file paths are recommended) and `format_shelve.json` has the correct headers.
 
 ```bash
-$ ../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file cases.txt -f ../format_shelve.json -c ../config.txt -o cohort_cases.txt -- -
-$ ../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file control.txt -f ../format_shelve.json -c ../config.txt -o cohort_control.txt -- -
-$ ./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
-$ ../shelve_access.py --all -c ../config.txt | ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format_shelve.json -c ../config.txt -- -
-$ cd ..
-$ head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
-$ cd -
+../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file cases.txt -f ../format_shelve.json -c ../config.txt -o cohort_cases.txt -- -
+../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file control.txt -f ../format_shelve.json -c ../config.txt -o cohort_control.txt -- -
+./merge.py --cases cohort_cases.txt --control cohort_control.txt -o cohort.txt --test 30 --seed 0
+../shelve_access.py --all -c ../config.txt | ./extract.py -w cohort.txt --age-time 20100101 --to 20100101 -o output.csv -f ../format_shelve.json -c ../config.txt -- -
+cd ..
+head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -
+cd -
 ```
 
 # Training Models
@@ -74,7 +74,7 @@ and stored them as `output.csv`. Also, it is assumed that you ran `../setup.sh -
 in order to install the required python libraries.
 
 ```bash
-$ ./train.py --in output.csv --out model --seed 0 --model reg -v 20
+./train.py --in output.csv --out model --seed 0 --model reg -v 20
 ```
 
 For the linear regression model the output consists of 3 files.

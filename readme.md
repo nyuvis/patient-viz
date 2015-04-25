@@ -19,7 +19,7 @@ You can use *git BASH* to execute the shell commands.
 In order to set up the tool please run the following command:
 
 ```bash
-$ ./setup.sh --default
+./setup.sh --default
 ```
 
 This downloads all necessary files for label creation of claims data events
@@ -29,7 +29,8 @@ you agree with the respective terms and conditions of the sources
 be prompted to confirm before downloading (this can be silenced
 via `-s`). In total, required space will be approximately `3 GB`.
 Processing of some files may take a while letting the script appear
-to be frozen (which is not the case!).
+to be frozen (which is not the case!). If you plan on converting many
+patient files run `./setup.sh --default --burst`.
 
 If you only want to partially download the example data and descriptions
 refer to the help: `./setup.sh -h`. The tool works without any of this data
@@ -41,7 +42,7 @@ when no setup is performed.
 After setting up the tool, files can be viewed with the following command:
 
 ```bash
-$ ./start.sh -p json/AEF023C2029F05BC.json --start
+./start.sh -p json/AEF023C2029F05BC.json --start
 ```
 
 where the argument after `-p` points to one of the previously created
@@ -51,16 +52,16 @@ a server which can be stopped using `./start.sh --stop`.
 The list of available files can be seen using:
 
 ```bash
-$ ./start.sh --list
+./start.sh --list
 ```
 
 Patient files can be created manually from the example claims data by
 issuing the following commands:
 
 ```bash
-$ ./cms_get_patient.py -p AEF023C2029F05BC -f format.json -o json/AEF023C2029F05BC.json -c style_classes.json -- cms
-$ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
-$ ./start.sh --list-update
+./cms_get_patient.py -p AEF023C2029F05BC -f format.json -o json/AEF023C2029F05BC.json -c style_classes.json -- cms
+./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
+./start.sh --list-update
 ```
 
 `./cms_analyze.py -f format.json -- cms` can be used to see which patient ids for `-p` are available.
@@ -75,15 +76,15 @@ The system can also handle data stored in a shelve db. However, you need to manu
 patients stored this way and update the `config.txt` file.
 
 ```bash
-$ ./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./cms_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/AEF023C2029F05BC.json -c style_classes.json -- -
-$ ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
-$ ./start.sh --list-update
+./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./cms_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/AEF023C2029F05BC.json -c style_classes.json -- -
+./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
+./start.sh --list-update
 ```
 
 The list of available patient ids can be seen using:
 
 ```bash
-$ ./shelve_access.py -c config.txt -l
+./shelve_access.py -c config.txt -l
 ```
 
 ## Feature Extraction and Model Creation
