@@ -78,6 +78,17 @@ function Event(e, pool, dictionary) {
   }
   var connections = e["connections"] || [];
 
+  var eg_id = "";
+  if("row_id" in e) {
+    eg_id = e["row_id"];
+    if(eg_id.length) {
+      pool.registerEventGroup(eg_id, that);
+    }
+  }
+  this.getEventGroupId = function() {
+    return eg_id;
+  };
+
   this.isFirstOfType = function() {
     return type.getCount() && type.getEventByIndex(0) === that;
   };
@@ -169,7 +180,6 @@ function Event(e, pool, dictionary) {
       var rowH = boxSize[1];
       var ownX = pool.getXByEventTime(that) + colW * 0.5;
       var ownY = that.getType().getY() + rowH * 0.5;
-      var p = new jkjs.Path();
       connectionsPath.selectAll("line").remove();
       if(that.shown()) {
         connections.forEach(function(con) {

@@ -288,6 +288,7 @@ function setupRectSelection(pool, blank) {
 }
 
 function setupClickAction(pool, blank) {
+  var lastE = null;
   blank.on("click", function() {
     if(blank.__ignoreClick) {
       blank.__ignoreClick = false;
@@ -316,7 +317,23 @@ function setupClickAction(pool, blank) {
       });
     }
     pool.endBulkSelection();
-  });
+  })
+  if(SHOW_EVENT_GROUPS) {
+    blank.on("mousemove", function() {
+      var cur = pool.getMousePos();
+      var e = null;
+      pool.traverseEventsForX(cur[0], function(eve) {
+        if(e) return;
+        var rangeY = pool.getRangeY(eve.getType());
+        if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
+          e = eve;
+        }
+      });
+      if(lastE === e) return;
+      lastE = e;
+      pool.updateEventGroupLines(e);
+    });
+  }
   pool.updateSelection();
 }
 

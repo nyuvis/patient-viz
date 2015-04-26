@@ -39,6 +39,54 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     }
     return eventMap[id] || null;
   };
+  var eventGroups = {};
+  var egSel = null;
+  this.registerEventGroup = function(eg_id, eve) {
+    if(!(eg_id in eventGroups)) {
+      eventGroups[eg_id] = [];
+    }
+    eventGroups[eg_id].push(eve);
+  };
+  this.getEventGroup = function(eg_id) {
+    return eg_id in eventGroups ? eventGroups[eg_id] : [];
+  };
+  this.updateEventGroupLines = function(eve) {
+    overview.clearShadow();
+
+    function update() {
+      if(!egSel) {
+        egSel = that.select().append("g");
+      }
+      egSel.selectAll("line").remove();
+      if(!eve) return;
+      var eg_id = eve.getEventGroupId();
+      var eg = that.getEventGroup(eg_id);
+      if(!eg.length && eve.shown()) return;
+      var boxSize = that.boxSize();
+      var colW = boxSize[0];
+      var rowH = boxSize[1];
+      var ownX = that.getXByEventTime(eve) + colW * 0.5;
+      var ownY = eve.getType().getY() + rowH * 0.5;
+      eg.forEach(function(other) {
+        if(!other || !other.shown() || other === eve) return;
+        var x = that.getXByEventTime(other) + colW * 0.5;
+        var y = other.getType().getY() + rowH * 0.5;
+        egSel.append("line").attr({
+          "stroke-width": 4,
+          "stroke": "black",
+          "stroke-linecap": "round",
+          "x1": ownX,
+          "y1": ownY,
+          "x2": x,
+          "y2": y
+        });
+      });
+    }
+
+    update();
+    overview.onBoxUpdate();
+  };
+
   this.addEventToType = function(eve, e, dictionary) {
     var g = e["group"];
     if(!(g in groups)) {
