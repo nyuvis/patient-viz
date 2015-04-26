@@ -100,8 +100,8 @@ def createEntry(group, id, claim_id, hasResult = False, resultFlag = False, resu
         "id": id,
         "group": group
     }
-    if claim_id is not None:
-        res["row_id"] = claim_id
+    if claim_id[0] is not None:
+        res["row_id"] = claim_id[0]
     if hasResult:
         res["flag_value"] = result
         res["flag"] = resultFlag
@@ -118,12 +118,12 @@ def handleEvent(row, claim_id):
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
     return res
 
-def handleRow(row, obj, statusMap, status):
+def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     curStatus = status
-    claim_id = None
+    claim_id = [ None ]
 
     def setClaimId(cid):
-        claim_id = cid
+        claim_id[0] = cid
 
     handleKey(row, "claim_id", MODE_OPTIONAL, lambda value:
             setClaimId(value)
@@ -236,7 +236,7 @@ def processDirectory(dir, id, obj, statusMap):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
             if len(segs) >= 4:
-                segs = segs[-4:-2]
+                segs = segs[-3:]
                 if (
                         len(segs[0]) == 1 and
                         len(segs[1]) == 1 and

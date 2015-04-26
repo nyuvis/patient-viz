@@ -27,10 +27,10 @@ def analyzeFile(inputFile, counter):
                 counter[id] = 1
 
 def analyzeDirectory(dir, counter):
-    for (_, _, files) in os.walk(dir):
+    for (root, _, files) in os.walk(dir):
         for file in files:
             if file.endswith(".csv"):
-                analyzeFile(dir + '/' + file, counter)
+                analyzeFile(os.path.join(root, file), counter)
 
 def read_format(file):
     global input_format

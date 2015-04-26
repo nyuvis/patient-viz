@@ -71,4823 +71,5703 @@
   }, 
   "events": [
     {
+      "row_id": "533283343945149", 
       "group": "diagnosis", 
       "id": "4118", 
       "time": 1199509200
     }, 
     {
+      "row_id": "533283343945149", 
       "group": "diagnosis", 
       "id": "4010", 
       "time": 1199509200
     }, 
     {
+      "row_id": "533283343945149", 
       "group": "diagnosis", 
       "id": "49390", 
       "time": 1199509200
     }, 
     {
+      "row_id": "533693346318655", 
       "group": "diagnosis", 
       "id": "5847", 
       "time": 1199682000
     }, 
     {
+      "row_id": "533173343419462", 
       "group": "diagnosis", 
       "id": "7209", 
       "time": 1200027600
     }, 
     {
+      "row_id": "533033344754814", 
       "group": "diagnosis", 
       "id": "412", 
       "time": 1200200400
     }, 
     {
+      "row_id": "533033344754814", 
       "group": "diagnosis", 
       "id": "43310", 
       "time": 1200200400
     }, 
     {
+      "row_id": "533033344754814", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200200400
     }, 
     {
+      "row_id": "533293346252617", 
       "group": "diagnosis", 
       "id": "78831", 
       "time": 1201323600
     }, 
     {
+      "row_id": "533293346252617", 
       "group": "diagnosis", 
       "id": "44381", 
       "time": 1201323600
     }, 
     {
+      "row_id": "533293346252617", 
       "group": "diagnosis", 
       "id": "185", 
       "time": 1201323600
     }, 
     {
+      "row_id": "533063344738572", 
       "group": "diagnosis", 
       "id": "5184", 
       "time": 1201928400
     }, 
     {
+      "row_id": "533243344203170", 
       "group": "diagnosis", 
       "id": "32729", 
       "time": 1201928400
     }, 
     {
+      "row_id": "533243344203170", 
       "group": "diagnosis", 
       "id": "30272", 
       "time": 1201928400
     }, 
     {
+      "row_id": "533243344203170", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1201928400
     }, 
     {
+      "row_id": "533243344203170", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1201928400
     }, 
     {
+      "row_id": "533773343727214", 
       "group": "diagnosis", 
       "id": "0730", 
       "time": 1202187600
     }, 
     {
+      "row_id": "533343344741342", 
       "group": "diagnosis", 
       "id": "7802", 
       "time": 1202446800
     }, 
     {
+      "row_id": "533343344741342", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1202446800
     }, 
     {
+      "row_id": "533823346951218", 
       "group": "diagnosis", 
       "id": "3949", 
       "time": 1202706000
     }, 
     {
+      "row_id": "533823346951218", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1202706000
     }, 
     {
+      "row_id": "533823346951218", 
       "group": "diagnosis", 
       "id": "5939", 
       "time": 1202706000
     }, 
     {
+      "row_id": "533413343050520", 
       "group": "diagnosis", 
       "id": "7825", 
       "time": 1202792400
     }, 
     {
+      "row_id": "533863342613754", 
       "group": "diagnosis", 
       "id": "7243", 
       "time": 1202878800
     }, 
     {
+      "row_id": "533863342613754", 
       "group": "diagnosis", 
       "id": "71941", 
       "time": 1202878800
     }, 
     {
+      "row_id": "533863342613754", 
       "group": "diagnosis", 
       "id": "7242", 
       "time": 1202878800
     }, 
     {
+      "row_id": "533863342613754", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1202878800
     }, 
     {
+      "row_id": "533573345642878", 
       "group": "diagnosis", 
       "id": "5162", 
       "time": 1202965200
     }, 
     {
+      "row_id": "533573345642878", 
       "group": "diagnosis", 
       "id": "33829", 
       "time": 1202965200
     }, 
     {
+      "row_id": "533573345642878", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1202965200
     }, 
     {
+      "row_id": "533083344919567", 
       "group": "diagnosis", 
       "id": "V5722", 
       "time": 1203570000
     }, 
     {
+      "row_id": "533933342680653", 
       "group": "diagnosis", 
       "id": "5168", 
       "time": 1203656400
     }, 
     {
+      "row_id": "533933342680653", 
       "group": "diagnosis", 
       "id": "E8160", 
       "time": 1203656400
     }, 
     {
+      "row_id": "533383342769019", 
       "group": "diagnosis", 
       "id": "78607", 
       "time": 1203742800
     }, 
     {
+      "row_id": "533383342769019", 
       "group": "diagnosis", 
       "id": "7823", 
       "time": 1203742800
     }, 
     {
+      "row_id": "533343342477622", 
       "group": "diagnosis", 
       "id": "07421", 
       "time": 1203829200
     }, 
     {
+      "row_id": "533343342477622", 
       "group": "diagnosis", 
       "id": "49121", 
       "time": 1203829200
     }, 
     {
+      "row_id": "533893344035721", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1203915600
     }, 
     {
+      "row_id": "533753346663216", 
       "group": "diagnosis", 
       "id": "4423", 
       "time": 1204002000
     }, 
     {
+      "row_id": "533753346663216", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1204002000
     }, 
     {
+      "row_id": "533203343022622", 
       "group": "diagnosis", 
       "id": "V4582", 
       "time": 1204866000
     }, 
     {
+      "row_id": "533593346774125", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1204866000
     }, 
     {
+      "row_id": "533333346442832", 
       "group": "diagnosis", 
       "id": "6803", 
       "time": 1204866000
     }, 
     {
+      "row_id": "533333346442832", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1204866000
     }, 
     {
+      "row_id": "533333346442832", 
       "group": "diagnosis", 
       "id": "60000", 
       "time": 1204866000
     }, 
     {
+      "row_id": "533333346442832", 
       "group": "diagnosis", 
       "id": "6803", 
       "time": 1204952400
     }, 
     {
+      "row_id": "533333346442832", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1204952400
     }, 
     {
+      "row_id": "533333346442832", 
       "group": "diagnosis", 
       "id": "60000", 
       "time": 1204952400
     }, 
     {
+      "row_id": "533763345616027", 
       "group": "diagnosis", 
       "id": "2840", 
       "time": 1205208000
     }, 
     {
+      "row_id": "533763345616027", 
       "group": "diagnosis", 
       "id": "5363", 
       "time": 1205208000
     }, 
     {
+      "row_id": "533763345616027", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1205208000
     }, 
     {
+      "row_id": "533763345616027", 
       "group": "diagnosis", 
       "id": "2840", 
       "time": 1205294400
     }, 
     {
+      "row_id": "533763345616027", 
       "group": "diagnosis", 
       "id": "5363", 
       "time": 1205294400
     }, 
     {
+      "row_id": "533763345616027", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1205294400
     }, 
     {
+      "row_id": "533763343337776", 
       "group": "diagnosis", 
       "id": "71536", 
       "time": 1205726400
     }, 
     {
+      "row_id": "533763343337776", 
       "group": "diagnosis", 
       "id": "2512", 
       "time": 1205726400
     }, 
     {
+      "row_id": "533813345643689", 
       "group": "diagnosis", 
       "id": "99677", 
       "time": 1205726400
     }, 
     {
+      "row_id": "533813345643689", 
       "group": "diagnosis", 
       "id": "V4364", 
       "time": 1205726400
     }, 
     {
+      "row_id": "533813345643689", 
       "group": "diagnosis", 
       "id": "59800", 
       "time": 1205726400
     }, 
     {
+      "row_id": "533813345643689", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1205726400
     }, 
     {
+      "row_id": "533353344838854", 
       "group": "diagnosis", 
       "id": "5119", 
       "time": 1205812800
     }, 
     {
+      "row_id": "533503346913257", 
       "group": "diagnosis", 
       "id": "2765", 
       "time": 1206072000
     }, 
     {
+      "row_id": "533503346913257", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1206072000
     }, 
     {
+      "row_id": "533803343267775", 
       "group": "diagnosis", 
       "id": "4243", 
       "time": 1206158400
     }, 
     {
+      "row_id": "533323343745841", 
       "group": "diagnosis", 
       "id": "27650", 
       "time": 1206244800
     }, 
     {
+      "row_id": "533323343745841", 
       "group": "diagnosis", 
       "id": "99673", 
       "time": 1206244800
     }, 
     {
+      "row_id": "533323343745841", 
       "group": "diagnosis", 
       "id": "V420", 
       "time": 1206244800
     }, 
     {
+      "row_id": "533323343745841", 
       "group": "diagnosis", 
       "id": "2766", 
       "time": 1206244800
     }, 
     {
+      "row_id": "533943342505410", 
       "group": "diagnosis", 
       "id": "1962", 
       "time": 1206590400
     }, 
     {
+      "row_id": "533093343596242", 
       "group": "diagnosis", 
       "id": "42820", 
       "time": 1206849600
     }, 
     {
+      "row_id": "533093343596242", 
       "group": "diagnosis", 
       "id": "71686", 
       "time": 1206849600
     }, 
     {
+      "row_id": "533093343596242", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1206849600
     }, 
     {
+      "row_id": "533093343596242", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1206849600
     }, 
     {
+      "row_id": "533193345603866", 
       "group": "diagnosis", 
       "id": "78650", 
       "time": 1206936000
     }, 
     {
+      "row_id": "533343346229608", 
       "group": "diagnosis", 
       "id": "70715", 
       "time": 1206936000
     }, 
     {
+      "row_id": "533353346220100", 
       "group": "diagnosis", 
       "id": "V518", 
       "time": 1207108800
     }, 
     {
+      "row_id": "533353346220100", 
       "group": "diagnosis", 
       "id": "042", 
       "time": 1207108800
     }, 
     {
+      "row_id": "533293346651334", 
       "group": "diagnosis", 
       "id": "1551", 
       "time": 1207454400
     }, 
     {
+      "row_id": "533553344807404", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1207454400
     }, 
     {
+      "row_id": "533553344807404", 
       "group": "diagnosis", 
       "id": "24290", 
       "time": 1207454400
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "42760", 
       "time": 1207368000
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1207368000
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "5119", 
       "time": 1207368000
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1207368000
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "42760", 
       "time": 1207454400
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1207454400
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "5119", 
       "time": 1207454400
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1207454400
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "42760", 
       "time": 1207540800
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1207540800
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "5119", 
       "time": 1207540800
     }, 
     {
+      "row_id": "533903344203345", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1207540800
     }, 
     {
+      "row_id": "533203345821044", 
       "group": "diagnosis", 
       "id": "71626", 
       "time": 1207972800
     }, 
     {
+      "row_id": "533443342759513", 
       "group": "diagnosis", 
       "id": "7218", 
       "time": 1208318400
     }, 
     {
+      "row_id": "533443342759513", 
       "group": "diagnosis", 
       "id": "71590", 
       "time": 1208318400
     }, 
     {
+      "row_id": "533443342759513", 
       "group": "diagnosis", 
       "id": "33821", 
       "time": 1208318400
     }, 
     {
+      "row_id": "533223343428762", 
       "group": "diagnosis", 
       "id": "71166", 
       "time": 1208491200
     }, 
     {
+      "row_id": "533843343935097", 
       "group": "diagnosis", 
       "id": "7070", 
       "time": 1208577600
     }, 
     {
+      "row_id": "533843343935097", 
       "group": "diagnosis", 
       "id": "28260", 
       "time": 1208577600
     }, 
     {
+      "row_id": "533243346173562", 
       "group": "diagnosis", 
       "id": "78606", 
       "time": 1208750400
     }, 
     {
+      "row_id": "533763345130834", 
       "group": "diagnosis", 
       "id": "46611", 
       "time": 1208750400
     }, 
     {
+      "row_id": "533763345130834", 
       "group": "diagnosis", 
       "id": "1330", 
       "time": 1208750400
     }, 
     {
+      "row_id": "533143346699505", 
       "group": "diagnosis", 
       "id": "03840", 
       "time": 1209441600
     }, 
     {
+      "row_id": "533143346699505", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1209441600
     }, 
     {
+      "row_id": "533143346699505", 
       "group": "diagnosis", 
       "id": "03840", 
       "time": 1209528000
     }, 
     {
+      "row_id": "533143346699505", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1209528000
     }, 
     {
+      "row_id": "533283343345195", 
       "group": "diagnosis", 
       "id": "3968", 
       "time": 1209614400
     }, 
     {
+      "row_id": "533283343345195", 
       "group": "diagnosis", 
       "id": "7852", 
       "time": 1209614400
     }, 
     {
+      "row_id": "533283343345195", 
       "group": "diagnosis", 
       "id": "4293", 
       "time": 1209614400
     }, 
     {
+      "row_id": "533463347261046", 
       "group": "diagnosis", 
       "id": "78606", 
       "time": 1209787200
     }, 
     {
+      "row_id": "533463347261046", 
       "group": "diagnosis", 
       "id": "4779", 
       "time": 1209787200
     }, 
     {
+      "row_id": "533463347261046", 
       "group": "diagnosis", 
       "id": "490", 
       "time": 1209787200
     }, 
     {
+      "row_id": "533493346519066", 
       "group": "diagnosis", 
       "id": "53082", 
       "time": 1209787200
     }, 
     {
+      "row_id": "533493346519066", 
       "group": "diagnosis", 
       "id": "56941", 
       "time": 1209787200
     }, 
     {
+      "row_id": "533493346519066", 
       "group": "diagnosis", 
       "id": "2875", 
       "time": 1209787200
     }, 
     {
+      "row_id": "533063343116885", 
       "group": "diagnosis", 
       "id": "0380", 
       "time": 1210305600
     }, 
     {
+      "row_id": "533963343746362", 
       "group": "diagnosis", 
       "id": "42830", 
       "time": 1210392000
     }, 
     {
+      "row_id": "533963343746362", 
       "group": "diagnosis", 
       "id": "5856", 
       "time": 1210392000
     }, 
     {
+      "row_id": "533963343746362", 
       "group": "diagnosis", 
       "id": "4263", 
       "time": 1210392000
     }, 
     {
+      "row_id": "533963343746362", 
       "group": "diagnosis", 
       "id": "59080", 
       "time": 1210392000
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "4910", 
       "time": 1211169600
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1211169600
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "4910", 
       "time": 1211256000
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1211256000
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "4910", 
       "time": 1211342400
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1211342400
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "4910", 
       "time": 1211428800
     }, 
     {
+      "row_id": "533483346041062", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1211428800
     }, 
     {
+      "row_id": "533133346832761", 
       "group": "diagnosis", 
       "id": "4830", 
       "time": 1211515200
     }, 
     {
+      "row_id": "533883345213758", 
       "group": "diagnosis", 
       "id": "2750", 
       "time": 1211515200
     }, 
     {
+      "row_id": "533883345213758", 
       "group": "diagnosis", 
       "id": "28521", 
       "time": 1211515200
     }, 
     {
+      "row_id": "533423346735292", 
       "group": "diagnosis", 
       "id": "4910", 
       "time": 1211601600
     }, 
     {
+      "row_id": "533553342548172", 
       "group": "diagnosis", 
       "id": "5173", 
       "time": 1211947200
     }, 
     {
+      "row_id": "533233342656626", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1212292800
     }, 
     {
+      "row_id": "533363343580591", 
       "group": "diagnosis", 
       "id": "25043", 
       "time": 1212379200
     }, 
     {
+      "row_id": "533363343580591", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1212379200
     }, 
     {
+      "row_id": "533363343580591", 
       "group": "diagnosis", 
       "id": "30000", 
       "time": 1212379200
     }, 
     {
+      "row_id": "533873344513744", 
       "group": "diagnosis", 
       "id": "28311", 
       "time": 1212811200
     }, 
     {
+      "row_id": "533873344513744", 
       "group": "diagnosis", 
       "id": "6029", 
       "time": 1212811200
     }, 
     {
+      "row_id": "533873344513744", 
       "group": "diagnosis", 
       "id": "V5869", 
       "time": 1212811200
     }, 
     {
+      "row_id": "533873344513744", 
       "group": "diagnosis", 
       "id": "71590", 
       "time": 1212811200
     }, 
     {
+      "row_id": "533943345386406", 
       "group": "diagnosis", 
       "id": "7249", 
       "time": 1212811200
     }, 
     {
+      "row_id": "533213343534236", 
       "group": "diagnosis", 
       "id": "5997", 
       "time": 1212897600
     }, 
     {
+      "row_id": "533273346624827", 
       "group": "diagnosis", 
       "id": "71904", 
       "time": 1213329600
     }, 
     {
+      "row_id": "533273346624827", 
       "group": "diagnosis", 
       "id": "71946", 
       "time": 1213329600
     }, 
     {
+      "row_id": "533043343235693", 
       "group": "diagnosis", 
       "id": "4271", 
       "time": 1214107200
     }, 
     {
+      "row_id": "533383345374998", 
       "group": "diagnosis", 
       "id": "78937", 
       "time": 1214712000
     }, 
     {
+      "row_id": "533083345578903", 
       "group": "diagnosis", 
       "id": "78651", 
       "time": 1215057600
     }, 
     {
+      "row_id": "533653343693358", 
       "group": "diagnosis", 
       "id": "7806", 
       "time": 1215316800
     }, 
     {
+      "row_id": "533653343693358", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1215316800
     }, 
     {
+      "row_id": "533653342544147", 
       "group": "diagnosis", 
       "id": "5559", 
       "time": 1215835200
     }, 
     {
+      "row_id": "533653342544147", 
       "group": "diagnosis", 
       "id": "V726", 
       "time": 1215835200
     }, 
     {
+      "row_id": "533293346668375", 
       "group": "diagnosis", 
       "id": "41410", 
       "time": 1216180800
     }, 
     {
+      "row_id": "533753345773959", 
       "group": "diagnosis", 
       "id": "2967", 
       "time": 1216180800
     }, 
     {
+      "row_id": "533153344925467", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1216267200
     }, 
     {
+      "row_id": "533153344925467", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1216267200
     }, 
     {
+      "row_id": "533153344925467", 
       "group": "diagnosis", 
       "id": "4439", 
       "time": 1216267200
     }, 
     {
+      "row_id": "533783344677467", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1216612800
     }, 
     {
+      "row_id": "533193345492552", 
       "group": "diagnosis", 
       "id": "7870", 
       "time": 1216699200
     }, 
     {
+      "row_id": "533193345492552", 
       "group": "diagnosis", 
       "id": "7820", 
       "time": 1216699200
     }, 
     {
+      "row_id": "533193345492552", 
       "group": "diagnosis", 
       "id": "7934", 
       "time": 1216699200
     }, 
     {
+      "row_id": "533193345492552", 
       "group": "diagnosis", 
       "id": "4270", 
       "time": 1216699200
     }, 
     {
+      "row_id": "533663345552509", 
       "group": "diagnosis", 
       "id": "7851", 
       "time": 1216872000
     }, 
     {
+      "row_id": "533663345552509", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1216872000
     }, 
     {
+      "row_id": "533043344155533", 
       "group": "diagnosis", 
       "id": "25052", 
       "time": 1217217600
     }, 
     {
+      "row_id": "533333342488745", 
       "group": "diagnosis", 
       "id": "4271", 
       "time": 1217476800
     }, 
     {
+      "row_id": "533333342488745", 
       "group": "diagnosis", 
       "id": "2768", 
       "time": 1217476800
     }, 
     {
+      "row_id": "533333342488745", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1217476800
     }, 
     {
+      "row_id": "533333342488745", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1217476800
     }, 
     {
+      "row_id": "533393347244954", 
       "group": "diagnosis", 
       "id": "99739", 
       "time": 1217908800
     }, 
     {
+      "row_id": "533963344636135", 
       "group": "diagnosis", 
       "id": "30989", 
       "time": 1218600000
     }, 
     {
+      "row_id": "533653346161876", 
       "group": "diagnosis", 
       "id": "V4363", 
       "time": 1218859200
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1218427200
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1218513600
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1218600000
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1218686400
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1218772800
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1218859200
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1218945600
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1219032000
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1219118400
     }, 
     {
+      "row_id": "533773345867291", 
       "group": "diagnosis", 
       "id": "25072", 
       "time": 1219204800
     }, 
     {
+      "row_id": "533013345799317", 
       "group": "diagnosis", 
       "id": "42821", 
       "time": 1219377600
     }, 
     {
+      "row_id": "533013345799317", 
       "group": "diagnosis", 
       "id": "7906", 
       "time": 1219377600
     }, 
     {
+      "row_id": "533013345799317", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1219377600
     }, 
     {
+      "row_id": "533013345799317", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1219377600
     }, 
     {
+      "row_id": "533293345140423", 
       "group": "diagnosis", 
       "id": "5119", 
       "time": 1219377600
     }, 
     {
+      "row_id": "533293345140423", 
       "group": "diagnosis", 
       "id": "7931", 
       "time": 1219377600
     }, 
     {
+      "row_id": "533683346534152", 
       "group": "diagnosis", 
       "id": "73605", 
       "time": 1219636800
     }, 
     {
+      "row_id": "533683346534152", 
       "group": "diagnosis", 
       "id": "72889", 
       "time": 1219636800
     }, 
     {
+      "row_id": "533683346534152", 
       "group": "diagnosis", 
       "id": "7823", 
       "time": 1219636800
     }, 
     {
+      "row_id": "533033343574830", 
       "group": "diagnosis", 
       "id": "7851", 
       "time": 1220673600
     }, 
     {
+      "row_id": "533033343574830", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1220673600
     }, 
     {
+      "row_id": "533033343574830", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1220673600
     }, 
     {
+      "row_id": "533033343574830", 
       "group": "diagnosis", 
       "id": "7851", 
       "time": 1220760000
     }, 
     {
+      "row_id": "533033343574830", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1220760000
     }, 
     {
+      "row_id": "533033343574830", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1220760000
     }, 
     {
+      "row_id": "533113343085560", 
       "group": "diagnosis", 
       "id": "25022", 
       "time": 1220760000
     }, 
     {
+      "row_id": "533113343085560", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1220760000
     }, 
     {
+      "row_id": "533113343085560", 
       "group": "diagnosis", 
       "id": "7039", 
       "time": 1220760000
     }, 
     {
+      "row_id": "533113343085560", 
       "group": "diagnosis", 
       "id": "7030", 
       "time": 1220760000
     }, 
     {
+      "row_id": "533843343018104", 
       "group": "diagnosis", 
       "id": "4912", 
       "time": 1222142400
     }, 
     {
+      "row_id": "533843343018104", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1222142400
     }, 
     {
+      "row_id": "533563342766877", 
       "group": "diagnosis", 
       "id": "5845", 
       "time": 1222401600
     }, 
     {
+      "row_id": "533563342766877", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1222401600
     }, 
     {
+      "row_id": "533563342766877", 
       "group": "diagnosis", 
       "id": "5852", 
       "time": 1222401600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "V182", 
       "time": 1223697600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "51881", 
       "time": 1223697600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1223697600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "4548", 
       "time": 1223697600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "V182", 
       "time": 1223784000
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "51881", 
       "time": 1223784000
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1223784000
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "4548", 
       "time": 1223784000
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "V182", 
       "time": 1223870400
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "51881", 
       "time": 1223870400
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1223870400
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "4548", 
       "time": 1223870400
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "V182", 
       "time": 1223956800
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "51881", 
       "time": 1223956800
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1223956800
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "4548", 
       "time": 1223956800
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "V182", 
       "time": 1224043200
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "51881", 
       "time": 1224043200
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1224043200
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "4548", 
       "time": 1224043200
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "V182", 
       "time": 1224129600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "51881", 
       "time": 1224129600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1224129600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "4548", 
       "time": 1224129600
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "V182", 
       "time": 1224216000
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "51881", 
       "time": 1224216000
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1224216000
     }, 
     {
+      "row_id": "533513342458097", 
       "group": "diagnosis", 
       "id": "4548", 
       "time": 1224216000
     }, 
     {
+      "row_id": "533713346737965", 
       "group": "diagnosis", 
       "id": "78609", 
       "time": 1224302400
     }, 
     {
+      "row_id": "533713346737965", 
       "group": "diagnosis", 
       "id": "78650", 
       "time": 1224302400
     }, 
     {
+      "row_id": "533713346737965", 
       "group": "diagnosis", 
       "id": "49320", 
       "time": 1224302400
     }, 
     {
+      "row_id": "533753343292540", 
       "group": "diagnosis", 
       "id": "37632", 
       "time": 1224302400
     }, 
     {
+      "row_id": "533753343292540", 
       "group": "diagnosis", 
       "id": "36501", 
       "time": 1224302400
     }, 
     {
+      "row_id": "533983346698391", 
       "group": "diagnosis", 
       "id": "42781", 
       "time": 1224561600
     }, 
     {
+      "row_id": "533983346698391", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1224561600
     }, 
     {
+      "row_id": "533753345331871", 
       "group": "diagnosis", 
       "id": "1571", 
       "time": 1224907200
     }, 
     {
+      "row_id": "533713343308866", 
       "group": "diagnosis", 
       "id": "1890", 
       "time": 1225339200
     }, 
     {
+      "row_id": "533573342583134", 
       "group": "diagnosis", 
       "id": "44023", 
       "time": 1226725200
     }, 
     {
+      "row_id": "533583342529048", 
       "group": "diagnosis", 
       "id": "99660", 
       "time": 1226811600
     }, 
     {
+      "row_id": "533873346585162", 
       "group": "diagnosis", 
       "id": "78651", 
       "time": 1226811600
     }, 
     {
+      "row_id": "533873346585162", 
       "group": "diagnosis", 
       "id": "7852", 
       "time": 1226811600
     }, 
     {
+      "row_id": "533543342915554", 
       "group": "diagnosis", 
       "id": "78651", 
       "time": 1226984400
     }, 
     {
+      "row_id": "533543342915554", 
       "group": "diagnosis", 
       "id": "78900", 
       "time": 1226984400
     }, 
     {
+      "row_id": "533543342915554", 
       "group": "diagnosis", 
       "id": "29630", 
       "time": 1226984400
     }, 
     {
+      "row_id": "533543342915554", 
       "group": "diagnosis", 
       "id": "7851", 
       "time": 1226984400
     }, 
     {
+      "row_id": "533653343393664", 
       "group": "diagnosis", 
       "id": "5185", 
       "time": 1227416400
     }, 
     {
+      "row_id": "533173342620887", 
       "group": "diagnosis", 
       "id": "25042", 
       "time": 1227589200
     }, 
     {
+      "row_id": "533173342620887", 
       "group": "diagnosis", 
       "id": "70714", 
       "time": 1227589200
     }, 
     {
+      "row_id": "533923345175139", 
       "group": "diagnosis", 
       "id": "5198", 
       "time": 1227848400
     }, 
     {
+      "row_id": "533903343467165", 
       "group": "diagnosis", 
       "id": "44382", 
       "time": 1227934800
     }, 
     {
+      "row_id": "533903343467165", 
       "group": "diagnosis", 
       "id": "71509", 
       "time": 1227934800
     }, 
     {
+      "row_id": "533213346782865", 
       "group": "diagnosis", 
       "id": "29630", 
       "time": 1228107600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1227675600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1227675600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1227675600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1227675600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1227762000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1227762000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1227762000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1227762000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1227848400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1227848400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1227848400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1227848400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1227934800
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1227934800
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1227934800
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1227934800
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1228021200
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1228021200
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1228021200
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1228021200
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1228107600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1228107600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1228107600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1228107600
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1228194000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1228194000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1228194000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1228194000
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1228280400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1228280400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1228280400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1228280400
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71880", 
       "time": 1228366800
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71990", 
       "time": 1228366800
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "71516", 
       "time": 1228366800
     }, 
     {
+      "row_id": "533363346922087", 
       "group": "diagnosis", 
       "id": "8208", 
       "time": 1228366800
     }, 
     {
+      "row_id": "533843342682031", 
       "group": "diagnosis", 
       "id": "5198", 
       "time": 1228366800
     }, 
     {
+      "row_id": "533723343072734", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533723343072734", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533723343072734", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533723343072734", 
       "group": "diagnosis", 
       "id": "71526", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533893343459673", 
       "group": "diagnosis", 
       "id": "7863", 
       "time": 1228539600
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "V5789", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "72887", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "43491", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1228453200
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "V5789", 
       "time": 1228539600
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "72887", 
       "time": 1228539600
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "43491", 
       "time": 1228539600
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1228539600
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "V5789", 
       "time": 1228626000
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "72887", 
       "time": 1228626000
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "43491", 
       "time": 1228626000
     }, 
     {
+      "row_id": "533343343307220", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1228626000
     }, 
     {
+      "row_id": "533203343541095", 
       "group": "diagnosis", 
       "id": "44382", 
       "time": 1229058000
     }, 
     {
+      "row_id": "533203343541095", 
       "group": "diagnosis", 
       "id": "78002", 
       "time": 1229058000
     }, 
     {
+      "row_id": "533203343541095", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1229058000
     }, 
     {
+      "row_id": "533203343541095", 
       "group": "diagnosis", 
       "id": "V420", 
       "time": 1229058000
     }, 
     {
+      "row_id": "533893345559312", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1229317200
     }, 
     {
+      "row_id": "533893345559312", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1229317200
     }, 
     {
+      "row_id": "533393343242848", 
       "group": "diagnosis", 
       "id": "V854", 
       "time": 1229835600
     }, 
     {
+      "row_id": "533393343242848", 
       "group": "diagnosis", 
       "id": "490", 
       "time": 1229835600
     }, 
     {
+      "row_id": "533393343242848", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1229835600
     }, 
     {
+      "row_id": "533393343242848", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1229835600
     }, 
     {
+      "row_id": "533493344921969", 
       "group": "diagnosis", 
       "id": "7916", 
       "time": 1229749200
     }, 
     {
+      "row_id": "533493344921969", 
       "group": "diagnosis", 
       "id": "7916", 
       "time": 1229835600
     }, 
     {
+      "row_id": "533503345688537", 
       "group": "diagnosis", 
       "id": "7854", 
       "time": 1230267600
     }, 
     {
+      "row_id": "533043346013597", 
       "group": "diagnosis", 
       "id": "V568", 
       "time": 1230440400
     }, 
     {
+      "row_id": "533043346013597", 
       "group": "diagnosis", 
       "id": "V5883", 
       "time": 1230440400
     }, 
     {
+      "row_id": "533043346013597", 
       "group": "diagnosis", 
       "id": "591", 
       "time": 1230440400
     }, 
     {
+      "row_id": "533513343163529", 
       "group": "diagnosis", 
       "id": "71510", 
       "time": 1230958800
     }, 
     {
+      "row_id": "533083343765289", 
       "group": "diagnosis", 
       "id": "4918", 
       "time": 1231045200
     }, 
     {
+      "row_id": "533593346373972", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1231650000
     }, 
     {
+      "row_id": "533593346373972", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1231650000
     }, 
     {
+      "row_id": "533453344782142", 
       "group": "diagnosis", 
       "id": "71975", 
       "time": 1231736400
     }, 
     {
+      "row_id": "533453344782142", 
       "group": "diagnosis", 
       "id": "5362", 
       "time": 1231736400
     }, 
     {
+      "row_id": "533513347132904", 
       "group": "diagnosis", 
       "id": "V1259", 
       "time": 1231995600
     }, 
     {
+      "row_id": "533663344581427", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1232514000
     }, 
     {
+      "row_id": "533273343383458", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1232773200
     }, 
     {
+      "row_id": "533273343383458", 
       "group": "diagnosis", 
       "id": "42830", 
       "time": 1232773200
     }, 
     {
+      "row_id": "533563344697112", 
       "group": "diagnosis", 
       "id": "485", 
       "time": 1233205200
     }, 
     {
+      "row_id": "533473346901709", 
       "group": "diagnosis", 
       "id": "78944", 
       "time": 1233637200
     }, 
     {
+      "row_id": "533973346100844", 
       "group": "diagnosis", 
       "id": "6829", 
       "time": 1233723600
     }, 
     {
+      "row_id": "533973346100844", 
       "group": "diagnosis", 
       "id": "6829", 
       "time": 1233810000
     }, 
     {
+      "row_id": "533553346106979", 
       "group": "diagnosis", 
       "id": "V7641", 
       "time": 1233982800
     }, 
     {
+      "row_id": "533023346841709", 
       "group": "diagnosis", 
       "id": "82030", 
       "time": 1234069200
     }, 
     {
+      "row_id": "533023346841709", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1234069200
     }, 
     {
+      "row_id": "533023346841709", 
       "group": "diagnosis", 
       "id": "3310", 
       "time": 1234069200
     }, 
     {
+      "row_id": "533313346585815", 
       "group": "diagnosis", 
       "id": "29613", 
       "time": 1235019600
     }, 
     {
+      "row_id": "533313346585815", 
       "group": "diagnosis", 
       "id": "30000", 
       "time": 1235019600
     }, 
     {
+      "row_id": "533823346871785", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1235451600
     }, 
     {
+      "row_id": "533653345517352", 
       "group": "diagnosis", 
       "id": "4658", 
       "time": 1235710800
     }, 
     {
+      "row_id": "533653345517352", 
       "group": "diagnosis", 
       "id": "49390", 
       "time": 1235710800
     }, 
     {
+      "row_id": "533653345517352", 
       "group": "diagnosis", 
       "id": "49301", 
       "time": 1235710800
     }, 
     {
+      "row_id": "533323344268830", 
       "group": "diagnosis", 
       "id": "25020", 
       "time": 1236142800
     }, 
     {
+      "row_id": "533323344268830", 
       "group": "diagnosis", 
       "id": "78079", 
       "time": 1236142800
     }, 
     {
+      "row_id": "533323344268830", 
       "group": "diagnosis", 
       "id": "1101", 
       "time": 1236142800
     }, 
     {
+      "row_id": "533323344268830", 
       "group": "diagnosis", 
       "id": "7038", 
       "time": 1236142800
     }, 
     {
+      "row_id": "533953346131546", 
       "group": "diagnosis", 
       "id": "7851", 
       "time": 1236142800
     }, 
     {
+      "row_id": "533393345417455", 
       "group": "diagnosis", 
       "id": "V6407", 
       "time": 1236830400
     }, 
     {
+      "row_id": "533793343150761", 
       "group": "diagnosis", 
       "id": "7863", 
       "time": 1237262400
     }, 
     {
+      "row_id": "533443345146321", 
       "group": "diagnosis", 
       "id": "7210", 
       "time": 1237348800
     }, 
     {
+      "row_id": "533443345146321", 
       "group": "diagnosis", 
       "id": "71945", 
       "time": 1237348800
     }, 
     {
+      "row_id": "533443345146321", 
       "group": "diagnosis", 
       "id": "3529", 
       "time": 1237348800
     }, 
     {
+      "row_id": "533443345146321", 
       "group": "diagnosis", 
       "id": "V6700", 
       "time": 1237348800
     }, 
     {
+      "row_id": "533803345410786", 
       "group": "diagnosis", 
       "id": "V561", 
       "time": 1237867200
     }, 
     {
+      "row_id": "533803345410786", 
       "group": "diagnosis", 
       "id": "28521", 
       "time": 1237867200
     }, 
     {
+      "row_id": "533803345410786", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1237867200
     }, 
     {
+      "row_id": "533803345410786", 
       "group": "diagnosis", 
       "id": "2753", 
       "time": 1237867200
     }, 
     {
+      "row_id": "533843344566863", 
       "group": "diagnosis", 
       "id": "4912", 
       "time": 1237953600
     }, 
     {
+      "row_id": "533843344566863", 
       "group": "diagnosis", 
       "id": "78720", 
       "time": 1237953600
     }, 
     {
+      "row_id": "533843344566863", 
       "group": "diagnosis", 
       "id": "7102", 
       "time": 1237953600
     }, 
     {
+      "row_id": "533373343543307", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1238040000
     }, 
     {
+      "row_id": "533223344758547", 
       "group": "diagnosis", 
       "id": "V4581", 
       "time": 1239163200
     }, 
     {
+      "row_id": "533223344758547", 
       "group": "diagnosis", 
       "id": "2768", 
       "time": 1239163200
     }, 
     {
+      "row_id": "533223344758547", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1239163200
     }, 
     {
+      "row_id": "533603345521300", 
       "group": "diagnosis", 
       "id": "78607", 
       "time": 1239508800
     }, 
     {
+      "row_id": "533603345521300", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1239508800
     }, 
     {
+      "row_id": "533603345521300", 
       "group": "diagnosis", 
       "id": "5856", 
       "time": 1239508800
     }, 
     {
+      "row_id": "533533343534191", 
       "group": "diagnosis", 
       "id": "37611", 
       "time": 1239854400
     }, 
     {
+      "row_id": "533533343534191", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1239854400
     }, 
     {
+      "row_id": "533833344311921", 
       "group": "diagnosis", 
       "id": "49120", 
       "time": 1239854400
     }, 
     {
+      "row_id": "533103346802417", 
       "group": "diagnosis", 
       "id": "V126", 
       "time": 1239940800
     }, 
     {
+      "row_id": "533103346802417", 
       "group": "diagnosis", 
       "id": "V1589", 
       "time": 1239940800
     }, 
     {
+      "row_id": "533743343312493", 
       "group": "diagnosis", 
       "id": "6819", 
       "time": 1240286400
     }, 
     {
+      "row_id": "533573345783097", 
       "group": "diagnosis", 
       "id": "1179", 
       "time": 1240372800
     }, 
     {
+      "row_id": "533573345783097", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1240372800
     }, 
     {
+      "row_id": "533573345783097", 
       "group": "diagnosis", 
       "id": "7197", 
       "time": 1240372800
     }, 
     {
+      "row_id": "533503346628633", 
       "group": "diagnosis", 
       "id": "72879", 
       "time": 1240459200
     }, 
     {
+      "row_id": "533503346628633", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1240459200
     }, 
     {
+      "row_id": "533503346628633", 
       "group": "diagnosis", 
       "id": "70715", 
       "time": 1240459200
     }, 
     {
+      "row_id": "533503346628633", 
       "group": "diagnosis", 
       "id": "5859", 
       "time": 1240459200
     }, 
     {
+      "row_id": "533183343361947", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1240545600
     }, 
     {
+      "row_id": "533183343361947", 
       "group": "diagnosis", 
       "id": "2865", 
       "time": 1240545600
     }, 
     {
+      "row_id": "533063344059877", 
       "group": "diagnosis", 
       "id": "11595", 
       "time": 1240891200
     }, 
     {
+      "row_id": "533273345814201", 
       "group": "diagnosis", 
       "id": "70707", 
       "time": 1241064000
     }, 
     {
+      "row_id": "533763345051685", 
       "group": "diagnosis", 
       "id": "7862", 
       "time": 1241064000
     }, 
     {
+      "row_id": "533763345051685", 
       "group": "diagnosis", 
       "id": "500", 
       "time": 1241064000
     }, 
     {
+      "row_id": "533713342820976", 
       "group": "diagnosis", 
       "id": "3920", 
       "time": 1241755200
     }, 
     {
+      "row_id": "533713342820976", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1241755200
     }, 
     {
+      "row_id": "533713342820976", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1241755200
     }, 
     {
+      "row_id": "533563342979326", 
       "group": "diagnosis", 
       "id": "78901", 
       "time": 1241841600
     }, 
     {
+      "row_id": "533563342979326", 
       "group": "diagnosis", 
       "id": "4550", 
       "time": 1241841600
     }, 
     {
+      "row_id": "533563342979326", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1241841600
     }, 
     {
+      "row_id": "533323345894924", 
       "group": "diagnosis", 
       "id": "72291", 
       "time": 1242014400
     }, 
     {
+      "row_id": "533323345894924", 
       "group": "diagnosis", 
       "id": "7213", 
       "time": 1242014400
     }, 
     {
+      "row_id": "533773345432658", 
       "group": "diagnosis", 
       "id": "78651", 
       "time": 1242187200
     }, 
     {
+      "row_id": "533773345432658", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1242187200
     }, 
     {
+      "row_id": "533773345432658", 
       "group": "diagnosis", 
       "id": "78605", 
       "time": 1242187200
     }, 
     {
+      "row_id": "533673344676540", 
       "group": "diagnosis", 
       "id": "45989", 
       "time": 1242532800
     }, 
     {
+      "row_id": "533933344129887", 
       "group": "diagnosis", 
       "id": "27952", 
       "time": 1242532800
     }, 
     {
+      "row_id": "533933344129887", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1242532800
     }, 
     {
+      "row_id": "533933344129887", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1242532800
     }, 
     {
+      "row_id": "533393344131121", 
       "group": "diagnosis", 
       "id": "4270", 
       "time": 1242792000
     }, 
     {
+      "row_id": "533393344131121", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1242792000
     }, 
     {
+      "row_id": "533333346736011", 
       "group": "diagnosis", 
       "id": "4928", 
       "time": 1244779200
     }, 
     {
+      "row_id": "533813344857228", 
       "group": "diagnosis", 
       "id": "49121", 
       "time": 1245384000
     }, 
     {
+      "row_id": "533813344857228", 
       "group": "diagnosis", 
       "id": "5180", 
       "time": 1245384000
     }, 
     {
+      "row_id": "533813344857228", 
       "group": "diagnosis", 
       "id": "V1588", 
       "time": 1245384000
     }, 
     {
+      "row_id": "533813344857228", 
       "group": "diagnosis", 
       "id": "V462", 
       "time": 1245384000
     }, 
     {
+      "row_id": "533183346486187", 
       "group": "diagnosis", 
       "id": "4254", 
       "time": 1246161600
     }, 
     {
+      "row_id": "533183346486187", 
       "group": "diagnosis", 
       "id": "42822", 
       "time": 1246161600
     }, 
     {
+      "row_id": "533183346486187", 
       "group": "diagnosis", 
       "id": "4149", 
       "time": 1246161600
     }, 
     {
+      "row_id": "533183346486187", 
       "group": "diagnosis", 
       "id": "2722", 
       "time": 1246161600
     }, 
     {
+      "row_id": "533723344858959", 
       "group": "diagnosis", 
       "id": "7902", 
       "time": 1246248000
     }, 
     {
+      "row_id": "533723344858959", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1246248000
     }, 
     {
+      "row_id": "533173342515418", 
       "group": "diagnosis", 
       "id": "82131", 
       "time": 1246593600
     }, 
     {
+      "row_id": "533173342515418", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1246593600
     }, 
     {
+      "row_id": "533173342515418", 
       "group": "diagnosis", 
       "id": "E9889", 
       "time": 1246593600
     }, 
     {
+      "row_id": "533183346150323", 
       "group": "diagnosis", 
       "id": "7851", 
       "time": 1247976000
     }, 
     {
+      "row_id": "533073346922362", 
       "group": "diagnosis", 
       "id": "4257", 
       "time": 1248062400
     }, 
     {
+      "row_id": "533073346922362", 
       "group": "diagnosis", 
       "id": "4439", 
       "time": 1248062400
     }, 
     {
+      "row_id": "533073346922362", 
       "group": "diagnosis", 
       "id": "4139", 
       "time": 1248062400
     }, 
     {
+      "row_id": "533033343929850", 
       "group": "diagnosis", 
       "id": "5856", 
       "time": 1248667200
     }, 
     {
+      "row_id": "533033343929850", 
       "group": "diagnosis", 
       "id": "28521", 
       "time": 1248667200
     }, 
     {
+      "row_id": "533033343929850", 
       "group": "diagnosis", 
       "id": "58881", 
       "time": 1248667200
     }, 
     {
+      "row_id": "533033343929850", 
       "group": "diagnosis", 
       "id": "5856", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533033343929850", 
       "group": "diagnosis", 
       "id": "28521", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533033343929850", 
       "group": "diagnosis", 
       "id": "58881", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533483346928962", 
       "group": "diagnosis", 
       "id": "78651", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533483346928962", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533483346928962", 
       "group": "diagnosis", 
       "id": "2761", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533483346928962", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533653343485603", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1248753600
     }, 
     {
+      "row_id": "533693343557722", 
       "group": "diagnosis", 
       "id": "42831", 
       "time": 1249185600
     }, 
     {
+      "row_id": "533693343557722", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1249185600
     }, 
     {
+      "row_id": "533943344477678", 
       "group": "diagnosis", 
       "id": "7819", 
       "time": 1249444800
     }, 
     {
+      "row_id": "533963344209601", 
       "group": "diagnosis", 
       "id": "4401", 
       "time": 1249617600
     }, 
     {
+      "row_id": "533963344209601", 
       "group": "diagnosis", 
       "id": "4471", 
       "time": 1249617600
     }, 
     {
+      "row_id": "533963344209601", 
       "group": "diagnosis", 
       "id": "43330", 
       "time": 1249617600
     }, 
     {
+      "row_id": "533963344209601", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1249617600
     }, 
     {
+      "row_id": "533183344052765", 
       "group": "diagnosis", 
       "id": "V5391", 
       "time": 1250568000
     }, 
     {
+      "row_id": "533183344052765", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1250568000
     }, 
     {
+      "row_id": "533303343147331", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1250568000
     }, 
     {
+      "row_id": "533553343085127", 
       "group": "diagnosis", 
       "id": "4281", 
       "time": 1250827200
     }, 
     {
+      "row_id": "533823342928590", 
       "group": "diagnosis", 
       "id": "70713", 
       "time": 1250827200
     }, 
     {
+      "row_id": "533823342928590", 
       "group": "diagnosis", 
       "id": "70722", 
       "time": 1250827200
     }, 
     {
+      "row_id": "533823342928590", 
       "group": "diagnosis", 
       "id": "04110", 
       "time": 1250827200
     }, 
     {
+      "row_id": "533543346918518", 
       "group": "diagnosis", 
       "id": "3488", 
       "time": 1251604800
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "V5867", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "V4581", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "29680", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "2768", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "72888", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "procedure", 
       "id": "4513", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "procedure", 
       "id": "3310", 
       "time": 1200978000
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "V5867", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "V4581", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "29680", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "2768", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "72888", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "procedure", 
       "id": "4513", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842441134740505", 
       "cost": "2000.00", 
       "group": "procedure", 
       "id": "3310", 
       "time": 1201064400
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "49322", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "4588", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "V1582", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "5720", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "04112", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "E9320", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "procedure", 
       "id": "8607", 
       "time": 1218427200
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "49322", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "4588", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "V1582", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "5720", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "04112", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "E9320", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "procedure", 
       "id": "8607", 
       "time": 1218513600
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "49322", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "4588", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "V1582", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "5720", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "04112", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "E9320", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "diagnosis", 
       "id": "41400", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842581134703036", 
       "cost": "8000.00", 
       "group": "procedure", 
       "id": "8607", 
       "time": 1218600000
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "99644", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "2851", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "5533", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "99641", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "71690", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "procedure", 
       "id": "0080", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "procedure", 
       "id": "2724", 
       "time": 1239076800
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "99644", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "2851", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "5533", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "99641", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "71690", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "procedure", 
       "id": "0080", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "procedure", 
       "id": "2724", 
       "time": 1239163200
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "99644", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "2851", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "5533", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "99641", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "diagnosis", 
       "id": "71690", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "procedure", 
       "id": "0080", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842441134715167", 
       "cost": "15000.00", 
       "group": "procedure", 
       "id": "2724", 
       "time": 1239249600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1247457600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1247544000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1247630400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1247716800
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1247803200
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1247889600
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1247976000
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "49122", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "73300", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "V5866", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "6961", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "725", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "30501", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842251134698246", 
       "cost": "6000.00", 
       "group": "diagnosis", 
       "id": "51889", 
       "time": 1248062400
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "3384", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "5853", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "7802", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "30000", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "49320", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "920", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "0066", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "42731", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "311", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "42789", 
       "time": 1251259200
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "3384", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "5853", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "7802", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "30000", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "49320", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "920", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "0066", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "42731", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "311", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "42789", 
       "time": 1251345600
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "41401", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "3384", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "5853", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "7802", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "30000", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "49320", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "diagnosis", 
       "id": "920", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "0066", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "42731", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "311", 
       "time": 1251432000
     }, 
     {
+      "row_id": "842971134721769", 
       "cost": "11000.00", 
       "group": "procedure", 
       "id": "42789", 
       "time": 1251432000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200373200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200373200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200373200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200373200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200373200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200459600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200459600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200459600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200459600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200459600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200546000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200546000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200546000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200546000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200546000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200632400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200632400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200632400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200632400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200632400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200718800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200718800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200718800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200718800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200718800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200805200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200805200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200805200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200805200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200805200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200891600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200891600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200891600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200891600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200891600
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1200978000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1200978000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1200978000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1200978000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1200978000
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1201064400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1201064400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1201064400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1201064400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1201064400
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1201150800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1201150800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1201150800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1201150800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1201150800
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "59081", 
       "time": 1201237200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42731", 
       "time": 1201237200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1201237200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2948", 
       "time": 1201237200
     }, 
     {
+      "row_id": "188012239124039", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2809", 
       "time": 1201237200
     }, 
     {
+      "row_id": "188482239135640", 
       "cost": "400.00", 
       "group": "diagnosis", 
       "id": "V8404", 
       "time": 1202792400
     }, 
     {
+      "row_id": "188482239135640", 
       "cost": "400.00", 
       "group": "diagnosis", 
       "id": "4720", 
       "time": 1202792400
     }, 
     {
+      "row_id": "188482239135640", 
       "cost": "400.00", 
       "group": "diagnosis", 
       "id": "78009", 
       "time": 1202792400
     }, 
     {
+      "row_id": "188482239135640", 
       "cost": "400.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1202792400
     }, 
     {
+      "row_id": "188782238723859", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "5640", 
       "time": 1206763200
     }, 
     {
+      "row_id": "188782238723859", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78907", 
       "time": 1206763200
     }, 
     {
+      "row_id": "188782238723859", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78650", 
       "time": 1206763200
     }, 
     {
+      "row_id": "188962238818778", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42789", 
       "time": 1214020800
     }, 
     {
+      "row_id": "188962238818778", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "5990", 
       "time": 1214020800
     }, 
     {
+      "row_id": "188962238818778", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1214020800
     }, 
     {
+      "row_id": "188962238818778", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1214020800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "46619", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "78831", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "7840", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "V5869", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "2859", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "7336", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188122238930660", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1223956800
     }, 
     {
+      "row_id": "188212239041785", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "44421", 
       "time": 1226293200
     }, 
     {
+      "row_id": "188212239041785", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "6089", 
       "time": 1226293200
     }, 
     {
+      "row_id": "188212239041785", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "V5869", 
       "time": 1226293200
     }, 
     {
+      "row_id": "188212239041785", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "3051", 
       "time": 1226293200
     }, 
     {
+      "row_id": "188212239041785", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "V420", 
       "time": 1226293200
     }, 
     {
+      "row_id": "188752238684287", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "0320", 
       "time": 1230786000
     }, 
     {
+      "row_id": "188582239275299", 
       "cost": "100.00", 
       "group": "diagnosis", 
       "id": "2681", 
       "time": 1231477200
     }, 
     {
+      "row_id": "188582239275299", 
       "cost": "100.00", 
       "group": "diagnosis", 
       "id": "71590", 
       "time": 1231477200
     }, 
     {
+      "row_id": "188582239275299", 
       "cost": "100.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1231477200
     }, 
     {
+      "row_id": "188582239275299", 
       "cost": "100.00", 
       "group": "diagnosis", 
       "id": "9239", 
       "time": 1231477200
     }, 
     {
+      "row_id": "188782238997330", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "42769", 
       "time": 1233723600
     }, 
     {
+      "row_id": "188782238997330", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2810", 
       "time": 1233723600
     }, 
     {
+      "row_id": "188112238940473", 
       "cost": "40.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1234069200
     }, 
     {
+      "row_id": "188112238940473", 
       "cost": "40.00", 
       "group": "diagnosis", 
       "id": "7802", 
       "time": 1234069200
     }, 
     {
+      "row_id": "188952239122348", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "7090", 
       "time": 1236402000
     }, 
     {
+      "row_id": "188952239122348", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "V7644", 
       "time": 1236402000
     }, 
     {
+      "row_id": "188952239122348", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "4011", 
       "time": 1236402000
     }, 
     {
+      "row_id": "188332238863327", 
       "cost": "200.00", 
       "group": "diagnosis", 
       "id": "9509", 
       "time": 1238817600
     }, 
     {
+      "row_id": "188332238863327", 
       "cost": "200.00", 
       "group": "diagnosis", 
       "id": "2449", 
       "time": 1238817600
     }, 
     {
+      "row_id": "188332238863327", 
       "cost": "200.00", 
       "group": "diagnosis", 
       "id": "V600", 
       "time": 1238817600
     }, 
     {
+      "row_id": "188332238863327", 
       "cost": "200.00", 
       "group": "diagnosis", 
       "id": "920", 
       "time": 1238817600
     }, 
     {
+      "row_id": "188572238752008", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "7850", 
       "time": 1240286400
     }, 
     {
+      "row_id": "188302239004981", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2870", 
       "time": 1241668800
     }, 
     {
+      "row_id": "188732239273638", 
       "cost": "100.00", 
       "group": "diagnosis", 
       "id": "70700", 
       "time": 1241928000
     }, 
     {
+      "row_id": "188562238569529", 
       "cost": "70.00", 
       "group": "diagnosis", 
       "id": "38643", 
       "time": 1244692800
     }, 
     {
+      "row_id": "188562238569529", 
       "cost": "70.00", 
       "group": "diagnosis", 
       "id": "78079", 
       "time": 1244692800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244347200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244347200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244347200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244347200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244347200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244433600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244433600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244433600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244433600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244433600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244520000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244520000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244520000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244520000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244520000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244606400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244606400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244606400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244606400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244606400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244692800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244692800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244692800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244692800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244692800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244779200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244779200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244779200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244779200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244779200
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244865600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244865600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244865600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244865600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244865600
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1244952000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1244952000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1244952000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1244952000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1244952000
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1245038400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1245038400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1245038400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1245038400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1245038400
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1245124800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "4280", 
       "time": 1245124800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7993", 
       "time": 1245124800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "7812", 
       "time": 1245124800
     }, 
     {
+      "row_id": "188642239026941", 
       "cost": "30.00", 
       "group": "diagnosis", 
       "id": "2724", 
       "time": 1245124800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245211200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245211200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245297600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245297600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245384000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245384000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245470400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245470400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245556800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245556800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245643200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245643200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245729600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245729600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245816000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245816000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245902400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245902400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1245988800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1245988800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246075200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246075200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246161600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246161600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246248000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246248000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246334400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246334400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246420800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246420800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246507200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246507200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246593600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246593600
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246680000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246680000
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246766400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246766400
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246852800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246852800
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "72664", 
       "time": 1246939200
     }, 
     {
+      "row_id": "188442238955140", 
       "cost": "500.00", 
       "group": "diagnosis", 
       "id": "2720", 
       "time": 1246939200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "4918", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "78659", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "V1261", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "79902", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "V4582", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "78703", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "25000", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "53081", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188452239150955", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "78079", 
       "time": 1249099200
     }, 
     {
+      "row_id": "188142239106934", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "28732", 
       "time": 1249617600
     }, 
     {
+      "row_id": "188672238863245", 
       "cost": "0.00", 
       "group": "diagnosis", 
       "id": "71930", 
       "time": 1254024000
     }, 
     {
+      "row_id": "188672238863245", 
       "cost": "0.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1254024000
     }, 
     {
+      "row_id": "188102238815952", 
       "cost": "90.00", 
       "group": "diagnosis", 
       "id": "46619", 
       "time": 1260939600
     }, 
     {
+      "row_id": "188102238815952", 
       "cost": "90.00", 
       "group": "diagnosis", 
       "id": "8488", 
       "time": 1260939600
     }, 
     {
+      "row_id": "188342238787996", 
       "cost": "80.00", 
       "group": "diagnosis", 
       "id": "42821", 
       "time": 1261544400
     }, 
     {
+      "row_id": "188342238787996", 
       "cost": "80.00", 
       "group": "diagnosis", 
       "id": "25002", 
       "time": 1261544400
     }, 
     {
+      "row_id": "188342238787996", 
       "cost": "80.00", 
       "group": "diagnosis", 
       "id": "32723", 
       "time": 1261544400
     }, 
     {
+      "row_id": "188342238787996", 
       "cost": "80.00", 
       "group": "diagnosis", 
       "id": "5856", 
       "time": 1261544400
     }, 
     {
+      "row_id": "188082239122282", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "42823", 
       "time": 1262581200
     }, 
     {
+      "row_id": "188082239122282", 
       "cost": "50.00", 
       "group": "diagnosis", 
       "id": "78192", 
       "time": 1262581200
     }, 
     {
+      "row_id": "188812239096673", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "2866", 
       "time": 1263358800
     }, 
     {
+      "row_id": "188512238898348", 
       "cost": "0.00", 
       "group": "diagnosis", 
       "id": "V5869", 
       "time": 1265173200
     }, 
     {
+      "row_id": "188512238898348", 
       "cost": "0.00", 
       "group": "diagnosis", 
       "id": "5762", 
       "time": 1265173200
     }, 
     {
+      "row_id": "188512238898348", 
       "cost": "0.00", 
       "group": "diagnosis", 
       "id": "07070", 
       "time": 1265173200
     }, 
     {
+      "row_id": "188512238898348", 
       "cost": "0.00", 
       "group": "diagnosis", 
       "id": "V5869", 
       "time": 1265173200
     }, 
     {
+      "row_id": "188052238612280", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "V548", 
       "time": 1266210000
     }, 
     {
+      "row_id": "188052238612280", 
       "cost": "10.00", 
       "group": "diagnosis", 
       "id": "V5861", 
       "time": 1266210000
     }, 
     {
+      "row_id": "188072238585748", 
       "cost": "300.00", 
       "group": "diagnosis", 
       "id": "78606", 
       "time": 1269748800
     }, 
     {
+      "row_id": "188072238585748", 
       "cost": "300.00", 
       "group": "diagnosis", 
       "id": "30000", 
       "time": 1269748800
     }, 
     {
+      "row_id": "188072238585748", 
       "cost": "300.00", 
       "group": "diagnosis", 
       "id": "V1011", 
       "time": 1269748800
     }, 
     {
+      "row_id": "188072238585748", 
       "cost": "300.00", 
       "group": "diagnosis", 
       "id": "4019", 
       "time": 1269748800
     }, 
     {
+      "row_id": "188072238585748", 
       "cost": "300.00", 
       "group": "diagnosis", 
       "id": "4168", 
       "time": 1269748800
     }, 
     {
+      "row_id": "188072238585748", 
       "cost": "300.00", 
       "group": "diagnosis", 
       "id": "49392", 
       "time": 1269748800
     }, 
     {
+      "row_id": "188572239114102", 
       "cost": "90.00", 
       "group": "diagnosis", 
       "id": "V4585", 
       "time": 1276920000
     }, 
     {
+      "row_id": "188572239114102", 
       "cost": "90.00", 
       "group": "diagnosis", 
       "id": "7919", 
       "time": 1276920000
     }, 
     {
+      "row_id": "188572239114102", 
       "cost": "90.00", 
       "group": "diagnosis", 
       "id": "30000", 
       "time": 1276920000
     }, 
     {
+      "row_id": "188522239048002", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "7235", 
       "time": 1281499200
     }, 
     {
+      "row_id": "188522239048002", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "7295", 
       "time": 1281499200
     }, 
     {
+      "row_id": "188522239048002", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "71945", 
       "time": 1281499200
     }, 
     {
+      "row_id": "188522239048002", 
       "cost": "60.00", 
       "group": "diagnosis", 
       "id": "7213", 
