@@ -100,8 +100,8 @@ def createEntry(group, id, claim_id, hasResult = False, resultFlag = False, resu
         "id": id,
         "group": group
     }
-    if claim_id is not None:
-        res["row_id"] = claim_id
+    if claim_id[0] is not None:
+        res["row_id"] = claim_id[0]
     if hasResult:
         res["flag_value"] = result
         res["flag"] = resultFlag
@@ -120,10 +120,10 @@ def handleEvent(row, claim_id):
 
 def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     curStatus = status
-    claim_id = None
+    claim_id = [ None ]
 
     def setClaimId(cid):
-        claim_id = cid
+        claim_id[0] = cid
 
     handleKey(row, "claim_id", MODE_OPTIONAL, lambda value:
             setClaimId(value)
