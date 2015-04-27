@@ -38,14 +38,18 @@ function Histogram(svg) {
       max = 1;
     }
     values = v.map(function(a) {
-      return [ a[0], a[1] / max ];
+      return [ a[0], a[1] ];
     });
     values.sort(function(a, b) {
       return d3.ascending(a[0], b[0]);
     });
     that.update();
   };
+  var useLog = true;
+  var yc = useLog ? d3.scale.log() : d3.scale.linear();
   this.update = function() {
+    yc.domain([ useLog ? 1 : 0, max ]);
+    yc.range([ yMap(0), yMap(1) ]);
     var valueMap = {};
     var times = values.map(function(v) {
       valueMap[v[0]] = v[1];
@@ -57,8 +61,8 @@ function Histogram(svg) {
     });
     rects.exit().remove();
     rects.enter().append("rect").classed("hist", true).attr({
-      "fill": "lightgray",
-      "stroke": "black"
+      "stroke": "black",
+      "stroke-width": 0.2
     });
     var smallestWidth = Number.POSITIVE_INFINITY;
     rects.each(function(t, ix) {
@@ -73,24 +77,31 @@ function Histogram(svg) {
       },
       "width": smallestWidth,
       "y": function(t) {
-        return yMap(valueMap[t]);
+        if(useLog && valueMap[t] < 1) return yMap(0);
+        return yc(valueMap[t]);
       },
       "height": function(t) {
-        return yMap(0) - yMap(valueMap[t]);
+        if(useLog && valueMap[t] < 1) return 0;
+        return yMap(0) - yc(valueMap[t]);
+      },
+      "fill": function(t) {
+        var bucket = Math.max(Math.min(4 - Math.floor(Math.log10(valueMap[t])), 4), 0);
+        return colorbrewer["RdYlBu"][5][bucket];
       }
     });
     smallestWidth > 0 || console.warn("smallest width is zero");
     var yAxisLeft = d3.svg.axis();
-    var yAxisRight = d3.svg.axis();
     yAxisLeft.orient("right");
-    yAxisRight.orient("left");
-    var yc = d3.scale.linear();
-    yc.domain([ 0, max ]);
-    yc.range([ yMap(0), yMap(1) ]);
     yAxisLeft.scale(yc);
-    yAxisRight.scale(yc);
+    useLog && yAxisLeft.ticks(1, 10);
     yLabelsLeft.call(yAxisLeft);
+    jkjs.util.toFront(yLabelsLeft, true);
+    var yAxisRight = d3.svg.axis();
+    yAxisRight.orient("left");
+    yAxisRight.scale(yc);
+    useLog && yAxisRight.ticks(1, 10);
     yLabelsRight.call(yAxisRight);
+    jkjs.util.toFront(yLabelsRight, true);
     if(!values.length) {
       yLabelsLeft.style({
         "opacity": 0

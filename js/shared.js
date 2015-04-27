@@ -129,16 +129,22 @@ function loadPerson(pid, person, pool, eventView, typeView, linechart, histogram
     var noHistogram = true;
     pool.traverseAllEvents(function(_, _, e) {
       var claim = e.getEventGroupId();
-      if(!claim.length) return;
       var cost = e.cost();
       if(cost) {
         noHistogram = false;
       }
       var t = e.getTime();
+      if(!claim.length) {
+        claim = "__time__" + t;
+      }
       if(claim in claims) {
-        claims[claim] === cost || console.warn("cost mismatch", claims[claim], cost);
-        if(claimToTime[claim] > t) {
-          claimToTime[claim] = t;
+        if(claim.indexOf("__time__") === 0) {
+          claims[claim] += cost;
+        } else {
+          claims[claim] === cost || console.warn("cost mismatch", claims[claim], cost);
+          if(claimToTime[claim] > t) {
+            claimToTime[claim] = t;
+          }
         }
       } else {
         claims[claim] = cost;
@@ -159,6 +165,7 @@ function loadPerson(pid, person, pool, eventView, typeView, linechart, histogram
       histogram.values(Object.keys(times).map(function(t) {
         return [ t, times[t] ];
       }));
+      jkjs.util.toFront(histogram.getG(), false);
     }
   }
   var sh = linechart.hasContent() || histogram.hasContent() ? 100 : 32;
