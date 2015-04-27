@@ -53,7 +53,7 @@ TODO arrays for first match
 }
 ```
 
-You can update converted patient files using `./setup.sh --convert "$(cat patients.txt)" --do-convert`.
+You can update converted patient files using `./setup.sh --convert "$(sed -E 's/json\/([^.]+)\.json/\1/' patients.txt)" --do-convert`.
 An initial `./setup.sh --burst` is recommended in doing so since it speeds up patient file conversion.
 
 ## Web input format

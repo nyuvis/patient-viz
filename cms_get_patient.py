@@ -177,6 +177,9 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
             # single event
             for event in handleEvent(row, claim_id):
                 event['time'] = curDate
+                handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
+                    addCost(event, amount)
+                )
                 obj['events'].append(event)
             handleStatusEvent(curDate)
 
