@@ -21,6 +21,7 @@
   <script src="js/eventview.js" charset="utf-8"></script>
   <script src="js/typeview.js" charset="utf-8"></script>
   <script src="js/linechart.js" charset="utf-8"></script>
+  <script src="js/histogram.js" charset="utf-8"></script>
   <script src="js/labels.js" charset="utf-8"></script>
   <script src="js/cluster.js" charset="utf-8"></script>
   <script src="js/shared.js" charset="utf-8"></script>
@@ -216,6 +217,7 @@ function start() {
   var eventList = null;
   var typeList = null;
   var linechart = null;
+  var histogram = null;
   var box = null;
   var labels = null;
 
@@ -295,7 +297,8 @@ function start() {
   eventList = views[1];
   typeList = views[2];
   linechart = views[3];
-  labels = views[4];
+  histogram = views[4];
+  labels = views[5];
   d3.select("#pJoin").on("change", function() {
     pool.joinSelections(d3.select("#pJoin").node().checked);
   });
@@ -365,7 +368,7 @@ function start() {
       }
       var error = true;
       try {
-        setPidSel(loadPerson(pid, json, pool, eventList, typeList, linechart, dictionary, suppl));
+        setPidSel(loadPerson(pid, json, pool, eventList, typeList, linechart, histogram, dictionary, suppl));
         busy.setState(jkjs.busy.state.norm);
         relayout();
         zui.showAll(false);
@@ -422,7 +425,7 @@ function start() {
     typeList && typeList.resize(allowedHeight - shadowHeight, bodyPadding);
     if(box) {
       var supplHeight = suppl.node().offsetHeight;
-      // firefox may not have values for that
+      // firefox might not have values for that
       if(!supplHeight) {
         supplHeight = 108;
       }
