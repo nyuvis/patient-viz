@@ -18,7 +18,7 @@ function Event(e, pool, dictionary) {
   var cost = e["cost"] || 0;
   if(cost) {
     cost = +cost;
-    if(!Number.isNaN(cost)) {
+    if(Number.isNaN(cost)) {
       cost = 0;
     }
   }
