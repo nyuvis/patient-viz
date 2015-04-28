@@ -55,6 +55,17 @@ def init():
     for key in initLookup.keys():
         symbolTable[key] = initLookup[key]()
 
+### provider ###
+
+def createProviderEntry(symbols, type, id):
+    pid = "" # find parent id
+    if id in symbols:
+        return toEntry(id, pid, symbols[id], symbols[id])
+    return createUnknownEntry(symbols, type, id, pid)
+
+def initProvider():
+    return {}
+
 ### prescribed ###
 
 def createPrescribedEntry(symbols, type, id):
@@ -228,21 +239,24 @@ root_names = {
     "prescribed": "Prescribed Medication",
     "lab-test": "Laboratory Test",
     "diagnosis": "Condition",
-    "procedure": "Procedure"
+    "procedure": "Procedure",
+    "provider": "Provider",
 }
 
 root_desc = {
     "prescribed": "Prescribed Medication",
     "lab-test": "Laboratory Test",
     "diagnosis": "Condition",
-    "procedure": "Procedure"
+    "procedure": "Procedure",
+    "provider": "Provider",
 }
 
 root_color = {
     "prescribed": "#eb9adb",
     "lab-test": "#80b1d3",
     "diagnosis": "#4daf4a",
-    "procedure": "#ff7f00"
+    "procedure": "#ff7f00",
+    "provider": "#e6ab02",
 }
 
 root_flags = {
@@ -252,7 +266,7 @@ root_flags = {
         },
         "H": {
             "color": "#fb8072"
-        }
+        },
     }
 }
 
@@ -385,6 +399,7 @@ ccs_diag_file = 'code/ccs/multi_diag.txt'
 ccs_proc_file = 'code/ccs/multi_proc.txt'
 productFile = 'code/ndc/product.txt'
 packageFile = 'code/ndc/package.txt'
+pntFile = 'code/pnt/pnt.txt'
 globalSymbolsFile = 'code/icd9/code_names.txt'
 globalMid = '2507387001'
 
@@ -392,14 +407,16 @@ convertLookup = {
     "prescribed": createPrescribedEntry,
     "lab-test": createLabtestEntry,
     "diagnosis": createDiagnosisEntry,
-    "procedure": createProcedureEntry
+    "procedure": createProcedureEntry,
+    "provider": createProviderEntry,
 }
 
 initLookup = {
     "prescribed": initPrescribed,
     "lab-test": initLabtest,
     "diagnosis": initDiagnosis,
-    "procedure": initProcedure
+    "procedure": initProcedure,
+    "provider": initProvider,
 }
 
 symbolTable = {}
@@ -431,8 +448,9 @@ def interpretArgs():
         'ndc_prod': productFile,
         'ndc_package': packageFile,
         'icd9': icd9File,
+        'pnt': pntFile,
         'ccs_diag': ccs_diag_file,
-        'ccs_proc': ccs_proc_file
+        'ccs_proc': ccs_proc_file,
     }
     info = {
         'mid': globalMid,

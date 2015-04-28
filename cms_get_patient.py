@@ -23,6 +23,7 @@ TYPE_PRESCRIBED = "prescribed"
 TYPE_LABTEST    = "lab-test"
 TYPE_DIAGNOSIS  = "diagnosis"
 TYPE_PROCEDURE  = "procedure"
+TYPE_PROVIDER   = "provider"
 
 MODE_OPTIONAL = 0
 MODE_DEFAULT = 1
@@ -116,6 +117,7 @@ def handleEvent(row, claim_id):
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
+    handleKey(row, "provider", MODE_OPTIONAL, lambda value: emit(TYPE_PROVIDER, value))
     return res
 
 def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
@@ -190,6 +192,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitNDC(date, ndc):
+        # TODO add provider here as well?
         event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
         event['time'] = toTime(date)
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
@@ -204,6 +207,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitLab(date, loinc, result, resultFlag):
+        # TODO add provider here as well?
         event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
         event['time'] = toTime(date)
         obj['events'].append(event)

@@ -1,9 +1,10 @@
 {
   "patient_id": "DESYNPUF_ID",
-  "claim_id": "CLM_ID",
   "born": "BENE_BIRTH_DT",
   "death": "BENE_DEATH_DT",
   "gender": "BENE_SEX_IDENT_CD",
+  "provider": "PRVDR_NUM",
+  "claim_id": "CLM_ID",
   "claim_amount": "CLM_PMT_AMT",
   "claim_from": "CLM_FROM_DT",
   "claim_to": "CLM_THRU_DT",
