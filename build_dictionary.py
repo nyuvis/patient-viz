@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on Mon Oct 13 11:44:00 2014
@@ -55,6 +55,32 @@ def init():
     for key in initLookup.keys():
         symbolTable[key] = initLookup[key]()
 
+### provider ###
+
+def createProviderEntry(symbols, type, id):
+    pid = id[2:4] if len(id) >= 4 else ""
+    if id in symbols:
+        return toEntry(id, pid, symbols[id], symbols[id])
+    if len(id) == 2:
+        return createUnknownEntry(symbols, type, id, pid)
+    return toEntry(id, pid, id, "Provider Number: {0}".format(id))
+
+def initProvider():
+    res = {}
+    if not os.path.isfile(getFile(pntFile)):
+        return res
+    with open(getFile(pntFile), 'r') as pnt:
+        for line in pnt.readlines():
+            l = line.strip()
+            if len(l) < 10 or not l[0].isdigit() or not l[1].isdigit() or not l[5].isdigit() or not l[6].isdigit():
+                continue
+            fromPN = int(l[0:2])
+            toPN = int(l[5:7])
+            desc = l[9:].strip()
+            for pn in xrange(fromPN, toPN + 1):
+                res[("00" + str(pn))[-2:]] = desc
+    return res
+
 ### prescribed ###
 
 def createPrescribedEntry(symbols, type, id):
@@ -66,10 +92,10 @@ def createPrescribedEntry(symbols, type, id):
 
 def initPrescribed():
     prescribeLookup = {}
-    if not os.path.isfile(productFile):
+    if not os.path.isfile(getFile(productFile)):
         return prescribeLookup
     uidLookup = {}
-    with open(productFile, 'r') as prFile:
+    with open(getFile(productFile), 'r') as prFile:
         for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
             uid = row['PRODUCTID'].strip()
             fullndc = row['PRODUCTNDC'].strip()
@@ -118,9 +144,9 @@ def initPrescribed():
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
             prescribeLookup[fullndc] = obj
-    if not os.path.isfile(packageFile):
+    if not os.path.isfile(getFile(packageFile)):
         return prescribeLookup
-    with open(packageFile, 'r') as paFile:
+    with open(getFile(packageFile), 'r') as paFile:
         for row in csv.DictReader(paFile, delimiter='\t', quoting=csv.QUOTE_NONE):
             uid = row['PRODUCTID'].strip()
             fullndc = row['NDCPACKAGECODE'].strip()
@@ -190,7 +216,7 @@ def initDiagnosis():
     global diag_parents
     codes = getGlobalSymbols()
     codes.update(getICD9())
-    diag_parents = readCCS(ccs_diag_file, codes)
+    diag_parents = readCCS(getFile(ccs_diag_file), codes)
     return codes
 
 ### procedure ###
@@ -210,7 +236,7 @@ def initProcedure():
     global proc_parents
     codes = getGlobalSymbols()
     codes.update(getICD9())
-    proc_parents = readCCS(ccs_proc_file, codes)
+    proc_parents = readCCS(getFile(ccs_proc_file), codes)
     return codes
 
 ### unknown ###
@@ -228,21 +254,24 @@ root_names = {
     "prescribed": "Prescribed Medication",
     "lab-test": "Laboratory Test",
     "diagnosis": "Condition",
-    "procedure": "Procedure"
+    "procedure": "Procedure",
+    "provider": "Provider",
 }
 
 root_desc = {
     "prescribed": "Prescribed Medication",
     "lab-test": "Laboratory Test",
     "diagnosis": "Condition",
-    "procedure": "Procedure"
+    "procedure": "Procedure",
+    "provider": "Provider",
 }
 
 root_color = {
     "prescribed": "#eb9adb",
     "lab-test": "#80b1d3",
     "diagnosis": "#4daf4a",
-    "procedure": "#ff7f00"
+    "procedure": "#ff7f00",
+    "provider": "#e6ab02",
 }
 
 root_flags = {
@@ -252,7 +281,7 @@ root_flags = {
         },
         "H": {
             "color": "#fb8072"
-        }
+        },
     }
 }
 
@@ -277,9 +306,9 @@ def getICD9():
 
 def initICD9():
     codes = {}
-    if not os.path.isfile(icd9File):
+    if not os.path.isfile(getFile(icd9File)):
         return codes
-    with open(icd9File, 'r') as file:
+    with open(getFile(icd9File), 'r') as file:
         lastCode = ""
         for line in file:
             if len(line.strip()) < 2:
@@ -341,9 +370,9 @@ def getGlobalSymbols():
 
 def initGlobalSymbols():
     codes_dict = {}
-    if not os.path.isfile(globalSymbolsFile):
+    if not os.path.isfile(getFile(globalSymbolsFile)):
         return codes_dict
-    with open(globalSymbolsFile, 'r') as file:
+    with open(getFile(globalSymbolsFile), 'r') as file:
         lines = file.readlines()
     for i in range(len(lines)):
         codeList = lines[i].split('#')[0].strip('\n');
@@ -380,26 +409,37 @@ def enrichDict(file, mid):
 
 ### argument API
 
+path_correction = './'
 icd9File = 'code/icd9/ucod.txt'
 ccs_diag_file = 'code/ccs/multi_diag.txt'
 ccs_proc_file = 'code/ccs/multi_proc.txt'
 productFile = 'code/ndc/product.txt'
 packageFile = 'code/ndc/package.txt'
+pntFile = 'code/pnt/pnt.txt'
 globalSymbolsFile = 'code/icd9/code_names.txt'
 globalMid = '2507387001'
+
+def setPathCorrection(pc):
+    global path_correction
+    path_correction = pc
+
+def getFile(file):
+    return os.path.join(path_correction, file)
 
 convertLookup = {
     "prescribed": createPrescribedEntry,
     "lab-test": createLabtestEntry,
     "diagnosis": createDiagnosisEntry,
-    "procedure": createProcedureEntry
+    "procedure": createProcedureEntry,
+    "provider": createProviderEntry,
 }
 
 initLookup = {
     "prescribed": initPrescribed,
     "lab-test": initLabtest,
     "diagnosis": initDiagnosis,
-    "procedure": initProcedure
+    "procedure": initProcedure,
+    "provider": initProvider,
 }
 
 symbolTable = {}
@@ -431,8 +471,9 @@ def interpretArgs():
         'ndc_prod': productFile,
         'ndc_package': packageFile,
         'icd9': icd9File,
+        'pnt': pntFile,
         'ccs_diag': ccs_diag_file,
-        'ccs_proc': ccs_proc_file
+        'ccs_proc': ccs_proc_file,
     }
     info = {
         'mid': globalMid,
@@ -472,6 +513,7 @@ if __name__ == '__main__':
     (settings, info, lookupMode, rest) = interpretArgs()
     globalSymbolsFile = settings['filename']
     icd9File = settings['icd9']
+    pntFile = settings['pnt']
     ccs_diag_file = settings['ccs_diag']
     ccs_proc_file = settings['ccs_proc']
     productFile = settings['ndc_prod']

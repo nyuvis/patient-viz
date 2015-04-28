@@ -25,11 +25,11 @@ TODO arrays for first match
 ```javascript
 {
   "patient_id": "DESYNPUF_ID",
-  <"claim_id">: "CLM_ID",
   <"age">: "ELIG_AGE",
   <"born">: "BENE_BIRTH_DT",
   <"death">: "BENE_DEATH_DT",
   <"gender">: "BENE_SEX_IDENT_CD",
+  <"claim_id">: "CLM_ID",
   <"claim_amount">: "CLM_PMT_AMT",
   <"claim_from">: "CLM_FROM_DT",
   <"claim_to">: "CLM_THRU_DT",
@@ -52,6 +52,9 @@ TODO arrays for first match
   <"lab_flag">: "LAB_NORMAL"
 }
 ```
+
+You can update converted patient files using `./setup.sh --convert "$(sed -E 's/json\/([^.]+)\.json/\1/' patients.txt)" --do-convert`.
+An initial `./setup.sh --burst` is recommended in doing so since it speeds up patient file conversion.
 
 ## Web input format
 

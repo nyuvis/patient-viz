@@ -2,6 +2,7 @@
 # @author Joschi <josua.krause@gmail.com>
 # created 2015-02-16 09:00
 
+PNT_DIR="code/pnt"
 NDC_DIR="code/ndc"
 ICD9_DIR="code/icd9"
 CCS_DIR="code/ccs"
@@ -24,6 +25,7 @@ file_list="patients.txt"
 fetch_samples="10"
 
 no_prompt=
+pn=
 ndc=
 cms=
 icd9=
@@ -34,7 +36,7 @@ do_clean=
 do_nop=
 do_burst=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
 
 usage() {
     echo $USAGE
@@ -46,10 +48,11 @@ usage() {
     echo "--samples-all: download all samples"
     echo "--convert <list of ids>: specify which patients to convert"
     echo "--convert-num <top n>: specify how many patients to convert (top n by the total number of events)"
-    echo "--default: use default settings (equal to --icd9 --ccs --ndc --cms --do-convert)"
+    echo "--default: use default settings (equal to --icd9 --ccs --ndc --pnt --cms --do-convert)"
     echo "--icd9: downloads ICD9 definitions"
     echo "--ccs: downloads CCS ICD9 hierarchies"
     echo "--ndc: downloads NDC definitions"
+    echo "--pnt: downloads the provider number table"
     echo "--cms: downloads the patient claims data"
     echo "--burst: splits the patient claim files for faster individual access"
     echo "--do-convert: converts patients"
@@ -96,6 +99,7 @@ while [ $# -gt 0 ]; do
     icd9=1
     ccs=1
     ndc=1
+    pn=1
     cms=1
     do_convert=1
     ;;
@@ -107,6 +111,9 @@ while [ $# -gt 0 ]; do
     ;;
   --ndc)
     ndc=1
+    ;;
+  --pnt)
+    pn=1
     ;;
   --opd)
     echo "--opd is now --cms"
@@ -256,6 +263,7 @@ pip_install() {
       PIP_INSTALL_FILE="get-pip.py"
       curl -# -o "${PIP_INSTALL_FILE}" 'https://bootstrap.pypa.io/get-pip.py'
       test_fail $?
+      # FIXME we should use virtualenv here
       ### patching for user installation leaves pip in a state where it cannot be
       ### accessed without knowing where it is and also it cannot be installed
       ### normally -- we need to ask for super-user :/
@@ -311,6 +319,7 @@ ask_all_clean() {
   ask_for_clean "ICD9 definitions" "${ICD9_DIR}"
   ask_for_clean "CCS hierarchies" "${CCS_DIR}"
   ask_for_clean "NDC definitions" "${NDC_DIR}"
+  ask_for_clean "provider numbers" "${PNT_DIR}"
   ask_for_clean "claims data" "${CMS_DIR}"
   ask_for_clean "patient files" "${JSON_DIR}" "${file_list}"
   ask_for_clean "error output files" "${err_file}" "${err_dict_file}"
@@ -448,6 +457,28 @@ fetch_ndc() {
   fi
 }
 
+allow_pn=
+ask_pn() {
+  PN_INFO="http://www.resdac.org/cms-data/variables/provider-number"
+  prompt "Do you want to download provider numbers?" "${PN_INFO}"
+  if [ $? -eq 0 ]; then
+    allow_pn=1
+  fi
+}
+
+fetch_pn() {
+  PNT_URL="http://www.resdac.org/sites/resdac.org/files/Provider%20Number%20Table.txt"
+  if [ ! -d "${PNT_DIR}" ]; then
+    mkdir -p "${PNT_DIR}"
+  fi
+  if [ ! -f "${PNT_DIR}/pnt.txt" ]; then
+    cd "${PNT_DIR}"
+    echo "downloading provider numbers"
+    curl -# -o "pnt.txt" "${PNT_URL}"
+    cd_back
+  fi
+}
+
 allow_cms=
 ask_cms() {
   CMS_INFO="http://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html"
@@ -560,6 +591,9 @@ fi
 if [ ! -z $ndc ]; then
   ask_ndc
 fi
+if [ ! -z $pn ]; then
+  ask_pn
+fi
 if [ ! -z $do_convert ]; then
   ask_convert
 fi
@@ -581,6 +615,9 @@ if [ ! -z $allow_ccs ]; then
 fi
 if [ ! -z $allow_ndc ]; then
   fetch_ndc
+fi
+if [ ! -z $allow_pn ]; then
+  fetch_pn
 fi
 if [ ! -z $do_burst ]; then
   burst

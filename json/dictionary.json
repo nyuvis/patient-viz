@@ -38331,5 +38331,984 @@
       "parent": "HIERARCHY.16.7", 
       "desc": "diagnosis 8488"
     }
+  }, 
+  "provider": {
+    "": {
+      "color": "#e6ab02", 
+      "name": "Provider", 
+      "id": "", 
+      "parent": "", 
+      "desc": "Provider"
+    }, 
+    "2300BJ": {
+      "id": "2300BJ", 
+      "name": "2300BJ", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300BJ"
+    }, 
+    "3300VG": {
+      "name": "3300VG", 
+      "id": "3300VG", 
+      "parent": "00", 
+      "desc": "Provider Number: 3300VG"
+    }, 
+    "3301QJ": {
+      "name": "3301QJ", 
+      "id": "3301QJ", 
+      "parent": "01", 
+      "desc": "Provider Number: 3301QJ"
+    }, 
+    "3301NV": {
+      "desc": "Provider Number: 3301NV", 
+      "id": "3301NV", 
+      "parent": "01", 
+      "name": "3301NV"
+    }, 
+    "2313PH": {
+      "id": "2313PH", 
+      "name": "2313PH", 
+      "parent": "13", 
+      "desc": "Provider Number: 2313PH"
+    }, 
+    "4525MD": {
+      "id": "4525MD", 
+      "name": "4525MD", 
+      "parent": "25", 
+      "desc": "Provider Number: 4525MD"
+    }, 
+    "3101KN": {
+      "desc": "Provider Number: 3101KN", 
+      "id": "3101KN", 
+      "parent": "01", 
+      "name": "3101KN"
+    }, 
+    "3300VU": {
+      "desc": "Provider Number: 3300VU", 
+      "id": "3300VU", 
+      "parent": "00", 
+      "name": "3300VU"
+    }, 
+    "1900PA": {
+      "id": "1900PA", 
+      "name": "1900PA", 
+      "parent": "00", 
+      "desc": "Provider Number: 1900PA"
+    }, 
+    "3100AM": {
+      "desc": "Provider Number: 3100AM", 
+      "id": "3100AM", 
+      "parent": "00", 
+      "name": "3100AM"
+    }, 
+    "3100ZA": {
+      "desc": "Provider Number: 3100ZA", 
+      "id": "3100ZA", 
+      "parent": "00", 
+      "name": "3100ZA"
+    }, 
+    "26": {
+      "name": "Non-hospital renal disease treatment centers", 
+      "id": "26", 
+      "parent": "", 
+      "desc": "Non-hospital renal disease treatment centers"
+    }, 
+    "1000KK": {
+      "name": "1000KK", 
+      "id": "1000KK", 
+      "parent": "00", 
+      "desc": "Provider Number: 1000KK"
+    }, 
+    "2302BM": {
+      "id": "2302BM", 
+      "name": "2302BM", 
+      "parent": "02", 
+      "desc": "Provider Number: 2302BM"
+    }, 
+    "2201YM": {
+      "id": "2201YM", 
+      "name": "2201YM", 
+      "parent": "01", 
+      "desc": "Provider Number: 2201YM"
+    }, 
+    "28": {
+      "id": "28", 
+      "name": "Non-hospital renal disease treatment centers", 
+      "parent": "", 
+      "desc": "Non-hospital renal disease treatment centers"
+    }, 
+    "3100ZR": {
+      "desc": "Provider Number: 3100ZR", 
+      "id": "3100ZR", 
+      "parent": "00", 
+      "name": "3100ZR"
+    }, 
+    "2200GN": {
+      "desc": "Provider Number: 2200GN", 
+      "name": "2200GN", 
+      "parent": "00", 
+      "id": "2200GN"
+    }, 
+    "1500ZV": {
+      "id": "1500ZV", 
+      "name": "1500ZV", 
+      "parent": "00", 
+      "desc": "Provider Number: 1500ZV"
+    }, 
+    "3130ZG": {
+      "desc": "Provider Number: 3130ZG", 
+      "id": "3130ZG", 
+      "parent": "30", 
+      "name": "3130ZG"
+    }, 
+    "3326HA": {
+      "name": "3326HA", 
+      "id": "3326HA", 
+      "parent": "26", 
+      "desc": "Provider Number: 3326HA"
+    }, 
+    "2302KU": {
+      "name": "2302KU", 
+      "id": "2302KU", 
+      "parent": "02", 
+      "desc": "Provider Number: 2302KU"
+    }, 
+    "3000AS": {
+      "id": "3000AS", 
+      "name": "3000AS", 
+      "parent": "00", 
+      "desc": "Provider Number: 3000AS"
+    }, 
+    "3900VN": {
+      "desc": "Provider Number: 3900VN", 
+      "name": "3900VN", 
+      "parent": "00", 
+      "id": "3900VN"
+    }, 
+    "3925CS": {
+      "desc": "Provider Number: 3925CS", 
+      "id": "3925CS", 
+      "parent": "25", 
+      "name": "3925CS"
+    }, 
+    "3303NG": {
+      "name": "3303NG", 
+      "id": "3303NG", 
+      "parent": "03", 
+      "desc": "Provider Number: 3303NG"
+    }, 
+    "3300NT": {
+      "name": "3300NT", 
+      "id": "3300NT", 
+      "parent": "00", 
+      "desc": "Provider Number: 3300NT"
+    }, 
+    "2301MD": {
+      "name": "2301MD", 
+      "id": "2301MD", 
+      "parent": "01", 
+      "desc": "Provider Number: 2301MD"
+    }, 
+    "3901ZS": {
+      "desc": "Provider Number: 3901ZS", 
+      "name": "3901ZS", 
+      "parent": "01", 
+      "id": "3901ZS"
+    }, 
+    "49006J": {
+      "desc": "Provider Number: 49006J", 
+      "name": "49006J", 
+      "parent": "00", 
+      "id": "49006J"
+    }, 
+    "2300KC": {
+      "name": "2300KC", 
+      "id": "2300KC", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300KC"
+    }, 
+    "44016G": {
+      "desc": "Provider Number: 44016G", 
+      "id": "44016G", 
+      "parent": "01", 
+      "name": "44016G"
+    }, 
+    "4200VJ": {
+      "desc": "Provider Number: 4200VJ", 
+      "name": "4200VJ", 
+      "parent": "00", 
+      "id": "4200VJ"
+    }, 
+    "3100QT": {
+      "desc": "Provider Number: 3100QT", 
+      "id": "3100QT", 
+      "parent": "00", 
+      "name": "3100QT"
+    }, 
+    "1000HG": {
+      "id": "1000HG", 
+      "name": "1000HG", 
+      "parent": "00", 
+      "desc": "Provider Number: 1000HG"
+    }, 
+    "1002KK": {
+      "id": "1002KK", 
+      "name": "1002KK", 
+      "parent": "02", 
+      "desc": "Provider Number: 1002KK"
+    }, 
+    "3013RV": {
+      "desc": "Provider Number: 3013RV", 
+      "name": "3013RV", 
+      "parent": "13", 
+      "id": "3013RV"
+    }, 
+    "4527HQ": {
+      "id": "4527HQ", 
+      "name": "4527HQ", 
+      "parent": "27", 
+      "desc": "Provider Number: 4527HQ"
+    }, 
+    "2000XR": {
+      "desc": "Provider Number: 2000XR", 
+      "name": "2000XR", 
+      "parent": "00", 
+      "id": "2000XR"
+    }, 
+    "39008U": {
+      "desc": "Provider Number: 39008U", 
+      "id": "39008U", 
+      "parent": "00", 
+      "name": "39008U"
+    }, 
+    "4530UC": {
+      "id": "4530UC", 
+      "name": "4530UC", 
+      "parent": "30", 
+      "desc": "Provider Number: 4530UC"
+    }, 
+    "1002YS": {
+      "desc": "Provider Number: 1002YS", 
+      "name": "1002YS", 
+      "parent": "02", 
+      "id": "1002YS"
+    }, 
+    "4401NU": {
+      "desc": "Provider Number: 4401NU", 
+      "id": "4401NU", 
+      "parent": "01", 
+      "name": "4401NU"
+    }, 
+    "10008H": {
+      "id": "10008H", 
+      "name": "10008H", 
+      "parent": "00", 
+      "desc": "Provider Number: 10008H"
+    }, 
+    "3301HQ": {
+      "desc": "Provider Number: 3301HQ", 
+      "name": "3301HQ", 
+      "parent": "01", 
+      "id": "3301HQ"
+    }, 
+    "3701ZN": {
+      "name": "3701ZN", 
+      "id": "3701ZN", 
+      "parent": "01", 
+      "desc": "Provider Number: 3701ZN"
+    }, 
+    "4527CM": {
+      "id": "4527CM", 
+      "name": "4527CM", 
+      "parent": "27", 
+      "desc": "Provider Number: 4527CM"
+    }, 
+    "2300AQ": {
+      "name": "2300AQ", 
+      "id": "2300AQ", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300AQ"
+    }, 
+    "02": {
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "id": "02", 
+      "parent": "", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
+    }, 
+    "03": {
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "id": "03", 
+      "parent": "", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
+    }, 
+    "00": {
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "id": "00", 
+      "parent": "", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
+    }, 
+    "01": {
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "id": "01", 
+      "parent": "", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
+    }, 
+    "06": {
+      "id": "06", 
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "parent": "", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
+    }, 
+    "1001BD": {
+      "name": "1001BD", 
+      "id": "1001BD", 
+      "parent": "01", 
+      "desc": "Provider Number: 1001BD"
+    }, 
+    "05": {
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "id": "05", 
+      "parent": "", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
+    }, 
+    "2330MM": {
+      "name": "2330MM", 
+      "id": "2330MM", 
+      "parent": "30", 
+      "desc": "Provider Number: 2330MM"
+    }, 
+    "08": {
+      "id": "08", 
+      "name": "Reserved for hospitals participating in ORD demonstration projects where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "parent": "", 
+      "desc": "Reserved for hospitals participating in ORD demonstration projects where TOB = 11X; ESRD clinic where TOB = 72X"
+    }, 
+    "3901VU": {
+      "desc": "Provider Number: 3901VU", 
+      "id": "3901VU", 
+      "parent": "01", 
+      "name": "3901VU"
+    }, 
+    "2913GC": {
+      "name": "2913GC", 
+      "id": "2913GC", 
+      "parent": "13", 
+      "desc": "Provider Number: 2913GC"
+    }, 
+    "3901NT": {
+      "desc": "Provider Number: 3901NT", 
+      "name": "3901NT", 
+      "parent": "01", 
+      "id": "3901NT"
+    }, 
+    "4506JT": {
+      "id": "4506JT", 
+      "name": "4506JT", 
+      "parent": "06", 
+      "desc": "Provider Number: 4506JT"
+    }, 
+    "2600BA": {
+      "name": "2600BA", 
+      "id": "2600BA", 
+      "parent": "00", 
+      "desc": "Provider Number: 2600BA"
+    }, 
+    "3100JU": {
+      "desc": "Provider Number: 3100JU", 
+      "id": "3100JU", 
+      "parent": "00", 
+      "name": "3100JU"
+    }, 
+    "3900XH": {
+      "desc": "Provider Number: 3900XH", 
+      "name": "3900XH", 
+      "parent": "00", 
+      "id": "3900XH"
+    }, 
+    "25": {
+      "desc": "Non-hospital renal disease treatment centers", 
+      "id": "25", 
+      "parent": "", 
+      "name": "Non-hospital renal disease treatment centers"
+    }, 
+    "3900AN": {
+      "desc": "Provider Number: 3900AN", 
+      "id": "3900AN", 
+      "parent": "00", 
+      "name": "3900AN"
+    }, 
+    "3301PH": {
+      "id": "3301PH", 
+      "name": "3301PH", 
+      "parent": "01", 
+      "desc": "Provider Number: 3301PH"
+    }, 
+    "30XPHC": {
+      "desc": "Provider Number: 30XPHC", 
+      "name": "30XPHC", 
+      "parent": "XP", 
+      "id": "30XPHC"
+    }, 
+    "0700VV": {
+      "name": "0700VV", 
+      "id": "0700VV", 
+      "parent": "00", 
+      "desc": "Provider Number: 0700VV"
+    }, 
+    "23006G": {
+      "name": "23006G", 
+      "id": "23006G", 
+      "parent": "00", 
+      "desc": "Provider Number: 23006G"
+    }, 
+    "27": {
+      "id": "27", 
+      "name": "Non-hospital renal disease treatment centers", 
+      "parent": "", 
+      "desc": "Non-hospital renal disease treatment centers"
+    }, 
+    "39S2AQ": {
+      "desc": "Provider Number: 39S2AQ", 
+      "id": "39S2AQ", 
+      "parent": "S2", 
+      "name": "39S2AQ"
+    }, 
+    "3901GS": {
+      "id": "3901GS", 
+      "name": "3901GS", 
+      "parent": "01", 
+      "desc": "Provider Number: 3901GS"
+    }, 
+    "2301GU": {
+      "name": "2301GU", 
+      "id": "2301GU", 
+      "parent": "01", 
+      "desc": "Provider Number: 2301GU"
+    }, 
+    "3100VC": {
+      "desc": "Provider Number: 3100VC", 
+      "name": "3100VC", 
+      "parent": "00", 
+      "id": "3100VC"
+    }, 
+    "41008M": {
+      "id": "41008M", 
+      "name": "41008M", 
+      "parent": "00", 
+      "desc": "Provider Number: 41008M"
+    }, 
+    "30008C": {
+      "id": "30008C", 
+      "name": "30008C", 
+      "parent": "00", 
+      "desc": "Provider Number: 30008C"
+    }, 
+    "4400YC": {
+      "desc": "Provider Number: 4400YC", 
+      "id": "4400YC", 
+      "parent": "00", 
+      "name": "4400YC"
+    }, 
+    "3902UU": {
+      "desc": "Provider Number: 3902UU", 
+      "id": "3902UU", 
+      "parent": "02", 
+      "name": "3902UU"
+    }, 
+    "30": {
+      "desc": "Rehabilitation hospitals", 
+      "id": "30", 
+      "parent": "", 
+      "name": "Rehabilitation hospitals"
+    }, 
+    "2200MT": {
+      "desc": "Provider Number: 2200MT", 
+      "name": "2200MT", 
+      "parent": "00", 
+      "id": "2200MT"
+    }, 
+    "4400RA": {
+      "desc": "Provider Number: 4400RA", 
+      "id": "4400RA", 
+      "parent": "00", 
+      "name": "4400RA"
+    }, 
+    "4401GN": {
+      "desc": "Provider Number: 4401GN", 
+      "id": "4401GN", 
+      "parent": "01", 
+      "name": "4401GN"
+    }, 
+    "1000JJ": {
+      "desc": "Provider Number: 1000JJ", 
+      "id": "1000JJ", 
+      "parent": "00", 
+      "name": "1000JJ"
+    }, 
+    "1700JJ": {
+      "name": "1700JJ", 
+      "id": "1700JJ", 
+      "parent": "00", 
+      "desc": "Provider Number: 1700JJ"
+    }, 
+    "45016T": {
+      "id": "45016T", 
+      "name": "45016T", 
+      "parent": "01", 
+      "desc": "Provider Number: 45016T"
+    }, 
+    "42006A": {
+      "desc": "Provider Number: 42006A", 
+      "id": "42006A", 
+      "parent": "00", 
+      "name": "42006A"
+    }, 
+    "2301BR": {
+      "name": "2301BR", 
+      "id": "2301BR", 
+      "parent": "01", 
+      "desc": "Provider Number: 2301BR"
+    }, 
+    "S2": {
+      "unmapped": true, 
+      "desc": "provider S2", 
+      "id": "S2", 
+      "parent": "", 
+      "name": "S2"
+    }, 
+    "S0": {
+      "unmapped": true, 
+      "desc": "provider S0", 
+      "name": "S0", 
+      "parent": "", 
+      "id": "S0"
+    }, 
+    "3901UT": {
+      "desc": "Provider Number: 3901UT", 
+      "name": "3901UT", 
+      "parent": "01", 
+      "id": "3901UT"
+    }, 
+    "2300NN": {
+      "id": "2300NN", 
+      "name": "2300NN", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300NN"
+    }, 
+    "3302RR": {
+      "id": "3302RR", 
+      "name": "3302RR", 
+      "parent": "02", 
+      "desc": "Provider Number: 3302RR"
+    }, 
+    "1000GD": {
+      "id": "1000GD", 
+      "name": "1000GD", 
+      "parent": "00", 
+      "desc": "Provider Number: 1000GD"
+    }, 
+    "2300VV": {
+      "id": "2300VV", 
+      "name": "2300VV", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300VV"
+    }, 
+    "2013RT": {
+      "id": "2013RT", 
+      "name": "2013RT", 
+      "parent": "13", 
+      "desc": "Provider Number: 2013RT"
+    }, 
+    "1001NA": {
+      "id": "1001NA", 
+      "name": "1001NA", 
+      "parent": "01", 
+      "desc": "Provider Number: 1001NA"
+    }, 
+    "4426BB": {
+      "desc": "Provider Number: 4426BB", 
+      "id": "4426BB", 
+      "parent": "26", 
+      "name": "4426BB"
+    }, 
+    "1000MM": {
+      "id": "1000MM", 
+      "name": "1000MM", 
+      "parent": "00", 
+      "desc": "Provider Number: 1000MM"
+    }, 
+    "3100JN": {
+      "desc": "Provider Number: 3100JN", 
+      "name": "3100JN", 
+      "parent": "00", 
+      "id": "3100JN"
+    }, 
+    "2200HP": {
+      "desc": "Provider Number: 2200HP", 
+      "name": "2200HP", 
+      "parent": "00", 
+      "id": "2200HP"
+    }, 
+    "2000JA": {
+      "desc": "Provider Number: 2000JA", 
+      "name": "2000JA", 
+      "parent": "00", 
+      "id": "2000JA"
+    }, 
+    "3100TA": {
+      "desc": "Provider Number: 3100TA", 
+      "id": "3100TA", 
+      "parent": "00", 
+      "name": "3100TA"
+    }, 
+    "3100TJ": {
+      "desc": "Provider Number: 3100TJ", 
+      "id": "3100TJ", 
+      "parent": "00", 
+      "name": "3100TJ"
+    }, 
+    "3302BQ": {
+      "desc": "Provider Number: 3302BQ", 
+      "name": "3302BQ", 
+      "parent": "02", 
+      "id": "3302BQ"
+    }, 
+    "2400DG": {
+      "id": "2400DG", 
+      "name": "2400DG", 
+      "parent": "00", 
+      "desc": "Provider Number: 2400DG"
+    }, 
+    "1000DT": {
+      "id": "1000DT", 
+      "name": "1000DT", 
+      "parent": "00", 
+      "desc": "Provider Number: 1000DT"
+    }, 
+    "2300XK": {
+      "id": "2300XK", 
+      "name": "2300XK", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300XK"
+    }, 
+    "3400ZQ": {
+      "id": "3400ZQ", 
+      "name": "3400ZQ", 
+      "parent": "00", 
+      "desc": "Provider Number: 3400ZQ"
+    }, 
+    "0503VJ": {
+      "id": "0503VJ", 
+      "name": "0503VJ", 
+      "parent": "03", 
+      "desc": "Provider Number: 0503VJ"
+    }, 
+    "XP": {
+      "unmapped": true, 
+      "desc": "provider XP", 
+      "name": "XP", 
+      "parent": "", 
+      "id": "XP"
+    }, 
+    "2302TV": {
+      "name": "2302TV", 
+      "id": "2302TV", 
+      "parent": "02", 
+      "desc": "Provider Number: 2302TV"
+    }, 
+    "3302QQ": {
+      "name": "3302QQ", 
+      "id": "3302QQ", 
+      "parent": "02", 
+      "desc": "Provider Number: 3302QQ"
+    }, 
+    "1000JR": {
+      "id": "1000JR", 
+      "name": "1000JR", 
+      "parent": "00", 
+      "desc": "Provider Number: 1000JR"
+    }, 
+    "13": {
+      "id": "13", 
+      "name": "Rural Primary Care Hospital (RCPH) - eff. 10/97 changed to Critical Access Hospitals (CAH)", 
+      "parent": "", 
+      "desc": "Rural Primary Care Hospital (RCPH) - eff. 10/97 changed to Critical Access Hospitals (CAH)"
+    }, 
+    "0700JJ": {
+      "name": "0700JJ", 
+      "id": "0700JJ", 
+      "parent": "00", 
+      "desc": "Provider Number: 0700JJ"
+    }, 
+    "33268J": {
+      "name": "33268J", 
+      "id": "33268J", 
+      "parent": "26", 
+      "desc": "Provider Number: 33268J"
+    }, 
+    "3901MK": {
+      "desc": "Provider Number: 3901MK", 
+      "id": "3901MK", 
+      "parent": "01", 
+      "name": "3901MK"
+    }, 
+    "4508QA": {
+      "id": "4508QA", 
+      "name": "4508QA", 
+      "parent": "08", 
+      "desc": "Provider Number: 4508QA"
+    }, 
+    "3901MB": {
+      "desc": "Provider Number: 3901MB", 
+      "id": "3901MB", 
+      "parent": "01", 
+      "name": "3901MB"
+    }, 
+    "44016P": {
+      "desc": "Provider Number: 44016P", 
+      "id": "44016P", 
+      "parent": "01", 
+      "name": "44016P"
+    }, 
+    "1700DM": {
+      "name": "1700DM", 
+      "id": "1700DM", 
+      "parent": "00", 
+      "desc": "Provider Number: 1700DM"
+    }, 
+    "2300WA": {
+      "id": "2300WA", 
+      "name": "2300WA", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300WA"
+    }, 
+    "4500NJ": {
+      "id": "4500NJ", 
+      "name": "4500NJ", 
+      "parent": "00", 
+      "desc": "Provider Number: 4500NJ"
+    }, 
+    "2302QS": {
+      "name": "2302QS", 
+      "id": "2302QS", 
+      "parent": "02", 
+      "desc": "Provider Number: 2302QS"
+    }, 
+    "4528SC": {
+      "id": "4528SC", 
+      "name": "4528SC", 
+      "parent": "28", 
+      "desc": "Provider Number: 4528SC"
+    }, 
+    "3930SM": {
+      "desc": "Provider Number: 3930SM", 
+      "id": "3930SM", 
+      "parent": "30", 
+      "name": "3930SM"
+    }, 
+    "2200YC": {
+      "desc": "Provider Number: 2200YC", 
+      "name": "2200YC", 
+      "parent": "00", 
+      "id": "2200YC"
+    }, 
+    "1000AH": {
+      "desc": "Provider Number: 1000AH", 
+      "id": "1000AH", 
+      "parent": "00", 
+      "name": "1000AH"
+    }, 
+    "2200QQ": {
+      "desc": "Provider Number: 2200QQ", 
+      "name": "2200QQ", 
+      "parent": "00", 
+      "id": "2200QQ"
+    }, 
+    "4401YC": {
+      "desc": "Provider Number: 4401YC", 
+      "id": "4401YC", 
+      "parent": "01", 
+      "name": "4401YC"
+    }, 
+    "2201JB": {
+      "desc": "Provider Number: 2201JB", 
+      "name": "2201JB", 
+      "parent": "01", 
+      "id": "2201JB"
+    }, 
+    "4413WV": {
+      "desc": "Provider Number: 4413WV", 
+      "id": "4413WV", 
+      "parent": "13", 
+      "name": "4413WV"
+    }, 
+    "3100XU": {
+      "desc": "Provider Number: 3100XU", 
+      "name": "3100XU", 
+      "parent": "00", 
+      "id": "3100XU"
+    }, 
+    "3926TD": {
+      "desc": "Provider Number: 3926TD", 
+      "name": "3926TD", 
+      "parent": "26", 
+      "id": "3926TD"
+    }, 
+    "4528GM": {
+      "id": "4528GM", 
+      "name": "4528GM", 
+      "parent": "28", 
+      "desc": "Provider Number: 4528GM"
+    }, 
+    "3902GN": {
+      "desc": "Provider Number: 3902GN", 
+      "name": "3902GN", 
+      "parent": "02", 
+      "id": "3902GN"
+    }, 
+    "4900CN": {
+      "name": "4900CN", 
+      "id": "4900CN", 
+      "parent": "00", 
+      "desc": "Provider Number: 4900CN"
+    }, 
+    "3013DJ": {
+      "id": "3013DJ", 
+      "name": "3013DJ", 
+      "parent": "13", 
+      "desc": "Provider Number: 3013DJ"
+    }, 
+    "3100CV": {
+      "desc": "Provider Number: 3100CV", 
+      "id": "3100CV", 
+      "parent": "00", 
+      "name": "3100CV"
+    }, 
+    "2325BH": {
+      "name": "2325BH", 
+      "id": "2325BH", 
+      "parent": "25", 
+      "desc": "Provider Number: 2325BH"
+    }, 
+    "T0": {
+      "unmapped": true, 
+      "desc": "provider T0", 
+      "name": "T0", 
+      "parent": "", 
+      "id": "T0"
+    }, 
+    "39S0NV": {
+      "desc": "Provider Number: 39S0NV", 
+      "name": "39S0NV", 
+      "parent": "S0", 
+      "id": "39S0NV"
+    }, 
+    "2201DT": {
+      "desc": "Provider Number: 2201DT", 
+      "name": "2201DT", 
+      "parent": "01", 
+      "id": "2201DT"
+    }, 
+    "4400MM": {
+      "desc": "Provider Number: 4400MM", 
+      "id": "4400MM", 
+      "parent": "00", 
+      "name": "4400MM"
+    }, 
+    "3302SB": {
+      "id": "3302SB", 
+      "name": "3302SB", 
+      "parent": "02", 
+      "desc": "Provider Number: 3302SB"
+    }, 
+    "2200ND": {
+      "desc": "Provider Number: 2200ND", 
+      "name": "2200ND", 
+      "parent": "00", 
+      "id": "2200ND"
+    }, 
+    "3300SJ": {
+      "id": "3300SJ", 
+      "name": "3300SJ", 
+      "parent": "00", 
+      "desc": "Provider Number: 3300SJ"
+    }, 
+    "3902XB": {
+      "desc": "Provider Number: 3902XB", 
+      "name": "3902XB", 
+      "parent": "02", 
+      "id": "3902XB"
+    }, 
+    "3901KA": {
+      "desc": "Provider Number: 3901KA", 
+      "name": "3901KA", 
+      "parent": "01", 
+      "id": "3901KA"
+    }, 
+    "39T0BD": {
+      "desc": "Provider Number: 39T0BD", 
+      "name": "39T0BD", 
+      "parent": "T0", 
+      "id": "39T0BD"
+    }, 
+    "2200PP": {
+      "desc": "Provider Number: 2200PP", 
+      "name": "2200PP", 
+      "parent": "00", 
+      "id": "2200PP"
+    }, 
+    "39006M": {
+      "desc": "Provider Number: 39006M", 
+      "name": "39006M", 
+      "parent": "00", 
+      "id": "39006M"
+    }, 
+    "26018R": {
+      "name": "26018R", 
+      "id": "26018R", 
+      "parent": "01", 
+      "desc": "Provider Number: 26018R"
+    }, 
+    "0505YJ": {
+      "name": "0505YJ", 
+      "id": "0505YJ", 
+      "parent": "05", 
+      "desc": "Provider Number: 0505YJ"
+    }, 
+    "3302DS": {
+      "name": "3302DS", 
+      "id": "3302DS", 
+      "parent": "02", 
+      "desc": "Provider Number: 3302DS"
+    }, 
+    "4500DP": {
+      "id": "4500DP", 
+      "name": "4500DP", 
+      "parent": "00", 
+      "desc": "Provider Number: 4500DP"
+    }, 
+    "2200PG": {
+      "desc": "Provider Number: 2200PG", 
+      "name": "2200PG", 
+      "parent": "00", 
+      "id": "2200PG"
+    }, 
+    "2300CS": {
+      "name": "2300CS", 
+      "id": "2300CS", 
+      "parent": "00", 
+      "desc": "Provider Number: 2300CS"
+    }, 
+    "1701JS": {
+      "name": "1701JS", 
+      "id": "1701JS", 
+      "parent": "01", 
+      "desc": "Provider Number: 1701JS"
+    }, 
+    "3301DD": {
+      "name": "3301DD", 
+      "id": "3301DD", 
+      "parent": "01", 
+      "desc": "Provider Number: 3301DD"
+    }
   }
 }

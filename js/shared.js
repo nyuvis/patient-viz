@@ -93,6 +93,7 @@ function initViews(mainG, secG, suppl, blank, eventList, typeList, overview, set
   res.push(setupEventView(pool, eventList));
   res.push(setupTypeView(pool, typeList));
   res.push(setupLinechart(pool, suppl, topMargin));
+  res.push(setupHistogram(pool, suppl, topMargin));
   res.push(new Labels(pool, updateViewport, blank));
   busy.setState(jkjs.busy.state.norm);
   return res;
@@ -117,16 +118,61 @@ function setupModes(pool) {
   });
 }
 
-function loadPerson(pid, person, pool, eventView, typeView, linechart, dictionary, suppl) {
+function loadPerson(pid, person, pool, eventView, typeView, linechart, histogram, dictionary, suppl) {
   var selId = refreshInfo(("" + pid).trim(), person);
   pool.clearEvents();
   pool.readEvents(person, dictionary);
   linechart.values("total" in person ? person["total"] : []);
-  var sh = linechart.hasContent() ? 100 : 32;
+  if(!linechart.hasContent()) { // FIXME make possible for both to show at the same time
+    var claims = {};
+    var claimToTime = {};
+    var noHistogram = true;
+    pool.traverseAllEvents(function(_, _, e) {
+      var claim = e.getEventGroupId();
+      var cost = e.cost();
+      if(cost) {
+        noHistogram = false;
+      }
+      var t = e.getTime();
+      if(!claim.length) {
+        claim = "__time__" + t;
+      }
+      if(claim in claims) {
+        if(claim.indexOf("__time__") === 0) {
+          claims[claim] += cost;
+        } else {
+          claims[claim] === cost || console.warn("cost mismatch", claims[claim], cost);
+          if(claimToTime[claim] > t) {
+            claimToTime[claim] = t;
+          }
+        }
+      } else {
+        claims[claim] = cost;
+        claimToTime[claim] = t;
+      }
+    });
+    var times = {};
+    Object.keys(claims).forEach(function(claim) {
+      var cost = claims[claim];
+      var t = claimToTime[claim];
+      if(!(t in times)) {
+        times[t] = cost;
+      } else {
+        times[t] += cost;
+      }
+    });
+    if(!noHistogram) {
+      histogram.values(Object.keys(times).map(function(t) {
+        return [ t, times[t] ];
+      }));
+      jkjs.util.toFront(histogram.getG(), false);
+    }
+  }
+  var sh = linechart.hasContent() || histogram.hasContent() ? 100 : 32;
   suppl.style({
     "height": sh + "px"
   });
-  pool.hasLinechart(linechart.hasContent());
+  pool.hasLinechart(linechart.hasContent() || histogram.hasContent());
   typeView.updateLists();
   setupBars(pool, person);
   setupYCluster(pool, d3.select("#pYCluster"), typeView);
@@ -421,6 +467,32 @@ function setupLinechart(pool, suppl, topMargin) {
     lc.updateWidth(w);
   });
   return lc;
+}
+
+function setupHistogram(pool, suppl, topMargin) {
+  var hs = new Histogram(suppl);
+  var timeMap = function(t) {
+    var vis = pool.linearTime();
+    return vis ? pool.getXByTime(t) : 0;
+  };
+  var yMap = function(v) {
+    var vis = pool.linearTime();
+    return vis ? (1 - v) * topMargin : topMargin;
+  };
+  hs.mapping([ timeMap, yMap ]);
+  pool.addViewportChangeListener(function(svgport, viewport, scale, smooth) {
+    var g = hs.getG();
+    var gt = jkjs.zui.asTransition(g, smooth);
+    var sx = scale;
+    var dx = -viewport.x;
+    gt.attr({
+      "transform": "scale(" + sx + " 1) translate(" + dx + " 0)"
+    });
+  });
+  pool.addSizeListener(function(w, _) {
+    hs.updateWidth(w);
+  });
+  return hs;
 }
 
 function setupEventView(pool, eventList) {
