@@ -6,11 +6,13 @@ function Histogram(svg) {
   var that = this;
   var values = [];
   var max = 1;
+  var colors = ["#eee", "#bbb", "#777", "#444", "#000"];
   var yLabelsLeft = svg.append("g").classed("yAxisClass", true);
   var yLabelsRight = svg.append("g").classed("yAxisClass", true);
   var g = svg.append("g").attr({
     "transform": "scale(1 1) translate(0 0)"
   });
+  var lineSel = g.append("g");
   var timeMap = function(t) {
     return 0;
   };
@@ -85,23 +87,53 @@ function Histogram(svg) {
         return yMap(0) - yc(valueMap[t]);
       },
       "fill": function(t) {
-        var bucket = Math.max(Math.min(4 - Math.floor(Math.log10(valueMap[t])), 4), 0);
-        return colorbrewer["RdYlBu"][5][bucket];
+        var bucket = Math.max(Math.min(Math.floor(Math.log10(valueMap[t])), colors.length), 0);
+        return colors[bucket];
       }
     });
     smallestWidth > 0 || console.warn("smallest width is zero");
+
     var yAxisLeft = d3.svg.axis();
     yAxisLeft.orient("right");
     yAxisLeft.scale(yc);
     useLog && yAxisLeft.ticks(1, 10);
     yLabelsLeft.call(yAxisLeft);
     jkjs.util.toFront(yLabelsLeft, true);
+
     var yAxisRight = d3.svg.axis();
     yAxisRight.orient("left");
     yAxisRight.scale(yc);
     useLog && yAxisRight.ticks(1, 10);
     yLabelsRight.call(yAxisRight);
     jkjs.util.toFront(yLabelsRight, true);
+
+    var horLines = [];
+    if(useLog) {
+      var l = 10;
+      while(l < max) {
+        horLines.push(l);
+        l *= 10;
+      }
+    } else {
+      yLabelsLeft.selectAll("g.tick").each(function(l) {
+        horLines.push(l);
+      });
+    }
+    var horSel = lineSel.selectAll("line.hor_line").data(horLines, function(l) { return l; });
+    horSel.exit().remove();
+    horSel.enter().append("line").classed("hor_line", true);
+    horSel.attr({
+      "stroke": "lightgray",
+      "x1": -0.25 * jkjs.util.BIG_NUMBER,
+      "x2": 0.5 * jkjs.util.BIG_NUMBER,
+      "y1": function(l) {
+        return yc(l);
+      },
+      "y2": function(l) {
+        return yc(l);
+      }
+    });
+
     if(!values.length) {
       yLabelsLeft.style({
         "opacity": 0
