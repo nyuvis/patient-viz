@@ -35,8 +35,9 @@ do_convert=
 do_clean=
 do_nop=
 do_burst=
+shelve=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--shelve] [--nop]"
 
 usage() {
     echo $USAGE
@@ -58,6 +59,7 @@ usage() {
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
     echo "--pip: install python packages. (not required for all use cases)"
+    echo "--shelve: use shelve input for conversion. (also switches to format_shelve.json except when -f is specified after)"
     echo "--nop: performs no operation besides basic setup tasks"
     exit 1
 }
@@ -67,6 +69,8 @@ if [ $# -eq 0 ]; then
 fi
 while [ $# -gt 0 ]; do
   case "$1" in
+  "")
+    ;;
   -h)
     usage ;;
   -c)
@@ -133,6 +137,10 @@ while [ $# -gt 0 ]; do
     ;;
   --pip)
     pip=1
+    ;;
+  --shelve)
+    format="format_shelve.json"
+    shelve="--shelve"
     ;;
   --nop)
     do_nop=1
@@ -550,20 +558,33 @@ convert_patients() {
 
   if [ -z "${convert_list}" ]; then
     echo "find top ${convert_top_n} patients"
-    ids=`./cms_analyze.py -m -f "${format}" -- ${CMS_DIR} | tail -n ${convert_top_n}`
+    if [ -z $shelve ]; then
+      ids=`./cms_analyze.py -m -f "${format}" -- ${CMS_DIR} | tail -n ${convert_top_n}`
+    else
+      # FIXME not the top n patients!
+      ids=`./shelve_access.py -c "${config}" -l | cut -d" " -f1 | head -n ${convert_top_n}`
+    fi
   else
     ids="${convert_list}"
   fi
   for id in $ids; do
     file="${JSON_DIR}/${id}.json"
     echo "create ${file}"
-    echo "config file is ${config}"
+    echo "config file is '${config}' format file is '${format}'"
     echo "script output can be found in ${err_file} and ${err_dict_file}"
-    ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2>> $err_file || {
-      echo "failed during patient conversion"
-      cd_back
-      exit 6
-    }
+    if [ -z $shelve ]; then
+      ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2>> $err_file || {
+        echo "failed during patient conversion"
+        cd_back
+        exit 6
+      }
+    else
+      ./shelve_access.py -p "${id}" -c "${config}" | ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- - 2>> $err_file || {
+        echo "failed during patient conversion"
+        cd_back
+        exit 9
+      }
+    fi
     ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2>> $err_dict_file || {
       echo "failed during dictionary creation"
       cd_back

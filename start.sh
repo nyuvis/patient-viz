@@ -10,7 +10,7 @@ server_pid_file="${base_dir}/server_pid.txt"
 server_log="${base_dir}/server_log.txt"
 server_err="${base_dir}/server_err.txt"
 
-USAGE="Usage: $0 -hq -p <patient file> [-d <dictionary file>] [--url] [--start|--stop] [--list|--list-update] [--refresh]"
+USAGE="Usage: $0 -hq -p <patient file> [-d <dictionary file>] [--url] [--start|--stop] [--list|--list-update] [--refresh] [--shelve]"
 
 usage() {
     echo $USAGE
@@ -24,6 +24,7 @@ usage() {
     echo "--start: starts the server"
     echo "--stop: stops the server"
     echo "--refresh: refreshes all already converted patient files"
+    echo "--shelve: uses shelve input"
     exit 1
 }
 
@@ -36,12 +37,15 @@ show_list=
 update_list=
 quiet=
 refresh=
+shelve=
 
 if [ $# -eq 0 ]; then
   usage
 fi
 while [ $# -gt 0 ]; do
   case "$1" in
+  "")
+    ;;
   -h)
     usage
     ;;
@@ -74,6 +78,9 @@ while [ $# -gt 0 ]; do
   --refresh)
     refresh=1
     ;;
+  --shelve)
+    shelve="--shelve"
+    ;;
   *)
     echo "illegal option -- $1"
     usage ;;
@@ -101,7 +108,7 @@ print() {
 }
 
 if [ ! -z $refresh ]; then
-  ./setup.sh -s --convert "$(sed -E 's/json\/([^.]+)\.json/\1/' ${file_list})" --do-convert
+  ./setup.sh -s --convert "$(sed -E 's/json\/([^.]+)\.json/\1/' ${file_list})" --do-convert "${shelve}"
 fi
 
 if [ ! -z $do_start ]; then
