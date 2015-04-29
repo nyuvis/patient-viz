@@ -196,7 +196,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                 handleStatusEvent(curDate, STATUS_IN if flag == 'I' else STATUS_UNKNOWN)
             )
             handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
-                print("'{0}'".format(flag), file=sys.stderr)
+                print("'{0}' {1}".format(flag, repr(statusMap.get(curDate, -100))), file=sys.stderr)
             )
             curDate = nextDay(curDate)
 
