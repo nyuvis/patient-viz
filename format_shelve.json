@@ -33,6 +33,10 @@
     "ENCS_DISCHARGE_DATE",
     "MED_CLMS_DISCHARGE_DATE"
   ],
+  "location_flag": [
+    "ENCS_FACILITY_TYPE",
+    "MED_CLMS_FACILITY_TYPE"
+  ],
   "diagnosis": [
     "ENCS_DX_CD1",
     "ENCS_DX_CD2",

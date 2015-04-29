@@ -149,14 +149,14 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     def addCost(event, amount):
         event['cost'] = amount
 
-    def handleStatusEvent(date):
+    def handleStatusEvent(date, st):
         if date in statusMap:
-            if statusMap[date] != STATUS_IN and curStatus == STATUS_IN:
-                statusMap[date] = curStatus
+            if statusMap[date] != STATUS_IN and st == STATUS_IN:
+                statusMap[date] = st
             elif statusMap[date] == STATUS_UNKNOWN:
-                statusMap[date] = curStatus
-        elif curStatus != STATUS_UNKNOWN:
-            statusMap[date] = curStatus
+                statusMap[date] = st
+        elif st != STATUS_UNKNOWN:
+            statusMap[date] = st
 
     def admissionDates(fromDate, toDate):
         if fromDate == '':
@@ -167,7 +167,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         curDate = toTime(fromDate)
         endDate = toTime(toDate) if toDate != '' else curDate
         while curDate <= endDate:
-            statusMap[curDate] = STATUS_IN # inpatient status always wins
+            handleStatusEvent(curDate, STATUS_IN)
             curDate = nextDay(curDate)
 
     handleKey(row, "admission", MODE_OPTIONAL, lambda in_from:
@@ -191,7 +191,10 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                     addCost(event, amount)
                 )
                 obj['events'].append(event)
-            handleStatusEvent(curDate)
+            handleStatusEvent(curDate, curStatus)
+            handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
+                handleStatusEvent(curDate, STATUS_IN) if flag == 'I' else pass
+            )
             curDate = nextDay(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
@@ -203,7 +206,11 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     def emitNDC(date, ndc):
         # TODO add provider/physician here as well?
         event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
-        event['time'] = toTime(date)
+        curDate = toTime(date)
+        event['time'] = curDate
+        handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
+            handleStatusEvent(curDate, STATUS_IN) if flag == 'I' else pass
+        )
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
             addCost(event, amount)
         )
