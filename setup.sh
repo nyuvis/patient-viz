@@ -573,23 +573,26 @@ convert_patients() {
     echo "config file is '${config}' format file is '${format}'"
     echo "script output can be found in ${err_file} and ${err_dict_file}"
     if [ -z $shelve ]; then
-      ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2>> $err_file || {
+      ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2>> $err_file
+      if [ $? -ne 0 ]; then
         echo "failed during patient conversion"
         cd_back
         exit 6
-      }
+      fi
     else
-      ./shelve_access.py -p "${id}" -c "${config}" | ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- - 2>> $err_file || {
+      ./shelve_access.py -p "${id}" -c "${config}" | ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- - 2>> $err_file
+      if [ $? -ne 0 ]; then
         echo "failed during patient conversion"
         cd_back
         exit 9
-      }
+      fi
     fi
-    ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2>> $err_dict_file || {
+    ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2>> $err_dict_file
+    if [ $? -ne 0 ]; then
       echo "failed during dictionary creation"
       cd_back
       exit 7
-    }
+    fi
     echo "conversion successful"
   done
 
