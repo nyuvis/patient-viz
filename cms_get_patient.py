@@ -193,7 +193,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                 obj['events'].append(event)
             handleStatusEvent(curDate, curStatus)
             handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
-                handleStatusEvent(curDate, STATUS_IN) if flag == 'I' else pass
+                handleStatusEvent(curDate, STATUS_IN if flag == 'I' else STATUS_UNKNOWN)
             )
             curDate = nextDay(curDate)
 
@@ -209,7 +209,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         curDate = toTime(date)
         event['time'] = curDate
         handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
-            handleStatusEvent(curDate, STATUS_IN) if flag == 'I' else pass
+            handleStatusEvent(curDate, STATUS_IN if flag == 'I' else STATUS_UNKNOWN)
         )
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
             addCost(event, amount)
