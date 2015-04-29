@@ -32,7 +32,14 @@ MODE_ARRAY = 2
 
 STATUS_UNKNOWN = 0
 STATUS_IN = 1
+STATUS_PROF = 2
 STATUS_OUT = -1
+
+STATUS_FLAG_MAP = {
+    "I": STATUS_IN,
+    "O": STATUS_OUT,
+    "P": STATUS_PROF
+}
 
 gender_label = {
     "1": "primary",
@@ -153,9 +160,11 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         if date in statusMap:
             if statusMap[date] != STATUS_IN and st == STATUS_IN:
                 statusMap[date] = st
+            elif statusMap[date] != STATUS_PROF and st == STATUS_PROF:
+                statusMap[date] = st
             elif statusMap[date] == STATUS_UNKNOWN:
                 statusMap[date] = st
-        elif st != STATUS_UNKNOWN:
+        else:
             statusMap[date] = st
 
     def admissionDates(fromDate, toDate):
@@ -193,7 +202,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                 obj['events'].append(event)
             handleStatusEvent(curDate, curStatus)
             handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
-                handleStatusEvent(curDate, STATUS_IN if flag == 'I' else STATUS_UNKNOWN)
+                handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
             )
             curDate = nextDay(curDate)
 
@@ -209,7 +218,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         curDate = toTime(date)
         event['time'] = curDate
         handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
-            handleStatusEvent(curDate, STATUS_IN if flag == 'I' else STATUS_UNKNOWN)
+            handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
         )
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
             addCost(event, amount)
@@ -399,20 +408,29 @@ if __name__ == '__main__':
             processDirectory(path, id, obj, statusMap)
     curInStart = None
     curInEnd = None
+    curStatus = STATUS_UNKNOWN
     for k in sorted(statusMap):
         status = statusMap[k]
-        if status == STATUS_IN:
+        if status == curStatus:
             if curInStart is None:
                 curInStart = k
             curInEnd = k
-        elif status == STATUS_OUT:
+        else:
             if curInStart is not None:
-                obj["v_spans"].append({
-                    "from": curInStart,
-                    "to": nextDay(curInEnd),
-                    "class": "in_hospital"
-                })
+                if curStatus == STATUS_IN:
+                    obj["v_spans"].append({
+                        "from": curInStart,
+                        "to": nextDay(curInEnd),
+                        "class": "in_hospital"
+                    })
+                elif curStatus == STATUS_PROF:
+                    obj["v_spans"].append({
+                        "from": curInStart,
+                        "to": nextDay(curInEnd),
+                        "class": "professional"
+                    })
                 curInStart = None
+            curStatus = status
     min_time = sys.maxint
     max_time = -sys.maxint-1
     for e in obj["events"]:
