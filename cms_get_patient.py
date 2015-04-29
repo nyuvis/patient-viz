@@ -24,6 +24,7 @@ TYPE_LABTEST    = "lab-test"
 TYPE_DIAGNOSIS  = "diagnosis"
 TYPE_PROCEDURE  = "procedure"
 TYPE_PROVIDER   = "provider"
+TYPE_PHYSICIAN  = "physician"
 
 MODE_OPTIONAL = 0
 MODE_DEFAULT = 1
@@ -117,7 +118,8 @@ def handleEvent(row, claim_id):
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
-    handleKey(row, "provider", MODE_OPTIONAL, lambda value: emit(TYPE_PROVIDER, value))
+    handleKey(row, "provider", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, value))
+    handleKey(row, "physician", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, value))
     return res
 
 def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
@@ -156,6 +158,24 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         elif curStatus != STATUS_UNKNOWN:
             statusMap[date] = curStatus
 
+    def admissionDates(fromDate, toDate):
+        if fromDate == '':
+            if toDate == '':
+                return
+            fromDate = toDate
+            toDate = ''
+        curDate = toTime(fromDate)
+        endDate = toTime(toDate) if toDate != '' else curDate
+        while curDate <= endDate:
+            statusMap[curDate] = STATUS_IN # inpatient status always wins
+            curDate = nextDay(curDate)
+
+    handleKey(row, "admission", MODE_OPTIONAL, lambda in_from:
+        handleKey(row, "discharge", MODE_OPTIONAL, lambda in_to:
+                admissionDates(in_from, in_to)
+            )
+        )
+
     def dates(fromDate, toDate):
         if fromDate == '':
             if toDate == '':
@@ -163,20 +183,8 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
             fromDate = toDate
             toDate = ''
         curDate = toTime(fromDate)
-        if toDate != '':
-            # time span
-            endDate = toTime(toDate)
-            while curDate <= endDate:
-                for event in handleEvent(row, claim_id):
-                    event['time'] = curDate
-                    handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
-                        addCost(event, amount)
-                    )
-                    obj['events'].append(event)
-                handleStatusEvent(curDate)
-                curDate = nextDay(curDate)
-        else:
-            # single event
+        endDate = toTime(toDate) if toDate != '' else curDate
+        while curDate <= endDate:
             for event in handleEvent(row, claim_id):
                 event['time'] = curDate
                 handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
@@ -184,6 +192,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                 )
                 obj['events'].append(event)
             handleStatusEvent(curDate)
+            curDate = nextDay(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
             handleKey(row, "claim_to", MODE_DEFAULT, lambda toDate:
@@ -192,7 +201,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitNDC(date, ndc):
-        # TODO add provider here as well?
+        # TODO add provider/physician here as well?
         event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
         event['time'] = toTime(date)
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
@@ -207,7 +216,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitLab(date, loinc, result, resultFlag):
-        # TODO add provider here as well?
+        # TODO add provider/physician here as well?
         event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
         event['time'] = toTime(date)
         obj['events'].append(event)

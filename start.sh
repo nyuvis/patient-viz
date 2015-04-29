@@ -10,7 +10,7 @@ server_pid_file="${base_dir}/server_pid.txt"
 server_log="${base_dir}/server_log.txt"
 server_err="${base_dir}/server_err.txt"
 
-USAGE="Usage: $0 -hq -p <patient file> [-d <dictionary file>] [--url] [--start|--stop] [--list|--list-update]"
+USAGE="Usage: $0 -hq -p <patient file> [-d <dictionary file>] [--url] [--start|--stop] [--list|--list-update] [--refresh]"
 
 usage() {
     echo $USAGE
@@ -23,6 +23,7 @@ usage() {
     echo "--url: only prints the URL (does not open a browser)"
     echo "--start: starts the server"
     echo "--stop: stops the server"
+    echo "--refresh: refreshes all already converted patient files"
     exit 1
 }
 
@@ -34,6 +35,7 @@ do_stop=
 show_list=
 update_list=
 quiet=
+refresh=
 
 if [ $# -eq 0 ]; then
   usage
@@ -69,6 +71,9 @@ while [ $# -gt 0 ]; do
   --list-update)
     update_list=1
     ;;
+  --refresh)
+    refresh=1
+    ;;
   *)
     echo "illegal option -- $1"
     usage ;;
@@ -80,7 +85,7 @@ if [[ $# -gt 1 ]]; then
   usage
 fi
 
-if [[ -z $pfile && -z $do_start && -z $do_stop && -z $show_list && -z $update_list ]]; then
+if [[ -z $pfile && -z $do_start && -z $do_stop && -z $show_list && -z $update_list && -z $refresh ]]; then
   echo "require patient file"
   usage
 fi
@@ -94,6 +99,10 @@ print() {
     echo "$@"
   fi
 }
+
+if [ ! -z $refresh ]; then
+  ./setup.sh -s --convert "$(sed -E 's/json\/([^.]+)\.json/\1/' ${file_list})" --do-convert
+fi
 
 if [ ! -z $do_start ]; then
   if [[ -s "${server_pid_file}" || -f "${server_pid_file}" ]]; then

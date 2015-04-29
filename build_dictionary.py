@@ -81,6 +81,15 @@ def initProvider():
                 res[("00" + str(pn))[-2:]] = desc
     return res
 
+### physician ###
+
+def createPhysicianEntry(symbols, type, id):
+    pid = ""
+    return createUnknownEntry(symbols, type, id, pid)
+
+def initPhysician():
+    return {}
+
 ### prescribed ###
 
 def createPrescribedEntry(symbols, type, id):
@@ -256,6 +265,7 @@ root_names = {
     "diagnosis": "Condition",
     "procedure": "Procedure",
     "provider": "Provider",
+    "physician": "Physician",
 }
 
 root_desc = {
@@ -264,6 +274,7 @@ root_desc = {
     "diagnosis": "Condition",
     "procedure": "Procedure",
     "provider": "Provider",
+    "physician": "Physician",
 }
 
 root_color = {
@@ -272,6 +283,7 @@ root_color = {
     "diagnosis": "#4daf4a",
     "procedure": "#ff7f00",
     "provider": "#e6ab02",
+    "physician": "#fccde5",
 }
 
 root_flags = {
@@ -432,6 +444,7 @@ convertLookup = {
     "diagnosis": createDiagnosisEntry,
     "procedure": createProcedureEntry,
     "provider": createProviderEntry,
+    "physician": createPhysicianEntry,
 }
 
 initLookup = {
@@ -440,6 +453,7 @@ initLookup = {
     "diagnosis": initDiagnosis,
     "procedure": initProcedure,
     "provider": initProvider,
+    "physician": initPhysician,
 }
 
 symbolTable = {}
