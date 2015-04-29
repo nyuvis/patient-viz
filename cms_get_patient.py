@@ -195,6 +195,9 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
             handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
                 handleStatusEvent(curDate, STATUS_IN if flag == 'I' else STATUS_UNKNOWN)
             )
+            handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
+                print("'{0}'".format(flag), file=sys.stderr)
+            )
             curDate = nextDay(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
