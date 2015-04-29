@@ -3,14 +3,16 @@
   "age": "ELIG_AGE",
   "gender": "ELIG_GENDER",
   "provider": [
+    "MED_CLMS_SERVICE_PLACE",
+    "RX_CLMS_SERVICE_PLACE",
+    "ENCS_SERVICE_PLACE"
+  ],
+  "physician": [
     "ENCS_SERVICE_PROVIDER_ID",
     "ENCS_REFERRING_PROVIDER_ID",
     "LAB_RSL_PROVIDER_ID",
     "MED_CLMS_SERVICE_PROVIDER_ID",
     "RX_CLMS_SERVICE_PROVIDER_ID"
-  ],
-  "physician": [
-    "ENCS_SPECIALTY"
   ],
   "claim_id": [
     "ENCS_CLAIM_NUMBER",
