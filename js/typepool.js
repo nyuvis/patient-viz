@@ -300,6 +300,18 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     });
     groups = {};
     eventMap = {};
+    hBars.forEach(function(b) {
+      b.sel && b.sel.remove();
+    });
+    vBars.forEach(function(b) {
+      b.sel && b.sel.remove();
+    });
+    vSpan.forEach(function(b) {
+      b.sel && b.sel.remove();
+    });
+    hBars = [];
+    vBars = [];
+    vSpan = [];
     width = colW;
     that.updateLook();
   };

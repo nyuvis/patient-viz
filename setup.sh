@@ -2,6 +2,7 @@
 # @author Joschi <josua.krause@gmail.com>
 # created 2015-02-16 09:00
 
+PNT_DIR="code/pnt"
 NDC_DIR="code/ndc"
 ICD9_DIR="code/icd9"
 CCS_DIR="code/ccs"
@@ -24,6 +25,7 @@ file_list="patients.txt"
 fetch_samples="10"
 
 no_prompt=
+pn=
 ndc=
 cms=
 icd9=
@@ -33,8 +35,9 @@ do_convert=
 do_clean=
 do_nop=
 do_burst=
+shelve=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--shelve] [--nop]"
 
 usage() {
     echo $USAGE
@@ -46,15 +49,17 @@ usage() {
     echo "--samples-all: download all samples"
     echo "--convert <list of ids>: specify which patients to convert"
     echo "--convert-num <top n>: specify how many patients to convert (top n by the total number of events)"
-    echo "--default: use default settings (equal to --icd9 --ccs --ndc --cms --do-convert)"
+    echo "--default: use default settings (equal to --icd9 --ccs --ndc --pnt --cms --do-convert)"
     echo "--icd9: downloads ICD9 definitions"
     echo "--ccs: downloads CCS ICD9 hierarchies"
     echo "--ndc: downloads NDC definitions"
+    echo "--pnt: downloads the provider number table"
     echo "--cms: downloads the patient claims data"
     echo "--burst: splits the patient claim files for faster individual access"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
     echo "--pip: install python packages. (not required for all use cases)"
+    echo "--shelve: use shelve input for conversion. (also switches to format_shelve.json except when -f is specified after)"
     echo "--nop: performs no operation besides basic setup tasks"
     exit 1
 }
@@ -64,6 +69,8 @@ if [ $# -eq 0 ]; then
 fi
 while [ $# -gt 0 ]; do
   case "$1" in
+  "")
+    ;;
   -h)
     usage ;;
   -c)
@@ -96,6 +103,7 @@ while [ $# -gt 0 ]; do
     icd9=1
     ccs=1
     ndc=1
+    pn=1
     cms=1
     do_convert=1
     ;;
@@ -107,6 +115,9 @@ while [ $# -gt 0 ]; do
     ;;
   --ndc)
     ndc=1
+    ;;
+  --pnt)
+    pn=1
     ;;
   --opd)
     echo "--opd is now --cms"
@@ -126,6 +137,10 @@ while [ $# -gt 0 ]; do
     ;;
   --pip)
     pip=1
+    ;;
+  --shelve)
+    format="format_shelve.json"
+    shelve="--shelve"
     ;;
   --nop)
     do_nop=1
@@ -256,6 +271,7 @@ pip_install() {
       PIP_INSTALL_FILE="get-pip.py"
       curl -# -o "${PIP_INSTALL_FILE}" 'https://bootstrap.pypa.io/get-pip.py'
       test_fail $?
+      # FIXME we should use virtualenv here
       ### patching for user installation leaves pip in a state where it cannot be
       ### accessed without knowing where it is and also it cannot be installed
       ### normally -- we need to ask for super-user :/
@@ -311,6 +327,7 @@ ask_all_clean() {
   ask_for_clean "ICD9 definitions" "${ICD9_DIR}"
   ask_for_clean "CCS hierarchies" "${CCS_DIR}"
   ask_for_clean "NDC definitions" "${NDC_DIR}"
+  ask_for_clean "provider numbers" "${PNT_DIR}"
   ask_for_clean "claims data" "${CMS_DIR}"
   ask_for_clean "patient files" "${JSON_DIR}" "${file_list}"
   ask_for_clean "error output files" "${err_file}" "${err_dict_file}"
@@ -448,6 +465,28 @@ fetch_ndc() {
   fi
 }
 
+allow_pn=
+ask_pn() {
+  PN_INFO="http://www.resdac.org/cms-data/variables/provider-number"
+  prompt "Do you want to download provider numbers?" "${PN_INFO}"
+  if [ $? -eq 0 ]; then
+    allow_pn=1
+  fi
+}
+
+fetch_pn() {
+  PNT_URL="http://www.resdac.org/sites/resdac.org/files/Provider%20Number%20Table.txt"
+  if [ ! -d "${PNT_DIR}" ]; then
+    mkdir -p "${PNT_DIR}"
+  fi
+  if [ ! -f "${PNT_DIR}/pnt.txt" ]; then
+    cd "${PNT_DIR}"
+    echo "downloading provider numbers"
+    curl -# -o "pnt.txt" "${PNT_URL}"
+    cd_back
+  fi
+}
+
 allow_cms=
 ask_cms() {
   CMS_INFO="http://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html"
@@ -519,25 +558,41 @@ convert_patients() {
 
   if [ -z "${convert_list}" ]; then
     echo "find top ${convert_top_n} patients"
-    ids=`./cms_analyze.py -m -f "${format}" -- ${CMS_DIR} | tail -n ${convert_top_n}`
+    if [ -z $shelve ]; then
+      ids=`./cms_analyze.py -m -f "${format}" -- ${CMS_DIR} | tail -n ${convert_top_n}`
+    else
+      # FIXME not the top n patients!
+      ids=`./shelve_access.py -c "${config}" -l | cut -d" " -f1 | head -n ${convert_top_n}`
+    fi
   else
     ids="${convert_list}"
   fi
   for id in $ids; do
     file="${JSON_DIR}/${id}.json"
     echo "create ${file}"
-    echo "config file is ${config}"
+    echo "config file is '${config}' format file is '${format}'"
     echo "script output can be found in ${err_file} and ${err_dict_file}"
-    ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2> $err_file || {
-      echo "failed during patient conversion"
-      cd_back
-      exit 6
-    }
-    ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2> $err_dict_file || {
+    if [ -z $shelve ]; then
+      ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2>> $err_file
+      if [ $? -ne 0 ]; then
+        echo "failed during patient conversion"
+        cd_back
+        exit 6
+      fi
+    else
+      ./shelve_access.py -p "${id}" -c "${config}" | ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- - 2>> $err_file
+      if [ $? -ne 0 ]; then
+        echo "failed during patient conversion"
+        cd_back
+        exit 9
+      fi
+    fi
+    ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2>> $err_dict_file
+    if [ $? -ne 0 ]; then
       echo "failed during dictionary creation"
       cd_back
       exit 7
-    }
+    fi
     echo "conversion successful"
   done
 
@@ -560,6 +615,9 @@ fi
 if [ ! -z $ndc ]; then
   ask_ndc
 fi
+if [ ! -z $pn ]; then
+  ask_pn
+fi
 if [ ! -z $do_convert ]; then
   ask_convert
 fi
@@ -581,6 +639,9 @@ if [ ! -z $allow_ccs ]; then
 fi
 if [ ! -z $allow_ndc ]; then
   fetch_ndc
+fi
+if [ ! -z $allow_pn ]; then
+  fetch_pn
 fi
 if [ ! -z $do_burst ]; then
   burst

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on 2015-03-04
@@ -20,8 +20,6 @@ sys.path.append('..')
 import build_dictionary
 import cms_get_patient
 import util
-
-path_correction = '../'
 
 from_time = -float('Inf')
 to_time = float('Inf')
@@ -305,12 +303,7 @@ if __name__ == '__main__':
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
 
-    build_dictionary.globalSymbolsFile = path_correction + settings['filename']
-    build_dictionary.icd9File = path_correction + settings['icd9']
-    build_dictionary.ccs_diag_file = path_correction + settings['ccs_diag']
-    build_dictionary.ccs_proc_file = path_correction + settings['ccs_proc']
-    build_dictionary.productFile = path_correction + settings['ndc_prod']
-    build_dictionary.packageFile = path_correction + settings['ndc_package']
+    build_dictionary.setPathCorrection('../')
     build_dictionary.reportMissingEntries = False
     build_dictionary.init()
 

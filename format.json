@@ -1,12 +1,35 @@
 {
   "patient_id": "DESYNPUF_ID",
-  "claim_id": "CLM_ID",
   "born": "BENE_BIRTH_DT",
   "death": "BENE_DEATH_DT",
   "gender": "BENE_SEX_IDENT_CD",
+  "provider": [
+    "PRVDR_NUM"
+  ],
+  "physician": [
+    "AT_PHYSN_NPI",
+    "OP_PHYSN_NPI",
+    "OT_PHYSN_NPI",
+    "PRF_PHYSN_NPI_1",
+    "PRF_PHYSN_NPI_2",
+    "PRF_PHYSN_NPI_3",
+    "PRF_PHYSN_NPI_4",
+    "PRF_PHYSN_NPI_5",
+    "PRF_PHYSN_NPI_6",
+    "PRF_PHYSN_NPI_7",
+    "PRF_PHYSN_NPI_8",
+    "PRF_PHYSN_NPI_9",
+    "PRF_PHYSN_NPI_10",
+    "PRF_PHYSN_NPI_11",
+    "PRF_PHYSN_NPI_12",
+    "PRF_PHYSN_NPI_13"
+  ],
+  "claim_id": "CLM_ID",
   "claim_amount": "CLM_PMT_AMT",
   "claim_from": "CLM_FROM_DT",
   "claim_to": "CLM_THRU_DT",
+  "admission": "CLM_ADMSN_DT",
+  "discharge": "NCH_BENE_DSCHRG_DT",
   "diagnosis": [
     "ICD9_DGNS_CD_1",
     "ICD9_DGNS_CD_2",

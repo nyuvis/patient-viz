@@ -1,12 +1,24 @@
 {
   "patient_id": "MEMBER_ID",
+  "age": "ELIG_AGE",
+  "gender": "ELIG_GENDER",
+  "provider": [
+    "MED_CLMS_SERVICE_PLACE",
+    "RX_CLMS_SERVICE_PLACE",
+    "ENCS_SERVICE_PLACE"
+  ],
+  "physician": [
+    "ENCS_SERVICE_PROVIDER_ID",
+    "ENCS_REFERRING_PROVIDER_ID",
+    "LAB_RSL_PROVIDER_ID",
+    "MED_CLMS_SERVICE_PROVIDER_ID",
+    "RX_CLMS_SERVICE_PROVIDER_ID"
+  ],
   "claim_id": [
     "ENCS_CLAIM_NUMBER",
     "MED_CLMS_CLAIM_NUMBER",
     "RX_CLMS_CLAIM_NUMBER"
   ],
-  "age": "ELIG_AGE",
-  "gender": "ELIG_GENDER",
   "claim_amount": [
     "ENCS_CHARGE_AMT",
     "MED_CLMS_CHARGE_AMT"
@@ -14,6 +26,18 @@
   "claim_from": [
     "ENCS_SERVICE_DATE",
     "MED_CLMS_SERVICE_DATE"
+  ],
+  "admission": [
+    "ENCS_ADMIT_DATE",
+    "MED_CLMS_ADMIT_DATE"
+  ],
+  "discharge": [
+    "ENCS_DISCHARGE_DATE",
+    "MED_CLMS_DISCHARGE_DATE"
+  ],
+  "location_flag": [
+    "ENCS_FACILITY_TYPE",
+    "MED_CLMS_FACILITY_TYPE"
   ],
   "diagnosis": [
     "ENCS_DX_CD1",

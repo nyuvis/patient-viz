@@ -87,6 +87,8 @@ The list of available patient ids can be seen using:
 ./shelve_access.py -c config.txt -l
 ```
 
+The `./start.sh` and `./setup.sh` scripts also accept `--shelve` as argument to use this behavior.
+
 ## Feature Extraction and Model Creation
 
 The data can also be used for predictive modeling.

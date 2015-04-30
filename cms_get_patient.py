@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on Tue Jan 20 14:10:00 2015
@@ -23,6 +23,8 @@ TYPE_PRESCRIBED = "prescribed"
 TYPE_LABTEST    = "lab-test"
 TYPE_DIAGNOSIS  = "diagnosis"
 TYPE_PROCEDURE  = "procedure"
+TYPE_PROVIDER   = "provider"
+TYPE_PHYSICIAN  = "physician"
 
 MODE_OPTIONAL = 0
 MODE_DEFAULT = 1
@@ -30,7 +32,14 @@ MODE_ARRAY = 2
 
 STATUS_UNKNOWN = 0
 STATUS_IN = 1
+STATUS_PROF = 2
 STATUS_OUT = -1
+
+STATUS_FLAG_MAP = {
+    "I": STATUS_IN,
+    "O": STATUS_OUT,
+    "P": STATUS_PROF
+}
 
 gender_label = {
     "1": "primary",
@@ -116,6 +125,8 @@ def handleEvent(row, claim_id):
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
     handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
+    handleKey(row, "provider", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, value))
+    handleKey(row, "physician", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, value))
     return res
 
 def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
@@ -145,14 +156,34 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     def addCost(event, amount):
         event['cost'] = amount
 
-    def handleStatusEvent(date):
+    def handleStatusEvent(date, st):
         if date in statusMap:
-            if statusMap[date] != STATUS_IN and curStatus == STATUS_IN:
-                statusMap[date] = curStatus
+            if statusMap[date] != STATUS_IN and st == STATUS_IN:
+                statusMap[date] = st
+            elif statusMap[date] != STATUS_PROF and st == STATUS_PROF:
+                statusMap[date] = st
             elif statusMap[date] == STATUS_UNKNOWN:
-                statusMap[date] = curStatus
-        elif curStatus != STATUS_UNKNOWN:
-            statusMap[date] = curStatus
+                statusMap[date] = st
+        else:
+            statusMap[date] = st
+
+    def admissionDates(fromDate, toDate):
+        if fromDate == '':
+            if toDate == '':
+                return
+            fromDate = toDate
+            toDate = ''
+        curDate = toTime(fromDate)
+        endDate = toTime(toDate) if toDate != '' else curDate
+        while curDate <= endDate:
+            handleStatusEvent(curDate, STATUS_IN)
+            curDate = nextDay(curDate)
+
+    handleKey(row, "admission", MODE_OPTIONAL, lambda in_from:
+        handleKey(row, "discharge", MODE_OPTIONAL, lambda in_to:
+                admissionDates(in_from, in_to)
+            )
+        )
 
     def dates(fromDate, toDate):
         if fromDate == '':
@@ -161,24 +192,19 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
             fromDate = toDate
             toDate = ''
         curDate = toTime(fromDate)
-        if toDate != '':
-            # time span
-            endDate = toTime(toDate)
-            while curDate <= endDate:
-                for event in handleEvent(row, claim_id):
-                    event['time'] = curDate
-                    handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
-                        addCost(event, amount)
-                    )
-                    obj['events'].append(event)
-                handleStatusEvent(curDate)
-                curDate = nextDay(curDate)
-        else:
-            # single event
+        endDate = toTime(toDate) if toDate != '' else curDate
+        while curDate <= endDate:
             for event in handleEvent(row, claim_id):
                 event['time'] = curDate
+                handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
+                    addCost(event, amount)
+                )
                 obj['events'].append(event)
-            handleStatusEvent(curDate)
+            handleStatusEvent(curDate, curStatus)
+            handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
+                handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
+            )
+            curDate = nextDay(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
             handleKey(row, "claim_to", MODE_DEFAULT, lambda toDate:
@@ -187,8 +213,13 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitNDC(date, ndc):
+        # TODO add provider/physician here as well?
         event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
-        event['time'] = toTime(date)
+        curDate = toTime(date)
+        event['time'] = curDate
+        handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
+            handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
+        )
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
             addCost(event, amount)
         )
@@ -201,6 +232,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitLab(date, loinc, result, resultFlag):
+        # TODO add provider/physician here as well?
         event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
         event['time'] = toTime(date)
         obj['events'].append(event)
@@ -376,20 +408,29 @@ if __name__ == '__main__':
             processDirectory(path, id, obj, statusMap)
     curInStart = None
     curInEnd = None
+    curStatus = STATUS_UNKNOWN
     for k in sorted(statusMap):
         status = statusMap[k]
-        if status == STATUS_IN:
+        if status == curStatus:
             if curInStart is None:
                 curInStart = k
             curInEnd = k
-        elif status == STATUS_OUT:
+        else:
             if curInStart is not None:
-                obj["v_spans"].append({
-                    "from": curInStart,
-                    "to": nextDay(curInEnd),
-                    "class": "in_hospital"
-                })
+                if curStatus == STATUS_IN:
+                    obj["v_spans"].append({
+                        "from": curInStart,
+                        "to": nextDay(curInEnd),
+                        "class": "in_hospital"
+                    })
+                elif curStatus == STATUS_PROF:
+                    obj["v_spans"].append({
+                        "from": curInStart,
+                        "to": nextDay(curInEnd),
+                        "class": "professional"
+                    })
                 curInStart = None
+            curStatus = status
     min_time = sys.maxint
     max_time = -sys.maxint-1
     for e in obj["events"]:
