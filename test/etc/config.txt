@@ -1,0 +1,10 @@
+{
+  "ndc_package": "code/ndc/package.txt", 
+  "ccs_proc": "code/ccs/multi_proc.txt", 
+  "quote": "\"", 
+  "ndc_prod": "code/ndc/product.txt", 
+  "delim": ",", 
+  "icd9": "code/icd9/ucod.txt", 
+  "ccs_diag": "code/ccs/multi_diag.txt", 
+  "filename": "code/icd9/code_names.txt"
+}

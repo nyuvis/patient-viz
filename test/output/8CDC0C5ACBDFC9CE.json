@@ -1,0 +1,383 @@
+{
+  "info": [
+    {
+      "id": "pid", 
+      "value": "8CDC0C5ACBDFC9CE", 
+      "name": "Patient"
+    }, 
+    {
+      "id": "born", 
+      "value": 1941, 
+      "name": "Born"
+    }, 
+    {
+      "id": "death", 
+      "value": "N/A", 
+      "name": "Died"
+    }, 
+    {
+      "label": "danger", 
+      "id": "gender", 
+      "value": "W", 
+      "name": "Gender"
+    }, 
+    {
+      "id": "event_count", 
+      "value": 52, 
+      "name": "Events"
+    }
+  ], 
+  "end": 1288152000, 
+  "v_spans": [], 
+  "v_bars": [
+    "auto"
+  ], 
+  "h_bars": [], 
+  "start": 1223006400, 
+  "classes": {
+    "in_hospital": {
+      "fill": "cornflowerblue"
+    }, 
+    "occurrence": {
+      "opacity": 0.5, 
+      "fill": "crimson"
+    }, 
+    "professional": {
+      "opacity": 0, 
+      "fill": "#9be0d9"
+    }
+  }, 
+  "events": [
+    {
+      "row_id": "533613344926964", 
+      "group": "diagnosis", 
+      "id": "4299", 
+      "time": 1223006400
+    }, 
+    {
+      "row_id": "533613344926964", 
+      "group": "physician", 
+      "id": "3294034755", 
+      "time": 1223006400
+    }, 
+    {
+      "row_id": "533463343559253", 
+      "group": "diagnosis", 
+      "id": "73399", 
+      "time": 1242619200
+    }, 
+    {
+      "row_id": "533463343559253", 
+      "group": "diagnosis", 
+      "id": "7231", 
+      "time": 1242619200
+    }, 
+    {
+      "row_id": "533463343559253", 
+      "group": "diagnosis", 
+      "id": "7234", 
+      "time": 1242619200
+    }, 
+    {
+      "row_id": "533463343559253", 
+      "group": "diagnosis", 
+      "id": "72885", 
+      "time": 1242619200
+    }, 
+    {
+      "row_id": "533463343559253", 
+      "group": "physician", 
+      "id": "4644692002", 
+      "time": 1242619200
+    }, 
+    {
+      "row_id": "533193344797461", 
+      "group": "diagnosis", 
+      "id": "7080", 
+      "time": 1245211200
+    }, 
+    {
+      "row_id": "533193344797461", 
+      "group": "physician", 
+      "id": "5543357769", 
+      "time": 1245211200
+    }, 
+    {
+      "row_id": "533933343463534", 
+      "group": "diagnosis", 
+      "id": "71891", 
+      "time": 1245902400
+    }, 
+    {
+      "row_id": "533933343463534", 
+      "group": "physician", 
+      "id": "5310045804", 
+      "time": 1245902400
+    }, 
+    {
+      "row_id": "533933343463534", 
+      "group": "physician", 
+      "id": "5310045804", 
+      "time": 1245902400
+    }, 
+    {
+      "row_id": "533833344457918", 
+      "group": "diagnosis", 
+      "id": "412", 
+      "time": 1256184000
+    }, 
+    {
+      "row_id": "533833344457918", 
+      "group": "diagnosis", 
+      "id": "42731", 
+      "time": 1256184000
+    }, 
+    {
+      "row_id": "533833344457918", 
+      "group": "physician", 
+      "id": "2414615937", 
+      "time": 1256184000
+    }, 
+    {
+      "row_id": "533093344989084", 
+      "group": "diagnosis", 
+      "id": "71660", 
+      "time": 1271476800
+    }, 
+    {
+      "row_id": "533093344989084", 
+      "group": "diagnosis", 
+      "id": "2809", 
+      "time": 1271476800
+    }, 
+    {
+      "row_id": "533093344989084", 
+      "group": "physician", 
+      "id": "2803644204", 
+      "time": 1271476800
+    }, 
+    {
+      "row_id": "533953345458932", 
+      "group": "diagnosis", 
+      "id": "41189", 
+      "time": 1275969600
+    }, 
+    {
+      "row_id": "533953345458932", 
+      "group": "diagnosis", 
+      "id": "4292", 
+      "time": 1275969600
+    }, 
+    {
+      "row_id": "533953345458932", 
+      "group": "diagnosis", 
+      "id": "78605", 
+      "time": 1275969600
+    }, 
+    {
+      "row_id": "533953345458932", 
+      "group": "physician", 
+      "id": "2595965533", 
+      "time": 1275969600
+    }, 
+    {
+      "row_id": "533813346240061", 
+      "group": "diagnosis", 
+      "id": "72232", 
+      "time": 1277438400
+    }, 
+    {
+      "row_id": "533813346240061", 
+      "group": "physician", 
+      "id": "4596946292", 
+      "time": 1277438400
+    }, 
+    {
+      "row_id": "533753347032318", 
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1278734400
+    }, 
+    {
+      "row_id": "533753347032318", 
+      "group": "physician", 
+      "id": "3663078548", 
+      "time": 1278734400
+    }, 
+    {
+      "row_id": "533243345851954", 
+      "group": "diagnosis", 
+      "id": "4271", 
+      "time": 1284264000
+    }, 
+    {
+      "row_id": "533243345851954", 
+      "group": "physician", 
+      "id": "8290608621", 
+      "time": 1284264000
+    }, 
+    {
+      "row_id": "533893342733892", 
+      "group": "diagnosis", 
+      "id": "4462", 
+      "time": 1285992000
+    }, 
+    {
+      "row_id": "533893342733892", 
+      "group": "physician", 
+      "id": "2949548858", 
+      "time": 1285992000
+    }, 
+    {
+      "row_id": "188492238934750", 
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "03284", 
+      "time": 1256702400
+    }, 
+    {
+      "row_id": "188492238934750", 
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "78052", 
+      "time": 1256702400
+    }, 
+    {
+      "row_id": "188492238934750", 
+      "cost": "10.00", 
+      "group": "provider", 
+      "id": "3902UU", 
+      "time": 1256702400
+    }, 
+    {
+      "row_id": "188492238934750", 
+      "cost": "10.00", 
+      "group": "physician", 
+      "id": "7687398245", 
+      "time": 1256702400
+    }, 
+    {
+      "row_id": "188492238934750", 
+      "cost": "10.00", 
+      "group": "physician", 
+      "id": "7687398245", 
+      "time": 1256702400
+    }, 
+    {
+      "row_id": "188872238828607", 
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "72292", 
+      "time": 1257915600
+    }, 
+    {
+      "row_id": "188872238828607", 
+      "cost": "200.00", 
+      "group": "provider", 
+      "id": "3100YQ", 
+      "time": 1257915600
+    }, 
+    {
+      "row_id": "188872238828607", 
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "1051734277", 
+      "time": 1257915600
+    }, 
+    {
+      "row_id": "188872238828607", 
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "0518849399", 
+      "time": 1257915600
+    }, 
+    {
+      "row_id": "188752239259964", 
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "2842", 
+      "time": 1262062800
+    }, 
+    {
+      "row_id": "188752239259964", 
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "25000", 
+      "time": 1262062800
+    }, 
+    {
+      "row_id": "188752239259964", 
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "2724", 
+      "time": 1262062800
+    }, 
+    {
+      "row_id": "188752239259964", 
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "3310", 
+      "time": 1262062800
+    }, 
+    {
+      "row_id": "188752239259964", 
+      "cost": "200.00", 
+      "group": "provider", 
+      "id": "3902UU", 
+      "time": 1262062800
+    }, 
+    {
+      "row_id": "188752239259964", 
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "7687398245", 
+      "time": 1262062800
+    }, 
+    {
+      "row_id": "188752239259964", 
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "7687398245", 
+      "time": 1262062800
+    }, 
+    {
+      "row_id": "188452239052439", 
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "42760", 
+      "time": 1262581200
+    }, 
+    {
+      "row_id": "188452239052439", 
+      "cost": "10.00", 
+      "group": "provider", 
+      "id": "3902UU", 
+      "time": 1262581200
+    }, 
+    {
+      "row_id": "188452239052439", 
+      "cost": "10.00", 
+      "group": "physician", 
+      "id": "7687398245", 
+      "time": 1262581200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "59012041141", 
+      "time": 1283400000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "00677169401", 
+      "time": 1286424000
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "36987152404", 
+      "time": 1288152000
+    }
+  ]
+}

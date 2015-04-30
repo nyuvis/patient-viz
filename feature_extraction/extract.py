@@ -220,13 +220,14 @@ def printResult(vectors, header_list, header_counts, delim, quote, whitelist, ou
         print("", file=sys.stderr)
 
 def usage():
-    print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('--num-cutoff <number>: specifies the minimum number of occurrences for a column to appear in the output. default is {0}'.format(str(num_cutoff)), file=sys.stderr)
     print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--to <date>: specifies the end date as "YYYYMMDD". can be omitted', file=sys.stderr)
-    print('-w <whitelist>: specifies a patient whitelist. all patients if omitted (warning: slow)', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
+    print('-w <whitelist>: specifies a patient whitelist. all patients if omitted (warning: slow)', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
@@ -253,7 +254,12 @@ if __name__ == '__main__':
             break
         if arg == '-h':
             usage()
-        if arg == '--age-time':
+        if arg == '--num-cutoff':
+            if not args or args[0] == '--':
+                print('--num-cutoff requires number', file=sys.stderr)
+                usage()
+            num_cutoff = int(args.pop(0))
+        elif arg == '--age-time':
             if not args or args[0] == '--':
                 print('--age-time requires a date', file=sys.stderr)
                 usage()
