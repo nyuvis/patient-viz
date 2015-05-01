@@ -479,9 +479,10 @@ def printResult(cohort, out):
         print(c, file=out)
 
 def usage():
-    print('usage: {0} [-h] [-o <output>] -f <format> -c <config> -q <query> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
-    print('usage: {0} [-h] [-o <output>] -f <format> -c <config> --query-file <file> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [-o <output>] -f <format> -c <config> -q <query> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [-o <output>] -f <format> -c <config> --query-file <file> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('--debug: prints debug output', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
@@ -492,16 +493,9 @@ def usage():
 
 if __name__ == '__main__':
     output = '-'
-    settings = {
-        'delim': ',',
-        'quote': '"',
-        'filename': build_dictionary.globalSymbolsFile,
-        'ndc_prod': build_dictionary.productFile,
-        'ndc_package': build_dictionary.packageFile,
-        'icd9': build_dictionary.icd9File,
-        'ccs_diag': build_dictionary.ccs_diag_file,
-        'ccs_proc': build_dictionary.ccs_proc_file
-    }
+    settings = build_dictionary.defaultSettings
+    settings['delim'] = ','
+    settings['quote'] = '"'
     query = ""
     args = sys.argv[:]
     args.pop(0)
@@ -543,6 +537,8 @@ if __name__ == '__main__':
                 print('-c requires argument', file=sys.stderr)
                 usage()
             build_dictionary.readConfig(settings, args.pop(0))
+        elif arg == '--debug':
+            build_dictionary.debugOutput = True
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -552,8 +548,7 @@ if __name__ == '__main__':
         usage()
 
     build_dictionary.setPathCorrection('../')
-    build_dictionary.reportMissingEntries = False
-    build_dictionary.init()
+    build_dictionary.init(settings)
 
     allPaths = []
     while args:

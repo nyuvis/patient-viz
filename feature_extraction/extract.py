@@ -220,8 +220,9 @@ def printResult(vectors, header_list, header_counts, delim, quote, whitelist, ou
         print("", file=sys.stderr)
 
 def usage():
-    print('usage: {0} [-h] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('--debug: prints debug output', file=sys.stderr)
     print('--num-cutoff <number>: specifies the minimum number of occurrences for a column to appear in the output. default is {0}'.format(str(num_cutoff)), file=sys.stderr)
     print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
@@ -235,16 +236,9 @@ def usage():
 
 if __name__ == '__main__':
     output = '-'
-    settings = {
-        'delim': ',',
-        'quote': '"',
-        'filename': build_dictionary.globalSymbolsFile,
-        'ndc_prod': build_dictionary.productFile,
-        'ndc_package': build_dictionary.packageFile,
-        'icd9': build_dictionary.icd9File,
-        'ccs_diag': build_dictionary.ccs_diag_file,
-        'ccs_proc': build_dictionary.ccs_proc_file
-    }
+    settings = build_dictionary.defaultSettings
+    settings['delim'] = ','
+    settings['quote'] = '"'
     whitelist = None
     args = sys.argv[:]
     args.pop(0)
@@ -305,13 +299,15 @@ if __name__ == '__main__':
                 print('-c requires argument', file=sys.stderr)
                 usage()
             build_dictionary.readConfig(settings, args.pop(0))
+        elif arg == '--debug':
+            build_dictionary.debugOutput = True
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
 
     build_dictionary.setPathCorrection('../')
     build_dictionary.reportMissingEntries = False
-    build_dictionary.init()
+    build_dictionary.init(settings)
 
     allPaths = []
     while args:

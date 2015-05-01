@@ -165,12 +165,33 @@
       "parent": "", 
       "name": "Condition"
     }, 
+    "HIERARCHY.13.2.3": {
+      "alias": "HIERARCHY1323", 
+      "desc": "Other non-traumatic joint disorders [204.]", 
+      "id": "HIERARCHY.13.2.3", 
+      "parent": "HIERARCHY.13.2", 
+      "name": "Other non-traumatic joint disorders [204.]"
+    }, 
     "73399": {
       "unmapped": true, 
       "desc": "diagnosis 73399", 
       "id": "73399", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.9", 
       "name": "73399"
+    }, 
+    "HIERARCHY.13.3.2": {
+      "alias": "HIERARCHY1332", 
+      "desc": "Intervertebral disc disorders                                                                           -", 
+      "id": "HIERARCHY.13.3.2", 
+      "parent": "HIERARCHY.13.3", 
+      "name": "Intervertebral disc disorders                                                                           -"
+    }, 
+    "HIERARCHY.13.3.3": {
+      "alias": "HIERARCHY1333", 
+      "desc": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
+      "id": "HIERARCHY.13.3.3", 
+      "parent": "HIERARCHY.13", 
+      "name": "Spondylosis; intervertebral disc disorders; other back problems [205.]"
     }, 
     "78605": {
       "unmapped": true, 
@@ -197,8 +218,15 @@
       "unmapped": true, 
       "desc": "diagnosis 71660", 
       "id": "71660", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.2.3", 
       "name": "71660"
+    }, 
+    "HIERARCHY.13.3.3.1": {
+      "alias": "HIERARCHY13331", 
+      "desc": "Cervical radiculitis                                                                                    -", 
+      "id": "HIERARCHY.13.3.3.1", 
+      "parent": "HIERARCHY.13.3.3", 
+      "name": "Cervical radiculitis                                                                                    -"
     }, 
     "2809": {
       "unmapped": true, 
@@ -207,33 +235,100 @@
       "parent": "", 
       "name": "2809"
     }, 
+    "HIERARCHY.13.3.3.7": {
+      "alias": "HIERARCHY13337", 
+      "desc": "Other back pain and disorders                                                                           -", 
+      "id": "HIERARCHY.13.3.3.7", 
+      "parent": "HIERARCHY.13.3.3", 
+      "name": "Other back pain and disorders                                                                           -"
+    }, 
+    "HIERARCHY.5": {
+      "alias": "HIERARCHY5", 
+      "desc": "Mental illness", 
+      "id": "HIERARCHY.5", 
+      "parent": "", 
+      "name": "Mental illness"
+    }, 
+    "HIERARCHY.7": {
+      "alias": "HIERARCHY7", 
+      "desc": "Diseases of the circulatory system", 
+      "id": "HIERARCHY.7", 
+      "parent": "", 
+      "name": "Diseases of the circulatory system"
+    }, 
+    "HIERARCHY.7.2.4.5": {
+      "alias": "HIERARCHY7245", 
+      "desc": "Other forms of chronic heart disease                                                                    -", 
+      "id": "HIERARCHY.7.2.4.5", 
+      "parent": "HIERARCHY.7.2.4", 
+      "name": "Other forms of chronic heart disease                                                                    -"
+    }, 
     "71891": {
       "unmapped": true, 
       "desc": "diagnosis 71891", 
       "id": "71891", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.2.3", 
       "name": "71891"
     }, 
+    "HIERARCHY.17.1.9": {
+      "alias": "HIERARCHY1719", 
+      "desc": "Allergic reactions [253.]", 
+      "id": "HIERARCHY.17.1.9", 
+      "parent": "HIERARCHY.17.1", 
+      "name": "Allergic reactions [253.]"
+    }, 
     "41189": {
-      "unmapped": true, 
-      "desc": "diagnosis 41189", 
+      "desc": "Other acute and subacute forms of ischemic heart disease", 
       "id": "41189", 
-      "parent": "", 
-      "name": "41189"
+      "parent": "HIERARCHY.7.2.4.3", 
+      "name": "Other acute and subacute forms of ischemic heart disease"
     }, 
     "42760": {
-      "unmapped": true, 
-      "desc": "diagnosis 42760", 
+      "desc": "Premature beats", 
       "id": "42760", 
-      "parent": "", 
-      "name": "42760"
+      "parent": "HIERARCHY.7.2.9.5", 
+      "name": "Premature beats"
+    }, 
+    "HIERARCHY.7.2.9.5": {
+      "alias": "HIERARCHY7295", 
+      "desc": "Premature beats                                                                                         -", 
+      "id": "HIERARCHY.7.2.9.5", 
+      "parent": "HIERARCHY.7.2.9", 
+      "name": "Premature beats                                                                                         -"
+    }, 
+    "HIERARCHY.7.2.9.2": {
+      "alias": "HIERARCHY7292", 
+      "desc": "Paroxysmal ventricular tachycardia                                                                      -", 
+      "id": "HIERARCHY.7.2.9.2", 
+      "parent": "HIERARCHY.7.2.9", 
+      "name": "Paroxysmal ventricular tachycardia                                                                      -"
+    }, 
+    "HIERARCHY.7.2.9.3": {
+      "alias": "HIERARCHY7293", 
+      "desc": "Atrial fibrillation                                                                                     -", 
+      "id": "HIERARCHY.7.2.9.3", 
+      "parent": "HIERARCHY.7.2.9", 
+      "name": "Atrial fibrillation                                                                                     -"
+    }, 
+    "HIERARCHY.13.9": {
+      "alias": "HIERARCHY139", 
+      "desc": "Other bone disease and musculoskeletal deformities [212.]", 
+      "id": "HIERARCHY.13.9", 
+      "parent": "HIERARCHY.13", 
+      "name": "Other bone disease and musculoskeletal deformities [212.]"
+    }, 
+    "HIERARCHY.13.8": {
+      "alias": "HIERARCHY138", 
+      "desc": "Other connective tissue disease [211.]", 
+      "id": "HIERARCHY.13.8", 
+      "parent": "HIERARCHY.13", 
+      "name": "Other connective tissue disease [211.]"
     }, 
     "4271": {
-      "unmapped": true, 
-      "desc": "diagnosis 4271", 
+      "desc": "Paroxysmal ventricular tachycardia", 
       "id": "4271", 
-      "parent": "", 
-      "name": "4271"
+      "parent": "HIERARCHY.7.2.9.2", 
+      "name": "Paroxysmal ventricular tachycardia"
     }, 
     "2724": {
       "unmapped": true, 
@@ -249,82 +344,134 @@
       "parent": "", 
       "name": "25000"
     }, 
+    "HIERARCHY.7.2.4.3": {
+      "alias": "HIERARCHY7243", 
+      "desc": "Other acute and subacute forms of ischemic heart disease                                                -", 
+      "id": "HIERARCHY.7.2.4.3", 
+      "parent": "HIERARCHY.7.2.4", 
+      "name": "Other acute and subacute forms of ischemic heart disease                                                -"
+    }, 
+    "HIERARCHY.13.3": {
+      "alias": "HIERARCHY133", 
+      "desc": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
+      "id": "HIERARCHY.13.3", 
+      "parent": "HIERARCHY.13", 
+      "name": "Spondylosis; intervertebral disc disorders; other back problems [205.]"
+    }, 
+    "HIERARCHY.13.2": {
+      "alias": "HIERARCHY132", 
+      "desc": "Non-traumatic joint disorders", 
+      "id": "HIERARCHY.13.2", 
+      "parent": "HIERARCHY.13", 
+      "name": "Non-traumatic joint disorders"
+    }, 
+    "HIERARCHY.7.2.4": {
+      "alias": "HIERARCHY724", 
+      "desc": "Coronary atherosclerosis and other heart disease [101.]", 
+      "id": "HIERARCHY.7.2.4", 
+      "parent": "HIERARCHY.7.2", 
+      "name": "Coronary atherosclerosis and other heart disease [101.]"
+    }, 
     "7234": {
       "unmapped": true, 
       "desc": "diagnosis 7234", 
       "id": "7234", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.3.3.1", 
       "name": "7234"
     }, 
     "7231": {
       "unmapped": true, 
       "desc": "diagnosis 7231", 
       "id": "7231", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.3.3.7", 
       "name": "7231"
     }, 
     "3310": {
       "unmapped": true, 
       "desc": "diagnosis 3310", 
       "id": "3310", 
-      "parent": "", 
+      "parent": "HIERARCHY.5.4", 
       "name": "3310"
     }, 
     "4462": {
-      "unmapped": true, 
-      "desc": "diagnosis 4462", 
+      "desc": "Hypersensitivity angiitis", 
       "id": "4462", 
       "parent": "", 
-      "name": "4462"
+      "name": "Hypersensitivity angiitis"
     }, 
     "72885": {
       "unmapped": true, 
       "desc": "diagnosis 72885", 
       "id": "72885", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.8", 
       "name": "72885"
     }, 
     "7080": {
       "unmapped": true, 
       "desc": "diagnosis 7080", 
       "id": "7080", 
-      "parent": "", 
+      "parent": "HIERARCHY.17.1.9", 
       "name": "7080"
     }, 
     "72292": {
       "unmapped": true, 
       "desc": "diagnosis 72292", 
       "id": "72292", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.3.2", 
       "name": "72292"
     }, 
     "4299": {
-      "unmapped": true, 
-      "desc": "diagnosis 4299", 
+      "desc": "Unspecified", 
       "id": "4299", 
-      "parent": "", 
-      "name": "4299"
+      "parent": "HIERARCHY.7.2.7", 
+      "name": "Unspecified"
+    }, 
+    "HIERARCHY.7.2": {
+      "alias": "HIERARCHY72", 
+      "desc": "Diseases of the heart", 
+      "id": "HIERARCHY.7.2", 
+      "parent": "HIERARCHY.7", 
+      "name": "Diseases of the heart"
+    }, 
+    "HIERARCHY.17.1": {
+      "alias": "HIERARCHY171", 
+      "desc": "Symptoms; signs; and ill-defined conditions", 
+      "id": "HIERARCHY.17.1", 
+      "parent": "HIERARCHY.17", 
+      "name": "Symptoms; signs; and ill-defined conditions"
     }, 
     "4292": {
-      "unmapped": true, 
-      "desc": "diagnosis 4292", 
+      "desc": "Cardiovascular disease, unspecified", 
       "id": "4292", 
-      "parent": "", 
-      "name": "4292"
+      "parent": "HIERARCHY.7.2.7", 
+      "name": "Cardiovascular disease, unspecified"
+    }, 
+    "HIERARCHY.5.4": {
+      "alias": "HIERARCHY54", 
+      "desc": "Delirium, dementia, and amnestic and other cognitive disorders [653.]", 
+      "id": "HIERARCHY.5.4", 
+      "parent": "HIERARCHY.5", 
+      "name": "Delirium, dementia, and amnestic and other cognitive disorders [653.]"
+    }, 
+    "HIERARCHY.7.2.9": {
+      "alias": "HIERARCHY729", 
+      "desc": "Cardiac dysrhythmias [106.]", 
+      "id": "HIERARCHY.7.2.9", 
+      "parent": "HIERARCHY.7.2", 
+      "name": "Cardiac dysrhythmias [106.]"
     }, 
     "72232": {
       "unmapped": true, 
       "desc": "diagnosis 72232", 
       "id": "72232", 
-      "parent": "", 
+      "parent": "HIERARCHY.13.3.2", 
       "name": "72232"
     }, 
     "412": {
-      "unmapped": true, 
-      "desc": "diagnosis 412", 
+      "desc": "Old myocardial infarction", 
       "id": "412", 
-      "parent": "", 
-      "name": "412"
+      "parent": "HIERARCHY.7.2.4.5", 
+      "name": "Old myocardial infarction"
     }, 
     "78052": {
       "unmapped": true, 
@@ -334,20 +481,39 @@
       "name": "78052"
     }, 
     "42731": {
-      "unmapped": true, 
-      "desc": "diagnosis 42731", 
+      "desc": "Atrial fibrillation and flutter", 
       "id": "42731", 
+      "parent": "HIERARCHY.7.2.9.3", 
+      "name": "Atrial fibrillation and flutter"
+    }, 
+    "HIERARCHY.17": {
+      "alias": "HIERARCHY17", 
+      "desc": "Symptoms; signs; and ill-defined conditions and factors influencing health status", 
+      "id": "HIERARCHY.17", 
       "parent": "", 
-      "name": "42731"
+      "name": "Symptoms; signs; and ill-defined conditions and factors influencing health status"
+    }, 
+    "HIERARCHY.7.2.7": {
+      "alias": "HIERARCHY727", 
+      "desc": "Other and ill-defined heart disease [104.]", 
+      "id": "HIERARCHY.7.2.7", 
+      "parent": "HIERARCHY.7.2", 
+      "name": "Other and ill-defined heart disease [104.]"
+    }, 
+    "HIERARCHY.13": {
+      "alias": "HIERARCHY13", 
+      "desc": "Diseases of the musculoskeletal system and connective tissue", 
+      "id": "HIERARCHY.13", 
+      "parent": "", 
+      "name": "Diseases of the musculoskeletal system and connective tissue"
     }
   }, 
   "provider": {
     "02": {
-      "unmapped": true, 
-      "desc": "provider 02", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
       "id": "02", 
       "parent": "", 
-      "name": "02"
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
     }, 
     "": {
       "color": "#e6ab02", 
@@ -369,11 +535,10 @@
       "name": "3100YQ"
     }, 
     "00": {
-      "unmapped": true, 
-      "desc": "provider 00", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
       "id": "00", 
       "parent": "", 
-      "name": "00"
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X"
     }
   }
 }

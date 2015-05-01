@@ -36,12 +36,12 @@
       "parent": "", 
       "name": "HIERARCHY.13.8"
     }, 
-    "HIERARCHY.6.9": {
+    "HIERARCHY.17.2.4": {
       "unmapped": true, 
-      "desc": "diagnosis HIERARCHY.6.9", 
-      "id": "HIERARCHY.6.9", 
+      "desc": "diagnosis HIERARCHY.17.2.4", 
+      "id": "HIERARCHY.17.2.4", 
       "parent": "", 
-      "name": "HIERARCHY.6.9"
+      "name": "HIERARCHY.17.2.4"
     }, 
     "HIERARCHY.13.3.2": {
       "unmapped": true, 
@@ -63,13 +63,6 @@
       "id": "2720", 
       "parent": "", 
       "name": "2720"
-    }, 
-    "HIERARCHY.3.2": {
-      "unmapped": true, 
-      "desc": "diagnosis HIERARCHY.3.2", 
-      "id": "HIERARCHY.3.2", 
-      "parent": "", 
-      "name": "HIERARCHY.3.2"
     }, 
     "HIERARCHY.3.1": {
       "unmapped": true, 
@@ -99,19 +92,19 @@
       "parent": "", 
       "name": "HIERARCHY.5.4"
     }, 
-    "HIERARCHY.17.2.4": {
+    "HIERARCHY.6.9": {
       "unmapped": true, 
-      "desc": "diagnosis HIERARCHY.17.2.4", 
-      "id": "HIERARCHY.17.2.4", 
+      "desc": "diagnosis HIERARCHY.6.9", 
+      "id": "HIERARCHY.6.9", 
       "parent": "", 
-      "name": "HIERARCHY.17.2.4"
+      "name": "HIERARCHY.6.9"
     }, 
-    "HIERARCHY.7.2.9": {
+    "HIERARCHY.8": {
       "unmapped": true, 
-      "desc": "diagnosis HIERARCHY.7.2.9", 
-      "id": "HIERARCHY.7.2.9", 
+      "desc": "diagnosis HIERARCHY.8", 
+      "id": "HIERARCHY.8", 
       "parent": "", 
-      "name": "HIERARCHY.7.2.9"
+      "name": "HIERARCHY.8"
     }, 
     "HIERARCHY.16": {
       "unmapped": true, 
@@ -119,6 +112,20 @@
       "id": "HIERARCHY.16", 
       "parent": "", 
       "name": "HIERARCHY.16"
+    }, 
+    "HIERARCHY.5": {
+      "unmapped": true, 
+      "desc": "diagnosis HIERARCHY.5", 
+      "id": "HIERARCHY.5", 
+      "parent": "", 
+      "name": "HIERARCHY.5"
+    }, 
+    "HIERARCHY.7.2.9": {
+      "unmapped": true, 
+      "desc": "diagnosis HIERARCHY.7.2.9", 
+      "id": "HIERARCHY.7.2.9", 
+      "parent": "", 
+      "name": "HIERARCHY.7.2.9"
     }, 
     "25000": {
       "unmapped": true, 
@@ -133,6 +140,13 @@
       "id": "2724", 
       "parent": "", 
       "name": "2724"
+    }, 
+    "HIERARCHY.3": {
+      "unmapped": true, 
+      "desc": "diagnosis HIERARCHY.3", 
+      "id": "HIERARCHY.3", 
+      "parent": "", 
+      "name": "HIERARCHY.3"
     }
   }, 
   "provider": {

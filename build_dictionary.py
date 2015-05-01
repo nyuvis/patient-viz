@@ -19,7 +19,7 @@ import os.path
 
 import util
 
-reportMissingEntries = False # only for debugging
+debugOutput = False
 
 def toEntry(id, pid, name, desc, alias=None):
     res = {
@@ -51,7 +51,21 @@ def createEntry(dict, type, id, onlyAddMapped=False):
         if aid not in dict[type]:
             createEntry(dict, type, aid, True)
 
-def init():
+def init(settings):
+    global globalSymbolsFile
+    global icd9File
+    global pntFile
+    global ccs_diag_file
+    global ccs_proc_file
+    global productFile
+    global packageFile
+    globalSymbolsFile = settings['filename']
+    icd9File = settings['icd9']
+    pntFile = settings['pnt']
+    ccs_diag_file = settings['ccs_diag']
+    ccs_proc_file = settings['ccs_proc']
+    productFile = settings['ndc_prod']
+    packageFile = settings['ndc_package']
     for key in initLookup.keys():
         symbolTable[key] = initLookup[key]()
 
@@ -126,8 +140,8 @@ def initPrescribed():
             ptn = row['PRODUCTTYPENAME'].strip()
             prop = row['PROPRIETARYNAME'].strip()
             nonp = row['NONPROPRIETARYNAME'].strip()
-            subst = row['SUBSTANCENAME'].strip()
-            pharm = row['PHARM_CLASSES'].strip()
+            subst = row['SUBSTANCENAME'].strip() if row['SUBSTANCENAME'] is not None else ""
+            pharm = row['PHARM_CLASSES'].strip() if row['PHARM_CLASSES'] is not None else ""
             if uid in uidLookup:
                 print("warning duplicate uid: " + uid, file=sys.stderr)
             uidLookup[uid] = {
@@ -251,8 +265,9 @@ def initProcedure():
 ### unknown ###
 
 def createUnknownEntry(_, type, id, pid = ""):
-    if reportMissingEntries:
-        print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
+    # TODO remove: can be seen by attribute unmapped
+    #if debugOutput:
+    #    print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
     res = toEntry(id, pid, id, type + " " + id)
     res["unmapped"] = True
     return res
@@ -436,7 +451,10 @@ def setPathCorrection(pc):
     path_correction = pc
 
 def getFile(file):
-    return os.path.join(path_correction, file)
+    res = os.path.join(path_correction, file)
+    if debugOutput:
+        print("exists: {0} file: {1}".format(repr(os.path.isfile(res)), repr(os.path.abspath(res))), file=sys.stderr)
+    return res
 
 convertLookup = {
     "prescribed": createPrescribedEntry,
@@ -462,6 +480,8 @@ def readConfig(settings, file):
     if file == '-':
         return
     config = {}
+    if debugOutput:
+        print("config exists: {0} file: {1}".format(repr(os.path.isfile(file)), repr(os.path.abspath(file))), file=sys.stderr)
     if os.path.isfile(file):
         with open(file, 'r') as input:
             config = json.loads(input.read())
@@ -471,7 +491,8 @@ def readConfig(settings, file):
             print(json.dumps(settings, indent=2), file=output)
 
 def usage():
-    print("{0}: -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
+    print("{0}: [--debug] -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
+    print("--debug: prints debug information", file=sys.stderr)
     print("-p <file>: specify patient json file. '-' uses standard in", file=sys.stderr)
     print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
@@ -479,16 +500,18 @@ def usage():
     print("-h|--help: prints this help.", file=sys.stderr)
     sys.exit(1)
 
+defaultSettings = {
+    'filename': globalSymbolsFile,
+    'ndc_prod': productFile,
+    'ndc_package': packageFile,
+    'icd9': icd9File,
+    'pnt': pntFile,
+    'ccs_diag': ccs_diag_file,
+    'ccs_proc': ccs_proc_file,
+}
+
 def interpretArgs():
-    settings = {
-        'filename': globalSymbolsFile,
-        'ndc_prod': productFile,
-        'ndc_package': packageFile,
-        'icd9': icd9File,
-        'pnt': pntFile,
-        'ccs_diag': ccs_diag_file,
-        'ccs_proc': ccs_proc_file,
-    }
+    settings = defaultSettings
     info = {
         'mid': globalMid,
         'output': '-'
@@ -518,6 +541,8 @@ def interpretArgs():
         elif val == '--lookup':
             lookupMode = True
             break
+        elif val == '--debug':
+            debugOutput = True
         else:
             print('illegal argument '+val, file=sys.stderr)
             usage()
@@ -525,14 +550,7 @@ def interpretArgs():
 
 if __name__ == '__main__':
     (settings, info, lookupMode, rest) = interpretArgs()
-    globalSymbolsFile = settings['filename']
-    icd9File = settings['icd9']
-    pntFile = settings['pnt']
-    ccs_diag_file = settings['ccs_diag']
-    ccs_proc_file = settings['ccs_proc']
-    productFile = settings['ndc_prod']
-    packageFile = settings['ndc_package']
-    init()
+    init(settings)
     if lookupMode:
         dict = {}
 
