@@ -7,6 +7,22 @@ Created on 2015-04-10
 """
 import sys
 import os.path
+import time
+from datetime import datetime, timedelta
+
+def _mktime(dt):
+    try:
+        return int(time.mktime(dt.timetuple()))
+    except OverflowError:
+        epoch = datetime(1970, 1, 1)
+        diff = dt - epoch
+        return diff.days * 24 * 3600 + diff.seconds
+
+def toTime(s):
+    return _mktime(datetime.strptime(s, "%Y%m%d"))
+
+def nextDay(stamp):
+    return _mktime(datetime.fromtimestamp(stamp) + timedelta(days = 1))
 
 class StdOutClose(Exception): pass
 

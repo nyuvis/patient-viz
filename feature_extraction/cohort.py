@@ -22,9 +22,6 @@ import build_dictionary
 import cms_get_patient
 import util
 
-def toTime(s):
-    return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
-
 class Range:
     """TODO"""
     def __init__(self, start, end):
@@ -150,7 +147,7 @@ def parseQuery(query):
     def date():
         lit = literal()
         try:
-            return toTime(lit)
+            return util.toTime(lit)
         except Exception, e:
             err(State.pos - len(lit), State.pos, "cannot convert to date: " + str(e))
 
@@ -357,7 +354,7 @@ def parseQuery(query):
 """ FIXME currently not in use
 def toAge(s):
     # TODO there could be a more precise way
-    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(toTime(str(s) + "0101")).year
+    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(util.toTime(str(s) + "0101")).year
 """
 
 def handleRow(row, id, eventCache, infoCache):

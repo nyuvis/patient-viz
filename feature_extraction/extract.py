@@ -30,12 +30,9 @@ ignore = {
 }
 num_cutoff = 500
 
-def toTime(s):
-    return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
-
 def toAge(s):
     # TODO there could be a more precise way
-    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(toTime(str(s) + "0101")).year
+    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(util.toTime(str(s) + "0101")).year
 
 def handleRow(row, id, eventCache, infoCache):
     obj = {
@@ -257,17 +254,17 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('--age-time requires a date', file=sys.stderr)
                 usage()
-            age_time = toTime(args.pop(0))
+            age_time = util.toTime(args.pop(0))
         elif arg == '--from':
             if not args or args[0] == '--':
                 print('--from requires a date', file=sys.stderr)
                 usage()
-            from_time = toTime(args.pop(0))
+            from_time = util.toTime(args.pop(0))
         elif arg == '--to':
             if not args or args[0] == '--':
                 print('--to requires a date', file=sys.stderr)
                 usage()
-            to_time = toTime(args.pop(0))
+            to_time = util.toTime(args.pop(0))
         elif arg == '-w':
             if not args or args[0] == '--':
                 print('-w requires whitelist file', file=sys.stderr)

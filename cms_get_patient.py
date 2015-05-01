@@ -6,8 +6,6 @@ Created on Tue Jan 20 14:10:00 2015
 @author: joschi
 """
 from __future__ import print_function
-import time as time_lib
-from datetime import datetime, timedelta
 import collections
 import os
 import sys
@@ -53,12 +51,6 @@ gender_map = {
     "M": "M",
     "W": "W"
 }
-
-def toTime(s):
-    return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
-
-def nextDay(stamp):
-    return int(time_lib.mktime((datetime.fromtimestamp(stamp) + timedelta(days = 1)).timetuple()))
 
 def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     for info in obj["info"]:
@@ -173,11 +165,11 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                 return
             fromDate = toDate
             toDate = ''
-        curDate = toTime(fromDate)
-        endDate = toTime(toDate) if toDate != '' else curDate
+        curDate = util.toTime(fromDate)
+        endDate = util.toTime(toDate) if toDate != '' else curDate
         while curDate <= endDate:
             handleStatusEvent(curDate, STATUS_IN)
-            curDate = nextDay(curDate)
+            curDate = util.nextDay(curDate)
 
     handleKey(row, "admission", MODE_OPTIONAL, lambda in_from:
         handleKey(row, "discharge", MODE_OPTIONAL, lambda in_to:
@@ -191,8 +183,8 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                 return
             fromDate = toDate
             toDate = ''
-        curDate = toTime(fromDate)
-        endDate = toTime(toDate) if toDate != '' else curDate
+        curDate = util.toTime(fromDate)
+        endDate = util.toTime(toDate) if toDate != '' else curDate
         while curDate <= endDate:
             for event in handleEvent(row, claim_id):
                 event['time'] = curDate
@@ -204,7 +196,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
             handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
                 handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
             )
-            curDate = nextDay(curDate)
+            curDate = util.nextDay(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
             handleKey(row, "claim_to", MODE_DEFAULT, lambda toDate:
@@ -215,7 +207,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     def emitNDC(date, ndc):
         # TODO add provider/physician here as well?
         event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
-        curDate = toTime(date)
+        curDate = util.toTime(date)
         event['time'] = curDate
         handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
             handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
@@ -234,7 +226,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     def emitLab(date, loinc, result, resultFlag):
         # TODO add provider/physician here as well?
         event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
-        event['time'] = toTime(date)
+        event['time'] = util.toTime(date)
         obj['events'].append(event)
 
     handleKey(row, "lab_date", MODE_OPTIONAL, lambda date:
@@ -301,10 +293,10 @@ def processLine(obj, line):
     else:
         sps = sp[1].split('-', 1)
         o = {
-            "from": toTime(sps[0])
+            "from": util.toTime(sps[0])
         }
         if len(sps) > 1:
-            o["to"] = toTime(sps[1])
+            o["to"] = util.toTime(sps[1])
         if len(sp) > 2:
             o["class"] = sp[2]
         obj["v_spans"].append(o)
@@ -420,13 +412,13 @@ if __name__ == '__main__':
                 if curStatus == STATUS_IN:
                     obj["v_spans"].append({
                         "from": curInStart,
-                        "to": nextDay(curInEnd),
+                        "to": util.nextDay(curInEnd),
                         "class": "in_hospital"
                     })
                 elif curStatus == STATUS_PROF:
                     obj["v_spans"].append({
                         "from": curInStart,
-                        "to": nextDay(curInEnd),
+                        "to": util.nextDay(curInEnd),
                         "class": "professional"
                     })
                 curInStart = None
