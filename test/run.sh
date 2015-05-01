@@ -41,6 +41,8 @@ convert_patient() {
   ../build_dictionary.py -p "${OUTPUT}/${id}.json.tmp" -c "${config}" -o "${OUTPUT}/dictionary.json.tmp" 2> $ERR_FILE
   check $?
   check_file "${OUTPUT}/dictionary.json" "${OUTPUT}/dictionary.json.tmp"
+  rm -- "${OUTPUT}/${id}.json.tmp"
+  rm -- "${OUTPUT}/dictionary.json.tmp"
 }
 
 create_predictive_model() {
@@ -59,6 +61,11 @@ create_predictive_model() {
   head -n 1 "${OUTPUT}/output.csv.tmp" | sed "s/,/ /g" | ../build_dictionary.py -o "${OUTPUT}/headers.json.tmp" -c "${config}" --lookup -
   check $?
   check_file "${OUTPUT}/headers.json" "${OUTPUT}/headers.json.tmp"
+  rm -- "${OUTPUT}/cohort_cases.txt.tmp"
+  rm -- "${OUTPUT}/cohort_control.txt.tmp"
+  rm -- "${OUTPUT}/cohort.txt.tmp"
+  rm -- "${OUTPUT}/output.csv.tmp"
+  rm -- "${OUTPUT}/headers.json.tmp"
 }
 
 convert_patient "8CDC0C5ACBDFC9CE"

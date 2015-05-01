@@ -2,10 +2,10 @@
   "physician": {
     "": {
       "color": "#fccde5", 
-      "name": "Physician", 
+      "desc": "Physician", 
       "id": "", 
       "parent": "", 
-      "desc": "Physician"
+      "name": "Physician"
     }, 
     "5310045804": {
       "unmapped": true, 
@@ -35,19 +35,19 @@
       "parent": "", 
       "name": "4596946292"
     }, 
-    "3294034755": {
-      "unmapped": true, 
-      "desc": "physician 3294034755", 
-      "id": "3294034755", 
-      "parent": "", 
-      "name": "3294034755"
-    }, 
     "2949548858": {
       "unmapped": true, 
       "desc": "physician 2949548858", 
       "id": "2949548858", 
       "parent": "", 
       "name": "2949548858"
+    }, 
+    "3294034755": {
+      "unmapped": true, 
+      "desc": "physician 3294034755", 
+      "id": "3294034755", 
+      "parent": "", 
+      "name": "3294034755"
     }, 
     "3663078548": {
       "unmapped": true, 
@@ -106,48 +106,64 @@
       "name": "5543357769"
     }
   }, 
-  "provider": {
-    "02": {
-      "unmapped": true, 
-      "name": "02", 
-      "id": "02", 
-      "parent": "", 
-      "desc": "provider 02"
-    }, 
+  "prescribed": {
     "": {
-      "color": "#e6ab02", 
-      "name": "Provider", 
+      "color": "#eb9adb", 
+      "desc": "Prescribed Medication", 
       "id": "", 
       "parent": "", 
-      "desc": "Provider"
+      "name": "Prescribed Medication"
     }, 
-    "3902UU": {
-      "desc": "Provider Number: 3902UU", 
-      "id": "3902UU", 
-      "parent": "02", 
-      "name": "3902UU"
-    }, 
-    "3100YQ": {
-      "desc": "Provider Number: 3100YQ", 
-      "id": "3100YQ", 
-      "parent": "00", 
-      "name": "3100YQ"
-    }, 
-    "00": {
+    "36987152404": {
       "unmapped": true, 
-      "name": "00", 
-      "id": "00", 
+      "desc": "prescribed 36987152404", 
+      "id": "36987152404", 
+      "parent": "369871524", 
+      "name": "36987152404"
+    }, 
+    "006771694": {
+      "unmapped": true, 
+      "desc": "prescribed 006771694", 
+      "id": "006771694", 
       "parent": "", 
-      "desc": "provider 00"
+      "name": "006771694"
+    }, 
+    "590120411": {
+      "unmapped": true, 
+      "desc": "prescribed 590120411", 
+      "id": "590120411", 
+      "parent": "", 
+      "name": "590120411"
+    }, 
+    "00677169401": {
+      "unmapped": true, 
+      "desc": "prescribed 00677169401", 
+      "id": "00677169401", 
+      "parent": "006771694", 
+      "name": "00677169401"
+    }, 
+    "369871524": {
+      "unmapped": true, 
+      "desc": "prescribed 369871524", 
+      "id": "369871524", 
+      "parent": "", 
+      "name": "369871524"
+    }, 
+    "59012041141": {
+      "unmapped": true, 
+      "desc": "prescribed 59012041141", 
+      "id": "59012041141", 
+      "parent": "590120411", 
+      "name": "59012041141"
     }
   }, 
   "diagnosis": {
     "": {
       "color": "#4daf4a", 
-      "name": "Condition", 
+      "desc": "Condition", 
       "id": "", 
       "parent": "", 
-      "desc": "Condition"
+      "name": "Condition"
     }, 
     "73399": {
       "unmapped": true, 
@@ -325,55 +341,39 @@
       "name": "42731"
     }
   }, 
-  "prescribed": {
+  "provider": {
+    "02": {
+      "unmapped": true, 
+      "desc": "provider 02", 
+      "id": "02", 
+      "parent": "", 
+      "name": "02"
+    }, 
     "": {
-      "color": "#eb9adb", 
-      "name": "Prescribed Medication", 
+      "color": "#e6ab02", 
+      "desc": "Provider", 
       "id": "", 
       "parent": "", 
-      "desc": "Prescribed Medication"
+      "name": "Provider"
     }, 
-    "36987152404": {
-      "unmapped": true, 
-      "desc": "prescribed 36987152404", 
-      "id": "36987152404", 
-      "parent": "369871524", 
-      "name": "36987152404"
+    "3902UU": {
+      "desc": "Provider Number: 3902UU", 
+      "id": "3902UU", 
+      "parent": "02", 
+      "name": "3902UU"
     }, 
-    "006771694": {
+    "3100YQ": {
+      "desc": "Provider Number: 3100YQ", 
+      "id": "3100YQ", 
+      "parent": "00", 
+      "name": "3100YQ"
+    }, 
+    "00": {
       "unmapped": true, 
-      "name": "006771694", 
-      "id": "006771694", 
+      "desc": "provider 00", 
+      "id": "00", 
       "parent": "", 
-      "desc": "prescribed 006771694"
-    }, 
-    "590120411": {
-      "unmapped": true, 
-      "name": "590120411", 
-      "id": "590120411", 
-      "parent": "", 
-      "desc": "prescribed 590120411"
-    }, 
-    "00677169401": {
-      "unmapped": true, 
-      "desc": "prescribed 00677169401", 
-      "id": "00677169401", 
-      "parent": "006771694", 
-      "name": "00677169401"
-    }, 
-    "369871524": {
-      "unmapped": true, 
-      "name": "369871524", 
-      "id": "369871524", 
-      "parent": "", 
-      "desc": "prescribed 369871524"
-    }, 
-    "59012041141": {
-      "unmapped": true, 
-      "desc": "prescribed 59012041141", 
-      "id": "59012041141", 
-      "parent": "590120411", 
-      "name": "59012041141"
+      "name": "00"
     }
   }
 }
