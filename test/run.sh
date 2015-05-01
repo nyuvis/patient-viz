@@ -28,7 +28,7 @@ check() {
 check_file() {
   diff $1 $2
   if [ $? -ne 0 ]; then
-    echo "$1 doesn't match $2"
+    echo "^ $1 doesn't match $2 ^"
     exit 3
   fi
 }
@@ -38,6 +38,9 @@ convert_patient() {
   ../cms_get_patient.py -p "${id}" -f "${format}" -o "${OUTPUT}/${id}.json.tmp" -c "${style_classes}" -- "${CMS_DIR}" 2> $ERR_FILE
   check $?
   check_file "${OUTPUT}/${id}.json" "${OUTPUT}/${id}.json.tmp"
+  ../build_dictionary.py -p "${OUTPUT}/${id}.json.tmp" -c "${config}" -o "${OUTPUT}/dictionary.json.tmp" 2> $ERR_FILE
+  check $?
+  check_file "${OUTPUT}/dictionary.json" "${OUTPUT}/dictionary.json.tmp"
 }
 
 create_predictive_model() {
@@ -53,6 +56,9 @@ create_predictive_model() {
   ${FEATURE_EXTRACT}/extract.py -w "${OUTPUT}/cohort.txt.tmp" --num-cutoff 1 --age-time 20100101 --to 20100101 -o "${OUTPUT}/output.csv.tmp" -f "${format}" -c "${config}" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/output.csv" "${OUTPUT}/output.csv.tmp"
+  head -n 1 "${OUTPUT}/output.csv.tmp" | sed "s/,/ /g" | ../build_dictionary.py -o "${OUTPUT}/headers.json.tmp" -c "${config}" --lookup -
+  check $?
+  check_file "${OUTPUT}/headers.json" "${OUTPUT}/headers.json.tmp"
 }
 
 convert_patient "8CDC0C5ACBDFC9CE"

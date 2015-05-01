@@ -1,0 +1,379 @@
+{
+  "physician": {
+    "": {
+      "color": "#fccde5", 
+      "name": "Physician", 
+      "id": "", 
+      "parent": "", 
+      "desc": "Physician"
+    }, 
+    "5310045804": {
+      "unmapped": true, 
+      "desc": "physician 5310045804", 
+      "id": "5310045804", 
+      "parent": "", 
+      "name": "5310045804"
+    }, 
+    "0518849399": {
+      "unmapped": true, 
+      "desc": "physician 0518849399", 
+      "id": "0518849399", 
+      "parent": "", 
+      "name": "0518849399"
+    }, 
+    "2803644204": {
+      "unmapped": true, 
+      "desc": "physician 2803644204", 
+      "id": "2803644204", 
+      "parent": "", 
+      "name": "2803644204"
+    }, 
+    "4596946292": {
+      "unmapped": true, 
+      "desc": "physician 4596946292", 
+      "id": "4596946292", 
+      "parent": "", 
+      "name": "4596946292"
+    }, 
+    "3294034755": {
+      "unmapped": true, 
+      "desc": "physician 3294034755", 
+      "id": "3294034755", 
+      "parent": "", 
+      "name": "3294034755"
+    }, 
+    "2949548858": {
+      "unmapped": true, 
+      "desc": "physician 2949548858", 
+      "id": "2949548858", 
+      "parent": "", 
+      "name": "2949548858"
+    }, 
+    "3663078548": {
+      "unmapped": true, 
+      "desc": "physician 3663078548", 
+      "id": "3663078548", 
+      "parent": "", 
+      "name": "3663078548"
+    }, 
+    "2414615937": {
+      "unmapped": true, 
+      "desc": "physician 2414615937", 
+      "id": "2414615937", 
+      "parent": "", 
+      "name": "2414615937"
+    }, 
+    "2595965533": {
+      "unmapped": true, 
+      "desc": "physician 2595965533", 
+      "id": "2595965533", 
+      "parent": "", 
+      "name": "2595965533"
+    }, 
+    "4644692002": {
+      "unmapped": true, 
+      "desc": "physician 4644692002", 
+      "id": "4644692002", 
+      "parent": "", 
+      "name": "4644692002"
+    }, 
+    "8290608621": {
+      "unmapped": true, 
+      "desc": "physician 8290608621", 
+      "id": "8290608621", 
+      "parent": "", 
+      "name": "8290608621"
+    }, 
+    "7687398245": {
+      "unmapped": true, 
+      "desc": "physician 7687398245", 
+      "id": "7687398245", 
+      "parent": "", 
+      "name": "7687398245"
+    }, 
+    "1051734277": {
+      "unmapped": true, 
+      "desc": "physician 1051734277", 
+      "id": "1051734277", 
+      "parent": "", 
+      "name": "1051734277"
+    }, 
+    "5543357769": {
+      "unmapped": true, 
+      "desc": "physician 5543357769", 
+      "id": "5543357769", 
+      "parent": "", 
+      "name": "5543357769"
+    }
+  }, 
+  "provider": {
+    "02": {
+      "unmapped": true, 
+      "name": "02", 
+      "id": "02", 
+      "parent": "", 
+      "desc": "provider 02"
+    }, 
+    "": {
+      "color": "#e6ab02", 
+      "name": "Provider", 
+      "id": "", 
+      "parent": "", 
+      "desc": "Provider"
+    }, 
+    "3902UU": {
+      "desc": "Provider Number: 3902UU", 
+      "id": "3902UU", 
+      "parent": "02", 
+      "name": "3902UU"
+    }, 
+    "3100YQ": {
+      "desc": "Provider Number: 3100YQ", 
+      "id": "3100YQ", 
+      "parent": "00", 
+      "name": "3100YQ"
+    }, 
+    "00": {
+      "unmapped": true, 
+      "name": "00", 
+      "id": "00", 
+      "parent": "", 
+      "desc": "provider 00"
+    }
+  }, 
+  "diagnosis": {
+    "": {
+      "color": "#4daf4a", 
+      "name": "Condition", 
+      "id": "", 
+      "parent": "", 
+      "desc": "Condition"
+    }, 
+    "73399": {
+      "unmapped": true, 
+      "desc": "diagnosis 73399", 
+      "id": "73399", 
+      "parent": "", 
+      "name": "73399"
+    }, 
+    "78605": {
+      "unmapped": true, 
+      "desc": "diagnosis 78605", 
+      "id": "78605", 
+      "parent": "", 
+      "name": "78605"
+    }, 
+    "03284": {
+      "unmapped": true, 
+      "desc": "diagnosis 03284", 
+      "id": "03284", 
+      "parent": "", 
+      "name": "03284"
+    }, 
+    "2842": {
+      "unmapped": true, 
+      "desc": "diagnosis 2842", 
+      "id": "2842", 
+      "parent": "", 
+      "name": "2842"
+    }, 
+    "71660": {
+      "unmapped": true, 
+      "desc": "diagnosis 71660", 
+      "id": "71660", 
+      "parent": "", 
+      "name": "71660"
+    }, 
+    "2809": {
+      "unmapped": true, 
+      "desc": "diagnosis 2809", 
+      "id": "2809", 
+      "parent": "", 
+      "name": "2809"
+    }, 
+    "71891": {
+      "unmapped": true, 
+      "desc": "diagnosis 71891", 
+      "id": "71891", 
+      "parent": "", 
+      "name": "71891"
+    }, 
+    "41189": {
+      "unmapped": true, 
+      "desc": "diagnosis 41189", 
+      "id": "41189", 
+      "parent": "", 
+      "name": "41189"
+    }, 
+    "42760": {
+      "unmapped": true, 
+      "desc": "diagnosis 42760", 
+      "id": "42760", 
+      "parent": "", 
+      "name": "42760"
+    }, 
+    "4271": {
+      "unmapped": true, 
+      "desc": "diagnosis 4271", 
+      "id": "4271", 
+      "parent": "", 
+      "name": "4271"
+    }, 
+    "2724": {
+      "unmapped": true, 
+      "desc": "diagnosis 2724", 
+      "id": "2724", 
+      "parent": "", 
+      "name": "2724"
+    }, 
+    "25000": {
+      "unmapped": true, 
+      "desc": "diagnosis 25000", 
+      "id": "25000", 
+      "parent": "", 
+      "name": "25000"
+    }, 
+    "7234": {
+      "unmapped": true, 
+      "desc": "diagnosis 7234", 
+      "id": "7234", 
+      "parent": "", 
+      "name": "7234"
+    }, 
+    "7231": {
+      "unmapped": true, 
+      "desc": "diagnosis 7231", 
+      "id": "7231", 
+      "parent": "", 
+      "name": "7231"
+    }, 
+    "3310": {
+      "unmapped": true, 
+      "desc": "diagnosis 3310", 
+      "id": "3310", 
+      "parent": "", 
+      "name": "3310"
+    }, 
+    "4462": {
+      "unmapped": true, 
+      "desc": "diagnosis 4462", 
+      "id": "4462", 
+      "parent": "", 
+      "name": "4462"
+    }, 
+    "72885": {
+      "unmapped": true, 
+      "desc": "diagnosis 72885", 
+      "id": "72885", 
+      "parent": "", 
+      "name": "72885"
+    }, 
+    "7080": {
+      "unmapped": true, 
+      "desc": "diagnosis 7080", 
+      "id": "7080", 
+      "parent": "", 
+      "name": "7080"
+    }, 
+    "72292": {
+      "unmapped": true, 
+      "desc": "diagnosis 72292", 
+      "id": "72292", 
+      "parent": "", 
+      "name": "72292"
+    }, 
+    "4299": {
+      "unmapped": true, 
+      "desc": "diagnosis 4299", 
+      "id": "4299", 
+      "parent": "", 
+      "name": "4299"
+    }, 
+    "4292": {
+      "unmapped": true, 
+      "desc": "diagnosis 4292", 
+      "id": "4292", 
+      "parent": "", 
+      "name": "4292"
+    }, 
+    "72232": {
+      "unmapped": true, 
+      "desc": "diagnosis 72232", 
+      "id": "72232", 
+      "parent": "", 
+      "name": "72232"
+    }, 
+    "412": {
+      "unmapped": true, 
+      "desc": "diagnosis 412", 
+      "id": "412", 
+      "parent": "", 
+      "name": "412"
+    }, 
+    "78052": {
+      "unmapped": true, 
+      "desc": "diagnosis 78052", 
+      "id": "78052", 
+      "parent": "", 
+      "name": "78052"
+    }, 
+    "42731": {
+      "unmapped": true, 
+      "desc": "diagnosis 42731", 
+      "id": "42731", 
+      "parent": "", 
+      "name": "42731"
+    }
+  }, 
+  "prescribed": {
+    "": {
+      "color": "#eb9adb", 
+      "name": "Prescribed Medication", 
+      "id": "", 
+      "parent": "", 
+      "desc": "Prescribed Medication"
+    }, 
+    "36987152404": {
+      "unmapped": true, 
+      "desc": "prescribed 36987152404", 
+      "id": "36987152404", 
+      "parent": "369871524", 
+      "name": "36987152404"
+    }, 
+    "006771694": {
+      "unmapped": true, 
+      "name": "006771694", 
+      "id": "006771694", 
+      "parent": "", 
+      "desc": "prescribed 006771694"
+    }, 
+    "590120411": {
+      "unmapped": true, 
+      "name": "590120411", 
+      "id": "590120411", 
+      "parent": "", 
+      "desc": "prescribed 590120411"
+    }, 
+    "00677169401": {
+      "unmapped": true, 
+      "desc": "prescribed 00677169401", 
+      "id": "00677169401", 
+      "parent": "006771694", 
+      "name": "00677169401"
+    }, 
+    "369871524": {
+      "unmapped": true, 
+      "name": "369871524", 
+      "id": "369871524", 
+      "parent": "", 
+      "desc": "prescribed 369871524"
+    }, 
+    "59012041141": {
+      "unmapped": true, 
+      "desc": "prescribed 59012041141", 
+      "id": "59012041141", 
+      "parent": "590120411", 
+      "name": "59012041141"
+    }
+  }
+}

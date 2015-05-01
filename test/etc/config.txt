@@ -1,10 +1,11 @@
 {
-  "ndc_package": "code/ndc/package.txt", 
-  "ccs_proc": "code/ccs/multi_proc.txt", 
-  "quote": "\"", 
-  "ndc_prod": "code/ndc/product.txt", 
-  "delim": ",", 
-  "icd9": "code/icd9/ucod.txt", 
-  "ccs_diag": "code/ccs/multi_diag.txt", 
-  "filename": "code/icd9/code_names.txt"
+  "ccs_proc": "test/code/ccs/multi_proc.txt",
+  "quote": "\"",
+  "delim": ",",
+  "pnt": "test/code/pnt/pnt.txt",
+  "filename": "test/code/icd9/code_names.txt",
+  "ndc_package": "test/code/ndc/package.txt",
+  "icd9": "test/code/icd9/ucod.txt",
+  "ndc_prod": "test/code/ndc/product.txt",
+  "ccs_diag": "test/code/ccs/multi_diag.txt"
 }
