@@ -7,20 +7,12 @@ Created on 2015-04-10
 """
 import sys
 import os
-import time
 from datetime import datetime, timedelta
 
-# fix timezone -- doesn't really matter since the granularity is days
-os.environ['TZ'] = 'UTC-0400'
-time.tzset()
-
+_epoch = datetime(1970, 1, 1)
 def _mktime(dt):
-    try:
-        return int(time.mktime(dt.timetuple()))
-    except OverflowError:
-        epoch = datetime(1970, 1, 1)
-        diff = dt - epoch
-        return diff.days * 24 * 3600 + diff.seconds
+    diff = dt - _epoch
+    return diff.days * 24 * 3600 + diff.seconds
 
 def toTime(s):
     return _mktime(datetime.strptime(s, "%Y%m%d"))
