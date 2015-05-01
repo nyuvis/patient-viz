@@ -6,9 +6,13 @@ Created on 2015-04-10
 @author: joschi
 """
 import sys
-import os.path
+import os
 import time
 from datetime import datetime, timedelta
+
+# fix timezone -- doesn't really matter since the granularity is days
+os.environ['TZ'] = 'UTC-0400'
+time.tzset()
 
 def _mktime(dt):
     try:
