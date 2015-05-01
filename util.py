@@ -6,7 +6,27 @@ Created on 2015-04-10
 @author: joschi
 """
 import sys
-import os.path
+import os
+from datetime import datetime, timedelta
+
+_epoch = datetime(1970, 1, 1)
+def _mktime(dt):
+    diff = dt - _epoch
+    return diff.days * 24 * 3600 + diff.seconds
+
+def toTime(s):
+    return _mktime(datetime.strptime(s, "%Y%m%d"))
+
+def nextDay(stamp):
+    return _mktime(datetime.fromtimestamp(stamp) + timedelta(days = 1))
+
+def is_array(v):
+    try:
+        if isinstance(v, unicode):
+            return False
+    except NameError:
+        pass
+    return not isinstance(v, str) and isinstance(v, collections.Sequence)
 
 class StdOutClose(Exception): pass
 

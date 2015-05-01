@@ -30,12 +30,9 @@ ignore = {
 }
 num_cutoff = 500
 
-def toTime(s):
-    return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
-
 def toAge(s):
     # TODO there could be a more precise way
-    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(toTime(str(s) + "0101")).year
+    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(util.toTime(str(s) + "0101")).year
 
 def handleRow(row, id, eventCache, infoCache):
     obj = {
@@ -220,13 +217,15 @@ def printResult(vectors, header_list, header_counts, delim, quote, whitelist, ou
         print("", file=sys.stderr)
 
 def usage():
-    print('usage: {0} [-h] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('--debug: prints debug output', file=sys.stderr)
+    print('--num-cutoff <number>: specifies the minimum number of occurrences for a column to appear in the output. default is {0}'.format(str(num_cutoff)), file=sys.stderr)
     print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--to <date>: specifies the end date as "YYYYMMDD". can be omitted', file=sys.stderr)
-    print('-w <whitelist>: specifies a patient whitelist. all patients if omitted (warning: slow)', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
+    print('-w <whitelist>: specifies a patient whitelist. all patients if omitted (warning: slow)', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
@@ -234,16 +233,9 @@ def usage():
 
 if __name__ == '__main__':
     output = '-'
-    settings = {
-        'delim': ',',
-        'quote': '"',
-        'filename': build_dictionary.globalSymbolsFile,
-        'ndc_prod': build_dictionary.productFile,
-        'ndc_package': build_dictionary.packageFile,
-        'icd9': build_dictionary.icd9File,
-        'ccs_diag': build_dictionary.ccs_diag_file,
-        'ccs_proc': build_dictionary.ccs_proc_file
-    }
+    settings = build_dictionary.defaultSettings
+    settings['delim'] = ','
+    settings['quote'] = '"'
     whitelist = None
     args = sys.argv[:]
     args.pop(0)
@@ -253,21 +245,26 @@ if __name__ == '__main__':
             break
         if arg == '-h':
             usage()
-        if arg == '--age-time':
+        if arg == '--num-cutoff':
+            if not args or args[0] == '--':
+                print('--num-cutoff requires number', file=sys.stderr)
+                usage()
+            num_cutoff = int(args.pop(0))
+        elif arg == '--age-time':
             if not args or args[0] == '--':
                 print('--age-time requires a date', file=sys.stderr)
                 usage()
-            age_time = toTime(args.pop(0))
+            age_time = util.toTime(args.pop(0))
         elif arg == '--from':
             if not args or args[0] == '--':
                 print('--from requires a date', file=sys.stderr)
                 usage()
-            from_time = toTime(args.pop(0))
+            from_time = util.toTime(args.pop(0))
         elif arg == '--to':
             if not args or args[0] == '--':
                 print('--to requires a date', file=sys.stderr)
                 usage()
-            to_time = toTime(args.pop(0))
+            to_time = util.toTime(args.pop(0))
         elif arg == '-w':
             if not args or args[0] == '--':
                 print('-w requires whitelist file', file=sys.stderr)
@@ -299,13 +296,15 @@ if __name__ == '__main__':
                 print('-c requires argument', file=sys.stderr)
                 usage()
             build_dictionary.readConfig(settings, args.pop(0))
+        elif arg == '--debug':
+            build_dictionary.debugOutput = True
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
 
     build_dictionary.setPathCorrection('../')
     build_dictionary.reportMissingEntries = False
-    build_dictionary.init()
+    build_dictionary.init(settings)
 
     allPaths = []
     while args:
