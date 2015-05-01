@@ -1,5 +1,7 @@
 # patient-viz
 
+[![Build Status](https://travis-ci.org/nyuvis/patient-viz.svg)](https://travis-ci.org/nyuvis/patient-viz)
+
 *patient-viz* is a tool allowing to view and explore insurance claim
 or other time sequence event data. The web-based tool is mostly written in
 [d3](http://d3js.org/) and uses [python](https://www.python.org/) and shell on the back-end.
