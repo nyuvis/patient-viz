@@ -67,9 +67,6 @@ def addInfo(obj, id, key, value, hasLabel = False, label = ""):
         node["label"] = label
     obj["info"].append(node)
 
-def is_array(v):
-    return not isinstance(v, (str, unicode)) and isinstance(v, collections.Sequence)
-
 def handleKey(row, key, mode, hnd):
     if mode == MODE_ARRAY:
         for k in input_format[key]:
@@ -79,7 +76,7 @@ def handleKey(row, key, mode, hnd):
     ignore_missing = mode == MODE_DEFAULT
     if key in input_format:
         k = input_format[key]
-        if is_array(k):
+        if util.is_array(k):
             found = False
             for key in k:
                 if key in row and row[key] != '':

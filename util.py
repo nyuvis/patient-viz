@@ -20,6 +20,14 @@ def toTime(s):
 def nextDay(stamp):
     return _mktime(datetime.fromtimestamp(stamp) + timedelta(days = 1))
 
+def is_array(v):
+    try:
+        if isinstance(v, unicode):
+            return False
+    except NameError:
+        pass
+    return not isinstance(v, str) and isinstance(v, collections.Sequence)
+
 class StdOutClose(Exception): pass
 
 class OutWrapper(object):
