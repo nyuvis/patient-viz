@@ -2,6 +2,7 @@
 # @author Joschi <josua.krause@gmail.com>
 # created 2015-04-26 23:11
 
+cd "$(dirname $0)"
 
 CMS_DIR="./cms"
 ERR_FILE="err.txt"
