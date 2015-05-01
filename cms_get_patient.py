@@ -420,8 +420,8 @@ if __name__ == '__main__':
                     })
                 curInStart = None
             curStatus = status
-    min_time = sys.maxint
-    max_time = -sys.maxint-1
+    min_time = float('inf')
+    max_time = float('-inf')
     for e in obj["events"]:
         time = e["time"]
         if time < min_time:
