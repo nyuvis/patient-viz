@@ -21,232 +21,318 @@ import util
 
 reportMissingEntries = False # only for debugging
 
-def toEntry(id, pid, name, desc, alias=None):
-    res = {
-        "id": id,
-        "parent": pid,
-        "name": name,
-        "desc": desc
-    }
-    if alias is not None and alias != id:
-        res["alias"] = alias
-    return res
+class EntryCreator(object):
+    def __init__(self):
+        self._baseTypes = {}
 
-def createEntry(dict, type, id, onlyAddMapped=False):
-    if not id:
-        entry = createRootEntry(type)
-    else:
-        creator = convertLookup.get(type, createUnknownEntry)
-        entry = creator(symbolTable.get(type, {}), type, id)
-    if type not in dict:
-        dict[type] = {}
-    if onlyAddMapped and 'unmapped' in entry and entry['unmapped']:
-        return
-    dict[type][id] = entry
-    pid = entry['parent']
-    if pid not in dict[type]:
-        createEntry(dict, type, pid, False)
-    if 'alias' in entry:
-        aid = entry['alias']
-        if aid not in dict[type]:
-            createEntry(dict, type, aid, True)
+    def baseType(self, name):
+        def wrapper(cls):
+            if not isinstance(cls, TypeBase):
+                raise TypeError("{0} is not a {1}".format(cls.__name__, TypeBase.__name__))
+            self._baseTypes[name] = cls()
+            return cls
+        return wrapper
 
-def init():
-    for key in initLookup.keys():
-        symbolTable[key] = initLookup[key]()
+    def codeType(self, name, code):
+        def wrapper(cls):
+            if not isinstance(cls, TypeCode):
+                raise TypeError("{0} is not a {1}".format(cls.__name__, TypeCode.__name__))
+            self._baseTypes[name].addCodeType(code, cls())
+            return cls
+        return wrapper
+
+    def toEntry(self, id, pid, name, desc, alias=None):
+        res = {
+            "id": id,
+            "parent": pid,
+            "name": name,
+            "desc": desc
+        }
+        if alias is not None and alias != id:
+            res["alias"] = alias
+        return res
+
+    def createEntry(self, dict, type, id, onlyAddMapped=False):
+        if not id:
+            entry = createRootEntry(type)
+        else:
+            creator = convertLookup.get(type, createUnknownEntry)
+            entry = creator(symbolTable.get(type, {}), type, id)
+        if type not in dict:
+            dict[type] = {}
+        if onlyAddMapped and 'unmapped' in entry and entry['unmapped']:
+            return
+        dict[type][id] = entry
+        pid = entry['parent']
+        if pid not in dict[type]:
+            createEntry(dict, type, pid, False)
+        if 'alias' in entry:
+            aid = entry['alias']
+            if aid not in dict[type]:
+                createEntry(dict, type, aid, True)
+
+    def init(self):
+        for key in initLookup.keys():
+            symbolTable[key] = initLookup[key]()
+
+    def
+
+### TODO fix above
+dictionary = EntryCreator()
+
+class TypeBase(Object):
+    def __init__(self):
+        self.codeTypes = {}
+    def name():
+        raise NotImplementedError()
+    def desc(self):
+        return self.name()
+    def color():
+        raise NotImplementedError()
+    def addCodeType(self, code, codeType):
+        self.codeTypes[code] = codeType
+    ### TODO add create and init
+
+class TypeCode(Object):
+    def init(self):
+        raise NotImplementedError()
+    def create(self, symbols, type, id):
+        raise NotImplementedError
 
 ### provider ###
+@dictionary.baseType("provider")
+class TypeProvider(TypeBase):
+    def name():
+        return "Provider"
+    def color():
+        return "#e6ab02"
 
-def createProviderEntry(symbols, type, id):
-    pid = id[2:4] if len(id) >= 4 else ""
-    if id in symbols:
-        return toEntry(id, pid, symbols[id], symbols[id])
-    if len(id) == 2:
-        return createUnknownEntry(symbols, type, id, pid)
-    return toEntry(id, pid, id, "Provider Number: {0}".format(id))
-
-def initProvider():
-    res = {}
-    if not os.path.isfile(getFile(pntFile)):
+@dictionary.codeType("provider", "pnt")
+class PntProviderCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = id[2:4] if len(id) >= 4 else ""
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id])
+        if len(id) == 2:
+            return createUnknownEntry(symbols, type, id, pid)
+        return toEntry(id, pid, id, "Provider Number: {0}".format(id))
+    def init():
+        res = {}
+        if not os.path.isfile(getFile(pntFile)):
+            return res
+        with open(getFile(pntFile), 'r') as pnt:
+            for line in pnt.readlines():
+                l = line.strip()
+                if len(l) < 10 or not l[0].isdigit() or not l[1].isdigit() or not l[5].isdigit() or not l[6].isdigit():
+                    continue
+                fromPN = int(l[0:2])
+                toPN = int(l[5:7])
+                desc = l[9:].strip()
+                for pn in xrange(fromPN, toPN + 1):
+                    res[("00" + str(pn))[-2:]] = desc
         return res
-    with open(getFile(pntFile), 'r') as pnt:
-        for line in pnt.readlines():
-            l = line.strip()
-            if len(l) < 10 or not l[0].isdigit() or not l[1].isdigit() or not l[5].isdigit() or not l[6].isdigit():
-                continue
-            fromPN = int(l[0:2])
-            toPN = int(l[5:7])
-            desc = l[9:].strip()
-            for pn in xrange(fromPN, toPN + 1):
-                res[("00" + str(pn))[-2:]] = desc
-    return res
 
 ### physician ###
+@dictionary.baseType("physician")
+class TypePhysician(TypeBase):
+    def name():
+        return "Physician"
+    def color():
+        return "#fccde5"
 
-def createPhysicianEntry(symbols, type, id):
-    pid = ""
-    return createUnknownEntry(symbols, type, id, pid)
-
-def initPhysician():
-    return {}
+@dictionary.codeType("physician", "cms")
+class CmsPhysicianCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = ""
+        return createUnknownEntry(symbols, type, id, pid)
+    def init():
+        return {}
 
 ### prescribed ###
+@dictionary.baseType("prescribed")
+class TypePrescribed(TypeBase):
+    def name():
+        return "Prescribed Medication"
+    def color():
+        return "#eb9adb"
 
-def createPrescribedEntry(symbols, type, id):
-    pid = id[:-2] if len(id) == 11 else ""
-    if id in symbols:
-        l = symbols[id]
-        return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
-    return createUnknownEntry(symbols, type, id, pid)
-
-def initPrescribed():
-    prescribeLookup = {}
-    if not os.path.isfile(getFile(productFile)):
+@dictionary.codeType("prescribed", "ndc")
+class NdcPrescribedCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = id[:-2] if len(id) == 11 else ""
+        if id in symbols:
+            l = symbols[id]
+            return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
+        return createUnknownEntry(symbols, type, id, pid)
+    def init():
+        prescribeLookup = {}
+        if not os.path.isfile(getFile(productFile)):
+            return prescribeLookup
+        uidLookup = {}
+        with open(getFile(productFile), 'r') as prFile:
+            for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
+                uid = row['PRODUCTID'].strip()
+                fullndc = row['PRODUCTNDC'].strip()
+                ndcparts = fullndc.split('-')
+                if len(ndcparts) != 2:
+                    print("invalid NDC (2):" + fullndc + "  " + uid, file=sys.stderr)
+                    continue
+                normndc = ""
+                if len(ndcparts[0]) == 4 and len(ndcparts[1]) == 4:
+                    normndc = "0" + ndcparts[0] + ndcparts[1]
+                elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 3:
+                    normndc = ndcparts[0] + "0" + ndcparts[1]
+                elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4:
+                    normndc = ndcparts[0] + ndcparts[1]
+                else:
+                    print("invalid split NDC (2):" + fullndc + "  " + uid, file=sys.stderr)
+                    continue
+                ndc = ndcparts[0] + ndcparts[1]
+                ptn = row['PRODUCTTYPENAME'].strip()
+                prop = row['PROPRIETARYNAME'].strip()
+                nonp = row['NONPROPRIETARYNAME'].strip()
+                subst = row['SUBSTANCENAME'].strip()
+                pharm = row['PHARM_CLASSES'].strip()
+                if uid in uidLookup:
+                    print("warning duplicate uid: " + uid, file=sys.stderr)
+                uidLookup[uid] = {
+                    "pType": ptn,
+                    "prop": prop,
+                    "nonp": nonp,
+                    "subst": subst,
+                    "pharm": pharm
+                }
+                desc = nonp + " " + ptn
+                l = uidLookup[uid]
+                if ndc in prescribeLookup or normndc in prescribeLookup:
+                    continue
+                obj = {
+                    "desc": desc,
+                    "pType": l["pType"],
+                    "prop": l["prop"],
+                    "nonp": l["nonp"],
+                    "subst": l["subst"],
+                    "pharm": l["pharm"],
+                    "alias": normndc
+                }
+                prescribeLookup[ndc] = obj
+                prescribeLookup[normndc] = obj
+                prescribeLookup[fullndc] = obj
+        if not os.path.isfile(getFile(packageFile)):
+            return prescribeLookup
+        with open(getFile(packageFile), 'r') as paFile:
+            for row in csv.DictReader(paFile, delimiter='\t', quoting=csv.QUOTE_NONE):
+                uid = row['PRODUCTID'].strip()
+                fullndc = row['NDCPACKAGECODE'].strip()
+                ndcparts = fullndc.split('-')
+                if len(ndcparts) != 3:
+                    print("invalid NDC (3):" + fullndc + "  " + uid, file=sys.stderr)
+                    continue
+                normndc = ""
+                if len(ndcparts[0]) == 4 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 2:
+                    normndc = "0" + ndcparts[0] + ndcparts[1] + ndcparts[2]
+                elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 3 and len(ndcparts[2]) == 2:
+                    normndc = ndcparts[0] + "0" + ndcparts[1] + ndcparts[2]
+                elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 1:
+                    normndc = ndcparts[0] + ndcparts[1] + "0" + ndcparts[2]
+                elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 2:
+                    normndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
+                else:
+                    print("invalid split NDC (3):" + fullndc + "  " + uid, file=sys.stderr)
+                    continue
+                ndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
+                desc = row['PACKAGEDESCRIPTION'].strip()
+                if uid not in uidLookup:
+                    #print("warning missing uid: " + uid, file=sys.stderr) // not that important since the non-packaged version is already added
+                    continue
+                l = uidLookup[uid]
+                if ndc in prescribeLookup:
+                    desc = prescribeLookup[ndc]["desc"] + " or " + desc
+                obj = {
+                    "desc": desc,
+                    "pType": l["pType"],
+                    "prop": l["prop"],
+                    "nonp": l["nonp"],
+                    "subst": l["subst"],
+                    "pharm": l["pharm"],
+                    "alias": normndc
+                }
+                prescribeLookup[ndc] = obj
+                prescribeLookup[normndc] = obj
+                prescribeLookup[fullndc] = obj
         return prescribeLookup
-    uidLookup = {}
-    with open(getFile(productFile), 'r') as prFile:
-        for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
-            uid = row['PRODUCTID'].strip()
-            fullndc = row['PRODUCTNDC'].strip()
-            ndcparts = fullndc.split('-')
-            if len(ndcparts) != 2:
-                print("invalid NDC (2):" + fullndc + "  " + uid, file=sys.stderr)
-                continue
-            normndc = ""
-            if len(ndcparts[0]) == 4 and len(ndcparts[1]) == 4:
-                normndc = "0" + ndcparts[0] + ndcparts[1]
-            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 3:
-                normndc = ndcparts[0] + "0" + ndcparts[1]
-            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4:
-                normndc = ndcparts[0] + ndcparts[1]
-            else:
-                print("invalid split NDC (2):" + fullndc + "  " + uid, file=sys.stderr)
-                continue
-            ndc = ndcparts[0] + ndcparts[1]
-            ptn = row['PRODUCTTYPENAME'].strip()
-            prop = row['PROPRIETARYNAME'].strip()
-            nonp = row['NONPROPRIETARYNAME'].strip()
-            subst = row['SUBSTANCENAME'].strip()
-            pharm = row['PHARM_CLASSES'].strip()
-            if uid in uidLookup:
-                print("warning duplicate uid: " + uid, file=sys.stderr)
-            uidLookup[uid] = {
-                "pType": ptn,
-                "prop": prop,
-                "nonp": nonp,
-                "subst": subst,
-                "pharm": pharm
-            }
-            desc = nonp + " " + ptn
-            l = uidLookup[uid]
-            if ndc in prescribeLookup or normndc in prescribeLookup:
-                continue
-            obj = {
-                "desc": desc,
-                "pType": l["pType"],
-                "prop": l["prop"],
-                "nonp": l["nonp"],
-                "subst": l["subst"],
-                "pharm": l["pharm"],
-                "alias": normndc
-            }
-            prescribeLookup[ndc] = obj
-            prescribeLookup[normndc] = obj
-            prescribeLookup[fullndc] = obj
-    if not os.path.isfile(getFile(packageFile)):
-        return prescribeLookup
-    with open(getFile(packageFile), 'r') as paFile:
-        for row in csv.DictReader(paFile, delimiter='\t', quoting=csv.QUOTE_NONE):
-            uid = row['PRODUCTID'].strip()
-            fullndc = row['NDCPACKAGECODE'].strip()
-            ndcparts = fullndc.split('-')
-            if len(ndcparts) != 3:
-                print("invalid NDC (3):" + fullndc + "  " + uid, file=sys.stderr)
-                continue
-            normndc = ""
-            if len(ndcparts[0]) == 4 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 2:
-                normndc = "0" + ndcparts[0] + ndcparts[1] + ndcparts[2]
-            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 3 and len(ndcparts[2]) == 2:
-                normndc = ndcparts[0] + "0" + ndcparts[1] + ndcparts[2]
-            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 1:
-                normndc = ndcparts[0] + ndcparts[1] + "0" + ndcparts[2]
-            elif len(ndcparts[0]) == 5 and len(ndcparts[1]) == 4 and len(ndcparts[2]) == 2:
-                normndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
-            else:
-                print("invalid split NDC (3):" + fullndc + "  " + uid, file=sys.stderr)
-                continue
-            ndc = ndcparts[0] + ndcparts[1] + ndcparts[2]
-            desc = row['PACKAGEDESCRIPTION'].strip()
-            if uid not in uidLookup:
-                #print("warning missing uid: " + uid, file=sys.stderr) // not that important since the non-packaged version is already added
-                continue
-            l = uidLookup[uid]
-            if ndc in prescribeLookup:
-                desc = prescribeLookup[ndc]["desc"] + " or " + desc
-            obj = {
-                "desc": desc,
-                "pType": l["pType"],
-                "prop": l["prop"],
-                "nonp": l["nonp"],
-                "subst": l["subst"],
-                "pharm": l["pharm"],
-                "alias": normndc
-            }
-            prescribeLookup[ndc] = obj
-            prescribeLookup[normndc] = obj
-            prescribeLookup[fullndc] = obj
-    return prescribeLookup
 
 ### lab-test ###
+@dictionary.baseType("lab-test")
+class TypeLabtest(TypeBase):
+    def name():
+        return "Laboratory Test"
+    def color():
+        return "#80b1d3"
 
-def createLabtestEntry(symbols, type, id):
-    pid = "" # find parent id
-    if id in symbols:
-        return toEntry(id, pid, symbols[id], symbols[id])
-    return createUnknownEntry(symbols, type, id, pid)
-
-def initLabtest():
-    return getGlobalSymbols()
+@dictionary.codeType("lab-test", "loinc")
+class LoincLabtestCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = "" # find parent id
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id])
+        return createUnknownEntry(symbols, type, id, pid)
+    def init():
+        return getGlobalSymbols()
 
 ### diagnosis ###
+@dictionary.baseType("diagnosis")
+class TypeDiagnosis(TypeBase):
+    def name():
+        return "Condition"
+    def color():
+        return "#4daf4a"
 
-diag_parents = {}
-def createDiagnosisEntry(symbols, type, id):
-    prox_id = id
-    pid = ""
-    while len(prox_id) >= 3:
-        pid = diag_parents[prox_id] if prox_id in diag_parents else pid
-        if prox_id in symbols:
-            return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
-        prox_id = prox_id[:-1]
-    return createUnknownEntry(symbols, type, id, pid)
-
-def initDiagnosis():
-    global diag_parents
-    codes = getGlobalSymbols()
-    codes.update(getICD9())
-    diag_parents = readCCS(getFile(ccs_diag_file), codes)
-    return codes
+@dictionary.codeType("diagnosis", "icd9")
+class LoincLabtestCode(TypeCode):
+    def __init__(self):
+        self._parents = {}
+    def create(self, symbols, type, id):
+        prox_id = id
+        pid = ""
+        while len(prox_id) >= 3:
+            pid = self._parents[prox_id] if prox_id in self._parents else pid
+            if prox_id in symbols:
+                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
+            prox_id = prox_id[:-1]
+        return createUnknownEntry(symbols, type, id, pid)
+    def init():
+        codes = getGlobalSymbols()
+        codes.update(getICD9())
+        self._parents = readCCS(getFile(ccs_diag_file), codes)
+        return codes
 
 ### procedure ###
+@dictionary.baseType("procedure")
+class TypeDiagnosis(TypeBase):
+    def name():
+        return "Procedure"
+    def color():
+        return "#ff7f00"
 
-proc_parents = {}
-def createProcedureEntry(symbols, type, id):
-    prox_id = id
-    pid = ""
-    while len(prox_id) >= 3:
-        pid = proc_parents[prox_id] if prox_id in proc_parents else pid
-        if prox_id in symbols:
-            return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
-        prox_id = prox_id[:-1]
-    return createUnknownEntry(symbols, type, id, pid)
-
-def initProcedure():
-    global proc_parents
-    codes = getGlobalSymbols()
-    codes.update(getICD9())
-    proc_parents = readCCS(getFile(ccs_proc_file), codes)
-    return codes
+@dictionary.codeType("procedure", "icd9")
+class LoincLabtestCode(TypeCode):
+    def __init__(self):
+        self._parents = {}
+    def create(self, symbols, type, id):
+        prox_id = id
+        pid = ""
+        while len(prox_id) >= 3:
+            pid = self._parents[prox_id] if prox_id in self._parents else pid
+            if prox_id in symbols:
+                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
+            prox_id = prox_id[:-1]
+        return createUnknownEntry(symbols, type, id, pid)
+    def init():
+        codes = getGlobalSymbols()
+        codes.update(getICD9())
+        self._parents = readCCS(getFile(ccs_proc_file), codes)
+        return codes
 
 ### unknown ###
 
@@ -258,33 +344,6 @@ def createUnknownEntry(_, type, id, pid = ""):
     return res
 
 ### type ###
-
-root_names = {
-    "prescribed": "Prescribed Medication",
-    "lab-test": "Laboratory Test",
-    "diagnosis": "Condition",
-    "procedure": "Procedure",
-    "provider": "Provider",
-    "physician": "Physician",
-}
-
-root_desc = {
-    "prescribed": "Prescribed Medication",
-    "lab-test": "Laboratory Test",
-    "diagnosis": "Condition",
-    "procedure": "Procedure",
-    "provider": "Provider",
-    "physician": "Physician",
-}
-
-root_color = {
-    "prescribed": "#eb9adb",
-    "lab-test": "#80b1d3",
-    "diagnosis": "#4daf4a",
-    "procedure": "#ff7f00",
-    "provider": "#e6ab02",
-    "physician": "#fccde5",
-}
 
 root_flags = {
     "lab-test": {
