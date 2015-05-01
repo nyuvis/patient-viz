@@ -8,8 +8,8 @@ env:
 python:
   - "2.6"
   - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
+#  - "3.2"
+#  - "3.3"
+#  - "3.4"
 install: true
 script: test/run.sh
