@@ -24,40 +24,42 @@ debugOutput = False
 class EntryCreator(object):
     def __init__(self):
         self._baseTypes = {}
+        self._codeTables = {}
+        self._unknown = None
 
     def baseType(self, name):
         def wrapper(cls):
-            if not isinstance(cls, TypeBase):
+            obj = cls()
+            if not isinstance(obj, TypeBase):
                 raise TypeError("{0} is not a {1}".format(cls.__name__, TypeBase.__name__))
-            self._baseTypes[name] = cls()
+            self._baseTypes[name] = obj
             return cls
         return wrapper
 
     def codeType(self, name, code):
         def wrapper(cls):
-            if not isinstance(cls, TypeCode):
+            obj = cls()
+            if not isinstance(obj, TypeCode):
                 raise TypeError("{0} is not a {1}".format(cls.__name__, TypeCode.__name__))
-            self._baseTypes[name].addCodeType(code, cls())
+            self._baseTypes[name].addCodeType(code, obj)
             return cls
         return wrapper
 
-    def toEntry(self, id, pid, name, desc, alias=None):
-        res = {
-            "id": id,
-            "parent": pid,
-            "name": name,
-            "desc": desc
-        }
-        if alias is not None and alias != id:
-            res["alias"] = alias
-        return res
+    def unknownType(self):
+        def wrapper(cls):
+            obj = cls()
+            if not isinstance(obj, TypeBase):
+                raise TypeError("{0} is not a {1}".format(cls.__name__, TypeBase.__name__))
+            self._unknown = obj
+        return wrapper
 
     def createEntry(self, dict, type, id, onlyAddMapped=False):
         if not id:
-            entry = createRootEntry(type)
+            entry = self.createRootEntry(type)
         else:
-            creator = convertLookup.get(type, createUnknownEntry)
-            entry = creator(symbolTable.get(type, {}), type, id)
+            baseType = self._baseTypes.get(type, self._unknown)
+            symbols = self._codeTables.get(type, {})
+            entry = baseType.create(symbols, type, id)
         if type not in dict:
             dict[type] = {}
         if onlyAddMapped and 'unmapped' in entry and entry['unmapped']:
@@ -65,11 +67,26 @@ class EntryCreator(object):
         dict[type][id] = entry
         pid = entry['parent']
         if pid not in dict[type]:
-            createEntry(dict, type, pid, False)
+            self.createEntry(dict, type, pid, False)
         if 'alias' in entry:
             aid = entry['alias']
             if aid not in dict[type]:
-                createEntry(dict, type, aid, True)
+                self.createEntry(dict, type, aid, True)
+
+    def createRootEntry(self, type):
+        baseType = self._baseTypes.get(type, self._unknown)
+        name = baseType.name()
+        if name == UNKNOWN:
+            name += " " + type
+        desc = baseType.desc()
+        if desc == UNKNOWN:
+            desc += " " + type
+        res = toEntry("", "", name, desc)
+        res["color"] = baseType.color()
+        flags = baseType.flags()
+        if len(flags.keys()):
+            res["flags"] = flags
+        return res
 
     def init(self, settings):
     	global globalSymbolsFile
@@ -86,28 +103,46 @@ class EntryCreator(object):
     	ccs_proc_file = settings['ccs_proc']
     	productFile = settings['ndc_prod']
     	packageFile = settings['ndc_package']
-    	for key in initLookup.keys():
-        	symbolTable[key] = initLookup[key]()
+    	for k in self._baseTypes.keys():
+            self._codeTables[k] = self._baseTypes[k].init()
 
-    def
-
-### TODO fix above
 dictionary = EntryCreator()
 
-class TypeBase(Object):
+class TypeBase(object):
     def __init__(self):
-        self.codeTypes = {}
-    def name():
+        self._codeTypes = {}
+    def name(self):
         raise NotImplementedError()
     def desc(self):
         return self.name()
-    def color():
+    def color(self):
         raise NotImplementedError()
+    def flags(self):
+        return {}
     def addCodeType(self, code, codeType):
-        self.codeTypes[code] = codeType
-    ### TODO add create and init
+        self._codeTypes[code] = codeType
+    def init(self):
+        res = {}
+        for code in self._codeTypes.keys():
+            res[code] = self._codeTypes[code].init()
+        return res
+    def create(self, symbols, type, id):
+        candidate = None
+        for k in self._codeTypes.keys():
+            can = self._codeTypes[k].create(symbols[k], type, id)
+            if "unmapped" in can and can["unmapped"]:
+                continue
+            if candidate is not None:
+                candidate = None
+                if debugOutput:
+                    print("ambiguous type {0} != {1}".format(repr(candidate), repr(can), file=sys.stderr))
+                break
+            candidate = can
+        if candidate is None:
+            return createUnknownEntry({}, type, id)
+        return candidate
 
-class TypeCode(Object):
+class TypeCode(object):
     def init(self):
         raise NotImplementedError()
     def create(self, symbols, type, id):
@@ -116,9 +151,9 @@ class TypeCode(Object):
 ### provider ###
 @dictionary.baseType("provider")
 class TypeProvider(TypeBase):
-    def name():
+    def name(self):
         return "Provider"
-    def color():
+    def color(self):
         return "#e6ab02"
 
 @dictionary.codeType("provider", "pnt")
@@ -130,7 +165,7 @@ class PntProviderCode(TypeCode):
         if len(id) == 2:
             return createUnknownEntry(symbols, type, id, pid)
         return toEntry(id, pid, id, "Provider Number: {0}".format(id))
-    def init():
+    def init(self):
         res = {}
         if not os.path.isfile(getFile(pntFile)):
             return res
@@ -149,9 +184,9 @@ class PntProviderCode(TypeCode):
 ### physician ###
 @dictionary.baseType("physician")
 class TypePhysician(TypeBase):
-    def name():
+    def name(self):
         return "Physician"
-    def color():
+    def color(self):
         return "#fccde5"
 
 @dictionary.codeType("physician", "cms")
@@ -159,15 +194,15 @@ class CmsPhysicianCode(TypeCode):
     def create(self, symbols, type, id):
         pid = ""
         return createUnknownEntry(symbols, type, id, pid)
-    def init():
+    def init(self):
         return {}
 
 ### prescribed ###
 @dictionary.baseType("prescribed")
 class TypePrescribed(TypeBase):
-    def name():
+    def name(self):
         return "Prescribed Medication"
-    def color():
+    def color(self):
         return "#eb9adb"
 
 @dictionary.codeType("prescribed", "ndc")
@@ -178,7 +213,7 @@ class NdcPrescribedCode(TypeCode):
             l = symbols[id]
             return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
         return createUnknownEntry(symbols, type, id, pid)
-    def init():
+    def init(self):
         prescribeLookup = {}
         if not os.path.isfile(getFile(productFile)):
             return prescribeLookup
@@ -279,10 +314,19 @@ class NdcPrescribedCode(TypeCode):
 ### lab-test ###
 @dictionary.baseType("lab-test")
 class TypeLabtest(TypeBase):
-    def name():
+    def name(self):
         return "Laboratory Test"
-    def color():
+    def color(self):
         return "#80b1d3"
+    def flags(self):
+        return {
+            "L": {
+                "color": "#fb8072"
+            },
+            "H": {
+                "color": "#fb8072"
+            },
+        }
 
 @dictionary.codeType("lab-test", "loinc")
 class LoincLabtestCode(TypeCode):
@@ -291,15 +335,15 @@ class LoincLabtestCode(TypeCode):
         if id in symbols:
             return toEntry(id, pid, symbols[id], symbols[id])
         return createUnknownEntry(symbols, type, id, pid)
-    def init():
+    def init(self):
         return getGlobalSymbols()
 
 ### diagnosis ###
 @dictionary.baseType("diagnosis")
 class TypeDiagnosis(TypeBase):
-    def name():
+    def name(self):
         return "Condition"
-    def color():
+    def color(self):
         return "#4daf4a"
 
 @dictionary.codeType("diagnosis", "icd9")
@@ -315,7 +359,7 @@ class LoincLabtestCode(TypeCode):
                 return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
             prox_id = prox_id[:-1]
         return createUnknownEntry(symbols, type, id, pid)
-    def init():
+    def init(self):
         codes = getGlobalSymbols()
         codes.update(getICD9())
         self._parents = readCCS(getFile(ccs_diag_file), codes)
@@ -324,9 +368,9 @@ class LoincLabtestCode(TypeCode):
 ### procedure ###
 @dictionary.baseType("procedure")
 class TypeDiagnosis(TypeBase):
-    def name():
+    def name(self):
         return "Procedure"
-    def color():
+    def color(self):
         return "#ff7f00"
 
 @dictionary.codeType("procedure", "icd9")
@@ -342,13 +386,25 @@ class LoincLabtestCode(TypeCode):
                 return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
             prox_id = prox_id[:-1]
         return createUnknownEntry(symbols, type, id, pid)
-    def init():
+    def init(self):
         codes = getGlobalSymbols()
         codes.update(getICD9())
         self._parents = readCCS(getFile(ccs_proc_file), codes)
         return codes
 
 ### unknown ###
+UNKNOWN = "UNKNOWN"
+
+@dictionary.unknownType()
+class TypeUnknown(TypeBase):
+    def name(self):
+        return UNKNOWN
+    def color(self):
+        return "red"
+    def init(self):
+        raise NotImplementedError()
+    def create(self, symbols, type, id):
+        return createUnknownEntry(symbols, type, id)
 
 def createUnknownEntry(_, type, id, pid = ""):
     # TODO remove: can be seen by attribute unmapped
@@ -358,26 +414,15 @@ def createUnknownEntry(_, type, id, pid = ""):
     res["unmapped"] = True
     return res
 
-### type ###
-
-root_flags = {
-    "lab-test": {
-        "L": {
-            "color": "#fb8072"
-        },
-        "H": {
-            "color": "#fb8072"
-        },
+def toEntry(id, pid, name, desc, alias=None):
+    res = {
+        "id": id,
+        "parent": pid,
+        "name": name,
+        "desc": desc
     }
-}
-
-def createRootEntry(type):
-    name = root_names.get(type, type)
-    res = toEntry("", "", name, root_desc.get(type, name))
-    if type in root_color:
-        res["color"] = root_color[type]
-    if type in root_flags:
-        res["flags"] = root_flags[type]
+    if alias is not None and alias != id:
+        res["alias"] = alias
     return res
 
 ### icd9 ###
@@ -386,7 +431,7 @@ globalICD9 = {}
 
 def getICD9():
     global globalICD9
-    if len(globalICD9.keys()) == 0:
+    if not len(globalICD9.keys()):
         globalICD9 = initICD9()
     return globalICD9.copy()
 
@@ -450,7 +495,7 @@ globalSymbols = {}
 
 def getGlobalSymbols():
     global globalSymbols
-    if len(globalSymbols.keys()) == 0:
+    if not len(globalSymbols.keys()):
         globalSymbols = initGlobalSymbols()
     return globalSymbols.copy()
 
@@ -472,7 +517,7 @@ def initGlobalSymbols():
 
 def extractEntries(dict, patient):
     for event in patient['events']:
-        createEntry(dict, event['group'], event['id'])
+        dictionary.createEntry(dict, event['group'], event['id'])
 
 def loadOldDict(file):
     dict = {}
@@ -515,26 +560,6 @@ def getFile(file):
         print("exists: {0} file: {1}".format(repr(os.path.isfile(res)), repr(os.path.abspath(res))), file=sys.stderr)
     return res
 
-convertLookup = {
-    "prescribed": createPrescribedEntry,
-    "lab-test": createLabtestEntry,
-    "diagnosis": createDiagnosisEntry,
-    "procedure": createProcedureEntry,
-    "provider": createProviderEntry,
-    "physician": createPhysicianEntry,
-}
-
-initLookup = {
-    "prescribed": initPrescribed,
-    "lab-test": initLabtest,
-    "diagnosis": initDiagnosis,
-    "procedure": initProcedure,
-    "provider": initProvider,
-    "physician": initPhysician,
-}
-
-symbolTable = {}
-
 def readConfig(settings, file):
     if file == '-':
         return
@@ -570,6 +595,7 @@ defaultSettings = {
 }
 
 def interpretArgs():
+    global debugOutput
     settings = defaultSettings
     info = {
         'mid': globalMid,
@@ -609,7 +635,7 @@ def interpretArgs():
 
 if __name__ == '__main__':
     (settings, info, lookupMode, rest) = interpretArgs()
-    init(settings)
+    dictionary.init(settings)
     if lookupMode:
         dict = {}
 
@@ -618,7 +644,7 @@ if __name__ == '__main__':
             if len(spl) != 2:
                 print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
                 sys.exit(1)
-            createEntry(dict, spl[0].strip(), spl[1].strip())
+            dictionary.createEntry(dict, spl[0].strip(), spl[1].strip())
 
         for e in rest:
             if e == "-":
