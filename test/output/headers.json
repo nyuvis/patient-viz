@@ -106,12 +106,6 @@
       "name": "Thyroid disorders [48.]", 
       "parent": "HIERARCHY.3"
     }, 
-    "HIERARCHY.3.2": {
-      "desc": "Endocrine; nutritional; and metabolic diseases and immunity disorders", 
-      "id": "HIERARCHY.3.2", 
-      "name": "Endocrine; nutritional; and metabolic diseases and immunity disorders", 
-      "parent": ""
-    }, 
     "HIERARCHY.5": {
       "desc": "Mental illness", 
       "id": "HIERARCHY.5", 
