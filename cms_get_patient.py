@@ -111,11 +111,15 @@ def handleEvent(row, claim_id):
         if value != '':
             res.append(createEntry(type, value, claim_id))
 
+    handleKey(row, "diagnosis_icd9", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
+    handleKey(row, "procedures_icd9", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
+    handleKey(row, "procedures_cpt", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
-    handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
-    handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
-    handleKey(row, "provider", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, value))
-    handleKey(row, "physician", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, value))
+    #handleKey(row, "procedures_hcpcs", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
+    handleKey(row, "provider_ibc", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, value))
+    handleKey(row, "provider_cms", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, value))
+    handleKey(row, "physician_ibc", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, value))
+    handleKey(row, "physician_cms", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, value))
     return res
 
 def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):

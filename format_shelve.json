@@ -7,6 +7,8 @@
     "RX_CLMS_SERVICE_PLACE",
     "ENCS_SERVICE_PLACE"
   ],
+  "provider_cms": [
+  ],
   "physician_ibc": [
     "ENCS_SPECIALTY",
     "MED_CLMS_SPECIALTY"
@@ -70,10 +72,6 @@
     "MED_CLMS_DX_CD14",
     "MED_CLMS_DX_CD15"
   ],
-  "procedures_cpt": [
-    "ENCS_CPTCODE",
-    "MED_CLMS_CPTCODE",
-  ],
   "procedures_icd9": [
     "ENCS_ICD9PROC1",
     "ENCS_ICD9PROC2",
@@ -105,6 +103,12 @@
     "MED_CLMS_ICD9PROC13",
     "MED_CLMS_ICD9proc14",
     "MED_CLMS_ICD9PROC15"
+  ],
+  "procedures_cpt": [
+    "ENCS_CPTCODE",
+    "MED_CLMS_CPTCODE",
+  ],
+  "procedures_hcpcs": [
   ],
   "prescribed_date": "RX_CLMS_SERVICE_DATE",
   "prescribed": "RX_CLMS_NDC",

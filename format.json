@@ -3,10 +3,14 @@
   "born": "BENE_BIRTH_DT",
   "death": "BENE_DEATH_DT",
   "gender": "BENE_SEX_IDENT_CD",
-  "provider": [
+  "provider_ibc": [
+  ],
+  "provider_cms": [
     "PRVDR_NUM"
   ],
-  "physician": [
+  "physician_ibc": [
+  ],
+  "physician_cms": [
     "AT_PHYSN_NPI",
     "OP_PHYSN_NPI",
     "OT_PHYSN_NPI",
@@ -42,6 +46,16 @@
     "ICD9_DGNS_CD_9",
     "ICD9_DGNS_CD_10",
     "ADMTNG_ICD9_DGNS_CD"
+  ],
+  "procedures_icd9": [
+    "ICD9_PRCDR_CD_1",
+    "ICD9_PRCDR_CD_2",
+    "ICD9_PRCDR_CD_3",
+    "ICD9_PRCDR_CD_4",
+    "ICD9_PRCDR_CD_5",
+    "ICD9_PRCDR_CD_6"
+  ],
+  "procedures_cpt": [
   ],
   "procedures_hcpcs": [
     "HCPCS_CD_1",
@@ -89,14 +103,6 @@
     "HCPCS_CD_43",
     "HCPCS_CD_44",
     "HCPCS_CD_45"
-  ],
-  "procedures_icd9": [
-    "ICD9_PRCDR_CD_1",
-    "ICD9_PRCDR_CD_2",
-    "ICD9_PRCDR_CD_3",
-    "ICD9_PRCDR_CD_4",
-    "ICD9_PRCDR_CD_5",
-    "ICD9_PRCDR_CD_6"
   ],
   "prescribed_date": "SRVC_DT",
   "prescribed": "PROD_SRVC_ID",

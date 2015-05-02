@@ -29,18 +29,41 @@ TODO arrays for first match
   <"born">: "BENE_BIRTH_DT",
   <"death">: "BENE_DEATH_DT",
   <"gender">: "BENE_SEX_IDENT_CD",
+  "provider_ibc": [
+  ],
+  "provider_cms": [
+    "PRVDR_NUM"
+  ],
+  "physician_ibc": [
+  ],
+  "physician_cms": [
+    "AT_PHYSN_NPI",
+    …
+  ],
   <"claim_id">: "CLM_ID",
   <"claim_amount">: "CLM_PMT_AMT",
   <"claim_from">: "CLM_FROM_DT",
   <"claim_to">: "CLM_THRU_DT",
-  "diagnosis": [
+  <"admission">: "CLM_ADMSN_DT",
+  <"discharge">: "NCH_BENE_DSCHRG_DT",
+  <"location_flag">: "ENCS_FACILITY_TYPE",
+  "diagnosis_icd9": [
     "ICD9_DGNS_CD_1",
     "ICD9_DGNS_CD_2",
     …
   ],
-  "procedures": [
+  "procedures_icd9": [
     "ICD9_PRCDR_CD_1",
     "ICD9_PRCDR_CD_2",
+    …
+  ],
+  "procedures_cpt": [
+    "ENCS_CPTCODE",
+    …
+  ],
+  "procedures_hcpcs": [
+    "HCPCS_CD_1",
+    "HCPCS_CD_2",
     …
   ],
   <"prescribed_date">: "SRVC_DT",
