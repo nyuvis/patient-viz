@@ -130,13 +130,16 @@ class TypeBase(object):
         candidate = None
         for k in self._codeTypes.keys():
             can = self._codeTypes[k].create(symbols[k], type, id)
-            if "unmapped" in can and can["unmapped"]:
-                continue
             if candidate is not None:
-                candidate = None
-                if debugOutput:
-                    print("ambiguous type {0} != {1}".format(repr(candidate), repr(can), file=sys.stderr))
-                break
+                umOld = "unmapped" in candidate and candidate["unmapped"]
+                um = "unmapped" in can and can["unmapped"]
+                if um and not umOld:
+                    continue
+                if um == umOld:
+                    candidate = None
+                    if not um and debugOutput:
+                        print("ambiguous type {0} != {1}".format(repr(candidate), repr(can), file=sys.stderr))
+                    break
             candidate = can
         if candidate is None:
             return createUnknownEntry({}, type, id)
@@ -156,8 +159,8 @@ class TypeProvider(TypeBase):
     def color(self):
         return "#e6ab02"
 
-@dictionary.codeType("provider", "pnt")
-class PntProviderCode(TypeCode):
+@dictionary.codeType("provider", "cms")
+class CmsProviderCode(TypeCode):
     def create(self, symbols, type, id):
         pid = id[2:4] if len(id) >= 4 else ""
         if id in symbols:
@@ -167,9 +170,10 @@ class PntProviderCode(TypeCode):
         return toEntry(id, pid, id, "Provider Number: {0}".format(id))
     def init(self):
         res = {}
-        if not os.path.isfile(getFile(pntFile)):
+        file = getFile(pntFile)
+        if not os.path.isfile(file):
             return res
-        with open(getFile(pntFile), 'r') as pnt:
+        with open(file, 'r') as pnt:
             for line in pnt.readlines():
                 l = line.strip()
                 if len(l) < 10 or not l[0].isdigit() or not l[1].isdigit() or not l[5].isdigit() or not l[6].isdigit():
@@ -215,10 +219,11 @@ class NdcPrescribedCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid)
     def init(self):
         prescribeLookup = {}
-        if not os.path.isfile(getFile(productFile)):
+        fileA = getFile(productFile)
+        if not os.path.isfile(fileA):
             return prescribeLookup
         uidLookup = {}
-        with open(getFile(productFile), 'r') as prFile:
+        with open(fileA, 'r') as prFile:
             for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
                 uid = row['PRODUCTID'].strip()
                 fullndc = row['PRODUCTNDC'].strip()
@@ -267,9 +272,10 @@ class NdcPrescribedCode(TypeCode):
                 prescribeLookup[ndc] = obj
                 prescribeLookup[normndc] = obj
                 prescribeLookup[fullndc] = obj
-        if not os.path.isfile(getFile(packageFile)):
+        fileB = getFile(packageFile)
+        if not os.path.isfile(fileB):
             return prescribeLookup
-        with open(getFile(packageFile), 'r') as paFile:
+        with open(fileB, 'r') as paFile:
             for row in csv.DictReader(paFile, delimiter='\t', quoting=csv.QUOTE_NONE):
                 uid = row['PRODUCTID'].strip()
                 fullndc = row['NDCPACKAGECODE'].strip()
@@ -347,7 +353,7 @@ class TypeDiagnosis(TypeBase):
         return "#4daf4a"
 
 @dictionary.codeType("diagnosis", "icd9")
-class LoincLabtestCode(TypeCode):
+class Icd9DiagnosisCode(TypeCode):
     def __init__(self):
         self._parents = {}
     def create(self, symbols, type, id):
@@ -367,14 +373,14 @@ class LoincLabtestCode(TypeCode):
 
 ### procedure ###
 @dictionary.baseType("procedure")
-class TypeDiagnosis(TypeBase):
+class TypeProcedure(TypeBase):
     def name(self):
         return "Procedure"
     def color(self):
         return "#ff7f00"
 
 @dictionary.codeType("procedure", "icd9")
-class LoincLabtestCode(TypeCode):
+class Icd9ProcedureCode(TypeCode):
     def __init__(self):
         self._parents = {}
     def create(self, symbols, type, id):
@@ -391,6 +397,23 @@ class LoincLabtestCode(TypeCode):
         codes.update(getICD9())
         self._parents = readCCS(getFile(ccs_proc_file), codes)
         return codes
+
+### info ###
+@dictionary.baseType("info")
+class TypeInfo(TypeBase):
+    def name(self):
+        return "Info"
+    def color(self):
+        return "pink"
+
+@dictionary.codeType("info", "info")
+class InfoInfoCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = ""
+        return toEntry(id, pid, id, "Info: " + id)
+    def init(self):
+        return {}
+
 
 ### unknown ###
 UNKNOWN = "UNKNOWN"
@@ -437,9 +460,10 @@ def getICD9():
 
 def initICD9():
     codes = {}
-    if not os.path.isfile(getFile(icd9File)):
+    f = getFile(icd9File)
+    if not os.path.isfile(f):
         return codes
-    with open(getFile(icd9File), 'r') as file:
+    with open(f, 'r') as file:
         lastCode = ""
         for line in file:
             if len(line.strip()) < 2:
@@ -501,9 +525,10 @@ def getGlobalSymbols():
 
 def initGlobalSymbols():
     codes_dict = {}
-    if not os.path.isfile(getFile(globalSymbolsFile)):
+    f = getFile(globalSymbolsFile)
+    if not os.path.isfile(f):
         return codes_dict
-    with open(getFile(globalSymbolsFile), 'r') as file:
+    with open(f, 'r') as file:
         lines = file.readlines()
     for i in range(len(lines)):
         codeList = lines[i].split('#')[0].strip('\n');
@@ -537,6 +562,9 @@ def enrichDict(file, mid):
     extractEntries(dict, patient)
     with util.OutWrapper(file) as out:
         print(json.dumps(dict, indent=2, sort_keys=True), file=out)
+
+def init(settings):
+    dictionary.init(settings)
 
 ### argument API
 

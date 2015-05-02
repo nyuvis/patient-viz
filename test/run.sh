@@ -36,6 +36,8 @@ check_file() {
 }
 
 convert_patient() {
+  rm -- "${OUTPUT}/${id}.json.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/dictionary.json.tmp" 2> /dev/null
   id=$1
   ../cms_get_patient.py -p "${id}" -f "${format}" -o "${OUTPUT}/${id}.json.tmp" -c "${style_classes}" -- "${CMS_DIR}" 2> $ERR_FILE
   check $?
@@ -43,11 +45,14 @@ convert_patient() {
   ../build_dictionary.py --debug -p "${OUTPUT}/${id}.json.tmp" -c "${config}" -o "${OUTPUT}/dictionary.json.tmp"
   check $?
   check_file "${OUTPUT}/dictionary.json" "${OUTPUT}/dictionary.json.tmp"
-  rm -- "${OUTPUT}/${id}.json.tmp"
-  rm -- "${OUTPUT}/dictionary.json.tmp"
 }
 
 create_predictive_model() {
+  rm -- "${OUTPUT}/cohort_cases.txt.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/cohort_control.txt.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/cohort.txt.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/output.csv.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/headers.json.tmp" 2> /dev/null
   ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/cases.txt" -f "${format}" -c "${config_fe}" -o "${OUTPUT}/cohort_cases.txt.tmp" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/cohort_cases.txt" "${OUTPUT}/cohort_cases.txt.tmp"
@@ -63,15 +68,10 @@ create_predictive_model() {
   head -n 1 "${OUTPUT}/output.csv.tmp" | sed "s/,/ /g" | ../build_dictionary.py --debug -o "${OUTPUT}/headers.json.tmp" -c "${config_fe}" --lookup -
   check $?
   check_file "${OUTPUT}/headers.json" "${OUTPUT}/headers.json.tmp"
-  rm -- "${OUTPUT}/cohort_cases.txt.tmp"
-  rm -- "${OUTPUT}/cohort_control.txt.tmp"
-  rm -- "${OUTPUT}/cohort.txt.tmp"
-  rm -- "${OUTPUT}/output.csv.tmp"
-  rm -- "${OUTPUT}/headers.json.tmp"
 }
 
 convert_patient "8CDC0C5ACBDFC9CE"
 create_predictive_model
 
-rm $ERR_FILE
+rm -- ${ERR_FILE} ${OUTPUT}/*.tmp
 exit 0

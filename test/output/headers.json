@@ -136,17 +136,17 @@
   }, 
   "info": {
     "": {
-      "desc": "info", 
+      "color": "pink", 
+      "desc": "Info", 
       "id": "", 
-      "name": "info", 
+      "name": "Info", 
       "parent": ""
     }, 
     "age_80_90": {
-      "desc": "info age_80_90", 
+      "desc": "Info: age_80_90", 
       "id": "age_80_90", 
       "name": "age_80_90", 
-      "parent": "", 
-      "unmapped": true
+      "parent": ""
     }
   }, 
   "provider": {

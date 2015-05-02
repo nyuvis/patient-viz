@@ -303,7 +303,6 @@ if __name__ == '__main__':
             usage()
 
     build_dictionary.setPathCorrection('../')
-    build_dictionary.reportMissingEntries = False
     build_dictionary.init(settings)
 
     allPaths = []
