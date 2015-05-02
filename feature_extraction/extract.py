@@ -178,7 +178,8 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
         else:
             processDirectory(path, id_column, eventHandle, whitelist)
 
-def printResult(vectors, header_list, header_counts, delim, quote, whitelist, out):
+def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
+    header_list = sorted(hl)
 
     def doQuote(cell):
         cell = str(cell)

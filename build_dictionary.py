@@ -362,7 +362,7 @@ class Icd9DiagnosisCode(TypeCode):
         while len(prox_id) >= 3:
             pid = self._parents[prox_id] if prox_id in self._parents else pid
             if prox_id in symbols:
-                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
+                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", "") if "HIERARCHY" not in id else None)
             prox_id = prox_id[:-1]
         return createUnknownEntry(symbols, type, id, pid)
     def init(self):
@@ -389,7 +389,7 @@ class Icd9ProcedureCode(TypeCode):
         while len(prox_id) >= 3:
             pid = self._parents[prox_id] if prox_id in self._parents else pid
             if prox_id in symbols:
-                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", ""))
+                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", "") if "HIERARCHY" not in id else None)
             prox_id = prox_id[:-1]
         return createUnknownEntry(symbols, type, id, pid)
     def init(self):

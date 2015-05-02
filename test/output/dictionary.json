@@ -175,175 +175,150 @@
       "unmapped": true
     }, 
     "HIERARCHY.13": {
-      "alias": "HIERARCHY13", 
       "desc": "Diseases of the musculoskeletal system and connective tissue", 
       "id": "HIERARCHY.13", 
       "name": "Diseases of the musculoskeletal system and connective tissue", 
       "parent": ""
     }, 
     "HIERARCHY.13.2": {
-      "alias": "HIERARCHY132", 
       "desc": "Non-traumatic joint disorders", 
       "id": "HIERARCHY.13.2", 
       "name": "Non-traumatic joint disorders", 
       "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.13.2.3": {
-      "alias": "HIERARCHY1323", 
       "desc": "Other non-traumatic joint disorders [204.]", 
       "id": "HIERARCHY.13.2.3", 
       "name": "Other non-traumatic joint disorders [204.]", 
       "parent": "HIERARCHY.13.2"
     }, 
     "HIERARCHY.13.3": {
-      "alias": "HIERARCHY133", 
       "desc": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
       "id": "HIERARCHY.13.3", 
       "name": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
       "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.13.3.2": {
-      "alias": "HIERARCHY1332", 
       "desc": "Intervertebral disc disorders                                                                           -", 
       "id": "HIERARCHY.13.3.2", 
       "name": "Intervertebral disc disorders                                                                           -", 
       "parent": "HIERARCHY.13.3"
     }, 
     "HIERARCHY.13.3.3": {
-      "alias": "HIERARCHY1333", 
       "desc": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
       "id": "HIERARCHY.13.3.3", 
       "name": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
       "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.13.3.3.1": {
-      "alias": "HIERARCHY13331", 
       "desc": "Cervical radiculitis                                                                                    -", 
       "id": "HIERARCHY.13.3.3.1", 
       "name": "Cervical radiculitis                                                                                    -", 
       "parent": "HIERARCHY.13.3.3"
     }, 
     "HIERARCHY.13.3.3.7": {
-      "alias": "HIERARCHY13337", 
       "desc": "Other back pain and disorders                                                                           -", 
       "id": "HIERARCHY.13.3.3.7", 
       "name": "Other back pain and disorders                                                                           -", 
       "parent": "HIERARCHY.13.3.3"
     }, 
     "HIERARCHY.13.8": {
-      "alias": "HIERARCHY138", 
       "desc": "Other connective tissue disease [211.]", 
       "id": "HIERARCHY.13.8", 
       "name": "Other connective tissue disease [211.]", 
       "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.13.9": {
-      "alias": "HIERARCHY139", 
       "desc": "Other bone disease and musculoskeletal deformities [212.]", 
       "id": "HIERARCHY.13.9", 
       "name": "Other bone disease and musculoskeletal deformities [212.]", 
       "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.17": {
-      "alias": "HIERARCHY17", 
       "desc": "Symptoms; signs; and ill-defined conditions and factors influencing health status", 
       "id": "HIERARCHY.17", 
       "name": "Symptoms; signs; and ill-defined conditions and factors influencing health status", 
       "parent": ""
     }, 
     "HIERARCHY.17.1": {
-      "alias": "HIERARCHY171", 
       "desc": "Symptoms; signs; and ill-defined conditions", 
       "id": "HIERARCHY.17.1", 
       "name": "Symptoms; signs; and ill-defined conditions", 
       "parent": "HIERARCHY.17"
     }, 
     "HIERARCHY.17.1.9": {
-      "alias": "HIERARCHY1719", 
       "desc": "Allergic reactions [253.]", 
       "id": "HIERARCHY.17.1.9", 
       "name": "Allergic reactions [253.]", 
       "parent": "HIERARCHY.17.1"
     }, 
     "HIERARCHY.5": {
-      "alias": "HIERARCHY5", 
       "desc": "Mental illness", 
       "id": "HIERARCHY.5", 
       "name": "Mental illness", 
       "parent": ""
     }, 
     "HIERARCHY.5.4": {
-      "alias": "HIERARCHY54", 
       "desc": "Delirium, dementia, and amnestic and other cognitive disorders [653.]", 
       "id": "HIERARCHY.5.4", 
       "name": "Delirium, dementia, and amnestic and other cognitive disorders [653.]", 
       "parent": "HIERARCHY.5"
     }, 
     "HIERARCHY.7": {
-      "alias": "HIERARCHY7", 
       "desc": "Diseases of the circulatory system", 
       "id": "HIERARCHY.7", 
       "name": "Diseases of the circulatory system", 
       "parent": ""
     }, 
     "HIERARCHY.7.2": {
-      "alias": "HIERARCHY72", 
       "desc": "Diseases of the heart", 
       "id": "HIERARCHY.7.2", 
       "name": "Diseases of the heart", 
       "parent": "HIERARCHY.7"
     }, 
     "HIERARCHY.7.2.4": {
-      "alias": "HIERARCHY724", 
       "desc": "Coronary atherosclerosis and other heart disease [101.]", 
       "id": "HIERARCHY.7.2.4", 
       "name": "Coronary atherosclerosis and other heart disease [101.]", 
       "parent": "HIERARCHY.7.2"
     }, 
     "HIERARCHY.7.2.4.3": {
-      "alias": "HIERARCHY7243", 
       "desc": "Other acute and subacute forms of ischemic heart disease                                                -", 
       "id": "HIERARCHY.7.2.4.3", 
       "name": "Other acute and subacute forms of ischemic heart disease                                                -", 
       "parent": "HIERARCHY.7.2.4"
     }, 
     "HIERARCHY.7.2.4.5": {
-      "alias": "HIERARCHY7245", 
       "desc": "Other forms of chronic heart disease                                                                    -", 
       "id": "HIERARCHY.7.2.4.5", 
       "name": "Other forms of chronic heart disease                                                                    -", 
       "parent": "HIERARCHY.7.2.4"
     }, 
     "HIERARCHY.7.2.7": {
-      "alias": "HIERARCHY727", 
       "desc": "Other and ill-defined heart disease [104.]", 
       "id": "HIERARCHY.7.2.7", 
       "name": "Other and ill-defined heart disease [104.]", 
       "parent": "HIERARCHY.7.2"
     }, 
     "HIERARCHY.7.2.9": {
-      "alias": "HIERARCHY729", 
       "desc": "Cardiac dysrhythmias [106.]", 
       "id": "HIERARCHY.7.2.9", 
       "name": "Cardiac dysrhythmias [106.]", 
       "parent": "HIERARCHY.7.2"
     }, 
     "HIERARCHY.7.2.9.2": {
-      "alias": "HIERARCHY7292", 
       "desc": "Paroxysmal ventricular tachycardia                                                                      -", 
       "id": "HIERARCHY.7.2.9.2", 
       "name": "Paroxysmal ventricular tachycardia                                                                      -", 
       "parent": "HIERARCHY.7.2.9"
     }, 
     "HIERARCHY.7.2.9.3": {
-      "alias": "HIERARCHY7293", 
       "desc": "Atrial fibrillation                                                                                     -", 
       "id": "HIERARCHY.7.2.9.3", 
       "name": "Atrial fibrillation                                                                                     -", 
       "parent": "HIERARCHY.7.2.9"
     }, 
     "HIERARCHY.7.2.9.5": {
-      "alias": "HIERARCHY7295", 
       "desc": "Premature beats                                                                                         -", 
       "id": "HIERARCHY.7.2.9.5", 
       "name": "Premature beats                                                                                         -", 
