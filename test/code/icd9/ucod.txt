@@ -1,0 +1,1731 @@
+CLASSIFICATION OF DISEASES AND INJURIES
+
+
+
+         I.  INFECTIOUS AND PARASITIC DISEASES (001-139)
+
+Includes:    diseases generally recognized as communicable or transmissible
+                  as well as a few diseases of unknown but possibly
+                  infectious origin
+
+Excludes:    acute respiratory infections (460-466)
+             influenza (487.-)
+             certain localized infections
+
+Note:    Categories for "late effects" of infectious and parasitic diseases
+         are to be found at 137.- to 139.-
+
+
+        INTESTINAL INFECTIOUS DISEASES (001-009)
+
+Excludes:    helminthiases (120-129)
+
+001     Cholera
+
+001.0   Due to Vibrio cholerae
+
+001.1   Due to Vibrio cholerae el tor
+
+001.9   Unspecified
+
+002     Typhoid and paratyphoid fevers
+
+002.0   Typhoid fever
+
+Typhoid (fever) (infection) [any site]
+
+002.1   Paratyphoid fever A
+
+002.2   Paratyphoid fever B
+
+002.3   Paratyphoid fever C
+
+002.9   Paratyphoid fever, unspecified
+
+003     Other salmonella infections
+
+
+                      HYPERTENSIVE DISEASE (401-404)
+
+The following fourth-digit subdivisions are for use with categories 401-404:
+    .0 Specified as malignant
+    .1 Specified as benign
+    .9 Not specified as malignant or benign
+
+Excludes:    when complicating pregnancy, childbirth, or the puerperium
+                  (642.-) when involving coronary vessels (410-414)
+
+401     Essential hypertension
+
+[See 401-404 for fourth-digit subdivisions.]
+
+Includes:    high blood pressure
+             hyperpiesia
+             hyperpiesis
+             hypertension (arterial) (essential) (primary) (systemic)
+
+Excludes:    when involving vessels of:
+                  brain (430-438)
+                  eye (362.1)
+
+402     Hypertensive heart disease
+
+[See 401-404 for fourth-digit subdivisions.]
+
+Includes:    hypertensive heart (disease) (failure)
+             any condition in 428, 429.0-429.3, 429.8, 429.9 due to
+                  hypertension
+
+403     Hypertensive renal disease
+
+[See 401-404 for fourth-digit subdivisions.]
+
+Includes:    arteriolar nephritis
+             arteriosclerosis of kidney
+             arteriosclerotic nephritis (chronic) (interstitial)
+             hypertensive:
+                  nephropathy
+                  renal failure
+             nephrosclerosis
+             any condition in 585, 586, or 587 with any condition in 401
+
+404     Hypertensive heart and renal disease
+
+[See 401-404 for fourth-digit subdivisions.]
+
+Includes:    disease:
+                  cardiorenal
+                  cardiovascular renal
+             any condition in 402.- with any condition in 403.-
+
+                     ISCHEMIC HEART DISEASE (410-414)
+
+Includes:    mention of hypertension (conditions in 401-404)
+
+Use additional code, if desired, to identify presence of hypertension
+
+410     Acute myocardial infarction
+
+Cardiac infarction                Rupture:
+Coronary (artery):                    heart
+    embolism                          myocardium
+    occlusion                     Subendocardial infarction
+    rupture                       Any condition in 414.1-414.9 specified
+    thrombosis                        as acute or with a stated duration
+Infarction:                           of 8 weeks or less
+    heart
+    myocardium
+    ventricle
+
+411     Other acute and subacute forms of ischemic heart disease
+
+Coronary:                         Microinfarct of heart
+    failure                       Preinfarction syndrome
+    insufficiency (acute)         Postmyocardial infarction or
+Intermediate coronary syndrome      Dressler's syndrome
+
+412     Old myocardial infarction
+
+Healed myocardial infarction
+Past myocardial infarction diagnosed on ECG or other special investigation,
+    but currently presenting no symptoms
+
+413     Angina pectoris
+
+Angina:                           Anginal syndrome
+    NOS                           Stenocardia
+    cardiac
+    decubitus
+    of effort
+
+414     Other forms of chronic ischemic heart disease
+
+Excludes:    cardiovascular arteriosclerosis, degeneration, disease or
+                  sclerosis (429.2)
+
+414.0   Coronary atherosclerosis
+
+Atherosclerotic heart disease
+Coronary atheroma
+Coronary (artery) sclerosis
+
+414.1   Aneurysm of heart
+
+Aneurysm:
+    coronary
+    mural
+    ventricular aneurysm
+
+414.8   Other
+
+Ischemia, myocardial (chronic)
+Any condition in 410 specified as chronic, or with a stated duration of
+    over 8 weeks
+
+414.9   Unspecified
+
+Ischemic heart disease NOS
+
+
+                    DISEASES OF PULMONARY CIRCULATION (415-417)
+
+415     Acute pulmonary heart disease
+
+415.0   Acute cor pulmonale
+
+415.1   Pulmonary embolism
+
+Pulmonary (artery) (vein):
+    apoplexy
+    infarction (hemorrhagic)
+    thrombosis
+
+Excludes:    when complicating:
+                  abortion (634-638 with fourth digit .6, 639.6)
+                  ectopic or molar pregnancy (639.6)
+                  pregnancy, childbirth, or the puerperium (673.-)
+
+416     Chronic pulmonary heart disease
+
+416.0   Primary pulmonary hypertension
+
+Pulmonary hypertension (idiopathic) (primary)
+
+416.1   Kyphoscoliotic heart disease
+
+416.8   Other
+
+416.9   Pulmonary heart disease, unspecified
+
+Chronic cardiopulmonary disease   Cor pulmonale (chronic) NOS
+
+417     Other diseases of pulmonary circulation
+
+417.0   Arteriovenous fistula of pulmonary vessels
+
+417.1   Aneurysm of pulmonary artery
+
+417.8   Other
+
+Rupture of pulmonary vessel       Stricture of pulmonary vessel
+
+417.9   Unspecified
+
+
+                    OTHER FORMS OF HEART DISEASE (420-429)
+
+420     Acute pericarditis
+
+Includes:    acute:
+                  mediastinopericarditis
+                  myopericarditis
+                  pericardial effusion
+                  pleuropericarditis
+                  pneumopericarditis
+
+420.9   Other and unspecified acute pericarditis
+
+Pericarditis:                     Pericarditis:
+    infective                         streptococcal
+    pneumococcal                      viral
+    purulent                      Pyopericarditis
+    staphylococcal
+
+421     Acute and subacute endocarditis
+
+421.0   Acute and subacute bacterial endocarditis
+
+Endocarditis (acute) (chronic) (subacute):
+    bacterial
+    infective NOS
+    lenta
+    malignant
+    septic
+    ulcerative
+    vegetative
+Infective aneurysm
+
+Use additional code, if desired, to identify infectious organism [e.g.,
+    Streptococcus 041.0, Staphylococcus 041.1]
+
+421.9   Acute endocarditis, unspecified
+
+Endocarditis, acute or subacute
+Myoendocarditis, acute or subacute
+Periendocarditis, acute or subacute
+
+Excludes:    acute rheumatic endocarditis (391.1)
+
+422     Acute myocarditis
+
+422.9   Other and unspecified acute myocarditis
+
+Acute or subacute                 Septic myocarditis
+    (interstitial) myocarditis    Toxic myocarditis
+
+423     Other diseases of pericardium
+
+Excludes:    when specified as rheumatic (393)
+
+423.0   Hemopericardium
+
+423.1   Adhesive pericarditis
+
+Adherent pericardium
+
+423.2   Constrictive pericarditis
+
+423.8   Other
+
+423.9   Unspecified
+
+424     Other diseases of endocardium
+
+424.0   Mitral valve disorders
+
+Mitral (valve):
+    incompetence NOS of specified cause, except rheumatic
+    insufficiency NOS of specified cause, except rheumatic
+    regurgitation NOS of specified cause, except rheumatic
+
+Excludes:    mitral (valve):
+                  disease (394.9)
+                  failure (394.9)
+                  stenosis (394.0)
+             the listed conditions:
+                  when specified as rheumatic (394.1)
+                  when of unspecified cause but with mention of:
+                       diseases of aortic valve (396)
+                       mitral stenosis or obstruction (394.2)
+
+424.1   Aortic valve disorders
+
+Aortic (valve):    }
+    incompetence   }  NOS
+    insufficiency  }  of specified cause,
+    regurgitation  }       except rheumatic
+    stenosis       }
+
+Excludes:    hypertrophic subaortic stenosis (425.1)
+             when specified as rheumatic (395.-)
+             when of unspecified cause but with mention of diseases of
+                  mitral valve (396)
+
+424.2   Tricuspid valve disorders, specified as nonrheumatic
+
+Tricuspid valve:   }
+    incompetence   }  of specified cause,
+    insufficiency  }       except rheumatic
+    regurgitation  }
+    stenosis       }
+
+Excludes:    when of unspecified cause (397.0)
+
+424.3   Pulmonary valve disorders
+
+Pulmonic regurgitation:           Pulmonic regurgitation:
+    NOS                               syphilitic
+
+Excludes:    when specified as rheumatic (397.1)
+
+424.9   Endocarditis, valve unspecified
+
+Endocarditis (chronic )
+Valvular:             }
+    incompetence      } of un-     { specified cause,
+    insufficiency     } specified  {      except rheumatic
+    regurgitation     } valve      { unspecified cause
+    stenosis          }
+Valvulitis (chronic)  }
+
+Excludes:    when specified as rheumatic (397.9)
+             endocardial fibroelastosis (425.3)
+
+425     Cardiomyopathy
+
+Includes:    myocardiopathy
+
+Excludes:    cardiomyopathy arising during pregnancy or the puerperium (674.8)
+
+425.0   Endomyocardial fibrosis
+
+425.1   Hypertrophic obstructive cardiomyopathy
+
+Hypertrophic subaortic stenosis
+
+425.2   Obscure cardiomyopathy of Africa
+
+Becker's disease
+
+425.3   Endocardial fibroelastosis
+
+425.4   Other primary cardiomyopathies
+
+Cardiovascular collagenosis
+Cardiomyopathy:                   Cardiomyopathy:
+    NOS                               hypertrophic nonobstructive
+    constrictive                      idiopathic
+    familial                          obstructive
+
+425.5   Alcoholic cardiomyopathy
+
+425.9   Secondary cardiomyopathy, unspecified
+
+426     Conduction disorders
+
+426.0   Atrioventricular block, complete
+
+426.1   Atrioventricular block, other and unspecified
+
+Atrioventricular block NOS        Wenkebach's phenomenon
+    (incomplete) (partial)        Incomplete atrioventricular block
+
+426.2   Left bundle branch hemiblock
+
+426.3   Other left bundle branch block
+
+426.4   Right bundle branch block
+
+426.5   Bundle branch block, unspecified
+
+426.6   Other heart block
+
+Sinoatrial block                  Sinoauricular block
+
+426.7   Anomalous atrioventricular excitation
+
+Atrioventricular conduction:      Wolff-Parkinson-White syndrome
+     accelerated
+     accessory
+     pre-excitation
+
+426.8   Other specified conduction disorders
+
+Atrioventricular [AV]             Interference dissociation
+    dissociation                  Lown-Ganong-Levine syndrome
+
+426.9   Unspecified
+
+Heart block NOS                   Stokes-Adams syndrome
+
+427     Cardiac dysrhythmias
+
+Excludes:    postoperative (997.1)
+             when attributable to medical care for abortion, ectopic or
+                  molar pregnancy, labor or delivery (634-638 with fourth
+                  digit .7, 639.8, 668.1, 669.4)
+
+427.0   Paroxysmal supraventricular tachycardia
+
+Paroxysmal tachycardia:           Paroxysmal tachycardia:
+    atrial                            junctional
+    atrioventricular [AV]             nodal
+
+427.1   Paroxysmal ventricular tachycardia
+
+427.2   Paroxysmal tachycardia, unspecified
+
+Bouveret-Hoffman syndrome
+
+427.3   Atrial fibrillation and flutter
+
+427.4   Ventricular fibrillation and flutter
+
+427.5   Cardiac arrest
+
+427.6   Premature beats
+
+Ectopic beats                     Premature:
+Extrasystoles                         beats
+extrasystolic arrhythmia                   atrial
+                                           nodal
+                                           supraventricular
+                                           ventricular
+                                      contractions
+
+427.8   Other
+
+Rhythm disorder:                  Syndrome:
+    coronary sinus                    sick sinus
+    ectopic                           tachycardia-bradycardia
+    nodal                         Wandering pacemaker
+
+427.9   Unspecified
+
+Arrhythmia (cardiac) NOS
+
+428     Heart failure
+
+Excludes:    postoperative (997.1)
+             when attributable to medical care for abortion, ectopic or
+                  molar pregnancy, labor or delivery (634-638 with fourth
+                  digit .7, 639.8, 668.1, 669.4)
+             when due to hypertension (402.-)
+
+428.0   Congestive heart failure
+
+Congestive heart disease
+Right heart failure (secondary to left heart failure)
+
+428.1   Left heart failure
+
+Acute edema of lung       }  with mention of heart disease
+Acute pulmonary edema     }       NOS or heart failure
+Cardiac asthma
+Left ventricular failure
+
+428.9   Unspecified
+
+Cardiac, heart or myocardial failure NOS
+Weak heart
+
+429     Ill-defined descriptions and complications of heart disease
+
+Excludes:    any condition in 429.0-429.3,429.8, 429.9 due to hypertension
+                  (402.-)
+
+429.0   Myocarditis, unspecified
+
+Myocarditis                }
+    NOS                    }
+    chronic (interstitial) } (with mention of arteriosclerosis)
+    fibroid                }
+    senile                 }
+
+Use additional code, if desired, to identify presence of arteriosclerosis
+
+429.1   Myocardial degeneration
+
+Degeneration of heart or myocardium:  }
+    fatty                             }
+    mural                             }
+    muscular                          }  (with mention of arteriosclerosis)
+Myocardial                            }
+    degeneration                      }
+    disease                           }
+
+Use additional code, if desired, to identify presence of arteriosclerosis
+
+429.2   Cardiovascular disease, unspecified
+
+Cardiovascular arteriosclerosis
+Cardiovascular      }
+    degeneration    } (with mention of arteriosclerosis)
+    disease         }
+    sclerosis       }
+
+Use additional code, if desired, to identify presence of arteriosclerosis
+
+429.3   Cardiomegaly
+
+Cardiac:
+    dilatation
+    hypertrophy
+Ventricular dilatation
+
+429.4   Functional disturbances following cardiac surgery
+
+[Not to be used for underlying cause of death]
+
+Cardiac insufficiency following cardiac surgery or due to presence of
+    prosthesis
+Heart failure following cardiac surgery or due to presence of prosthesis
+Postcardiotomy syndrome
+
+Excludes:    cardiac failure in the immediate postoperative period (997.1)
+
+429.5   Rupture of chordae tendineae
+
+429.6   Rupture of papillary muscle
+
+429.8   Other
+
+Carditis
+
+429.9   Unspecified
+
+Heart disease (organic) NOS       Morbus cordis NOS
+
+
+                      CEREBROVASCULAR DISEASE (430-438)
+
+Includes:    with mention of hypertension (conditions in 401)
+
+Use additional code, if desired, to identify presence of hypertension
+
+Excludes:    any condition in 430-434, 436, 437 occurring during pregnancy,
+                  childbirth, or the puerperium, or specified as puerperal
+                  (674.0)
+
+430     Subarachnoid hemorrhage
+
+Meningeal hemorrhage
+    Ruptured (congenital) cerebral aneurysm:
+         NOS
+
+431     Intracerebral hemorrhage
+
+Hemorrhage (of):                  Hemorrhage (of):
+    basilar                           internal capsule
+    bulbar                            intrapontine
+    cerebral                          pontine
+    cerebromeningeal                  subcortical
+    cerebellar                        ventricular
+    cortical                      Rupture of blood vessel in brain
+
+432     Other and unspecified intracranial hemorrhage
+
+432.0   Nontraumatic extradural hemorrhage
+
+Nontraumatic epidural hemorrhage
+
+432.1   Subdural hemorrhage
+
+Subdural hemorrhage (nontraumatic)
+
+432.9   Unspecified intracranial hemorrhage
+
+433     Occlusion and stenosis of precerebral arteries
+
+Includes:    embolism of basilar, carotid, and vertebral arteries
+             narrowing of basilar, carotid, and vertebral arteries
+             obstruction (complete) (partial) of basilar, carotid, and
+                  vertebral arteries
+             thrombosis of basilar, carotid, and vertebral arteries
+
+Excludes:    insufficiency NOS of precerebral arteries (435)
+
+433.0   Basilar artery
+
+433.1   Carotid artery
+
+433.2   Vertebral artery
+
+433.3   Multiple and bilateral
+
+433.8   Other
+
+433.9   Unspecified
+
+Precerebral artery NOS
+
+434     Occlusion of cerebral arteries
+
+434.0   Cerebral thrombosis
+
+Thrombosis of cerebral arteries
+
+434.1   Cerebral embolism
+
+434.9   Unspecified
+
+Cerebral infarction NOS
+
+435     Transient cerebral ischemia
+
+Basilar artery syndrome           Intermittent cerebral ischemia
+Cerebrovascular insufficiency    Spasm of cerebral arteries
+    (acute) with transient        Subclavian steal syndrome
+    focal neurological            Vertebral artery syndrome
+    signs and symptoms            Transient ischemic attack [TIA]
+Insufficiency:
+    basilar artery
+    carotid artery
+    vertebral artery
+
+Excludes:    acute cerebrovascular insufficiency NOS (437.1)
+             when due to any conditions in 433.- (433.-)
+
+436     Acute but ill-defined cerebrovascular disease
+
+Apoplexy, apoplectic:             Cerebrovascular accident NOS
+    NOS                           Stroke
+    attack
+    seizure
+
+437     Other and ill-defined cerebrovascular disease
+
+437.0   Cerebral atherosclerosis
+
+Atheroma of cerebral arteries
+
+437.1   Other generalized ischemic cerebrovascular disease
+
+Acute cerebrovascular insufficiency NOS
+Cerebral ischemia (chronic)
+
+437.2   Hypertensive encephalopathy
+
+437.3   Cerebral aneurysm, nonruptured
+
+437.4   Cerebral arteritis
+
+437.5   Moyamoya disease
+
+437.6   Nonpyogenic thrombosis of intracranial venous sinus
+
+437.8   Other
+
+437.9   Unspecified
+
+438     Late effects of cerebrovascular disease
+
+Note:   This category is to be used to indicate conditions in 430-437 as the
+        cause of late effects, themselves classifiable elsewhere.  The "late
+        effects" include conditions specified as such, as sequelae, or present
+        one year or more after the onset of the causal condition.
+
+
+         DISEASES OF ARTERIES, ARTERIOLES, AND CAPILLARIES (440-448)
+
+440     Atherosclerosis
+
+Includes:    arteriolosclerosis
+             arteriosclerosis
+             arteriosclerotic vascular disease
+             atheroma
+             degeneration:
+                  arterial
+                  arteriovascular
+                  vascular
+             endarteritis deformans or obliterans
+             senile:
+                  arteritis
+                  endarteritis
+
+440.0   Of aorta
+
+440.1   Of renal artery
+
+Excludes:    atherosclerosis of renal arterioles (403.0)
+
+440.2   Of arteries of the extremities
+
+Mönckeberg's (medial) sclerosis
+
+440.8   Of other specified arteries
+
+Excludes:    cerebral (437.0)
+             coronary (414.0)
+             mesenteric (557.1)
+             pulmonary (416.0)
+
+440.9   Generalized and unspecified
+
+441     Aortic aneurysm
+
+441.0   Dissecting aneurysm [any part]
+
+441.1   Thoracic aneurysm, ruptured
+
+441.2   Thoracic aneurysm without mention of rupture
+
+441.3   Abdominal aneurysm, ruptured
+
+441.4   Abdominal aneurysm without mention of rupture
+
+441.5   Aortic aneurysm of unspecified site, ruptured
+
+Rupture of aorta NOS
+
+441.6   Aortic aneurysm of unspecified site without mention of rupture
+
+Aneurysm           }
+Dilatation         }  of aorta
+Hyaline necrosis   }
+
+442     Other aneurysm
+
+Includes:    aneurysm (rupture) (cirsoid) (false) (varicose)
+             aneurysmal varix
+
+Excludes:    arteriovenous aneurysm, acquired (447.0)
+
+442.0   Of artery of upper extremity
+
+442.1   Of renal artery
+
+442.2   Of iliac artery
+
+442.3   Of artery of lower extremity
+
+442.8   Of other specified artery
+
+Excludes:    cerebral (nonruptured) (437.3)
+                  ruptured (430)
+             coronary (414.1)
+             heart (414.1)
+             pulmonary (417.1)
+
+442.9   Of unspecified site
+
+443     Other peripheral vascular disease
+
+443.0   Raynaud's syndrome
+
+Raynaud's:                        Raynaud's:
+    disease                           phenomenon (secondary)
+
+443.1   Thromboangiitis obliterans [Buerger's disease]
+
+443.8   Other
+
+Acrocyanosis                      Erythrocyanosis
+Acroparaesthesia:                 Erythromelalgia
+    simple [Schulze's type]
+    vasomotor [Nothnagel's type]
+
+Excludes:    chilblains (991.5)
+             frostbite (991.0 - 991.3, E901.-)
+             immersion foot (991.4, E901.0)
+
+443.9   Unspecified
+
+Intermittent claudication NOS     Spasm of artery
+Peripheral vascular disease NOS
+
+Excludes:    spasm of cerebral artery (435)
+
+444     Arterial embolism and thrombosis
+
+Includes:    infarction:
+                  embolic
+                  thrombotic
+             occlusion
+
+Excludes:    when complicating:
+                  abortion (634-638 with fourth digit .6, 639.6)
+                  ectopic or molar pregnancy (639.6)
+                  pregnancy, childbirth, or the puerperium (673.-)
+
+444.0   Of abdominal aorta
+
+Aortic bifurcation syndrome       Leriche's syndrome
+
+444.1   Of other aorta
+
+444.2   Of arteries of the extremities
+
+Peripheral arterial embolism
+
+444.8   Of other specified artery
+
+Excludes:    basilar (433.0)
+             carotid (433.1)
+             cerebral (434.-)
+             coronary (410)
+             mesenteric (557.0)
+             ophthalmic (362.3)
+             precerebral (433.-)
+             pulmonary (415.1)
+             renal (593.8)
+             retinal (362.3)
+             vertebral (433.2)
+
+444.9   Of unspecified artery
+
+446     Polyarteritis nodosa and allied conditions
+
+446.0   Polyarteritis nodosa
+
+Disseminated necrotizing periarteritis
+Panarteritis
+Periarteritis (nodosa)
+
+446.1   Acute febrile mucocutaneous lymph node syndrome [MCLS]
+
+446.2   Hypersensitivity angiitis
+
+Goodpasture's syndrome
+
+446.3   Lethal midline granuloma
+
+446.4   Wegener's granulomatosis
+
+446.5   Giant cell arteritis
+
+Cranial arteritis                 Temporal arteritis
+Horton's disease
+
+446.6   Thrombotic microangiopathy
+
+Thrombotic thrombocytopenic purpura
+
+446.7   Takayasu's disease
+
+Aortic arch arteritis             Pulseless disease
+
+447     Other disorders of arteries and arterioles
+
+447.0   Arteriovenous fistula, acquired
+
+Arteriovenous aneurysm, acquired
+
+Excludes:    cerebral (437.3)
+             coronary (414.1)
+             pulmonary (417.0)
+             traumatic (900-904)
+
+447.1   Stricture of artery
+
+447.2   Rupture of artery
+
+Erosion of artery
+Fistula of artery
+Ulcer of artery
+
+Excludes:    traumatic rupture of artery (900.-904.-)
+
+447.3   Hyperplasia of renal artery
+
+447.4   Coeliac artery compression syndrome
+
+447.5   Necrosis of artery
+
+447.6   Arteritis, unspecified
+
+Aortitis NOS                      Endarteritis NOS
+
+Excludes:    arteritis, endarteritis:
+                  aortic arch (446.7)
+                  cerebral (437.4)
+                  coronary (414.8)
+                  deformans (440.-)
+                  obliterans (440.-)
+                  senile (440.-)
+
+447.8   Other
+
+Fibromuscular hyperplasia of arteries
+
+447.9   Unspecified
+
+448     Diseases of capillaries
+
+448.0   Hereditary hemorrhagic telangiectasia
+
+Rendu-Osler-Weber disease
+
+448.1   Nevus, non-neoplastic
+
+Nevus:
+    araneus
+    senile
+    spider
+    stellar
+
+448.9   Other and unspecified
+
+
+           DISEASES OF VEINS AND LYMPHATICS, AND OTHER DISEASES
+                     OF CIRCULATORY SYSTEM (451-459)
+
+451     Phlebitis and thrombophlebitis
+
+Includes:    endophlebitis
+             inflammation, vein
+             periphlebitis
+             suppurative phlebitis
+
+Excludes:    when complicating:
+                  abortion (634-638 with fourth digit .7, 639.8)
+                  ectopic or molar pregnancy (639.8)
+                  pregnancy, childbirth, or the puerperium (671.-)
+
+451.0   Of superficial vessels of lower extremities
+
+451.1   Of deep vessels of lower extremities
+
+451.2   Of lower extremities, unspecified
+
+451.8   Of other sites
+
+Use additional E code, if desired, to identify drug, if drug-induced
+
+Excludes:    intracranial venous sinus (325)
+                  nonpyogenic (437.6)
+             portal (vein) (572.1)
+
+451.9   Of unspecified site
+
+452     Portal vein thrombosis
+
+Portal (vein) obstruction
+
+Excludes:    phlebitis of portal vein (572.1)
+
+453     Other venous embolism and thrombosis
+
+Excludes:    when complicating:
+                  abortion (634-638 with fourth digit .7, 639.8)
+                  ectopic or molar pregnancy (639.8)
+                  pregnancy, childbirth, or the puerperium (671.-)
+
+453.0   Budd-Chiari syndrome
+
+453.1   Thrombophlebitis migrans
+
+453.2   Of vena cava
+
+453.3   Of renal vein
+
+453.8   Of other specified veins
+
+Excludes:    cerebral (434.-)
+             coronary (410)
+             intracranial venous sinus (325)
+                  nonpyogenic (437.6)
+             lower extremities (451.0-451.2)
+             mesenteric (557.0)
+             portal (452)
+             precerebral (433.-)
+             pulmonary (415.1)
+
+453.9   Of unspecified site
+
+Embolism of vein                  Thrombosis (vein)
+
+454     Varicose veins of lower extremities
+
+Excludes:    when complicating pregnancy or the puerperium (671.0)
+
+454.0   With ulcer
+
+Varicose ulcer (lower extremity, any part)
+Any condition in 454.9 with ulcer or specified as ulcerated
+
+454.1   With inflammation
+
+Any condition in 454.9 with inflammation or specified as inflamed
+
+454.2   With ulcer and inflammation
+
+Any condition in 454.9 with ulcer and inflammation
+
+454.9   Without mention of ulcer or inflammation
+
+Phlebectasia of lower extremity [any part] or of unspecified site
+Varicose veins of lower extremity [any part] or of unspecified site
+Varix of lower extremity [any part] or of unspecified site
+
+455     Hemorrhoids
+
+Includes:    hemorrhoids (rectum)
+             piles
+             varicose veins, anus or rectum
+
+Excludes:    when complicating pregnancy, childbirth, or the puerperium
+                  (671.8)
+
+455.0   Internal hemorrhoids without mention of complication
+
+455.1   Internal thrombosed hemorrhoids
+
+455.2   Internal hemorrhoids with other complication
+
+Internal hemorrhoids:
+    bleeding
+    prolapsed
+    strangulated
+    ulcerated
+
+455.3   External hemorrhoids without mention of complication
+
+455.4   External thrombosed hemorrhoids
+
+455.5   External hemorrhoids with other complication
+
+External hemorrhoids:
+    bleeding
+    prolapsed
+    strangulated
+    ulcerated
+
+455.6   Unspecified hemorrhoids without mention of complication
+
+Hemorrhoids NOS
+
+455.7   Unspecified thrombosed hemorrhoids
+
+Thrombosed hemorrhoids, unspecified whether internal or external
+
+455.8   Unspecified hemorrhoids with other complication
+
+Hemorrhoids, unspecified whether internal or external:
+    bleeding
+    prolapsed
+    strangulated
+    ulcerated
+
+455.9   Residual hemorrhoidal skin tags
+
+Skin tags, anus or rectum
+
+456     Varicose veins of other sites
+
+456.0   Esophageal varices with bleeding
+
+456.1   Esophageal varices without mention of bleeding
+
+456.3   Sublingual varices
+
+456.4   Scrotal varices
+
+Varicocele
+
+456.5   Pelvic varices
+
+456.6   Vulval varices
+
+Excludes:    when complicating pregnancy, childbirth, or the puerperium
+                  (671.1)
+
+456.8   Other
+
+Excludes:    retinal varices (362.1)
+             varicose veins of unspecified site (454.9)
+
+457     Noninfective disorders of lymphatic channels
+
+457.0   Postmastectomy lymphedema syndrome
+
+[Not to be used for underlying cause of death]
+
+Elephantiasis due to mastectomy operation
+Obliteration of lymphatic vessel due to mastectomy operation
+
+457.1   Other lymphedema
+
+Elephantiasis (nonfilarial) NOS
+Lymphangiectasis
+Obliteration, lymphatic vessel
+
+Excludes:    elephantiasis (nonfilarial):
+                  congenital (757.0)
+                  eyelid (374.8)
+                  vulva (624.8)
+
+457.2   Lymphangitis
+
+Lymphangitis:
+    NOS
+    chronic
+    subacute
+
+Excludes:    acute lymphangitis (682.-)
+
+457.8   Other noninfective disorders of lymphatic channels
+
+Chylocele (nonfilarial)
+
+Excludes:    chylocele:
+                  filarial (125.-)
+                  tunica vaginalis (nonfilarial) (608.8)
+
+457.9   Unspecified
+
+458     Hypotension
+
+Includes:    hypopiesis
+
+Excludes:    cardiovascular collapse (785.5)
+             maternal hypotension syndrome (669.2)
+             Shy-Drager syndrome (333.0)
+
+458.0   Orthostatic hypotension
+
+Hypotension:
+    orthostatic (chronic)
+    postural
+
+458.1   Chronic hypotension
+
+Permanent idiopathic hypotension
+
+458.9   Unspecified
+
+Hypotension (arterial) NOS
+
+459     Other disorders of circulatory system
+
+459.0   Hemorrhage, unspecified
+
+Excludes:    hemorrhage:
+                  gastrointestinal (578.9)
+                  in newborn NOS (772.9)
+
+459.1   Postphlebitic syndrome
+
+459.2   Compression of vein
+
+Stricture of vein                 Vena cava syndrome (inferior) (superior)
+
+459.8   Other
+
+Collateral circulation (venous), any site
+Phlebosclerosis
+
+459.9   Unspecified
+                 VIII.  DISEASES OF THE RESPIRATORY SYSTEM
+
+Use additional code, if desired, to identify infectious organism
+
+
+                   ACUTE RESPIRATORY INFECTIONS (460-466)
+
+Excludes:    pneumonia and influenza (480-487)
+
+460     Acute nasopharyngitis [common cold]
+
+Coryza (acute)                    Rhinitis:
+Nasal catarrh, acute                  acute
+Nasopharyngitis:                      infective
+    NOS
+    acute
+    infective NOS
+
+Excludes:    nasopharyngitis, chronic (472.2)
+             pharyngitis:
+                  acute or unspecified (462)
+                  chronic (472.1)
+             rhinitis:
+                  allergic (477.-)
+                  chronic or unspecified (472.0)
+             sore throat:
+                  acute or unspecified (462)
+                  chronic (472.1)
+
+461     Acute sinusitis
+
+Includes:    abscess, acute, of sinus (accessory) (nasal)
+             empyema, acute, of sinus (accessory) (nasal)
+             infection, acute, of sinus (accessory) (nasal)
+             inflammation, acute, of sinus (accessory) (nasal)
+             suppuration, acute, of sinus (accessory) (nasal)
+
+Excludes:    chronic or unspecified (473.-)
+
+461.0   Maxillary
+
+Acute antritis
+
+461.1   Frontal
+
+461.2   Ethmoidal
+
+461.3   Sphenoidal
+
+461.8   Other
+
+Acute pansinusitis
+
+461.9   Unspecified
+
+Acute sinusitis NOS
+
+462     Acute pharyngitis
+
+Acute sore throat NOS             Pharyngitis (acute):
+Pharyngitis (acute):
+    NOS                               staphylococcal
+    gangrenous                        suppurative
+    infective                         ulcerative
+    phlegmonous                   Sore throat (viral) NOS
+    pneumococcal                  Viral pharyngitis
+
+Excludes:    abscess:
+                  peritonsillar [quinsy] (475)
+                  pharyngeal (478.2)
+                  retropharyngeal (478.2)
+             chronic pharyngitis (472.1)
+             that conditions if specified as (due to):
+                  Coxsackie (virus) (074.0)
+                  herpes simplex (054.7)
+                  influenzal (487.1)
+                  septic (034.0)
+                  streptococcal (034.0)
+
+463     Acute tonsillitis
+
+Tonsillitis (acute):              Tonsillitis (acute):
+    NOS                               septic
+    follicular                        staphylococcal
+    gangrenous                        suppurative
+    infective                         ulcerative
+    pneumococcal                      viral
+
+Excludes:    peritonsillar abscess [quinsy] (475)
+             sore throat:
+                  acute or NOS (462)
+                  septic (034.0)
+             streptococcal tonsillitis (034.0)
+
+464     Acute laryngitis and tracheitis
+
+Excludes:    when specified as due to Streptococcus (034.0)
+
+464.0   Acute laryngitis
+
+Laryngitis (acute):               Laryngitis (acute):
+    NOS                               pneumococcal
+    Hemophilus influenzae             septic
+         [H. influenzae]              suppurative
+    oedematous                        ulcerative
+
+Excludes:    chronic laryngitis (476.-)
+             influenzal laryngitis (487.1)
+
+464.1   Acute tracheitis
+
+Tracheitis (acute):
+    NOS
+    catarrhal
+    viral
+
+Excludes:    chronic tracheitis (491.8)
+
+464.2   Acute laryngotracheitis
+
+Laryngotracheitis (acute)         Tracheitis (acute) with laryngitis (acute)
+
+464.3   Acute epiglottitis
+
+464.4   Croup
+
+465     Acute upper respiratory infections of multiple or unspecified sites
+
+465.0   Acute laryngopharyngitis
+
+465.8   Other multiple sites
+
+465.9   Unspecified site
+
+Upper respiratory:
+    disease (acute)
+    infection (acute)
+
+Excludes:    upper respiratory infection due to:
+                  influenza (487.1)
+                  streptococcus (034.0)
+
+466     Acute bronchitis and bronchiolitis
+
+Includes:    the listed conditions with or without mention of obstruction
+                   or bronchospasm
+
+Excludes:    for single-condition coding, acute exacerbation of chronic
+                  bronchitis (491.-)
+
+466.0   Acute bronchitis
+
+Bronchitis, acute or subacute:    Bronchitis, acute or subacute:
+    fibrinous                         viral
+    membranous                        with tracheitis
+    pneumococcal                  Croupous bronchitis
+    purulent                      Tracheobronchitis, acute
+    septic
+
+466.1   Acute bronchiolitis
+
+Bronchiolitis (acute)             Capillary pneumonia
+
+
+
+            OTHER DISEASES OF THE UPPER RESPIRATORY TRACT (470-478)
+
+470     Deflected nasal septum
+
+Deflection or deviation of septum (nasal) (acquired)
+
+471     Nasal polyps
+
+Excludes:    adenomatous polyps (212.0)
+
+471.0   Polyp of nasal cavity
+
+Polyp:
+    choanal
+    nasopharyngeal
+
+471.1   Polypoid sinus degeneration
+
+Woakes' syndrome or ethmoiditis
+
+471.8   Other polyp of sinus
+
+Polyp of sinus:
+    accessory
+    ethmoidal
+    maxillary
+    sphenoidal
+
+471.9   Unspecified
+
+Nasal polyp NOS
+
+472     Chronic pharyngitis and nasopharyngitis
+
+472.0   Chronic rhinitis
+
+Ozena
+Rhinitis:
+    NOS
+    atrophic
+    granulomatous
+    hypertrophic
+    obstructive
+    purulent
+    ulcerative
+
+Excludes:    allergic rhinitis (477.-)
+
+472.1   Chronic pharyngitis
+
+Chronic sore throat
+Pharyngitis:
+    atrophic
+    granular (chronic)
+    hypertrophic
+
+472.2   Chronic nasopharyngitis
+
+Excludes:    acute or unspecified nasopharyngitis (460)
+
+473     Chronic sinusitis
+
+Includes:
+    abscess (chronic) of sinus (accessory) (nasal)
+    empyema (chronic) of sinus (accessory) (nasal)
+    infection (chronic) of sinus (accessory) (nasal)
+    suppuration (chronic) of sinus (accessory) (nasal)
+
+Excludes:    acute sinusitis (461.-)
+
+473.0   Maxillary
+
+Antritis (chronic)
+
+473.1   Frontal
+
+473.2   Ethmoidal
+
+473.3   Sphenoidal
+
+473.8   Other
+
+Pansinusitis (chronic)
+
+473.9   Unspecified
+
+Sinusitis (chronic) NOS
+
+474     Chronic disease of tonsils and adenoids
+
+474.0   Chronic tonsillitis
+
+Excludes:    acute or unspecified tonsillitis (463)
+
+474.1   Hypertrophy of tonsils and adenoids
+
+Enlargement of tonsils (and adenoids)
+Hyperplasia of tonsils (and adenoids)
+Hypertrophy of tonsils (and adenoids)
+
+474.2   Adenoid vegetations
+
+474.8   Other chronic disease of tonsils and adenoids
+
+Amygdalolith                      Tonsillar tag
+Calculus, tonsil                  Ulcer, tonsil
+Cicatrix of tonsil (and adenoid)
+
+474.9   Unspecified
+
+Disease (chronic) of tonsils (and adenoids)
+
+475     Peritonsillar abscess
+
+Abscess of tonsil
+Peritonsillar cellulitis
+Quinsy
+
+Excludes:    tonsillitis:
+                  acute or NOS (463)
+                  chronic (474.0)
+
+476     Chronic laryngitis and laryngotracheitis
+
+476.0   Chronic laryngitis
+
+Laryngitis:
+    catarrhal
+    hypertrophic
+    sicca
+
+476.1   Chronic laryngotracheitis
+
+Laryngitis, chronic, with tracheitis (chronic)
+Tracheitis, chronic, with laryngitis
+
+Excludes:    chronic tracheitis (491.8)
+             laryngitis and tracheitis, acute or unspecified (464.-)
+
+477     Allergic rhinitis
+
+Includes:    allergic rhinitis (nonseasonal) (seasonal)
+             hay fever
+             pollinosis
+             spasmodic rhinorrhea
+
+Excludes:    allergic rhinitis with asthma (bronchial) (493.0)
+
+477.0   Due to pollen
+
+477.8   Due to other allergen
+
+477.9   Cause unspecified
+
+478     Other diseases of upper respiratory tract
+
+478.0   Hypertrophy of nasal turbinates
+
+478.1   Other diseases of nasal cavity and sinuses
+
+Abscess of nose (septum)          Cyst or mucocele of sinus (nasal)
+Necrosis of nose (septum)         Rhinolith
+Ulceration of nose (septum)
+
+Excludes:    varicose ulcer of nasal septum (456.8)
+
+478.2   Other diseases of pharynx, not elsewhere classified
+
+Abscess of pharynx or nasopharynx
+Cellulitis of pharynx or nasopharynx
+Cyst of pharynx or nasopharynx
+Edema of pharynx or nasopharynx
+Retropharyngeal abscess
+
+Excludes:    ulcerative pharyngitis (462)
+
+478.3   Paralysis of vocal cords or larynx
+
+Laryngoplegia                     Paralysis of glottis
+
+478.4   Polyp of vocal cord or larynx
+
+Excludes:    adenomatous polyps (212.1)
+
+478.5   Other diseases of vocal cords
+
+Abscess of vocal cords            Leukoplakia of vocal cords
+Cellulitis of vocal cords         Chorditis (fibrinous) (nodosa) (tuberosa)
+Granuloma of vocal cords          Singers' nodes
+
+478.6   Edema of larynx
+
+Edema (of):
+    glottis
+    subglottic
+    supraglottic
+
+478.7   Other diseases of larynx, not elsewhere classified
+
+Abscess of larynx                 Perichondritis of larynx
+Cellulitis of larynx              Spasm of larynx
+Necrosis of larynx                Stenosis of larynx
+Obstruction of larynx             Ulcer of larynx
+Pachyderma of larynx              Laryngismus (stridulus)
+
+Excludes:    ulcerative laryngitis (464.0)
+
+478.8   Upper respiratory tract hypersensitivity reaction, site unspecified
+
+478.9   Other and unspecified diseases of upper respiratory tract
+
+Abscess of trachea                Cicatrix of trachea
+
+
+                      PNEUMONIA AND INFLUENZA (480-487)
+
+Excludes:    pneumonia:
+                  allergic or eosinophilic (518.3)
+             aspiration:
+                  NOS (507.0)
+                  newborn (770.1)
+                  solids and liquids (507.-)
+             congenital (770.0)
+             lipoid (507.1)
+             passive (514)
+             postoperative (997.3)
+             rheumatic (390)
+
+480     Viral pneumonia
+
+480.0   Pneumonia due to adenovirus
+
+480.1   Pneumonia due to respiratory syncytial virus
+
+480.2   Pneumonia due to parainfluenza virus
+
+480.8   Pneumonia due to other virus, not elsewhere classified
+
+Excludes:    congenital rubella pneumonitis (771.0)
+             influenza with pneumonia, any form (487.0)
+             pneumonia complicating viral diseases classified elsewhere
+                  (045-079)
+
+480.9   Viral pneumonia, unspecified
+
+481     Pneumococcal pneumonia
+
+Lobar pneumonia, organism unspecified
+
+482     Other bacterial pneumonia
+
+482.0   Pneumonia due to Klebsiella pneumoniae
+
+482.1   Pneumonia due to Pseudomonas
+
+482.2   Pneumonia due to Hemophilus influenzae [H. influenzae]
+
+482.3   Pneumonia due to Streptococcus
+
+482.4   Pneumonia due to Staphylococcus
+
+482.8   Pneumonia due to other specified bacteria
+
+Pneumonia due to:
+    Escherichia coli [E. coli]
+    Proteus
+
+Excludes:    pneumonia complicating infectious diseases classified elsewhere
+                  (001-136)
+
+482.9   Bacterial pneumonia, unspecified
+
+483     Pneumonia due to other specified organism
+
+Pneumonia due to:
+    Eaton's agent
+    Mycoplasma(pneumoniae)
+    Pleuropneumonia-like organisms [PPLO]
+
+485     Bronchopneumonia, organism unspecified
+
+Excludes:    bronchiolitis (466.1)
+             lipoid pneumonia (507.1)
+
+486     Pneumonia, organism unspecified
+
+Excludes:    hypostatic or passive pneumonia (514)
+             influenza with pneumonia, any form (487.0)
+             inhalation or aspiration pneumonia due to foreign material
+                  (507.-)
+             pneumonitis due to fumes and vapors (506.0)
+
+487     Influenza
+
+Excludes:    Hemophilus influenzae [H. influenzae]:
+                  infection NOS (041.5)
+                  meningitis (320.0)
+                  pneumonia (482.2)
+
+487.0   With pneumonia
+
+Influenza with pneumonia, any form
+Influenzal:
+    bronchopneumonia
+    pneumonia
+
+487.1   With other respiratory manifestations
+
+Influenza NOS                     Influenzal:
+Influenzal:                           pharyngitis
+    laryngitis                        respiratory infection (upper) (acute)
+
+487.8   With other manifestations
+
+Encephalopathy due to influenza
+Influenza with involvement of gastrointestinal tract
+
+     CHRONIC OBSTRUCTIVE PULMONARY DISEASE AND ALLIED CONDITIONS
+(490-496)
+
+490     Bronchitis, not specified as acute or chronic
+
+Bronchitis NOS:
+    catarrhal
+    with tracheitis NOS
+Tracheobronchitis NOS
+
+Excludes:    bronchitis:
+                  allergic NOS (493.9)
+                  asthmatic NOS (493.9)
+                  due to fumes and vapors (506.0)
+
+491     Chronic bronchitis
+
+Includes:    in single-condition coding, acute exacerbation of chronic
+                  bronchitis
+
+491.0   Simple chronic bronchitis
+
+Catarrhal bronchitis, chronic     Smokers' cough
+
+491.1   Mucopurulent chronic bronchitis
+
+Bronchitis (chronic) (recurrent):
+    mucopurulent
+    purulent
+
+491.2   Obstructive chronic bronchitis
+
+Bronchitis:                       Bronchitis:
+    asthmatic, chronic                obstructive (chronic) (diffuse)
+    emphysematous                     with airways obstruction
+
+491.8   Other chronic bronchitis
+
+Chronic:
+    tracheitis
+    tracheobronchitis
+
+491.9   Unspecified
+
+492     Emphysema
+
+Emphysema (lung or pulmonary):    Emphysematous bleb
+    bullous                       MacLeod's syndrome or unilateral emphysema
+    centriacinar
+    centrilobular
+    obstructive
+    panacinar
+    panlobular
+    vesicular
+
+Excludes:    emphysema:
+                  compensatory (518.2)
+                  due to fumes and vapours (506.4)
+                  interstitial (518.1)
+                       newborn (770.2)
+                  mediastinal (518.1)
+                  surgical (subcutaneous) (998.8)
+                  traumatic (958.7)
+
+493     Asthma
+
+493.0   Extrinsic asthma
+
+Asthma:
+    allergic, stated cause
+    atopic
+    childhood
+    hay
+    platinum
+Hayfever with asthma
+
+Excludes:    asthma:
+                  allergic NOS (493.9)
+                  detergent (507.8)
+                  miners' (500)
+                  wood (495.8)
