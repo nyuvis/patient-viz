@@ -128,7 +128,7 @@ def readConfig(settings, file):
     settings.update(config)
     if set(settings.keys()) - set(config.keys()):
         with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2), file=output)
+            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
 
 def usage():
     print("{0}: --all | -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]".format(sys.argv[0]), file=sys.stderr)

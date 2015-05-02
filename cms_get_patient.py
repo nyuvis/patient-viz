@@ -438,4 +438,4 @@ if __name__ == '__main__':
     if output != '-' and not os.path.exists(os.path.dirname(output)):
         os.makedirs(os.path.dirname(output))
     with util.OutWrapper(output) as out:
-        print(json.dumps(obj, indent=2), file=out)
+        print(json.dumps(obj, indent=2, sort_keys=True), file=out)

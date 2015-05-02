@@ -98,7 +98,7 @@ def readConfig(settings, file):
     settings.update(config)
     if set(settings.keys()) - set(config.keys()):
         with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2), file=output)
+            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
 
 def read_format(file):
     global input_format

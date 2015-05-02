@@ -536,7 +536,7 @@ def enrichDict(file, mid):
             patient = json.loads(pfile.read())
     extractEntries(dict, patient)
     with util.OutWrapper(file) as out:
-        print(json.dumps(dict, indent=2), file=out)
+        print(json.dumps(dict, indent=2, sort_keys=True), file=out)
 
 ### argument API
 
@@ -572,7 +572,7 @@ def readConfig(settings, file):
     settings.update(config)
     if set(settings.keys()) - set(config.keys()):
         with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2), file=output)
+            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
 
 def usage():
     print("{0}: [--debug] -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
@@ -656,6 +656,6 @@ if __name__ == '__main__':
 
         file = info['output']
         with util.OutWrapper(file) as out:
-            print(json.dumps(dict, indent=2), file=out)
+            print(json.dumps(dict, indent=2, sort_keys=True), file=out)
     else:
         enrichDict(info['output'], info['mid'])
