@@ -11,5 +11,5 @@ python:
 #  - "3.2"
 #  - "3.3"
 #  - "3.4"
-install: true
+install: pip install pytz
 script: test/run.sh
