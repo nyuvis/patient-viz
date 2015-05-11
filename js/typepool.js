@@ -1121,13 +1121,6 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     }
     that.traverseTypes(function(gid, tid, type) {
       if(!type.isValid()) return;
-      var tRect = {
-        x: 0,
-        y: type.getY(),
-        width: w,
-        height: rowH
-      };
-      if(!jkjs.util.rectIntersect(sRect, tRect)) return;
       type.traverseEventRange(sRect.x - colW, sRect.x + sRect.width, function(e) {
         return that.getXByEventTime(e);
       }, function(e) {

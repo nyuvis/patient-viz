@@ -309,9 +309,9 @@ function setupRectSelection(pool, blank) {
     var cur = pool.getMousePos();
     rect = {
       x: cur[0],
-      y: cur[1],
+      y: -0.5 * jkjs.util.BIG_NUMBER,
       width: 0,
-      height: 0
+      height: jkjs.util.BIG_NUMBER
     };
     updateSelectionRect();
   }).on("drag", function() {
@@ -319,7 +319,6 @@ function setupRectSelection(pool, blank) {
     if(!rect) return;
     var cur = pool.getMousePos();
     rect.width = cur[0] - rect.x;
-    rect.height = cur[1] - rect.y;
     pool.selectInRect(makeAbsRect(rect), false);
     updateSelectionRect();
   }).on("dragend", function() {
