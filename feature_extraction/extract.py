@@ -26,7 +26,9 @@ to_time = float('Inf')
 age_time = None
 age_bin = 10
 ignore = {
-    "prescribed": True
+    "prescribed": True,
+    "provider": True,
+    "physician": True
 }
 num_cutoff = 500
 
