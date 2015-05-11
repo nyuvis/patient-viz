@@ -10,7 +10,7 @@ import os
 from datetime import datetime, timedelta, tzinfo
 import pytz
 
-_compute_self = "total_seconds" in dir(timedelta(seconds=1))
+_compute_self = "total_seconds" not in dir(timedelta(seconds=1))
 _tz = pytz.timezone('US/Eastern')
 _epoch = datetime(year=1970, month=1, day=1, tzinfo=_tz)
 _day_seconds = 24 * 3600
