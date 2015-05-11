@@ -181,20 +181,5 @@
       "name": "age_80_90", 
       "parent": ""
     }
-  }, 
-  "provider": {
-    "": {
-      "color": "#e6ab02", 
-      "desc": "Provider", 
-      "id": "", 
-      "name": "Provider", 
-      "parent": ""
-    }, 
-    "02": {
-      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
-      "id": "02", 
-      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
-      "parent": ""
-    }
   }
 }

@@ -181,7 +181,6 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
             processDirectory(path, id_column, eventHandle, whitelist)
 
 def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
-    header_list = sorted(hl)
 
     def doQuote(cell):
         cell = str(cell)
@@ -194,20 +193,22 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
     wl_row = lambda id: delim + delim.join(map(lambda k: doQuote(whitelist[id][k]), wkeys)) if whitelist is not None else ""
 
     num_total = len(vectors.keys())
-    columns = []
-    for (ix, h) in enumerate(header_list):
+    columnMap = {}
+    for (ix, h) in enumerate(hl):
         n = header_counts[h]
         if n > num_cutoff and n < num_total - num_cutoff:
-            columns.append(ix)
+            columnMap[h] = ix
 
-    s = doQuote("id") + wl_header + delim + delim.join(map(lambda c: doQuote(header_list[c]), columns))
+    columns = map(lambda h: columnMap[h], sorted(columnMap.keys()))
+
+    s = doQuote("id") + wl_header + delim + delim.join(map(lambda c: doQuote(hl[c]), columns))
     print(s, file=out)
 
     num = 0
 
     empty = emptyBitVector()
     for id in vectors.keys():
-        bitvec = getBitVector(vectors, header_list, id)
+        bitvec = getBitVector(vectors, hl, id)
         s = doQuote(id) + wl_row(id) + delim + delim.join(map(doQuote, map(lambda c: 1 if c in bitvec else 0, columns)))
         vectors[id] = empty
         print(s, file=out)
