@@ -353,9 +353,11 @@ function setupClickAction(pool, blank) {
       });
     } else {
       pool.traverseTypes(function(gid, tid, type) {
-        var rangeY = pool.getRangeY(e.getType());
+        var rangeY = pool.getRangeY(type);
         if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
-          e.setSelected(true);
+          type.traverseEvents(function(e) {
+            e.setSelected(true);
+          });
         }
       });
     }
