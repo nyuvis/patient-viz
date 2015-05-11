@@ -39,7 +39,7 @@
           <input id="pShow" type="checkbox" checked="checked"> Show All Events
         </label>
         <label>
-          <input id="pJoin" type="checkbox"> Join Selections
+          <input id="pVSel" type="checkbox"> Vertical Sel.
         </label>
         <label>
           <input id="pUseLens" type="checkbox"> Use Lens
@@ -299,8 +299,8 @@ function start() {
   linechart = views[3];
   histogram = views[4];
   labels = views[5];
-  d3.select("#pJoin").on("change", function() {
-    pool.joinSelections(d3.select("#pJoin").node().checked);
+  d3.select("#pVSel").on("change", function() {
+    pool.verticalSelection(d3.select("#pVSel").node().checked);
   });
   d3.select("#pShow").on("change", function() {
     pool.showOnlyWeightedEvents(!d3.select("#pShow").node().checked);

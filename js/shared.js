@@ -347,22 +347,20 @@ function setupClickAction(pool, blank) {
         e.setSelected(false);
       });
     }
-    var slot = [];
-    pool.traverseEventsForX(cur[0], function(e) {
-      var rangeY = pool.getRangeY(e.getType());
-      if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
-        e.setSelected(pool.joinSelections() ? true : !e.isSelected());
-        hasEvent = true;
-      }
-      slot.push(e);
-    });
-    if(!hasEvent) {
-      slot.forEach(function(e) {
+    if(pool.verticalSelection()) {
+      pool.traverseEventsForX(cur[0], function(e) {
         e.setSelected(true);
+      });
+    } else {
+      pool.traverseTypes(function(gid, tid, type) {
+        var rangeY = pool.getRangeY(e.getType());
+        if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
+          e.setSelected(true);
+        }
       });
     }
     pool.endBulkSelection();
-  })
+  });
   if(SHOW_EVENT_GROUPS) {
     blank.on("mousemove", function() {
       var cur = pool.getMousePos();

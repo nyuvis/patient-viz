@@ -1206,6 +1206,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     if(!arguments.length) return joinSelections;
     joinSelections = !!js;
   };
+  var verticalSelection = false;
+  this.verticalSelection = function(_) {
+    if(!arguments.length) return verticalSelection;
+    verticalSelection = !!_;
+  };
   var seListeners = [];
   this.addSelectionListener = function(listen) {
     seListeners.push(listen);
