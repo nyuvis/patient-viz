@@ -7,18 +7,27 @@ Created on 2015-04-10
 """
 import sys
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, tzinfo
+import pytz
 
-_epoch = datetime(1970, 1, 1)
+_compute_self = "total_seconds" in dir(timedelta(seconds=1))
+_tz = pytz.timezone('US/Eastern')
+_epoch = datetime(year=1970, month=1, day=1, tzinfo=_tz)
+_day_seconds = 24 * 3600
+_milli = 10**6
 def _mktime(dt):
-    diff = dt - _epoch
-    return diff.days * 24 * 3600 + diff.seconds
+    if not _compute_self:
+        res = (dt - _epoch).total_seconds()
+    else:
+        td = dt - _epoch
+        res = (td.microseconds + (td.seconds + td.days * _day_seconds) * _milli) / _milli
+    return int(res - res % _day_seconds)
 
 def toTime(s):
-    return _mktime(datetime.strptime(s, "%Y%m%d"))
+    return _mktime(datetime(year=int(s[0:4]), month=int(s[4:6]), day=int(s[6:8]), tzinfo=_tz))
 
 def nextDay(stamp):
-    return _mktime(datetime.fromtimestamp(stamp) + timedelta(days = 1))
+    return _mktime(_epoch + timedelta(days=1, seconds=stamp))
 
 def is_array(v):
     try:
