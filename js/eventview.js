@@ -4,16 +4,12 @@
 
 function EventView(sel) {
   var that = this;
+  var totalHeight = Number.NaN;
+  var totalWidth = 265;
   var singleSlot = false;
   var singleType = false;
   var events = [];
-  var full = sel.classed("popover", true).style({
-    "display": "none",
-    "position": "fixed",
-    "left": "20px",
-    "top": "80px",
-    "max-width": 325 + "px"
-  });
+  var full = sel;
   var header = full.append("h3").classed("popover-title", true).text("Selection");
   var list = full.append("div").classed("popover-content", true).style({
     "overflow": "auto",
@@ -31,7 +27,11 @@ function EventView(sel) {
   // TODO
   this.resize = function(allowedHeight, bodyPadding) {
     full.style({
-      "top": (bodyPadding + 20) + "px"
+      "position": "absolute",
+      "top": bodyPadding + "px",
+      "right": 10 + "px",
+      "width": totalWidth + "px",
+      "height": totalHeight + "px"
     });
     list.style({
       "max-height": (allowedHeight - 80) + "px"
