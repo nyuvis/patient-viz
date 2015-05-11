@@ -10,11 +10,17 @@ import os
 from datetime import datetime, timedelta, tzinfo
 import pytz
 
+_compute_self = "total_seconds" in timedelta(seconds=1)
 _tz = pytz.timezone('US/Eastern')
 _epoch = datetime(year=1970, month=1, day=1, tzinfo=_tz)
 _day_seconds = 24 * 3600
+_milli = 10**6
 def _mktime(dt):
-    res = (dt - _epoch).total_seconds()
+    if not _compute_self:
+        res = (dt - _epoch).total_seconds()
+    else:
+        td = dt - _epoch
+        res = (td.microseconds + (td.seconds + td.days * _day_seconds) * _milli) / _milli
     return int(res - res % _day_seconds)
 
 def toTime(s):
