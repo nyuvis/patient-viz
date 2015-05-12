@@ -9,9 +9,11 @@ function EventView(sel) {
   var singleSlot = false;
   var singleType = false;
   var events = [];
-  var full = sel;
-  var header = full.append("h3").classed("popover-title", true).text("Selection");
-  var list = full.append("div").classed("popover-content", true).style({
+  var full = sel.append("div");
+  var header = full.append("span").text("Selection").style({
+    "font-weight": 500
+  });
+  var list = full.append("div").style({
     "overflow": "auto",
     "max-height": "200px"
   });
@@ -27,14 +29,12 @@ function EventView(sel) {
   // TODO
   this.resize = function(allowedHeight, bodyPadding) {
     full.style({
-      "position": "absolute",
-      "top": bodyPadding + "px",
-      "right": 10 + "px",
       "width": totalWidth + "px",
-      "height": totalHeight + "px"
+      "height": allowedHeight + "px"
     });
+    var head = header.node().offsetHeight;
     list.style({
-      "max-height": (allowedHeight - 80) + "px"
+      "max-height": (allowedHeight - head - 10) + "px"
     });
   };
 
@@ -134,10 +134,6 @@ function EventView(sel) {
     es.each(function(e) {
       var li = d3.select(this);
       e.updateListEntry(li, singleSlot, singleType);
-    });
-
-    full.style({
-      "display": events.length ? "block" : "none"
     });
   };
 

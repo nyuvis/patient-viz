@@ -61,7 +61,6 @@
   <div id="pSVG"></div>
 </div>
 <div id="pTypes"></div>
-<div id="pList"></div>
 
 <script>
 var SLOW_MODE = false;
@@ -292,7 +291,7 @@ function start() {
     }
   }
 
-  var views = initViews(mainG, secG, suppl, blank, d3.select("#pList"), d3.select("#pTypes"), overview, setBox, onVC, busy, updateViewport);
+  var views = initViews(mainG, secG, suppl, blank, d3.select("#pTypes"), d3.select("#pTypes"), overview, setBox, onVC, busy, updateViewport);
   pool = views[0];
   eventList = views[1];
   typeList = views[2];
@@ -421,8 +420,9 @@ function start() {
       overview.onSizeUpdate();
     }
     var shadowHeight = overview.getHeightForWidth(listWidth);
-    eventList && eventList.resize(allowedHeight, bodyPadding);
-    typeList && typeList.resize(allowedHeight - shadowHeight, bodyPadding);
+    var listHeight = (allowedHeight - shadowHeight) * 0.4;
+    eventList && eventList.resize(listHeight, bodyPadding);
+    typeList && typeList.resize(allowedHeight - shadowHeight - listHeight, bodyPadding);
     if(box) {
       var supplHeight = suppl.node().offsetHeight;
       // firefox might not have values for that
