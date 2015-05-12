@@ -2,7 +2,7 @@
 
 A binary feature matrix can be extracted using the `extract.py` script.
 The output is a CSV table with columns `id` and named after the event types:
-`${group_id}__${type_id}` where `${group_id}` and `${type_id}` are as defined
+`${group_id}__${type_id}` or `${group_id}__${code_name}__${type_id}` where `${group_id}`, `${code_name}`, and `${type_id}` are as defined
 [in the specification](../spec.md).
 Additionally, if a tagged cohort (as returned by `./merge.py`) is used there are
 two more columns `outcome` (`1` indicates a case) and `test` (`1` indicates that

@@ -132,6 +132,7 @@ The events file:
     {
       "group": $group_id,
       "id": $type_id,
+      <"code">: $code_name, // the optional code name
       "time": 1288756800, // timestamp
       <"row_id">: $row_id, // groups events of the same row together
       <"flag">: $flag_id, // optional event flag

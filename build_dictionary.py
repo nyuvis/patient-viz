@@ -41,6 +41,7 @@ class EntryCreator(object):
             obj = cls()
             if not isinstance(obj, TypeCode):
                 raise TypeError("{0} is not a {1}".format(cls.__name__, TypeCode.__name__))
+            obj.code = code
             self._baseTypes[name].addCodeType(code, obj)
             return cls
         return wrapper
@@ -53,13 +54,13 @@ class EntryCreator(object):
             self._unknown = obj
         return wrapper
 
-    def createEntry(self, dict, type, id, onlyAddMapped=False):
+    def createEntry(self, dict, type, id, onlyAddMapped=False, code=None):
         if not id:
             entry = self.createRootEntry(type)
         else:
             baseType = self._baseTypes.get(type, self._unknown)
             symbols = self._codeTables.get(type, {})
-            entry = baseType.create(symbols, type, id)
+            entry = baseType.create(symbols, type, id, code)
         if type not in dict:
             dict[type] = {}
         if onlyAddMapped and 'unmapped' in entry and entry['unmapped']:
@@ -67,11 +68,11 @@ class EntryCreator(object):
         dict[type][id] = entry
         pid = entry['parent']
         if pid not in dict[type]:
-            self.createEntry(dict, type, pid, False)
+            self.createEntry(dict, type, pid, False, code)
         if 'alias' in entry:
             aid = entry['alias']
             if aid not in dict[type]:
-                self.createEntry(dict, type, aid, True)
+                self.createEntry(dict, type, aid, True, code)
 
     def createRootEntry(self, type):
         baseType = self._baseTypes.get(type, self._unknown)
@@ -126,23 +127,29 @@ class TypeBase(object):
         for code in self._codeTypes.keys():
             res[code] = self._codeTypes[code].init()
         return res
-    def create(self, symbols, type, id):
+    def create(self, symbols, type, id, code):
         candidate = None
-        for k in self._codeTypes.keys():
-            can = self._codeTypes[k].create(symbols[k], type, id)
-            if candidate is not None:
-                umOld = "unmapped" in candidate and candidate["unmapped"]
-                um = "unmapped" in can and can["unmapped"]
-                if um and not umOld:
-                    continue
-                if um == umOld:
-                    candidate = None
-                    if not um and debugOutput:
-                        print("ambiguous type {0} != {1}".format(repr(candidate), repr(can), file=sys.stderr))
-                    break
-            candidate = can
+        if code is not None:
+            if code in self._codeTypes and code in symbols:
+                candidate = self._codeTypes[code].create(symbols[code], type, id)
+            elif debugOutput:
+                print("unknown code {0}".format(repr(code), file=sys.stderr))
+        else:
+            for k in self._codeTypes.keys():
+                can = self._codeTypes[k].create(symbols[k], type, id)
+                if candidate is not None:
+                    umOld = "unmapped" in candidate and candidate["unmapped"]
+                    um = "unmapped" in can and can["unmapped"]
+                    if um and not umOld:
+                        continue
+                    if um == umOld:
+                        candidate = None
+                        if not um and debugOutput:
+                            print("ambiguous type {0} != {1}".format(repr(candidate), repr(can), file=sys.stderr))
+                        break
+                candidate = can
         if candidate is None:
-            return createUnknownEntry({}, type, id)
+            return createUnknownEntry({}, type, id, code=code)
         return candidate
 
 class TypeCode(object):
@@ -166,7 +173,7 @@ class CmsProviderCode(TypeCode):
         if id in symbols:
             return toEntry(id, pid, symbols[id], symbols[id])
         if len(id) == 2:
-            return createUnknownEntry(symbols, type, id, pid)
+            return createUnknownEntry(symbols, type, id, pid, code=self.code)
         return toEntry(id, pid, id, "Provider Number: {0}".format(id))
     def init(self):
         res = {}
@@ -197,7 +204,7 @@ class TypePhysician(TypeBase):
 class CmsPhysicianCode(TypeCode):
     def create(self, symbols, type, id):
         pid = ""
-        return createUnknownEntry(symbols, type, id, pid)
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self):
         return {}
 
@@ -216,7 +223,7 @@ class NdcPrescribedCode(TypeCode):
         if id in symbols:
             l = symbols[id]
             return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
-        return createUnknownEntry(symbols, type, id, pid)
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self):
         prescribeLookup = {}
         fileA = getFile(productFile)
@@ -340,7 +347,7 @@ class LoincLabtestCode(TypeCode):
         pid = "" # find parent id
         if id in symbols:
             return toEntry(id, pid, symbols[id], symbols[id])
-        return createUnknownEntry(symbols, type, id, pid)
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self):
         return getGlobalSymbols()
 
@@ -364,7 +371,7 @@ class Icd9DiagnosisCode(TypeCode):
             if prox_id in symbols:
                 return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", "") if "HIERARCHY" not in id else None)
             prox_id = prox_id[:-1]
-        return createUnknownEntry(symbols, type, id, pid)
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self):
         codes = getGlobalSymbols()
         codes.update(getICD9())
@@ -426,14 +433,15 @@ class TypeUnknown(TypeBase):
         return "red"
     def init(self):
         raise NotImplementedError()
-    def create(self, symbols, type, id):
-        return createUnknownEntry(symbols, type, id)
+    def create(self, symbols, type, id, code):
+        return createUnknownEntry(symbols, type, id, code=code)
 
-def createUnknownEntry(_, type, id, pid = ""):
+def createUnknownEntry(_, type, id, pid = "", code = None):
     # TODO remove: can be seen by attribute unmapped
     #if debugOutput:
     #    print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
-    res = toEntry(id, pid, id, type + " " + id)
+    typeText = type + " (" + code + ")" if code is not None else type
+    res = toEntry(id, pid, id, typeText + " " + id)
     res["unmapped"] = True
     return res
 
@@ -542,7 +550,7 @@ def initGlobalSymbols():
 
 def extractEntries(dict, patient):
     for event in patient['events']:
-        dictionary.createEntry(dict, event['group'], event['id'])
+        dictionary.createEntry(dict, event['group'], event['id'], code=event.get('code', None))
 
 def loadOldDict(file):
     dict = {}
@@ -669,10 +677,11 @@ if __name__ == '__main__':
 
         def addEntry(e):
             spl = e.split('__', 1)
-            if len(spl) != 2:
-                print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
+            if len(spl) != 2 and len(spl) != 3:
+                print("shorthand format is '${group_id}__${type_id}' or '${group_id}__${code_name}__${type_id}': " + e, file=sys.stderr)
                 sys.exit(1)
-            dictionary.createEntry(dict, spl[0].strip(), spl[1].strip())
+            code = spl[1].strip() if len(spl) > 2 else None
+            dictionary.createEntry(dict, spl[0].strip(), spl[len(spl) - 1].strip(), code=code)
 
         for e in rest:
             if e == "-":

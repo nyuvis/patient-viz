@@ -8,21 +8,21 @@
       "parent": ""
     }, 
     "25000": {
-      "desc": "diagnosis 25000", 
+      "desc": "diagnosis (icd9) 25000", 
       "id": "25000", 
       "name": "25000", 
       "parent": "", 
       "unmapped": true
     }, 
     "2720": {
-      "desc": "diagnosis 2720", 
+      "desc": "diagnosis (icd9) 2720", 
       "id": "2720", 
       "name": "2720", 
       "parent": "", 
       "unmapped": true
     }, 
     "2724": {
-      "desc": "diagnosis 2724", 
+      "desc": "diagnosis (icd9) 2724", 
       "id": "2724", 
       "name": "2724", 
       "parent": "", 
