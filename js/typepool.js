@@ -1130,6 +1130,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         e.setSelected(true);
       });
     });
+    that.highlightEvent(null);
     that.endBulkSelection();
   };
   this.startBulkSelection = function() {
@@ -1140,6 +1141,40 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     if(inBulkSelection <= 0) {
       that.updateSelection();
     }
+  };
+  var highlightEvent = null;
+  var highlightListeners = [];
+  this.highlightEvent = function(_) {
+    if(!arguments.length) return highlightEvent;
+    if(highlightEvent === _) return;
+    highlightEvent = _;
+    if(helpV) {
+      overview.clearShadow();
+      helpV.attr({
+        "x": highlightEvent ? that.getXByEventTime(highlightEvent) : 0
+      }).style({
+        "opacity": highlightEvent ? 1 : 0
+      });
+      overview.onBoxUpdate();
+    }
+    if(helpH) {
+      var type = highlightEvent ? highlightEvent.getType() : null;
+      if(type && type.getProxed().length) {
+        type = type.getProxed()[0];
+      }
+      helpH.attr({
+        "y": type ? type.getY() : 0
+      }).style({
+        "opacity": highlightEvent ? 1 : 0
+      });
+    }
+    if(inBulkSelection > 0) return;
+    highlightListeners.forEach(function(cb) {
+      cb();
+    });
+  };
+  this.addHighlightListener = function(cb) {
+    highlightListeners.push(cb);
   };
   this.updateSelection = function() {
     if(inBulkSelection > 0) return;
@@ -1182,21 +1217,6 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     if(Object.keys(types).length == 1) {
       onlyType = types[Object.keys(types)[0]];
       singleType = true;
-    }
-    // ===== update helper bars =====
-    if(helpV) {
-      helpV.attr({
-        "x": singleSlot ? that.getXByEventTime(repr) : 0
-      }).style({
-        "opacity": singleSlot ? 1 : 0
-      });
-    }
-    if(helpH) {
-      helpH.attr({
-        "y": singleType ? onlyType.getProxed()[0].getY() : 0
-      }).style({
-        "opacity": singleType ? 1 : 0
-      });
     }
     // ===== notify listeners =====
     seListeners.forEach(function(l) {

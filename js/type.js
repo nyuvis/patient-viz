@@ -467,11 +467,14 @@ function Type(p, g, typeId, dictionary) {
         });
       }
       var none = true;
+      var first = null;
       that.traverseProxedEvents(function(e) {
+        if(!first) first = e;
         e.setSelected(true);
         none = false;
       });
       if(none) {
+        first = null;
         // we clicked on an inner node
         // we can determine selection through parenthood
         pool.traverseEvents(function(gid, tid, e) {
@@ -485,6 +488,7 @@ function Type(p, g, typeId, dictionary) {
           }
         });
       }
+      pool.highlightEvent(first);
       pool.endBulkSelection();
     });
     return {

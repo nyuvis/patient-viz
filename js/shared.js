@@ -347,8 +347,10 @@ function setupClickAction(pool, blank) {
         e.setSelected(false);
       });
     }
+    var first = null;
     if(pool.verticalSelection()) {
       pool.traverseEventsForX(cur[0], function(e) {
+        if(!first) first = e;
         e.setSelected(true);
       });
     } else {
@@ -356,11 +358,13 @@ function setupClickAction(pool, blank) {
         var rangeY = pool.getRangeY(type);
         if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
           type.traverseEvents(function(e) {
+            if(!first) first = e;
             e.setSelected(true);
           });
         }
       });
     }
+    pool.highlightEvent(first);
     pool.endBulkSelection();
   });
   if(SHOW_EVENT_GROUPS) {

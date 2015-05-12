@@ -103,17 +103,8 @@ function Event(e, pool, dictionary) {
   };
   this.clickSelected = function() {
     var pool = that.getType().getPool();
-    if(pool.joinSelections()) {
-      that.setSelected(!that.isSelected());
-    } else {
-      pool.startBulkSelection();
-      pool.traverseEvents(function(gid, tid, e) {
-        e.setSelected(false);
-      });
-      that.setSelected(true);
-      pool.endBulkSelection();
-    }
-  }
+    pool.highlightEvent(that);
+  };
   this.setSelected = function(isSelected) {
     var old = selected;
     selected = !!isSelected;
@@ -255,7 +246,7 @@ function Event(e, pool, dictionary) {
   };
   this.updateListEntry = function(sel, singleSlot, singleType) {
     var color = that.getBaseColor();
-    var showSelection = singleSlot && that.isSelected();
+    var showSelection = that.getType().getPool().highlightEvent() === that;
     // removes all children of sel
     sel.selectAll("span").text(that.getDesc()).style({
       "background-color": showSelection ? color : null,

@@ -50,6 +50,9 @@ function EventView(sel) {
         that.setEvents(es, singleSlot, singleType);
       }
     });
+    pool.addHighlightListener(function() {
+      that.updateEntries();
+    });
   };
 
   this.setEvents = function(es, ss, st) {
@@ -131,7 +134,10 @@ function EventView(sel) {
     if(sortAndGroup && sortAndGroup.sort) {
       es.sort(sortAndGroup.sort);
     }
-    es.each(function(e) {
+    that.updateEntries();
+  };
+  this.updateEntries = function() {
+    list.selectAll("li.pElem").each(function(e) {
       var li = d3.select(this);
       e.updateListEntry(li, singleSlot, singleType);
     });
