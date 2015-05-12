@@ -1131,6 +1131,8 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       });
     });
     that.highlightEvent(null);
+    that.fixSelection(true);
+    that.greyOutRest(true);
     that.endBulkSelection();
   };
   this.startBulkSelection = function() {
@@ -1141,6 +1143,16 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     if(inBulkSelection <= 0) {
       that.updateSelection();
     }
+  };
+  var greyOutRest = false;
+  this.greyOutRest = function(_) {
+    if(!arguments.length) return greyOutRest;
+    greyOutRest = _;
+  };
+  var fixSelection = false;
+  this.fixSelection = function(_) {
+    if(!arguments.length) return fixSelection;
+    fixSelection = _;
   };
   var highlightEvent = null;
   var highlightListeners = [];
@@ -1175,6 +1187,10 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   };
   this.addHighlightListener = function(cb) {
     highlightListeners.push(cb);
+  };
+  var hasSelection = false;
+  this.hasSelection = function() {
+    return hasSelection;
   };
   this.updateSelection = function() {
     if(inBulkSelection > 0) return;
@@ -1218,6 +1234,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       onlyType = types[Object.keys(types)[0]];
       singleType = true;
     }
+    hasSelection = !!events.length;
     // ===== notify listeners =====
     seListeners.forEach(function(l) {
       l(events, types, singleSlot, singleType);

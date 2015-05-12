@@ -489,6 +489,8 @@ function Type(p, g, typeId, dictionary) {
         });
       }
       pool.highlightEvent(first);
+      pool.fixSelection(true);
+      pool.greyOutRest(false);
       pool.endBulkSelection();
     });
     return {

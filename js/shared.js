@@ -333,12 +333,9 @@ function setupRectSelection(pool, blank) {
 }
 
 function setupClickAction(pool, blank) {
-  var lastE = null;
-  blank.on("click", function() {
-    if(blank.__ignoreClick) {
-      blank.__ignoreClick = false;
-      return;
-    }
+
+  function selectCur() {
+    if(pool.fixSelection()) return;
     var cur = pool.getMousePos();
     var hasEvent = false;
     pool.startBulkSelection();
@@ -365,10 +362,24 @@ function setupClickAction(pool, blank) {
       });
     }
     pool.highlightEvent(first);
+    pool.greyOutRest(false);
+    pool.endBulkSelection();
+  }
+
+  var lastE = null;
+  blank.on("click", function() {
+    if(blank.__ignoreClick) {
+      blank.__ignoreClick = false;
+      return;
+    }
+    pool.startBulkSelection();
+    selectCur();
+    pool.fixSelection(!pool.fixSelection());
     pool.endBulkSelection();
   });
   if(SHOW_EVENT_GROUPS) {
     blank.on("mousemove", function() {
+      selectCur();
       var cur = pool.getMousePos();
       var e = null;
       pool.traverseEventsForX(cur[0], function(eve) {
@@ -381,6 +392,10 @@ function setupClickAction(pool, blank) {
       if(lastE === e) return;
       lastE = e;
       pool.updateEventGroupLines(e);
+    });
+  } else {
+    blank.on("mousemove", function() {
+      selectCur();
     });
   }
   pool.updateSelection();

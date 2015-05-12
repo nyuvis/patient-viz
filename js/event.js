@@ -122,7 +122,8 @@ function Event(e, pool, dictionary) {
     return type;
   };
   this.getColor = function() {
-    if(that.isSelected()) {
+    var pool = type.getPool();
+    if(pool.greyOutRest() && pool.hasSelection() && pool.fixSelection() && !that.isSelected()) {
       return d3.rgb("darkgray");
     }
     return that.getBaseColor();
