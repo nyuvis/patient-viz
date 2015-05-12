@@ -83,11 +83,12 @@ function TypeView(pool, sel, sortDropdownSel) {
       }).style({
         "position": "absolute",
         "top": 0,
-        "right": 22 + "px",
+        "left": 22 + "px",
         "width": tw + "px",
-        "height": th + "px"
+        "height": th + "px",
+        "z-index": -1000
       });
-      jkjs.util.toFront(fpSel, false);
+      jkjs.util.toFront(fpSel, true);
       var ctx = fpSel.node().getContext("2d");
       ctx.globalAlpha = 1;
       ctx.clearRect(0, 0, totalWidth, totalHeight);
@@ -205,7 +206,9 @@ function TypeView(pool, sel, sortDropdownSel) {
       "font-family": "monospace",
       "white-space": "nowrap",
       "max-height": h + "px",
+      "max-width": totalWidth + "px",
       "margin": "0 0 12px 0",
+      "position": "absolute"
     });
 
     function Node(id, type) {
