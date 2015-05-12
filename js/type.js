@@ -112,8 +112,9 @@ function Type(p, g, typeId, dictionary) {
   this.fillFingerprint = function(ctx, w, h) {
     ensureProxedEvents();
     if(!proxedEvents.length) return;
-    var min = that.proxedMinTime();
-    var max = that.proxedMaxTime();
+    var timeRange = pool.getRangeTime();
+    var min = timeRange[0];
+    var max = timeRange[1];
     ctx.save();
     ctx.globalAlpha = 0.5;
     ctx.lineWidth = 1;

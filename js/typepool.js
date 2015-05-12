@@ -715,6 +715,9 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   this.getRangeX = function() {
     return [ that.getXByTime(startTime), that.getXByTime(endTime) ];
   };
+  this.getRangeTime = function() {
+    return [ startTime, endTime ];
+  };
   this.getRangeDate = function() {
     return [ new Date(startTime * 1000), new Date(endTime * 1000) ];
   };
