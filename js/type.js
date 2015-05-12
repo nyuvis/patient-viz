@@ -109,6 +109,27 @@ function Type(p, g, typeId, dictionary) {
   this.hasRealProxy = function() {
     return that.proxyType() !== that;
   };
+  this.fillFingerprint = function(ctx, w, h) {
+    ensureProxedEvents();
+    if(!proxedEvents.length) return;
+    var timeRange = pool.getRangeTime();
+    var min = timeRange[0];
+    var max = timeRange[1];
+    ctx.save();
+    ctx.globalAlpha = 0.5;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = that.getColor();
+    that.traverseProxedEvents(function(e) {
+      var t = e.getTime();
+      var x = (t - min) / (max - min) * w;
+      if(Number.isNaN(x)) return;
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
+      ctx.stroke();
+    });
+    ctx.restore();
+  };
 
   this.getParentString = function() {
     return parent;
@@ -422,6 +443,8 @@ function Type(p, g, typeId, dictionary) {
     return valid;
   };
 
+  var entryW = Number.NaN;
+  var entryH = Number.NaN;
   var check = null;
   var span = null;
   var space = null;
