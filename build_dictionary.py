@@ -131,8 +131,10 @@ class TypeBase(object):
         candidate = None
         if "__" in id:
             [ new_code, id ] = id.split("__", 1)
-            if new_code in self._codeType.keys():
+            if new_code in self._codeTypes.keys():
                 code = new_code
+            elif debugOutput:
+                print("unknown code {0} in id '{1}' using {2}".format(repr(new_code), repr(new_code + "__" + id), repr(code), file=sys.stderr))
         if code is not None:
             if code in self._codeTypes and code in symbols:
                 candidate = self._codeTypes[code].create(symbols[code], type, id)

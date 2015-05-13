@@ -18,14 +18,11 @@ from sklearn.metrics import roc_curve,auc
 import cPickle
 
 def parsedata(cohort):
-    cohortsize = -1
-    data = None
-    head = None
-    with open(cohort, 'r') as csvfile:
-        cohortsize = len(csvfile.readlines()) - 1
-        #------
-        csvfile.seek(0)
-        for (ix, row) in enumerate(csv.DictReader(csvfile)):
+
+    def read(csvfile):
+        head = None
+        rows = []
+        for row in csv.DictReader(csvfile):
             if head is None:
                 head = filter(lambda h: h != 'id', row.keys())
                 # position test and outcome correctly
@@ -35,6 +32,10 @@ def parsedata(cohort):
                 head[head.index('outcome')] = head[1]
                 head[0] = 'test'
                 head[1] = 'outcome'
+            rows.append(row)
+        cohortsize = len(rows)
+        data = None
+        for (ix, row) in enumerate(rows):
             if data is None:
                 data = np.zeros((cohortsize, len(head)), dtype='bool')
             data[ix,:] = np.array(map(lambda k: row[k], head))
@@ -45,7 +46,13 @@ def parsedata(cohort):
         testsety = data[(test_ix==1),1]
         trainsetx = data[(test_ix==0),2:]
         trainsety = data[(test_ix==0),1]
-    return trainsety, trainsetx, testsety, testsetx, head[2:]
+        return trainsety, trainsetx, testsety, testsetx, head[2:]
+
+    if cohort == '-':
+        return read(sys.stdin)
+    else:
+        with open(cohort, 'r') as csvfile:
+            return read(csvfile)
 
 def getsavefile(filename, ext, overwrite):
     save_name = filename
@@ -113,7 +120,7 @@ def usage():
     print('-h: print help', file=sys.stderr)
     print('-w: if set output files get overwritten', file=sys.stderr)
     print('-v <percentage>: specifies the percentage (0-100) of patients in the training set, used for tuning parameters of the model. default is 20', file=sys.stderr)
-    print('--in <input file>: specifies the feature vectors', file=sys.stderr)
+    print('--in <input file>: specifies the feature vectors as input file or "-" for stdin', file=sys.stderr)
     print('--out <output dir>: specifies model output directory', file=sys.stderr)
     print('--seed <seed>: specifies the seed for the rng. if omitted the seed is not set. needs to be integer', file=sys.stderr)
     print('--model <model type>: specifies what type of model is to be trained. default is reg(logistic regression) options:reg|randForest|SVM', file=sys.stderr)

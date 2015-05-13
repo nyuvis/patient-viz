@@ -111,15 +111,15 @@ def handleEvent(row, claim_id):
         if value != '':
             res.append(createEntry(type, value, claim_id))
 
-    handleKey(row, "diagnosis_icd9", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
-    handleKey(row, "procedures_icd9", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
-    handleKey(row, "procedures_cpt", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
+    handleKey(row, "diagnosis_icd9", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, "icd9__" + value))
+    handleKey(row, "procedures_icd9", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "icd9__" + value))
+    handleKey(row, "procedures_cpt", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "cpt__" + value))
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
-    #handleKey(row, "procedures_hcpcs", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
-    handleKey(row, "provider_ibc", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, value))
-    handleKey(row, "provider_cms", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, value))
-    handleKey(row, "physician_ibc", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, value))
-    handleKey(row, "physician_cms", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, value))
+    #handleKey(row, "procedures_hcpcs", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "hcpcs__" + value))
+    handleKey(row, "provider_ibc", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, "ibc__" + value))
+    handleKey(row, "provider_cms", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, "cms__" + value))
+    handleKey(row, "physician_ibc", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, "ibc__" + value))
+    handleKey(row, "physician_cms", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, "cms__" + value))
     return res
 
 def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
@@ -207,7 +207,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
 
     def emitNDC(date, ndc):
         # TODO add provider/physician here as well?
-        event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
+        event = createEntry(TYPE_PRESCRIBED, "ndc__" + ndc, claim_id)
         curDate = util.toTime(date)
         event['time'] = curDate
         handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
@@ -226,7 +226,7 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
 
     def emitLab(date, loinc, result, resultFlag):
         # TODO add provider/physician here as well?
-        event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
+        event = createEntry(TYPE_LABTEST, "loinc__" + loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
         event['time'] = util.toTime(date)
         obj['events'].append(event)
 

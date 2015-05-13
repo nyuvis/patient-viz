@@ -70,7 +70,7 @@ class OutWrapper(object):
                 raise
 
     def close(self):
-        if not self._isStdout and self._still_open:
+        if self._still_open:
             self._fp.close()
             self._still_open = False
 

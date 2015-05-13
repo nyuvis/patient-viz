@@ -7,27 +7,6 @@
       "name": "Condition", 
       "parent": ""
     }, 
-    "25000": {
-      "desc": "diagnosis (icd9) 25000", 
-      "id": "25000", 
-      "name": "25000", 
-      "parent": "", 
-      "unmapped": true
-    }, 
-    "2720": {
-      "desc": "diagnosis (icd9) 2720", 
-      "id": "2720", 
-      "name": "2720", 
-      "parent": "", 
-      "unmapped": true
-    }, 
-    "2724": {
-      "desc": "diagnosis (icd9) 2724", 
-      "id": "2724", 
-      "name": "2724", 
-      "parent": "", 
-      "unmapped": true
-    }, 
     "HIERARCHY.13": {
       "desc": "Diseases of the musculoskeletal system and connective tissue", 
       "id": "HIERARCHY.13", 
@@ -165,6 +144,27 @@
       "id": "HIERARCHY.8.1", 
       "name": "Respiratory infections", 
       "parent": "HIERARCHY.8"
+    }, 
+    "icd9__25000": {
+      "desc": "diagnosis (icd9) 25000", 
+      "id": "25000", 
+      "name": "25000", 
+      "parent": "", 
+      "unmapped": true
+    }, 
+    "icd9__2720": {
+      "desc": "diagnosis (icd9) 2720", 
+      "id": "2720", 
+      "name": "2720", 
+      "parent": "", 
+      "unmapped": true
+    }, 
+    "icd9__2724": {
+      "desc": "diagnosis (icd9) 2724", 
+      "id": "2724", 
+      "name": "2724", 
+      "parent": "", 
+      "unmapped": true
     }
   }, 
   "info": {

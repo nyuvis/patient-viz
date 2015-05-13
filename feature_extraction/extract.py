@@ -66,8 +66,7 @@ def handleRow(row, id, eventCache, infoCache):
                 infoCache.append("sex_f")
 
 
-def processFile(inputFile, id_column, eventHandle, whitelist):
-    print("processing file: {0}".format(inputFile), file=sys.stderr)
+def processFile(inputFile, id_column, eventHandle, whitelist, printInfo):
     id_event_cache = {}
     id_info_cache = {}
 
@@ -95,12 +94,13 @@ def processFile(inputFile, id_column, eventHandle, whitelist):
         with open(inputFile) as csvFile:
             handleRows(csv.DictReader(csvFile))
 
-    eventHandle(inputFile, id_event_cache, id_info_cache)
+    eventHandle(inputFile, id_event_cache, id_info_cache, printInfo)
 
 def createEventHandler(cb):
 
-    def handleEvent(inputFile, id_event_cache, id_info_cache):
-        print("processing file: {0}".format(inputFile), file=sys.stderr)
+    def handleEvent(inputFile, id_event_cache, id_info_cache, printInfo):
+        if printInfo:
+            print("processing file: {0}".format(inputFile), file=sys.stderr)
 
         def processDict(events, id):
             if len(events) == 0:
@@ -121,10 +121,10 @@ def createEventHandler(cb):
             processDict(eventCache, id)
             del eventCache[:]
             num += 1
-            if sys.stderr.isatty():
+            if printInfo and sys.stderr.isatty():
                 sys.stderr.write("processing: {0:.2%}\r".format(num / num_total))
                 sys.stderr.flush()
-        if sys.stderr.isatty():
+        if printInfo and sys.stderr.isatty():
             print("", file=sys.stderr)
         for id in id_info_cache.keys():
             infoCache = id_info_cache[id]
@@ -133,10 +133,37 @@ def createEventHandler(cb):
     return handleEvent
 
 def processDirectory(dir, id_column, cb, whitelist):
+    dirty = False
     for (root, _, files) in os.walk(dir):
+        if root != dir:
+            segs = root.split('/') # **/A/4/2/*.csv
+            if len(segs) >= 4:
+                segs = segs[-3:]
+                if (
+                        len(segs[0]) == 1 and
+                        len(segs[1]) == 1 and
+                        len(segs[2]) == 1
+                    ):
+                    if sys.stderr.isatty():
+                        try:
+                            progr = (int(segs[0], 16)*16*16 + int(segs[1], 16)*16 + int(segs[2], 16)) / (16**3 - 1)
+                            sys.stderr.write("processing: {0}/{1}/{2}/ {3:.2%}\r".format(segs[0], segs[1], segs[2], progr))
+                            sys.stderr.flush()
+                            dirty = True
+                        except:
+                            pass
+                    for file in files:
+                        if file.endswith(".csv"):
+                            processFile(os.path.join(root, file), id_column, cb, whitelist, False)
+                    continue
         for file in files:
             if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id_column, cb, whitelist)
+                if dirty and sys.stderr.isatty():
+                    print("", file=sys.stderr)
+                    dirty = False
+                processFile(os.path.join(root, file), id_column, cb, whitelist, True)
+    if dirty and sys.stderr.isatty():
+        print("", file=sys.stderr)
 
 def emptyBitVector():
     return set([])

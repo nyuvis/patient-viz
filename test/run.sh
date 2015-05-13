@@ -80,4 +80,6 @@ convert_patient "8CDC0C5ACBDFC9CE"
 create_predictive_model
 
 rm -- ${ERR_FILE} ${OUTPUT}/*.tmp
+
+print "all tests successful!"
 exit 0
