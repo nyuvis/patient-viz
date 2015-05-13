@@ -60,7 +60,7 @@ class EntryCreator(object):
         else:
             baseType = self._baseTypes.get(type, self._unknown)
             symbols = self._codeTables.get(type, {})
-            entry = baseType.create(symbols, type, id, code)
+            (entry, code) = baseType.create(symbols, type, id, code)
         if type not in dict:
             dict[type] = {}
         if onlyAddMapped and 'unmapped' in entry and entry['unmapped']:
@@ -129,6 +129,10 @@ class TypeBase(object):
         return res
     def create(self, symbols, type, id, code):
         candidate = None
+        if "__" in id:
+            [ new_code, id ] = id.split("__", 1)
+            if new_code in self._codeType.keys():
+                code = new_code
         if code is not None:
             if code in self._codeTypes and code in symbols:
                 candidate = self._codeTypes[code].create(symbols[code], type, id)
@@ -149,8 +153,8 @@ class TypeBase(object):
                         break
                 candidate = can
         if candidate is None:
-            return createUnknownEntry({}, type, id, code=code)
-        return candidate
+            return (createUnknownEntry({}, type, id, code=code), code)
+        return (candidate, code)
 
 class TypeCode(object):
     def init(self):
@@ -440,6 +444,8 @@ def createUnknownEntry(_, type, id, pid = "", code = None):
     # TODO remove: can be seen by attribute unmapped
     #if debugOutput:
     #    print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
+    if "__" in id:
+      (code, id) = id.split("__", 1)
     typeText = type + " (" + code + ")" if code is not None else type
     res = toEntry(id, pid, id, typeText + " " + id)
     res["unmapped"] = True
@@ -550,7 +556,7 @@ def initGlobalSymbols():
 
 def extractEntries(dict, patient):
     for event in patient['events']:
-        dictionary.createEntry(dict, event['group'], event['id'], code=event.get('code', None))
+        dictionary.createEntry(dict, event['group'], event['id'])
 
 def loadOldDict(file):
     dict = {}
@@ -677,11 +683,10 @@ if __name__ == '__main__':
 
         def addEntry(e):
             spl = e.split('__', 1)
-            if len(spl) != 2 and len(spl) != 3:
-                print("shorthand format is '${group_id}__${type_id}' or '${group_id}__${code_name}__${type_id}': " + e, file=sys.stderr)
+            if len(spl) != 2:
+                print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
                 sys.exit(1)
-            code = spl[1].strip() if len(spl) > 2 else None
-            dictionary.createEntry(dict, spl[0].strip(), spl[len(spl) - 1].strip(), code=code)
+            dictionary.createEntry(dict, spl[0].strip(), spl[1].strip())
 
         for e in rest:
             if e == "-":
