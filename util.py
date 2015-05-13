@@ -9,6 +9,7 @@ import sys
 import os
 from datetime import datetime, timedelta, tzinfo
 import pytz
+import collections
 
 _compute_self = "total_seconds" not in dir(timedelta(seconds=1))
 _tz = pytz.timezone('US/Eastern')
@@ -35,7 +36,7 @@ def is_array(v):
             return False
     except NameError:
         pass
-    return not isinstance(v, str) and isinstance(v, collections.Sequence)
+    return not isinstance(v, str) and (isinstance(v, list) or isinstance(v, collections.Sequence))
 
 class StdOutClose(Exception): pass
 
