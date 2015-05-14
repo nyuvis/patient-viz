@@ -86,6 +86,11 @@ TODO text
 The specification is split into two files, the dictionary containing all types (ie. rows)
 and the events containing all events (ie. boxes).
 
+Type ids (`$type_id`) can also consist of a prefixed version of a code (eg.
+`250.00`, `icd9__250.00`, `25000`, or `icd9__25000` are all representations
+of the `diagnosis` (`$group_id`) with the description:
+"Diabetes mellitus without mention of complication").
+
 The dictionary file:
 
 ```javascript

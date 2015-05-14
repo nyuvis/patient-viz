@@ -1,4 +1,4 @@
-score on unseen test set is:  0.776742737204
-training score on this set was:  0.773481792229
-best average score during cross validation was: 0.773191461713 with c = 0.1
+score on unseen test set is:  0.776745580299
+training score on this set was:  0.773482929633
+best average score during cross validation was: 0.773178832907 with c = 0.1
 saving the model in directory:  ./output/model

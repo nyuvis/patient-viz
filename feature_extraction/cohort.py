@@ -189,7 +189,14 @@ def parseQuery(query):
     # <ids>: <id> | "(" <id> { "|" <id> }* ")"
     def ids():
         res = []
-        parse_disjunction(lambda: res.append(literal()))
+
+        def addId():
+            lit = literal()
+            res.append(lit)
+            if "__" in lit:
+                res.append(lit.split("__", 1)[1])
+
+        parse_disjunction(addId)
         return res
 
     # <type>: <group> ":" <ids> | "age" ":" <ranges> "@" <date>
@@ -388,8 +395,9 @@ def handleRow(row, id, eventCache, infoCache):
                 infoCache.append("sex_f")
     """
 
-def processFile(inputFile, id_column, qm, candidates):
-    print("processing file: {0}".format(inputFile), file=sys.stderr)
+def processFile(inputFile, id_column, qm, candidates, printInfo):
+    if printInfo:
+        print("processing file: {0}".format(inputFile), file=sys.stderr)
     id_event_cache = {}
     id_info_cache = {}
 
@@ -441,10 +449,10 @@ def processFile(inputFile, id_column, qm, candidates):
         processDict(eventCache, id)
         del eventCache[:]
         num += 1
-        if sys.stderr.isatty():
+        if printInfo and sys.stderr.isatty():
             sys.stderr.write("processing: {0:.2%}\r".format(num / num_total))
             sys.stderr.flush()
-    if sys.stderr.isatty():
+    if printInfo and sys.stderr.isatty():
         print("", file=sys.stderr)
     """ FIXME no info handling yet
     for id in id_info_cache.keys():
@@ -453,17 +461,44 @@ def processFile(inputFile, id_column, qm, candidates):
     """
 
 def processDirectory(dir, id_column, qm, candidates):
+    dirty = False
     for (root, _, files) in os.walk(dir):
+        if root != dir:
+            segs = root.split('/') # **/A/4/2/*.csv
+            if len(segs) >= 4:
+                segs = segs[-3:]
+                if (
+                        len(segs[0]) == 1 and
+                        len(segs[1]) == 1 and
+                        len(segs[2]) == 1
+                    ):
+                    if sys.stderr.isatty():
+                        try:
+                            progr = (int(segs[0], 16)*16*16 + int(segs[1], 16)*16 + int(segs[2], 16)) / (16**3 - 1)
+                            sys.stderr.write("processing: {0}/{1}/{2}/ {3:.2%}\r".format(segs[0], segs[1], segs[2], progr))
+                            sys.stderr.flush()
+                            dirty = True
+                        except:
+                            pass
+                    for file in files:
+                        if file.endswith(".csv"):
+                            processFile(os.path.join(root, file), id_column, qm, candidates, False)
+                    continue
         for file in files:
             if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id_column, qm, candidates)
+                if dirty and sys.stderr.isatty():
+                    print("", file=sys.stderr)
+                    dirty = False
+                processFile(os.path.join(root, file), id_column, qm, candidates, True)
+    if dirty and sys.stderr.isatty():
+        print("", file=sys.stderr)
 
 def processAll(qm, cohort, path_tuples):
     candidates = {}
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, qm, candidates)
+            processFile(path, id_column, qm, candidates, True)
         else:
             processDirectory(path, id_column, qm, candidates)
     for c in candidates.values():

@@ -203,7 +203,7 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, eventHandle, whitelist)
+            processFile(path, id_column, eventHandle, whitelist, True)
         else:
             processDirectory(path, id_column, eventHandle, whitelist)
 

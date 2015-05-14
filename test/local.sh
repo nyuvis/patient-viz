@@ -8,7 +8,7 @@ CMS_DIR="../cms"
 OUTPUT="./output"
 FEATURE_EXTRACT="../feature_extraction"
 
-cohort="${FEATURE_EXTRACT}/cohort.txt"
+cohort="./etc/cohort.txt"
 format="../format.json"
 config="../config.txt"
 
