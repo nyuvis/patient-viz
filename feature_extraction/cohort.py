@@ -1,12 +1,15 @@
-#!/usr/bin/env python
+#!/bin/bash
 # -*- coding: utf-8 -*-
-"""
+"""exec" "`dirname \"$0\"`/../call.sh" "$0" "$@"; """
+from __future__ import print_function
+from __future__ import division
+
+__doc__ = """
 Created on 2015-03-08
 
 @author: joschi
 """
-from __future__ import print_function
-from __future__ import division
+
 import time as time_lib
 from datetime import datetime, timedelta
 import re

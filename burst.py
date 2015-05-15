@@ -1,11 +1,14 @@
-#!/usr/bin/env python
+#!/bin/bash
 # -*- coding: utf-8 -*-
-"""
+"""exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
+from __future__ import print_function
+
+__doc__ = """
 Created on Thu Apr 23 21:56:00 2015
 
 @author: joschi
 """
-from __future__ import print_function
+
 import os
 import sys
 import csv
