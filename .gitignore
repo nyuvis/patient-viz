@@ -11,3 +11,4 @@
 /patients.txt
 json.zip
 **/*.pyc
+/.venv/
