@@ -1,3 +1,4 @@
 /model/
 *.tmp_local
 *.tmp
+/etc/cohort.txt
