@@ -4,6 +4,9 @@
 
 cd "$(dirname $0)"
 
+exec 3>&2
+export TEST_DEBUG="TEST_DEBUG"
+
 CMS_DIR="./cms"
 ERR_FILE="err.txt"
 OUTPUT="./output"
@@ -75,4 +78,5 @@ convert_patient "8CDC0C5ACBDFC9CE"
 create_predictive_model
 
 rm $ERR_FILE
+exec 3>&- # don't really need to close the FD
 exit 0
