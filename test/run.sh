@@ -4,6 +4,9 @@
 
 cd "$(dirname $0)"
 
+exec 3>&2
+export TEST_DEBUG="TEST_DEBUG"
+
 CMS_DIR="./cms"
 ERR_FILE="err.txt"
 OUTPUT="./output"
@@ -32,8 +35,9 @@ check() {
 }
 
 check_file() {
-  diff $1 $2
+  diff -q "$1" "$2"
   if [ $? -ne 0 ]; then
+    diff -u "$1" "$2"
     print "^ $1 doesn't match $2 ^"
     exit 3
   fi
@@ -82,4 +86,5 @@ create_predictive_model
 rm -- ${ERR_FILE} ${OUTPUT}/*.tmp
 
 print "all tests successful!"
+exec 3>&- # don't really need to close the FD
 exit 0

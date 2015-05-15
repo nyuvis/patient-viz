@@ -4,6 +4,9 @@
 
 cd "$(dirname $0)"
 
+exec 3>&2
+export TEST_DEBUG="TEST_DEBUG"
+
 CMS_DIR="../cms"
 OUTPUT="./output"
 FEATURE_EXTRACT="../feature_extraction"
@@ -49,4 +52,5 @@ rm -- ${OUTPUT}/*.tmp_local
 rm -r -- ${OUTPUT}/model/
 
 print "all tests successful!"
+exec 3>&- # don't really need to close the FD
 exit 0
