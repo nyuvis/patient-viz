@@ -28,8 +28,9 @@ check() {
 }
 
 check_file() {
-  diff $1 $2
+  diff -q "$1" "$2"
   if [ $? -ne 0 ]; then
+    diff -u "$1" "$2"
     echo "^ $1 doesn't match $2 ^"
     exit 3
   fi
