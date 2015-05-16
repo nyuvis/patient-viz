@@ -7,6 +7,8 @@ import sys
 import os
 from datetime import datetime, timedelta, tzinfo
 import pytz
+import collections
+from operator import itemgetter
 import json
 
 __doc__ = """
@@ -40,7 +42,7 @@ def is_array(v):
             return False
     except NameError:
         pass
-    return not isinstance(v, str) and isinstance(v, collections.Sequence)
+    return not isinstance(v, str) and (isinstance(v, list) or isinstance(v, collections.Sequence))
 
 class StdOutClose(Exception): pass
 
@@ -75,7 +77,7 @@ class OutWrapper(object):
                 raise
 
     def close(self):
-        if not self._isStdout and self._still_open:
+        if self._still_open:
             self._fp.close()
             self._still_open = False
 
@@ -108,21 +110,49 @@ def read_format(file, input_format, usage):
         input_format.update(json.loads(formatFile.read()))
 
 def process_burst_directory(dir, cb):
-    for (root, _, files) in os.walk(dir):
+    for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             continue
-        for file in files:
+        for file in sorted(files):
             if file.endswith(".csv"):
                 cb(root, file)
 
 def process_directory(dir, cb):
-    for (root, _, files) in os.walk(dir):
-        for file in files:
+    dirty = False
+    for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
+        if root != dir:
+            segs = root.split('/') # **/A/4/2/*.csv
+            if len(segs) >= 4:
+                segs = segs[-3:]
+                if (
+                        len(segs[0]) == 1 and
+                        len(segs[1]) == 1 and
+                        len(segs[2]) == 1
+                    ):
+                    if sys.stderr.isatty():
+                        try:
+                            progr = (int(segs[0], 16)*16*16 + int(segs[1], 16)*16 + int(segs[2], 16)) / (16**3 - 1)
+                            sys.stderr.write("processing: {0}/{1}/{2}/ {3:.2%}\r".format(segs[0], segs[1], segs[2], progr))
+                            sys.stderr.flush()
+                            dirty = True
+                        except:
+                            pass
+                    for file in sorted(files):
+                        if file.endswith(".csv"):
+                            cb(os.path.join(root, file))
+                    continue
+        for file in sorted(files):
             if file.endswith(".csv"):
+                if dirty and sys.stderr.isatty():
+                    print("", file=sys.stderr)
+                    dirty = False
                 cb(os.path.join(root, file))
+    if dirty and sys.stderr.isatty():
+        print("", file=sys.stderr)
+
 
 def process_id_directory(dir, id, cb):
-    for (root, _, files) in os.walk(dir):
+    for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
             if len(segs) >= 4:
@@ -138,7 +168,7 @@ def process_id_directory(dir, id, cb):
                         )
                     ):
                     continue
-        for file in files:
+        for file in sorted(files):
             if file.endswith(".csv"):
                 cb(os.path.join(root, file), id)
 
