@@ -172,7 +172,7 @@ def interpretArgs():
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            util.readConfig(settings, args.pop(0))
+            util.read_config(settings, args.pop(0))
         elif val == '-o':
             if not args:
                 print('-o requires argument', file=sys.stderr)

@@ -16,7 +16,6 @@ format="../format.json"
 style_classes="../style_classes.json"
 etc="./etc"
 config="${etc}/config.txt"
-config_fe="${etc}/config_fe.txt"
 
 check() {
   if [ -s $ERR_FILE ]; then
@@ -52,19 +51,19 @@ convert_patient() {
 }
 
 create_predictive_model() {
-  ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/cases.txt" -f "${format}" -c "${config_fe}" -o "${OUTPUT}/cohort_cases.txt.tmp" -- "${CMS_DIR}"
+  ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/cases.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_cases.txt.tmp" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/cohort_cases.txt" "${OUTPUT}/cohort_cases.txt.tmp"
-  ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/control.txt" -f "${format}" -c "${config_fe}" -o "${OUTPUT}/cohort_control.txt.tmp" -- "${CMS_DIR}"
+  ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/control.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_control.txt.tmp" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/cohort_control.txt" "${OUTPUT}/cohort_control.txt.tmp"
   ${FEATURE_EXTRACT}/merge.py --cases "${OUTPUT}/cohort_cases.txt.tmp" --control "${OUTPUT}/cohort_control.txt.tmp" -o "${OUTPUT}/cohort.txt.tmp" --test 30 --seed 0 2> $ERR_FILE
   check $?
   check_file "${OUTPUT}/cohort.txt" "${OUTPUT}/cohort.txt.tmp"
-  ${FEATURE_EXTRACT}/extract.py --debug -w "${OUTPUT}/cohort.txt.tmp" --num-cutoff 1 --age-time 20100101 --to 20100101 -o "${OUTPUT}/output.csv.tmp" -f "${format}" -c "${config_fe}" -- "${CMS_DIR}"
+  ${FEATURE_EXTRACT}/extract.py --debug -w "${OUTPUT}/cohort.txt.tmp" --num-cutoff 1 --age-time 20100101 --to 20100101 -o "${OUTPUT}/output.csv.tmp" -f "${format}" -c "${config}" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/output.csv" "${OUTPUT}/output.csv.tmp"
-  head -n 1 "${OUTPUT}/output.csv.tmp" | sed "s/,/ /g" | ../build_dictionary.py --debug -o "${OUTPUT}/headers.json.tmp" -c "${config_fe}" --lookup -
+  head -n 1 "${OUTPUT}/output.csv.tmp" | sed "s/,/ /g" | ../build_dictionary.py --debug -o "${OUTPUT}/headers.json.tmp" -c "${config}" --lookup -
   check $?
   check_file "${OUTPUT}/headers.json" "${OUTPUT}/headers.json.tmp"
   rm -- "${OUTPUT}/cohort_cases.txt.tmp"

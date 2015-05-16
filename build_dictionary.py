@@ -83,9 +83,9 @@ def createProviderEntry(symbols, type, id):
 
 def initProvider():
     res = {}
-    if not os.path.isfile(getFile(pntFile)):
+    if not os.path.isfile(util.get_file(pntFile, debugOutput)):
         return res
-    with open(getFile(pntFile), 'r') as pnt:
+    with open(util.get_file(pntFile, False), 'r') as pnt:
         for line in pnt.readlines():
             l = line.strip()
             if len(l) < 10 or not l[0].isdigit() or not l[1].isdigit() or not l[5].isdigit() or not l[6].isdigit():
@@ -117,10 +117,10 @@ def createPrescribedEntry(symbols, type, id):
 
 def initPrescribed():
     prescribeLookup = {}
-    if not os.path.isfile(getFile(productFile)):
+    if not os.path.isfile(util.get_file(productFile, debugOutput)):
         return prescribeLookup
     uidLookup = {}
-    with open(getFile(productFile), 'r') as prFile:
+    with open(util.get_file(productFile, False), 'r') as prFile:
         for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
             uid = row['PRODUCTID'].strip()
             fullndc = row['PRODUCTNDC'].strip()
@@ -169,9 +169,9 @@ def initPrescribed():
             prescribeLookup[ndc] = obj
             prescribeLookup[normndc] = obj
             prescribeLookup[fullndc] = obj
-    if not os.path.isfile(getFile(packageFile)):
+    if not os.path.isfile(util.get_file(packageFile, debugOutput)):
         return prescribeLookup
-    with open(getFile(packageFile), 'r') as paFile:
+    with open(util.get_file(packageFile, False), 'r') as paFile:
         for row in csv.DictReader(paFile, delimiter='\t', quoting=csv.QUOTE_NONE):
             uid = row['PRODUCTID'].strip()
             fullndc = row['NDCPACKAGECODE'].strip()
@@ -241,7 +241,7 @@ def initDiagnosis():
     global diag_parents
     codes = getGlobalSymbols()
     codes.update(getICD9())
-    diag_parents = readCCS(getFile(ccs_diag_file), codes)
+    diag_parents = readCCS(util.get_file(ccs_diag_file, debugOutput), codes)
     return codes
 
 ### procedure ###
@@ -261,7 +261,7 @@ def initProcedure():
     global proc_parents
     codes = getGlobalSymbols()
     codes.update(getICD9())
-    proc_parents = readCCS(getFile(ccs_proc_file), codes)
+    proc_parents = readCCS(util.get_file(ccs_proc_file, debugOutput), codes)
     return codes
 
 ### unknown ###
@@ -335,9 +335,9 @@ def getICD9():
 
 def initICD9():
     codes = {}
-    if not os.path.isfile(getFile(icd9File)):
+    if not os.path.isfile(util.get_file(icd9File, debugOutput)):
         return codes
-    with open(getFile(icd9File), 'r') as file:
+    with open(util.get_file(icd9File, False), 'r') as file:
         lastCode = ""
         for line in file:
             if len(line.strip()) < 2:
@@ -399,9 +399,9 @@ def getGlobalSymbols():
 
 def initGlobalSymbols():
     codes_dict = {}
-    if not os.path.isfile(getFile(globalSymbolsFile)):
+    if not os.path.isfile(util.get_file(globalSymbolsFile, debugOutput)):
         return codes_dict
-    with open(getFile(globalSymbolsFile), 'r') as file:
+    with open(util.get_file(globalSymbolsFile, False), 'r') as file:
         lines = file.readlines()
     for i in range(len(lines)):
         codeList = lines[i].split('#')[0].strip('\n');
@@ -438,7 +438,6 @@ def enrichDict(file, mid):
 
 ### argument API
 
-path_correction = './'
 icd9File = 'code/icd9/ucod.txt'
 ccs_diag_file = 'code/ccs/multi_diag.txt'
 ccs_proc_file = 'code/ccs/multi_proc.txt'
@@ -447,16 +446,6 @@ packageFile = 'code/ndc/package.txt'
 pntFile = 'code/pnt/pnt.txt'
 globalSymbolsFile = 'code/icd9/code_names.txt'
 globalMid = '2507387001'
-
-def setPathCorrection(pc):
-    global path_correction
-    path_correction = pc
-
-def getFile(file):
-    res = os.path.join(path_correction, file)
-    if debugOutput:
-        print("exists: {0} file: {1}".format(repr(os.path.isfile(res)), repr(os.path.abspath(res))), file=sys.stderr)
-    return res
 
 convertLookup = {
     "prescribed": createPrescribedEntry,
@@ -521,7 +510,7 @@ def interpretArgs():
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            util.readConfig(settings, args.pop(0), debugOutput)
+            util.read_config(settings, args.pop(0), debugOutput)
         elif val == '-o':
             if not args:
                 print('-o requires argument', file=sys.stderr)

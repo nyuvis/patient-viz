@@ -529,7 +529,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            util.readConfig(settings, args.pop(0), build_dictionary.debugOutput)
+            util.read_config(settings, args.pop(0), build_dictionary.debugOutput)
         elif arg == '--debug':
             build_dictionary.debugOutput = True
         else:
@@ -540,7 +540,6 @@ if __name__ == '__main__':
         print('query is required', file=sys.stderr)
         usage()
 
-    build_dictionary.setPathCorrection('../')
     build_dictionary.init(settings)
 
     allPaths = []
