@@ -3,18 +3,19 @@
 """exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
 from __future__ import print_function
 
+import time
+import os
+import sys
+import csv
+import json
+
+import util
+
 __doc__ = """
 Created on Tue Jan 20 11:55:00 2015
 
 @author: joschi
 """
-
-import time
-import os
-import sys
-import csv
-#import simplejson as json
-import json
 
 input_format = {}
 
@@ -28,20 +29,6 @@ def analyzeFile(inputFile, counter):
                 counter[id] += 1
             else:
                 counter[id] = 1
-
-def analyzeDirectory(dir, counter):
-    for (root, _, files) in os.walk(dir):
-        for file in files:
-            if file.endswith(".csv"):
-                analyzeFile(os.path.join(root, file), counter)
-
-def read_format(file):
-    global input_format
-    if not os.path.isfile(file):
-        print('invalid format file: {0}'.format(file), file=sys.stderr)
-        usage()
-    with open(file) as formatFile:
-        input_format = json.loads(formatFile.read())
 
 def usage():
     print('usage: {0} [-h] [-m] -f <format> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
@@ -70,7 +57,7 @@ if __name__ == '__main__':
             if not args or args[0] == "--":
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            read_format(args.pop(0))
+            util.read_format(args.pop(0), input_format, usage)
         else:
             print('illegal argument: '+arg, file=sys.stderr)
             usage()
@@ -90,7 +77,7 @@ if __name__ == '__main__':
         if isfile:
             analyzeFile(path, counter)
         else:
-            analyzeDirectory(path, counter)
+            util.process_directory(path, lambda file: analyzeFile(file, counter))
 
     list = counter.keys()
     list.sort(key = lambda k: counter[k])
