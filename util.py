@@ -8,6 +8,7 @@ import os
 from datetime import datetime, timedelta, tzinfo
 import pytz
 import collections
+from operator import itemgetter
 import json
 
 __doc__ = """
@@ -109,16 +110,16 @@ def read_format(file, input_format, usage):
         input_format.update(json.loads(formatFile.read()))
 
 def process_burst_directory(dir, cb):
-    for (root, _, files) in os.walk(dir):
+    for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             continue
-        for file in files:
+        for file in sorted(files):
             if file.endswith(".csv"):
                 cb(root, file)
 
 def process_directory(dir, cb):
     dirty = False
-    for (root, _, files) in os.walk(dir):
+    for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
             if len(segs) >= 4:
@@ -136,11 +137,11 @@ def process_directory(dir, cb):
                             dirty = True
                         except:
                             pass
-                    for file in files:
+                    for file in sorted(files):
                         if file.endswith(".csv"):
                             cb(os.path.join(root, file), False)
                     continue
-        for file in files:
+        for file in sorted(files):
             if file.endswith(".csv"):
                 if dirty and sys.stderr.isatty():
                     print("", file=sys.stderr)
@@ -151,7 +152,7 @@ def process_directory(dir, cb):
 
 
 def process_id_directory(dir, id, cb):
-    for (root, _, files) in os.walk(dir):
+    for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
             if len(segs) >= 4:
@@ -167,7 +168,7 @@ def process_id_directory(dir, id, cb):
                         )
                     ):
                     continue
-        for file in files:
+        for file in sorted(files):
             if file.endswith(".csv"):
                 cb(os.path.join(root, file), id)
 
