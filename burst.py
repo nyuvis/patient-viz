@@ -1,18 +1,20 @@
-#!/usr/bin/env python
+#!/bin/bash
 # -*- coding: utf-8 -*-
-"""
+"""exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
+from __future__ import print_function
+
+import os
+import sys
+import csv
+import json
+
+import util
+
+__doc__ = """
 Created on Thu Apr 23 21:56:00 2015
 
 @author: joschi
 """
-from __future__ import print_function
-import os
-import sys
-import csv
-#import simplejson as json
-import json
-
-import util
 
 input_format = {}
 
@@ -78,35 +80,7 @@ def processFile(inPath, outPath, filename, out):
         print('{0} rows'.format(str(count)), file=sys.stderr)
     os.remove(inFile)
 
-def processDirectory(dir, outPath, out):
-    for (root, _, files) in os.walk(dir):
-        if root != dir:
-            continue
-        for file in files:
-            if file.endswith(".csv"):
-                processFile(root, outPath, file, out)
-
 ### argument API
-
-def readConfig(settings, file):
-    if file == '-':
-        return
-    config = {}
-    if os.path.isfile(file):
-        with open(file, 'r') as input:
-            config = json.loads(input.read())
-    settings.update(config)
-    if set(settings.keys()) - set(config.keys()):
-        with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
-
-def read_format(file):
-    global input_format
-    if not os.path.isfile(file):
-        print('invalid format file: {0}'.format(file), file=sys.stderr)
-        usage()
-    with open(file) as formatFile:
-        input_format = json.loads(formatFile.read())
 
 def usage():
     print('usage: {0} [-h] -f <format> -c <config> --path <path>'.format(sys.argv[0]), file=sys.stderr)
@@ -137,12 +111,12 @@ if __name__ == '__main__':
             if not args:
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            read_format(args.pop(0))
+            util.read_format(args.pop(0), input_format, usage)
         elif arg == '-c':
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            readConfig(settings, args.pop(0))
+            util.read_config(settings, args.pop(0))
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -156,4 +130,4 @@ if __name__ == '__main__':
         'delim': settings['delim'],
         'quote': settings['quote']
     }
-    processDirectory(path, path, out)
+    util.process_burst_directory(path, lambda root, file: processFile(root, path, file, out))

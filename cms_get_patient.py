@@ -1,19 +1,21 @@
-#!/usr/bin/env python
+#!/bin/bash
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 20 14:10:00 2015
-
-@author: joschi
-"""
+"""exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
 from __future__ import print_function
+
 import collections
 import os
 import sys
 import csv
-#import simplejson as json
 import json
 
 import util
+
+__doc__ = """
+Created on Tue Jan 20 14:10:00 2015
+
+@author: joschi
+"""
 
 input_format = {}
 
@@ -252,27 +254,6 @@ def processFile(inputFile, id, obj, statusMap):
                     status = STATUS_OUT
                 handleRow(row, obj, statusMap, status)
 
-def processDirectory(dir, id, obj, statusMap):
-    for (root, _, files) in os.walk(dir):
-        if root != dir:
-            segs = root.split('/') # **/A/4/2/*.csv
-            if len(segs) >= 4:
-                segs = segs[-3:]
-                if (
-                        len(segs[0]) == 1 and
-                        len(segs[1]) == 1 and
-                        len(segs[2]) == 1 and
-                        (
-                            segs[0][0] != id[0] or
-                            segs[1][0] != id[1] or
-                            segs[2][0] != id[2]
-                        )
-                    ):
-                    continue
-        for file in files:
-            if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id, obj, statusMap)
-
 def processLine(obj, line):
     sp = line.strip().split(':', 2)
     if len(sp) < 2:
@@ -309,14 +290,6 @@ def usage():
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
 
-def read_format(file):
-    global input_format
-    if not os.path.isfile(file):
-        print('invalid format file: {0}'.format(file), file=sys.stderr)
-        usage()
-    with open(file) as formatFile:
-        input_format = json.loads(formatFile.read())
-
 if __name__ == '__main__':
     lineFile = None
     classFile = None
@@ -334,7 +307,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            read_format(args.pop(0))
+            util.read_format(args.pop(0), input_format, usage)
         elif arg == '-o':
             if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
@@ -394,7 +367,7 @@ if __name__ == '__main__':
         if isfile:
             processFile(path, id, obj, statusMap)
         else:
-            processDirectory(path, id, obj, statusMap)
+            util.process_id_directory(path, id, lambda file, id: processFile(file, id, obj, statusMap))
     curInStart = None
     curInEnd = None
     curStatus = STATUS_UNKNOWN

@@ -1,19 +1,21 @@
-#!/usr/bin/env python
+#!/bin/bash
 # -*- coding: utf-8 -*-
-"""
+"""exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
+from __future__ import print_function
+
+import shelve
+import sys
+import os.path
+import json
+
+import util
+
+__doc__ = """
 Created on 2015-03-02
 
 @author: joschi
 @author: razavian
 """
-from __future__ import print_function
-import shelve
-import sys
-import os.path
-#import simplejson as json
-import json
-
-import util
 
 def writeRow(cols, out, start, length, colZero):
     delim = out['delim'];
@@ -118,18 +120,6 @@ def printList(settings):
 
 ### argument API
 
-def readConfig(settings, file):
-    if file == '-':
-        return
-    config = {}
-    if os.path.isfile(file):
-        with open(file, 'r') as input:
-            config = json.loads(input.read())
-    settings.update(config)
-    if set(settings.keys()) - set(config.keys()):
-        with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
-
 def usage():
     print("{0}: --all | -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]".format(sys.argv[0]), file=sys.stderr)
     print("--all: print all patients", file=sys.stderr)
@@ -182,7 +172,7 @@ def interpretArgs():
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            readConfig(settings, args.pop(0))
+            util.read_config(settings, args.pop(0))
         elif val == '-o':
             if not args:
                 print('-o requires argument', file=sys.stderr)
