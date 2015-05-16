@@ -4,19 +4,12 @@
 from __future__ import print_function
 from __future__ import division
 
-__doc__ = """
-Created on 2015-03-08
-
-@author: joschi
-"""
-
 import time as time_lib
 from datetime import datetime, timedelta
 import re
 import sys
 import os.path
 import csv
-#import simplejson as json
 import json
 
 sys.path.append('..')
@@ -24,6 +17,12 @@ sys.path.append('..')
 import build_dictionary
 import cms_get_patient
 import util
+
+__doc__ = """
+Created on 2015-03-08
+
+@author: joschi
+"""
 
 class Range:
     """TODO"""
@@ -463,39 +462,6 @@ def processFile(inputFile, id_column, qm, candidates, printInfo):
         cb(id, "info", infoCache)
     """
 
-def processDirectory(dir, id_column, qm, candidates):
-    dirty = False
-    for (root, _, files) in os.walk(dir):
-        if root != dir:
-            segs = root.split('/') # **/A/4/2/*.csv
-            if len(segs) >= 4:
-                segs = segs[-3:]
-                if (
-                        len(segs[0]) == 1 and
-                        len(segs[1]) == 1 and
-                        len(segs[2]) == 1
-                    ):
-                    if sys.stderr.isatty():
-                        try:
-                            progr = (int(segs[0], 16)*16*16 + int(segs[1], 16)*16 + int(segs[2], 16)) / (16**3 - 1)
-                            sys.stderr.write("processing: {0}/{1}/{2}/ {3:.2%}\r".format(segs[0], segs[1], segs[2], progr))
-                            sys.stderr.flush()
-                            dirty = True
-                        except:
-                            pass
-                    for file in files:
-                        if file.endswith(".csv"):
-                            processFile(os.path.join(root, file), id_column, qm, candidates, False)
-                    continue
-        for file in files:
-            if file.endswith(".csv"):
-                if dirty and sys.stderr.isatty():
-                    print("", file=sys.stderr)
-                    dirty = False
-                processFile(os.path.join(root, file), id_column, qm, candidates, True)
-    if dirty and sys.stderr.isatty():
-        print("", file=sys.stderr)
-
 def processAll(qm, cohort, path_tuples):
     candidates = {}
     id_column = cms_get_patient.input_format["patient_id"]
@@ -503,7 +469,7 @@ def processAll(qm, cohort, path_tuples):
         if isfile:
             processFile(path, id_column, qm, candidates, True)
         else:
-            processDirectory(path, id_column, qm, candidates)
+            util.process_directory(path, lambda file, printInfo: processFile(file, id_column, qm, candidates, printInfo))
     for c in candidates.values():
         if qm.isMatch(c):
             cohort.append(c.getPid())
@@ -561,7 +527,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            cms_get_patient.read_format(args.pop(0))
+            util.read_format(args.pop(0), cms_get_patient.input_format, usage)
         elif arg == '-o':
             if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
@@ -571,7 +537,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            build_dictionary.readConfig(settings, args.pop(0))
+            util.readConfig(settings, args.pop(0), build_dictionary.debugOutput)
         elif arg == '--debug':
             build_dictionary.debugOutput = True
         else:

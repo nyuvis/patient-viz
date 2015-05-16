@@ -1,18 +1,20 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
 """exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
-
-__doc__ = """
-Created on 2015-04-10
-
-@author: joschi
-"""
+from __future__ import print_function
 
 import sys
 import os
 from datetime import datetime, timedelta, tzinfo
 import pytz
 import collections
+import json
+
+__doc__ = """
+Created on 2015-04-10
+
+@author: joschi
+"""
 
 _compute_self = "total_seconds" not in dir(timedelta(seconds=1))
 _tz = pytz.timezone('US/Eastern')
@@ -84,3 +86,88 @@ class OutWrapper(object):
     def __exit__(self, type, value, traceback):
         self.close()
         return isinstance(value, StdOutClose)
+
+def readConfig(settings, file, debugOutput=False):
+    if file == '-':
+        return
+    config = {}
+    if debugOutput:
+        print("config exists: {0} file: {1}".format(repr(os.path.isfile(file)), repr(os.path.abspath(file))), file=sys.stderr)
+    if os.path.isfile(file):
+        with open(file, 'r') as input:
+            config = json.loads(input.read())
+    settings.update(config)
+    if set(settings.keys()) - set(config.keys()):
+        with open(file, 'w') as output:
+            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
+
+def read_format(file, input_format, usage):
+    if not os.path.isfile(file):
+        print('invalid format file: {0}'.format(file), file=sys.stderr)
+        usage()
+    with open(file) as formatFile:
+        input_format.update(json.loads(formatFile.read()))
+
+def process_burst_directory(dir, cb):
+    for (root, _, files) in os.walk(dir):
+        if root != dir:
+            continue
+        for file in files:
+            if file.endswith(".csv"):
+                cb(root, file)
+
+def process_directory(dir, cb):
+    dirty = False
+    for (root, _, files) in os.walk(dir):
+        if root != dir:
+            segs = root.split('/') # **/A/4/2/*.csv
+            if len(segs) >= 4:
+                segs = segs[-3:]
+                if (
+                        len(segs[0]) == 1 and
+                        len(segs[1]) == 1 and
+                        len(segs[2]) == 1
+                    ):
+                    if sys.stderr.isatty():
+                        try:
+                            progr = (int(segs[0], 16)*16*16 + int(segs[1], 16)*16 + int(segs[2], 16)) / (16**3 - 1)
+                            sys.stderr.write("processing: {0}/{1}/{2}/ {3:.2%}\r".format(segs[0], segs[1], segs[2], progr))
+                            sys.stderr.flush()
+                            dirty = True
+                        except:
+                            pass
+                    for file in files:
+                        if file.endswith(".csv"):
+                            cb(os.path.join(root, file), False)
+                    continue
+        for file in files:
+            if file.endswith(".csv"):
+                if dirty and sys.stderr.isatty():
+                    print("", file=sys.stderr)
+                    dirty = False
+                cb(os.path.join(root, file), True)
+    if dirty and sys.stderr.isatty():
+        print("", file=sys.stderr)
+
+
+def process_id_directory(dir, id, cb):
+    for (root, _, files) in os.walk(dir):
+        if root != dir:
+            segs = root.split('/') # **/A/4/2/*.csv
+            if len(segs) >= 4:
+                segs = segs[-3:]
+                if (
+                        len(segs[0]) == 1 and
+                        len(segs[1]) == 1 and
+                        len(segs[2]) == 1 and
+                        (
+                            segs[0][0] != id[0] or
+                            segs[1][0] != id[1] or
+                            segs[2][0] != id[2]
+                        )
+                    ):
+                    continue
+        for file in files:
+            if file.endswith(".csv"):
+                cb(os.path.join(root, file), id)
+

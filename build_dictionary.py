@@ -3,24 +3,23 @@
 """exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
 from __future__ import print_function
 
-__doc__ = """
-Created on Mon Oct 13 11:44:00 2014
-
-@author: joschi
-@author: razavian
-"""
-
 import time
 import datetime
 import shelve
 from datetime import datetime,timedelta
 import sys
 import csv
-#import simplejson as json
 import json
 import os.path
 
 import util
+
+__doc__ = """
+Created on Mon Oct 13 11:44:00 2014
+
+@author: joschi
+@author: razavian
+"""
 
 debugOutput = False
 
@@ -607,20 +606,6 @@ def getFile(file):
         print("exists: {0} file: {1}".format(repr(os.path.isfile(res)), repr(os.path.abspath(res))), file=sys.stderr)
     return res
 
-def readConfig(settings, file):
-    if file == '-':
-        return
-    config = {}
-    if debugOutput:
-        print("config exists: {0} file: {1}".format(repr(os.path.isfile(file)), repr(os.path.abspath(file))), file=sys.stderr)
-    if os.path.isfile(file):
-        with open(file, 'r') as input:
-            config = json.loads(input.read())
-    settings.update(config)
-    if set(settings.keys()) - set(config.keys()):
-        with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
-
 def usage():
     print("{0}: [--debug] -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
     print("--debug: prints debug information", file=sys.stderr)
@@ -664,7 +649,7 @@ def interpretArgs():
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            readConfig(settings, args.pop(0))
+            util.readConfig(settings, args.pop(0), debugOutput)
         elif val == '-o':
             if not args:
                 print('-o requires argument', file=sys.stderr)
