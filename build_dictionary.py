@@ -185,7 +185,7 @@ class CmsProviderCode(TypeCode):
         return toEntry(id, pid, id, "Provider Number: {0}".format(id))
     def init(self):
         res = {}
-        file = getFile(pntFile)
+        file = util.get_file(pntFile, debugOutput)
         if not os.path.isfile(file):
             return res
         with open(file, 'r') as pnt:
@@ -234,7 +234,7 @@ class NdcPrescribedCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self):
         prescribeLookup = {}
-        fileA = getFile(productFile)
+        fileA = util.get_file(productFile, debugOutput)
         if not os.path.isfile(fileA):
             return prescribeLookup
         uidLookup = {}
@@ -287,7 +287,7 @@ class NdcPrescribedCode(TypeCode):
                 prescribeLookup[ndc] = obj
                 prescribeLookup[normndc] = obj
                 prescribeLookup[fullndc] = obj
-        fileB = getFile(packageFile)
+        fileB = util.get_file(packageFile, debugOutput)
         if not os.path.isfile(fileB):
             return prescribeLookup
         with open(fileB, 'r') as paFile:
@@ -383,7 +383,7 @@ class Icd9DiagnosisCode(TypeCode):
     def init(self):
         codes = getGlobalSymbols()
         codes.update(getICD9())
-        self._parents = readCCS(getFile(ccs_diag_file), codes)
+        self._parents = readCCS(util.get_file(ccs_diag_file, debugOutput), codes)
         return codes
 
 ### procedure ###
@@ -410,7 +410,7 @@ class Icd9ProcedureCode(TypeCode):
     def init(self):
         codes = getGlobalSymbols()
         codes.update(getICD9())
-        self._parents = readCCS(getFile(ccs_proc_file), codes)
+        self._parents = readCCS(util.get_file(ccs_proc_file, debugOutput), codes)
         return codes
 
 ### info ###
@@ -478,7 +478,7 @@ def getICD9():
 
 def initICD9():
     codes = {}
-    f = getFile(icd9File)
+    f = util.get_file(icd9File, debugOutput)
     if not os.path.isfile(f):
         return codes
     with open(f, 'r') as file:
@@ -543,7 +543,7 @@ def getGlobalSymbols():
 
 def initGlobalSymbols():
     codes_dict = {}
-    f = getFile(globalSymbolsFile)
+    f = util.get_file(globalSymbolsFile, debugOutput)
     if not os.path.isfile(f):
         return codes_dict
     with open(f, 'r') as file:
@@ -586,7 +586,6 @@ def init(settings):
 
 ### argument API
 
-path_correction = './'
 icd9File = 'code/icd9/ucod.txt'
 ccs_diag_file = 'code/ccs/multi_diag.txt'
 ccs_proc_file = 'code/ccs/multi_proc.txt'
@@ -595,16 +594,6 @@ packageFile = 'code/ndc/package.txt'
 pntFile = 'code/pnt/pnt.txt'
 globalSymbolsFile = 'code/icd9/code_names.txt'
 globalMid = '2507387001'
-
-def setPathCorrection(pc):
-    global path_correction
-    path_correction = pc
-
-def getFile(file):
-    res = os.path.join(path_correction, file)
-    if debugOutput:
-        print("exists: {0} file: {1}".format(repr(os.path.isfile(res)), repr(os.path.abspath(res))), file=sys.stderr)
-    return res
 
 def usage():
     print("{0}: [--debug] -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
@@ -649,7 +638,7 @@ def interpretArgs():
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            util.readConfig(settings, args.pop(0), debugOutput)
+            util.read_config(settings, args.pop(0), debugOutput)
         elif val == '-o':
             if not args:
                 print('-o requires argument', file=sys.stderr)

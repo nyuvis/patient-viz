@@ -116,7 +116,7 @@ if __name__ == '__main__':
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            util.readConfig(settings, args.pop(0))
+            util.read_config(settings, args.pop(0))
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()

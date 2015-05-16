@@ -88,9 +88,18 @@ class OutWrapper(object):
         self.close()
         return isinstance(value, StdOutClose)
 
-def readConfig(settings, file, debugOutput=False):
+_path_correction = '.'
+def get_file(file, debugOutput=False):
+    res = os.path.join(_path_correction, file)
+    if debugOutput:
+        print("exists: {0} file: {1}".format(repr(os.path.isfile(res)), repr(os.path.abspath(res))), file=sys.stderr)
+    return res
+
+def read_config(settings, file, debugOutput=False):
+    global _path_correction
     if file == '-':
         return
+    _path_correction = os.path.dirname(os.path.abspath(file))
     config = {}
     if debugOutput:
         print("config exists: {0} file: {1}".format(repr(os.path.isfile(file)), repr(os.path.abspath(file))), file=sys.stderr)

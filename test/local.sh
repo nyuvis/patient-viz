@@ -38,9 +38,12 @@ check_file() {
 print "test: training predictive model"
 
 if [ ! -f "${cohort}" ]; then
+  print "building cohort"
   ${FEATURE_EXTRACT}/cohort.py --query-file "${FEATURE_EXTRACT}/cases.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_cases.txt.tmp_local" -- "$CMS_DIR"
   ${FEATURE_EXTRACT}/cohort.py --query-file "${FEATURE_EXTRACT}/control.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_control.txt.tmp_local" -- "$CMS_DIR"
   ${FEATURE_EXTRACT}/merge.py --cases "${OUTPUT}/cohort_cases.txt.tmp_local" --control "${OUTPUT}/cohort_control.txt.tmp_local" -o "${cohort}" --test 30 --seed 0
+else
+  print "use existing cohort at ${cohort}"
 fi
 
 ${FEATURE_EXTRACT}/extract.py -w "${cohort}" --age-time 20100101 --to 20100101 -o - -f "${format}" -c "${config}" -- "$CMS_DIR" | \
