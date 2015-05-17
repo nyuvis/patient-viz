@@ -1,19 +1,15 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Created on 2015-03-08
-
-@author: joschi
-"""
+# -*- mode: python; -*-
+"""exec" "`dirname \"$0\"`/../call.sh" "$0" "$@"; """
 from __future__ import print_function
 from __future__ import division
+
 import time as time_lib
 from datetime import datetime, timedelta
 import re
 import sys
 import os.path
 import csv
-#import simplejson as json
 import json
 
 sys.path.append('..')
@@ -21,6 +17,12 @@ sys.path.append('..')
 import build_dictionary
 import cms_get_patient
 import util
+
+__doc__ = """
+Created on 2015-03-08
+
+@author: joschi
+"""
 
 class Range:
     """TODO"""
@@ -452,12 +454,6 @@ def processFile(inputFile, id_column, qm, candidates):
         cb(id, "info", infoCache)
     """
 
-def processDirectory(dir, id_column, qm, candidates):
-    for (root, _, files) in os.walk(dir):
-        for file in files:
-            if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id_column, qm, candidates)
-
 def processAll(qm, cohort, path_tuples):
     candidates = {}
     id_column = cms_get_patient.input_format["patient_id"]
@@ -465,7 +461,7 @@ def processAll(qm, cohort, path_tuples):
         if isfile:
             processFile(path, id_column, qm, candidates)
         else:
-            processDirectory(path, id_column, qm, candidates)
+            util.process_directory(path, lambda file: processFile(file, id_column, qm, candidates))
     for c in candidates.values():
         if qm.isMatch(c):
             cohort.append(c.getPid())
@@ -482,7 +478,7 @@ def usage():
     print('--debug: prints debug output', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
-    print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
+    print('-c <config>: specify config file', file=sys.stderr)
     print('-q <query>: specifies the query', file=sys.stderr)
     print('--query-file <file>: specifies a file containing the query', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
@@ -523,7 +519,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            cms_get_patient.read_format(args.pop(0))
+            util.read_format(args.pop(0), cms_get_patient.input_format, usage)
         elif arg == '-o':
             if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
@@ -533,7 +529,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            build_dictionary.readConfig(settings, args.pop(0))
+            util.read_config(settings, args.pop(0), build_dictionary.debugOutput)
         elif arg == '--debug':
             build_dictionary.debugOutput = True
         else:
@@ -544,7 +540,6 @@ if __name__ == '__main__':
         print('query is required', file=sys.stderr)
         usage()
 
-    build_dictionary.setPathCorrection('../')
     build_dictionary.init(settings)
 
     allPaths = []

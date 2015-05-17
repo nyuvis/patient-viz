@@ -10,7 +10,7 @@ Enrico Bertini, and [David Sontag](http://cs.nyu.edu/~dsontag/).
 
 ![The tool in action!](overview.png)
 
-[![Build Status](https://travis-ci.org/nyuvis/patient-viz.svg)](https://travis-ci.org/nyuvis/patient-viz)
+[![Build Status](https://travis-ci.org/nyuvis/patient-viz.svg?branch=master)](https://travis-ci.org/nyuvis/patient-viz)
 
 ## Setup
 

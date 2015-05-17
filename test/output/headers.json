@@ -28,110 +28,166 @@
       "parent": "", 
       "unmapped": true
     }, 
+    "HIERARCHY.13": {
+      "alias": "HIERARCHY13", 
+      "desc": "Diseases of the musculoskeletal system and connective tissue", 
+      "id": "HIERARCHY.13", 
+      "name": "Diseases of the musculoskeletal system and connective tissue", 
+      "parent": ""
+    }, 
+    "HIERARCHY.13.2": {
+      "alias": "HIERARCHY132", 
+      "desc": "Non-traumatic joint disorders", 
+      "id": "HIERARCHY.13.2", 
+      "name": "Non-traumatic joint disorders", 
+      "parent": "HIERARCHY.13"
+    }, 
     "HIERARCHY.13.2.3": {
-      "desc": "diagnosis HIERARCHY.13.2.3", 
+      "alias": "HIERARCHY1323", 
+      "desc": "Other non-traumatic joint disorders [204.]", 
       "id": "HIERARCHY.13.2.3", 
-      "name": "HIERARCHY.13.2.3", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Other non-traumatic joint disorders [204.]", 
+      "parent": "HIERARCHY.13.2"
+    }, 
+    "HIERARCHY.13.3": {
+      "alias": "HIERARCHY133", 
+      "desc": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
+      "id": "HIERARCHY.13.3", 
+      "name": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
+      "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.13.3.2": {
-      "desc": "diagnosis HIERARCHY.13.3.2", 
+      "alias": "HIERARCHY1332", 
+      "desc": "Intervertebral disc disorders                                                                           -", 
       "id": "HIERARCHY.13.3.2", 
-      "name": "HIERARCHY.13.3.2", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Intervertebral disc disorders                                                                           -", 
+      "parent": "HIERARCHY.13.3"
     }, 
     "HIERARCHY.13.8": {
-      "desc": "diagnosis HIERARCHY.13.8", 
+      "alias": "HIERARCHY138", 
+      "desc": "Other connective tissue disease [211.]", 
       "id": "HIERARCHY.13.8", 
-      "name": "HIERARCHY.13.8", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Other connective tissue disease [211.]", 
+      "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.16": {
-      "desc": "diagnosis HIERARCHY.16", 
+      "alias": "HIERARCHY16", 
+      "desc": "Injury and poisoning", 
       "id": "HIERARCHY.16", 
-      "name": "HIERARCHY.16", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Injury and poisoning", 
+      "parent": ""
+    }, 
+    "HIERARCHY.17": {
+      "alias": "HIERARCHY17", 
+      "desc": "Symptoms; signs; and ill-defined conditions and factors influencing health status", 
+      "id": "HIERARCHY.17", 
+      "name": "Symptoms; signs; and ill-defined conditions and factors influencing health status", 
+      "parent": ""
     }, 
     "HIERARCHY.17.1": {
-      "desc": "diagnosis HIERARCHY.17.1", 
+      "alias": "HIERARCHY171", 
+      "desc": "Symptoms; signs; and ill-defined conditions", 
       "id": "HIERARCHY.17.1", 
-      "name": "HIERARCHY.17.1", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Symptoms; signs; and ill-defined conditions", 
+      "parent": "HIERARCHY.17"
+    }, 
+    "HIERARCHY.17.2": {
+      "alias": "HIERARCHY172", 
+      "desc": "Factors influencing health care", 
+      "id": "HIERARCHY.17.2", 
+      "name": "Factors influencing health care", 
+      "parent": "HIERARCHY.17"
     }, 
     "HIERARCHY.17.2.4": {
-      "desc": "diagnosis HIERARCHY.17.2.4", 
+      "alias": "HIERARCHY1724", 
+      "desc": "Other aftercare [257.]", 
       "id": "HIERARCHY.17.2.4", 
-      "name": "HIERARCHY.17.2.4", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Other aftercare [257.]", 
+      "parent": "HIERARCHY.17.2"
     }, 
     "HIERARCHY.3": {
-      "desc": "diagnosis HIERARCHY.3", 
+      "alias": "HIERARCHY3", 
+      "desc": "Endocrine; nutritional; and metabolic diseases and immunity disorders", 
       "id": "HIERARCHY.3", 
-      "name": "HIERARCHY.3", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Endocrine; nutritional; and metabolic diseases and immunity disorders", 
+      "parent": ""
     }, 
     "HIERARCHY.3.1": {
-      "desc": "diagnosis HIERARCHY.3.1", 
+      "alias": "HIERARCHY31", 
+      "desc": "Thyroid disorders [48.]", 
       "id": "HIERARCHY.3.1", 
-      "name": "HIERARCHY.3.1", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Thyroid disorders [48.]", 
+      "parent": "HIERARCHY.3"
     }, 
     "HIERARCHY.5": {
-      "desc": "diagnosis HIERARCHY.5", 
+      "alias": "HIERARCHY5", 
+      "desc": "Mental illness", 
       "id": "HIERARCHY.5", 
-      "name": "HIERARCHY.5", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Mental illness", 
+      "parent": ""
     }, 
     "HIERARCHY.5.4": {
-      "desc": "diagnosis HIERARCHY.5.4", 
+      "alias": "HIERARCHY54", 
+      "desc": "Delirium, dementia, and amnestic and other cognitive disorders [653.]", 
       "id": "HIERARCHY.5.4", 
-      "name": "HIERARCHY.5.4", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Delirium, dementia, and amnestic and other cognitive disorders [653.]", 
+      "parent": "HIERARCHY.5"
+    }, 
+    "HIERARCHY.6": {
+      "alias": "HIERARCHY6", 
+      "desc": "Diseases of the nervous system and sense organs", 
+      "id": "HIERARCHY.6", 
+      "name": "Diseases of the nervous system and sense organs", 
+      "parent": ""
     }, 
     "HIERARCHY.6.7": {
-      "desc": "diagnosis HIERARCHY.6.7", 
+      "alias": "HIERARCHY67", 
+      "desc": "Eye disorders", 
       "id": "HIERARCHY.6.7", 
-      "name": "HIERARCHY.6.7", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Eye disorders", 
+      "parent": "HIERARCHY.6"
     }, 
     "HIERARCHY.6.9": {
-      "desc": "diagnosis HIERARCHY.6.9", 
+      "alias": "HIERARCHY69", 
+      "desc": "Other nervous system disorders [95.]", 
       "id": "HIERARCHY.6.9", 
-      "name": "HIERARCHY.6.9", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Other nervous system disorders [95.]", 
+      "parent": "HIERARCHY.6"
+    }, 
+    "HIERARCHY.7": {
+      "alias": "HIERARCHY7", 
+      "desc": "Diseases of the circulatory system", 
+      "id": "HIERARCHY.7", 
+      "name": "Diseases of the circulatory system", 
+      "parent": ""
+    }, 
+    "HIERARCHY.7.2": {
+      "alias": "HIERARCHY72", 
+      "desc": "Diseases of the heart", 
+      "id": "HIERARCHY.7.2", 
+      "name": "Diseases of the heart", 
+      "parent": "HIERARCHY.7"
     }, 
     "HIERARCHY.7.2.9": {
-      "desc": "diagnosis HIERARCHY.7.2.9", 
+      "alias": "HIERARCHY729", 
+      "desc": "Cardiac dysrhythmias [106.]", 
       "id": "HIERARCHY.7.2.9", 
-      "name": "HIERARCHY.7.2.9", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Cardiac dysrhythmias [106.]", 
+      "parent": "HIERARCHY.7.2"
     }, 
     "HIERARCHY.8": {
-      "desc": "diagnosis HIERARCHY.8", 
+      "alias": "HIERARCHY8", 
+      "desc": "Diseases of the respiratory system", 
       "id": "HIERARCHY.8", 
-      "name": "HIERARCHY.8", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Diseases of the respiratory system", 
+      "parent": ""
     }, 
     "HIERARCHY.8.1": {
-      "desc": "diagnosis HIERARCHY.8.1", 
+      "alias": "HIERARCHY81", 
+      "desc": "Respiratory infections", 
       "id": "HIERARCHY.8.1", 
-      "name": "HIERARCHY.8.1", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Respiratory infections", 
+      "parent": "HIERARCHY.8"
     }
   }, 
   "info": {
@@ -158,11 +214,10 @@
       "parent": ""
     }, 
     "02": {
-      "desc": "provider 02", 
+      "desc": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
       "id": "02", 
-      "name": "02", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Short-term (general and specialty) hospitals where TOB = 11X; ESRD clinic where TOB = 72X", 
+      "parent": ""
     }
   }
 }
