@@ -1,6 +1,8 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
 # -*- mode: python; -*-
+# vim: set filetype=python:
+# vim: set ft=py:
 """exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
 from __future__ import print_function
 
