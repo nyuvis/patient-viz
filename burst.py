@@ -87,7 +87,7 @@ def usage():
     print('usage: {0} [-h] -f <format> -c <config> --path <path>'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
-    print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
+    print("-c <config>: specify config file", file=sys.stderr)
     print('--path <path>: a path containing input files', file=sys.stderr)
     exit(1)
 

@@ -487,7 +487,7 @@ def usage():
     print('--debug: prints debug output', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
-    print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
+    print('-c <config>: specify config file', file=sys.stderr)
     print('-q <query>: specifies the query', file=sys.stderr)
     print('--query-file <file>: specifies a file containing the query', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)

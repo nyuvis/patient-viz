@@ -228,7 +228,7 @@ def usage():
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-w <whitelist>: specifies a patient whitelist. all patients if omitted (warning: slow)', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
-    print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
+    print('-c <config>: specify config file', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
 

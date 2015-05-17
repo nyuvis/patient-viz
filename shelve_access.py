@@ -125,7 +125,7 @@ def usage():
     print("{0}: --all | -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]".format(sys.argv[0]), file=sys.stderr)
     print("--all: print all patients", file=sys.stderr)
     print("-p <pid>: specify patient id", file=sys.stderr)
-    print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
+    print("-c <config>: specify config file", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
     print("-h|--help: prints this help", file=sys.stderr)
     print("-l|--list: prints all available patient ids and exits", file=sys.stderr)
