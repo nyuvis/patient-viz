@@ -99,8 +99,6 @@ def get_file(file, debugOutput=False):
 
 def read_config(settings, file, debugOutput=False):
     global _path_correction
-    if file == '-':
-        return
     _path_correction = os.path.dirname(os.path.abspath(file))
     config = {}
     if debugOutput:

@@ -472,7 +472,7 @@ def usage():
     print("{0}: [--debug] -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
     print("--debug: prints debug information", file=sys.stderr)
     print("-p <file>: specify patient json file. '-' uses standard in", file=sys.stderr)
-    print("-c <config>: specify config file. '-' uses default settings", file=sys.stderr)
+    print("-c <config>: specify config file", file=sys.stderr)
     print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
     print("--lookup <id...>: lookup mode. translates ids in shorthand notation '${group_id}__${type_id}'. '-' uses standard in with ids separated by spaces", file=sys.stderr)
     print("-h|--help: prints this help.", file=sys.stderr)
