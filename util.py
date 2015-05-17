@@ -1,5 +1,6 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
+# -*- mode: python; -*-
 """exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
 from __future__ import print_function
 

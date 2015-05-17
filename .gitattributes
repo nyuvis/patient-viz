@@ -11,3 +11,6 @@
 *.png binary
 *.gif binary
 *.zip binary
+
+*.py linguist-language=python
+lib/* linguist-vendored
