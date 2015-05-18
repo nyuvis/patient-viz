@@ -125,7 +125,7 @@ def process_burst_directory(dir, cb):
             if file.endswith(".csv"):
                 cb(root, file)
 
-def process_directory(dir, cb):
+def process_directory(dir, cb, show_progress=True):
     dirty = False
     for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
@@ -137,7 +137,7 @@ def process_directory(dir, cb):
                         len(segs[1]) == 1 and
                         len(segs[2]) == 1
                     ):
-                    if sys.stderr.isatty():
+                    if show_progress and sys.stderr.isatty():
                         try:
                             progr = (int(segs[0], 16)*16*16 + int(segs[1], 16)*16 + int(segs[2], 16)) / (16**3 - 1)
                             sys.stderr.write("processing: {0}/{1}/{2}/ {3:.2%}\r".format(segs[0], segs[1], segs[2], progr))
@@ -151,11 +151,11 @@ def process_directory(dir, cb):
                     continue
         for file in sorted(files):
             if file.endswith(".csv"):
-                if dirty and sys.stderr.isatty():
+                if dirty and show_progress and sys.stderr.isatty():
                     print("", file=sys.stderr)
                     dirty = False
-                cb(os.path.join(root, file), True)
-    if dirty and sys.stderr.isatty():
+                cb(os.path.join(root, file), show_progress)
+    if dirty and show_progress and sys.stderr.isatty():
         print("", file=sys.stderr)
 
 

@@ -592,7 +592,7 @@ ccs_proc_file = 'code/ccs/multi_proc.txt'
 productFile = 'code/ndc/product.txt'
 packageFile = 'code/ndc/package.txt'
 pntFile = 'code/pnt/pnt.txt'
-globalSymbolsFile = 'code/icd9/code_names.txt'
+globalSymbolsFile = 'code/code_names.txt'
 globalMid = '2507387001'
 
 def usage():

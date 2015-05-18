@@ -24,6 +24,12 @@ Created on 2015-03-08
 @author: joschi
 """
 
+debug_inspect = False
+inspect_pids = set([
+    'ADEDFB0ACC2513AD',
+    'FEE931854890F1F0'
+])
+
 class Range:
     """TODO"""
     def __init__(self, start, end):
@@ -31,7 +37,7 @@ class Range:
         self.end = end
 
     def __str__(self):
-        return "[{0}:{1}]".format(str(self.start), str(self.end))
+        return "[{0}:{1}]".format(repr(self.start), repr(self.end))
 
     def inRange(self, value):
         if self.start is None:
@@ -270,16 +276,16 @@ def parseQuery(query):
             d = date()
             return {
                 "<": Range(None, d),
-                "<=": Range(None, d + 1), # 1s is enough
-                ">": Range(d + 1, None), # 1s is enough
+                "<=": Range(None, util.nextDay(d)),
+                ">": Range(util.nextDay(d), None),
                 ">=": Range(d, None)
             }[c]
         start = date()
         if peek("-"):
             char("-")
             end = date()
-            return Range(start, end + 1) # 1s is enough
-        return Range(start, start + 1) # 1s is enough
+            return Range(start, util.nextDay(end))
+        return Range(start, util.nextDay(start))
 
     # <times>: <time> | "(" <time> { "|" <time> }* ")"
     def times():
@@ -311,12 +317,26 @@ def parseQuery(query):
                     raise NotImplementedError("special casing for special types")
                 if group != groupId:
                     return False
-                return any(typeId.startswith(tid) for tid in t["id"])
+
+                def check(tid):
+                    res = typeId.startswith(tid)
+                    if debug_inspect and candidate.pid in inspect_pids:
+                        print("{0} {1} {2} {3} {4}".format(repr(typeId), repr(tid), repr(res), repr(candidate.pid), repr(negate)), file=sys.stderr)
+                    return res
+
+                return any(check(tid) for tid in t["id"])
 
             if not any(checkType(t) for t in ts):
                 return
             time = event["time"]
-            if not any(t.inRange(time) for t in trs):
+
+            def checkTime(r):
+                res = r.inRange(time)
+                if debug_inspect and candidate.pid in inspect_pids:
+                    print("{0} {1} {2} {3} {4} {5}".format(repr(time), str(r), repr(res), repr(typeId), repr(candidate.pid), repr(negate)), file=sys.stderr)
+                return res
+
+            if not any(checkTime(r) for r in trs):
                 return
             candidate.setMem(id, {
                 "match": True
@@ -359,12 +379,6 @@ def parseQuery(query):
         return res
 
     return pQuery()
-
-""" FIXME currently not in use
-def toAge(s):
-    # TODO there could be a more precise way
-    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(util.toTime(str(s) + "0101")).year
-"""
 
 def handleRow(row, id, eventCache, infoCache):
     obj = {
@@ -437,6 +451,8 @@ def processFile(inputFile, id_column, qm, candidates, printInfo):
         for group in dict.keys():
             cb(id, group, dict[group].keys())
         """
+        if debug_inspect and id in inspect_pids:
+            print("{0} {1}".format(qm.isMatch(candidate), id), file=sys.stderr)
 
     if inputFile == '-':
         handleRows(csv.DictReader(sys.stdin))
@@ -451,10 +467,10 @@ def processFile(inputFile, id_column, qm, candidates, printInfo):
         processDict(eventCache, id)
         del eventCache[:]
         num += 1
-        if printInfo and sys.stderr.isatty():
+        if not debug_inspect and printInfo and sys.stderr.isatty():
             sys.stderr.write("processing: {0:.2%}\r".format(num / num_total))
             sys.stderr.flush()
-    if printInfo and sys.stderr.isatty():
+    if not debug_inspect and printInfo and sys.stderr.isatty():
         print("", file=sys.stderr)
     """ FIXME no info handling yet
     for id in id_info_cache.keys():
@@ -467,9 +483,9 @@ def processAll(qm, cohort, path_tuples):
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, qm, candidates, True)
+            processFile(path, id_column, qm, candidates, not debug_inspect)
         else:
-            util.process_directory(path, lambda file, printInfo: processFile(file, id_column, qm, candidates, printInfo))
+            util.process_directory(path, lambda file, printInfo: processFile(file, id_column, qm, candidates, not debug_inspect and printInfo), not debug_inspect)
     for c in candidates.values():
         if qm.isMatch(c):
             cohort.append(c.getPid())
