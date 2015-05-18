@@ -17,14 +17,18 @@ style_classes="../style_classes.json"
 etc="./etc"
 config="${etc}/config.txt"
 
+print() {
+  echo "$@" 2>&1
+}
+
 check() {
   if [ -s $ERR_FILE ]; then
     cat $ERR_FILE
-    echo "^ error file not empty ^"
+    print "^ error file not empty ^"
     exit 1
   fi
   if [ $1 -ne 0 ]; then
-    echo "^ command failed ^"
+    print "^ command failed ^"
     exit 2
   fi
 }
@@ -33,12 +37,15 @@ check_file() {
   diff -q "$1" "$2"
   if [ $? -ne 0 ]; then
     diff -u "$1" "$2"
-    echo "^ $1 doesn't match $2 ^"
+    print "^ $1 doesn't match $2 ^"
     exit 3
   fi
 }
 
 convert_patient() {
+  print "test: convert patient"
+  rm -- "${OUTPUT}/${id}.json.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/dictionary.json.tmp" 2> /dev/null
   id=$1
   ../cms_get_patient.py -p "${id}" -f "${format}" -o "${OUTPUT}/${id}.json.tmp" -c "${style_classes}" -- "${CMS_DIR}" 2> $ERR_FILE
   check $?
@@ -46,11 +53,15 @@ convert_patient() {
   ../build_dictionary.py --debug -p "${OUTPUT}/${id}.json.tmp" -c "${config}" -o "${OUTPUT}/dictionary.json.tmp"
   check $?
   check_file "${OUTPUT}/dictionary.json" "${OUTPUT}/dictionary.json.tmp"
-  rm -- "${OUTPUT}/${id}.json.tmp"
-  rm -- "${OUTPUT}/dictionary.json.tmp"
 }
 
 create_predictive_model() {
+  print "test: create predictive model"
+  rm -- "${OUTPUT}/cohort_cases.txt.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/cohort_control.txt.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/cohort.txt.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/output.csv.tmp" 2> /dev/null
+  rm -- "${OUTPUT}/headers.json.tmp" 2> /dev/null
   ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/cases.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_cases.txt.tmp" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/cohort_cases.txt" "${OUTPUT}/cohort_cases.txt.tmp"
@@ -66,16 +77,13 @@ create_predictive_model() {
   head -n 1 "${OUTPUT}/output.csv.tmp" | sed "s/,/ /g" | ../build_dictionary.py --debug -o "${OUTPUT}/headers.json.tmp" -c "${config}" --lookup -
   check $?
   check_file "${OUTPUT}/headers.json" "${OUTPUT}/headers.json.tmp"
-  rm -- "${OUTPUT}/cohort_cases.txt.tmp"
-  rm -- "${OUTPUT}/cohort_control.txt.tmp"
-  rm -- "${OUTPUT}/cohort.txt.tmp"
-  rm -- "${OUTPUT}/output.csv.tmp"
-  rm -- "${OUTPUT}/headers.json.tmp"
 }
 
 convert_patient "8CDC0C5ACBDFC9CE"
 create_predictive_model
 
-rm $ERR_FILE
+rm -- ${ERR_FILE} ${OUTPUT}/*.tmp
+
+print "all tests successful!"
 exec 3>&- # don't really need to close the FD
 exit 0

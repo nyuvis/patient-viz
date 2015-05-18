@@ -3,10 +3,14 @@
   "born": "BENE_BIRTH_DT",
   "death": "BENE_DEATH_DT",
   "gender": "BENE_SEX_IDENT_CD",
-  "provider": [
+  "provider_ibc": [
+  ],
+  "provider_cms": [
     "PRVDR_NUM"
   ],
-  "physician": [
+  "physician_ibc": [
+  ],
+  "physician_cms": [
     "AT_PHYSN_NPI",
     "OP_PHYSN_NPI",
     "OT_PHYSN_NPI",
@@ -30,7 +34,7 @@
   "claim_to": "CLM_THRU_DT",
   "admission": "CLM_ADMSN_DT",
   "discharge": "NCH_BENE_DSCHRG_DT",
-  "diagnosis": [
+  "diagnosis_icd9": [
     "ICD9_DGNS_CD_1",
     "ICD9_DGNS_CD_2",
     "ICD9_DGNS_CD_3",
@@ -40,15 +44,65 @@
     "ICD9_DGNS_CD_7",
     "ICD9_DGNS_CD_8",
     "ICD9_DGNS_CD_9",
-    "ICD9_DGNS_CD_10"
+    "ICD9_DGNS_CD_10",
+    "ADMTNG_ICD9_DGNS_CD"
   ],
-  "procedures": [
+  "procedures_icd9": [
     "ICD9_PRCDR_CD_1",
     "ICD9_PRCDR_CD_2",
     "ICD9_PRCDR_CD_3",
     "ICD9_PRCDR_CD_4",
     "ICD9_PRCDR_CD_5",
     "ICD9_PRCDR_CD_6"
+  ],
+  "procedures_cpt": [
+  ],
+  "procedures_hcpcs": [
+    "HCPCS_CD_1",
+    "HCPCS_CD_2",
+    "HCPCS_CD_3",
+    "HCPCS_CD_4",
+    "HCPCS_CD_5",
+    "HCPCS_CD_6",
+    "HCPCS_CD_7",
+    "HCPCS_CD_8",
+    "HCPCS_CD_9",
+    "HCPCS_CD_10",
+    "HCPCS_CD_11",
+    "HCPCS_CD_12",
+    "HCPCS_CD_13",
+    "HCPCS_CD_14",
+    "HCPCS_CD_15",
+    "HCPCS_CD_16",
+    "HCPCS_CD_17",
+    "HCPCS_CD_18",
+    "HCPCS_CD_19",
+    "HCPCS_CD_20",
+    "HCPCS_CD_21",
+    "HCPCS_CD_22",
+    "HCPCS_CD_23",
+    "HCPCS_CD_24",
+    "HCPCS_CD_25",
+    "HCPCS_CD_26",
+    "HCPCS_CD_27",
+    "HCPCS_CD_28",
+    "HCPCS_CD_29",
+    "HCPCS_CD_30",
+    "HCPCS_CD_31",
+    "HCPCS_CD_32",
+    "HCPCS_CD_33",
+    "HCPCS_CD_34",
+    "HCPCS_CD_35",
+    "HCPCS_CD_36",
+    "HCPCS_CD_37",
+    "HCPCS_CD_38",
+    "HCPCS_CD_39",
+    "HCPCS_CD_40",
+    "HCPCS_CD_41",
+    "HCPCS_CD_42",
+    "HCPCS_CD_43",
+    "HCPCS_CD_44",
+    "HCPCS_CD_45"
   ],
   "prescribed_date": "SRVC_DT",
   "prescribed": "PROD_SRVC_ID",

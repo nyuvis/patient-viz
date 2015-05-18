@@ -28,7 +28,9 @@ to_time = float('Inf')
 age_time = None
 age_bin = 10
 ignore = {
-    "prescribed": True
+    "prescribed": True,
+    "provider": True,
+    "physician": True
 }
 num_cutoff = 500
 
@@ -66,8 +68,7 @@ def handleRow(row, id, eventCache, infoCache):
                 infoCache.append("sex_f")
 
 
-def processFile(inputFile, id_column, eventHandle, whitelist):
-    print("processing file: {0}".format(inputFile), file=sys.stderr)
+def processFile(inputFile, id_column, eventHandle, whitelist, printInfo):
     id_event_cache = {}
     id_info_cache = {}
 
@@ -95,12 +96,13 @@ def processFile(inputFile, id_column, eventHandle, whitelist):
         with open(inputFile) as csvFile:
             handleRows(csv.DictReader(csvFile))
 
-    eventHandle(inputFile, id_event_cache, id_info_cache)
+    eventHandle(inputFile, id_event_cache, id_info_cache, printInfo)
 
 def createEventHandler(cb):
 
-    def handleEvent(inputFile, id_event_cache, id_info_cache):
-        print("processing file: {0}".format(inputFile), file=sys.stderr)
+    def handleEvent(inputFile, id_event_cache, id_info_cache, printInfo):
+        if printInfo:
+            print("processing file: {0}".format(inputFile), file=sys.stderr)
 
         def processDict(events, id):
             if len(events) == 0:
@@ -121,10 +123,10 @@ def createEventHandler(cb):
             processDict(eventCache, id)
             del eventCache[:]
             num += 1
-            if sys.stderr.isatty():
+            if printInfo and sys.stderr.isatty():
                 sys.stderr.write("processing: {0:.2%}\r".format(num / num_total))
                 sys.stderr.flush()
-        if sys.stderr.isatty():
+        if printInfo and sys.stderr.isatty():
             print("", file=sys.stderr)
         for id in id_info_cache.keys():
             infoCache = id_info_cache[id]
@@ -170,11 +172,11 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, eventHandle, whitelist)
+            processFile(path, id_column, eventHandle, whitelist, True)
         else:
-            util.process_directory(path, lambda file: processFile(file, id_column, eventHandle, whitelist))
+            util.process_directory(path, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, printInfo))
 
-def printResult(vectors, header_list, header_counts, delim, quote, whitelist, out):
+def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
 
     def doQuote(cell):
         cell = str(cell)
@@ -187,20 +189,22 @@ def printResult(vectors, header_list, header_counts, delim, quote, whitelist, ou
     wl_row = lambda id: delim + delim.join(map(lambda k: doQuote(whitelist[id][k]), wkeys)) if whitelist is not None else ""
 
     num_total = len(vectors.keys())
-    columns = []
-    for (ix, h) in enumerate(header_list):
+    columnMap = {}
+    for (ix, h) in enumerate(hl):
         n = header_counts[h]
         if n > num_cutoff and n < num_total - num_cutoff:
-            columns.append(ix)
+            columnMap[h] = ix
 
-    s = doQuote("id") + wl_header + delim + delim.join(map(lambda c: doQuote(header_list[c]), columns))
+    columns = map(lambda h: columnMap[h], sorted(columnMap.keys()))
+
+    s = doQuote("id") + wl_header + delim + delim.join(map(lambda c: doQuote(hl[c]), columns))
     print(s, file=out)
 
     num = 0
 
     empty = emptyBitVector()
     for id in vectors.keys():
-        bitvec = getBitVector(vectors, header_list, id)
+        bitvec = getBitVector(vectors, hl, id)
         s = doQuote(id) + wl_row(id) + delim + delim.join(map(doQuote, map(lambda c: 1 if c in bitvec else 0, columns)))
         vectors[id] = empty
         print(s, file=out)

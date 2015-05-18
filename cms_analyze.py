@@ -77,7 +77,7 @@ if __name__ == '__main__':
         if isfile:
             analyzeFile(path, counter)
         else:
-            util.process_directory(path, lambda file: analyzeFile(file, counter))
+            util.process_directory(path, lambda file, printInfo: analyzeFile(file, counter))
 
     list = counter.keys()
     list.sort(key = lambda k: counter[k])
