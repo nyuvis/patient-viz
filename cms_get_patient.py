@@ -8,6 +8,7 @@ import os
 import sys
 import csv
 import json
+import re
 
 import util
 
@@ -317,6 +318,7 @@ if __name__ == '__main__':
                 print('-o requires output file', file=sys.stderr)
                 usage()
             output = args.pop(0)
+            output = re.sub(r'(^|[^%])((?:%%)*)%p', r'\1\2foo', output).replace('%%', '%')
         elif arg == '-p':
             if not args or args[0] == '--':
                 print('no id specified', file=sys.stderr)
