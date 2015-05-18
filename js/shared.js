@@ -377,26 +377,28 @@ function setupClickAction(pool, blank) {
     pool.fixSelection(!pool.fixSelection());
     pool.endBulkSelection();
   });
-  if(SHOW_EVENT_GROUPS) {
-    blank.on("mousemove", function() {
-      selectCur();
-      var cur = pool.getMousePos();
-      var e = null;
-      pool.traverseEventsForX(cur[0], function(eve) {
-        if(e) return;
-        var rangeY = pool.getRangeY(eve.getType());
-        if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
-          e = eve;
-        }
+  if(!SLOW_MODE) {
+    if(SHOW_EVENT_GROUPS) {
+      blank.on("mousemove", function() {
+        selectCur();
+        var cur = pool.getMousePos();
+        var e = null;
+        pool.traverseEventsForX(cur[0], function(eve) {
+          if(e) return;
+          var rangeY = pool.getRangeY(eve.getType());
+          if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
+            e = eve;
+          }
+        });
+        if(lastE === e) return;
+        lastE = e;
+        pool.updateEventGroupLines(e);
       });
-      if(lastE === e) return;
-      lastE = e;
-      pool.updateEventGroupLines(e);
-    });
-  } else {
-    blank.on("mousemove", function() {
-      selectCur();
-    });
+    } else {
+      blank.on("mousemove", function() {
+        selectCur();
+      });
+    }
   }
   pool.updateSelection();
 }

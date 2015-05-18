@@ -109,20 +109,34 @@ function Type(p, g, typeId, dictionary) {
   this.hasRealProxy = function() {
     return that.proxyType() !== that;
   };
-  this.fillFingerprint = function(ctx, w, h) {
+  var fingerprint = null;
+  this.ensureFingerprint = function() {
+    if(fingerprint) return;
     ensureProxedEvents();
+    fingerprint = {};
     if(!proxedEvents.length) return;
+    that.traverseProxedEvents(function(e) {
+      var t = e.getTime();
+      if(t in fingerprint) {
+        fingerprint[t] += 1;
+      } else {
+        fingerprint[t] = 1;
+      }
+    });
+  };
+  this.fillFingerprint = function(ctx, w, h) {
+    that.ensureFingerprint();
     var timeRange = pool.getRangeTime();
     var min = timeRange[0];
     var max = timeRange[1];
+    var baseAlpha = 0.7;
     ctx.save();
-    ctx.globalAlpha = 0.5;
     ctx.lineWidth = 1;
     ctx.strokeStyle = that.getColor();
-    that.traverseProxedEvents(function(e) {
-      var t = e.getTime();
+    Object.keys(fingerprint).forEach(function(t) {
       var x = (t - min) / (max - min) * w;
       if(Number.isNaN(x)) return;
+      ctx.globalAlpha = Math.min(1, baseAlpha * fingerprint[t]);
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, h);
