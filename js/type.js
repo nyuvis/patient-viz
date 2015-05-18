@@ -491,16 +491,17 @@ Type.typeDesc = function(group, id, asId, dictionary, full) {
   } else if(group in dictionary && id in dictionary[group]) {
     var desc = dictionary[group][id][full ? "desc" : "name"];
     if(group != "diagnosis" && group != "procedure") return desc;
-    if(id.startsWith("HIERARCHY") || id == '') return desc;
-    if(desc == id) {
+    var rid = id.indexOf("__") >= 0 ? id.split("__", 2)[1] : id;
+    if(rid.startsWith("HIERARCHY") || rid == '') return desc;
+    if(desc == rid) {
       desc = "";
     }
-    if(id.indexOf('.') >= 0) return id + (desc != "" ? ": " + desc : "");
-    var letterstart = Number.isNaN(+id.substring(0, 1));
-    var pre = id.substring(0, letterstart ? 4 : 3);
-    var post = id.substring(letterstart ? 4 : 3);
+    if(rid.indexOf('.') >= 0) return rid + (desc != "" ? ": " + desc : "");
+    var letterstart = Number.isNaN(+rid.substring(0, 1));
+    var pre = rid.substring(0, letterstart ? 4 : 3);
+    var post = rid.substring(letterstart ? 4 : 3);
     return pre + "." + post + (desc != "" ? ": " + desc : "");
   } else {
-    return (full ? group + " " : "") + id
+    return (full ? group + " " : "") + rid
   }
 };
