@@ -86,7 +86,7 @@ where the column names equal the feature names.
 The prediction for one patient can be computed by the following formula
 
 ```javascript
-1 / (1 + Math.exp( -( bias + w_a + w_b + w_e + w_h + …) )) > 0.5
+1 / (1 + Math.exp( -( bias + w_a + w_b + w_e + w_h + … ) )) > 0.5
 ```
 
 Where `bias` is the bias of the model and `w_a` is the weight of feature `a`

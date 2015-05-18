@@ -1,1 +1,1 @@
-!diagnosis:4271@<20100101,diagnosis:4271@>=20100101
+!diagnosis:icd9__4271@<20100101,diagnosis:icd9__4271@>=20100101

@@ -29,18 +29,41 @@ TODO arrays for first match
   <"born">: "BENE_BIRTH_DT",
   <"death">: "BENE_DEATH_DT",
   <"gender">: "BENE_SEX_IDENT_CD",
+  "provider_ibc": [
+  ],
+  "provider_cms": [
+    "PRVDR_NUM"
+  ],
+  "physician_ibc": [
+  ],
+  "physician_cms": [
+    "AT_PHYSN_NPI",
+    …
+  ],
   <"claim_id">: "CLM_ID",
   <"claim_amount">: "CLM_PMT_AMT",
   <"claim_from">: "CLM_FROM_DT",
   <"claim_to">: "CLM_THRU_DT",
-  "diagnosis": [
+  <"admission">: "CLM_ADMSN_DT",
+  <"discharge">: "NCH_BENE_DSCHRG_DT",
+  <"location_flag">: "ENCS_FACILITY_TYPE",
+  "diagnosis_icd9": [
     "ICD9_DGNS_CD_1",
     "ICD9_DGNS_CD_2",
     …
   ],
-  "procedures": [
+  "procedures_icd9": [
     "ICD9_PRCDR_CD_1",
     "ICD9_PRCDR_CD_2",
+    …
+  ],
+  "procedures_cpt": [
+    "ENCS_CPTCODE",
+    …
+  ],
+  "procedures_hcpcs": [
+    "HCPCS_CD_1",
+    "HCPCS_CD_2",
     …
   ],
   <"prescribed_date">: "SRVC_DT",
@@ -62,6 +85,11 @@ TODO text
 
 The specification is split into two files, the dictionary containing all types (ie. rows)
 and the events containing all events (ie. boxes).
+
+Type ids (`$type_id`) can also consist of a prefixed version of a code (eg.
+`250.00`, `icd9__250.00`, `25000`, or `icd9__25000` are all representations
+of the `diagnosis` (`$group_id`) with the description:
+"Diabetes mellitus without mention of complication").
 
 The dictionary file:
 
@@ -164,7 +192,7 @@ Besides CSV files patient files can also be created using a shelve database.
 For this the patient file creation pipeline looks like:
 
 ```bash
-./shelve_access.py -p 3045033701 -c config.txt -o - | ./cms_get_patient.py -p 3045033701 -f format_shelve.json -o json/3045033701.json -- -
+./shelve_access.py -p 3045033701 -c config.txt -o - | ./cms_get_patient.py -p 3045033701 -f format_shelve.json -o json/%p.json -- -
 ./build_dictionary.py -p json/3045033701.json -c config.txt -o json/dictionary.json
 ./start.sh --list-update
 ```

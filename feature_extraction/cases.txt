@@ -1,1 +1,1 @@
-!diagnosis:250@<20100101,diagnosis:250@>=20100101
+!diagnosis:icd9__250@<20100101,diagnosis:icd9__250@>=20100101
