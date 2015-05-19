@@ -1198,7 +1198,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     var onlyTime = Number.NaN;
     var repr = null;
     var types = {};
-    var events = [];
+    var eventMap = {};
     that.traverseEvents(function(gid, tid, e) {
       e.updateLook();
       var type = e.getType();
@@ -1221,8 +1221,12 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         }
 
         addType(type);
-        events.push(e);
+        var fog = e.firstOfGroup();
+        eventMap[fog.getId()] = fog;
       }
+    });
+    var events = Object.keys(eventMap).map(function(k) {
+      return eventMap[k];
     });
     var singleSlot = false;
     var singleType = false;

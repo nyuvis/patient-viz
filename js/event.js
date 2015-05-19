@@ -88,6 +88,37 @@ function Event(e, pool, dictionary) {
   this.getEventGroupId = function() {
     return eg_id;
   };
+  var fog = null
+  this.firstOfGroup = function(_) {
+    if(!arguments.length) {
+      if(!fog) {
+        fog = getFirstOfGroup();
+      }
+      return fog;
+    }
+    fog = _;
+  };
+
+  function getFirstOfGroup() {
+    if(!eg_id.length) return that;
+    var typeId = that.getType().getTypeId();
+    var time = that.getTime();
+    var eve = that;
+    var eves = pool.getEventGroup(eg_id).filter(function(e) {
+      return typeId === e.getType().getTypeId();
+    });
+    eves.forEach(function(e) {
+      var t = e.getTime();
+      if(t < time) {
+        time = t;
+        eve = e;
+      }
+    });
+    eves.forEach(function(e) {
+      e.firstOfGroup(eve);
+    });
+    return eve;
+  }
 
   this.isFirstOfType = function() {
     return type.getCount() && type.getEventByIndex(0) === that;
