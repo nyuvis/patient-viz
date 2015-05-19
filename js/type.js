@@ -110,26 +110,41 @@ function Type(p, g, typeId, dictionary) {
     return that.proxyType() !== that;
   };
   var fingerprint = null;
-  this.ensureFingerprint = function() {
-    if(fingerprint) return;
-    ensureProxedEvents();
-    fingerprint = {};
-    if(!proxedEvents.length) return;
-    that.traverseProxedEvents(function(e) {
-      var t = e.getTime();
-      if(t in fingerprint) {
-        fingerprint[t] += 1;
-      } else {
-        fingerprint[t] = 1;
+  var fingerprintTypes = {};
+  this.setFingerprintTypes = function(types) {
+    var oldT = Object.keys(fingerprintTypes);
+    fingerprintTypes = types;
+    var newT = Object.keys(fingerprintTypes);
+    var chg = true;
+    if(oldT.length === newT.length) {
+      chg = false;
+      oldT.sort();
+      newT.sort();
+      for(var ix = 0;ix < oldT.length;ix += 1) {
+        if(oldT[ix] !== newT[ix]) {
+          chg = true;
+          break;
+        }
       }
-    });
+    }
+    if(chg) {
+      fingerprint = null;
+    }
+    return chg;
   };
   this.fillFingerprint = function(ctx, w, h) {
-    that.ensureFingerprint();
+    if(!fingerprint) {
+      fingerprint = {};
+      Object.keys(fingerprintTypes).forEach(function(tid) {
+        fingerprintTypes[tid].traverseProxedEvents(function(e) {
+          fingerprint[e.getTime()] = 1;
+        });
+      });
+    }
     var timeRange = pool.getRangeTime();
     var min = timeRange[0];
     var max = timeRange[1];
-    var baseAlpha = 0.7;
+    var baseAlpha = 1;
     ctx.save();
     ctx.lineWidth = 1;
     ctx.strokeStyle = that.getColor();
@@ -519,9 +534,6 @@ function Type(p, g, typeId, dictionary) {
       "background-color": hasSelected ? color : null,
       "color": hasSelected ? jkjs.util.getFontColor(color) : null
     });
-    if(hasSelected && onlyOneTypeSelected) {
-      sel.node().scrollIntoView(true);
-    }
     var tmp = check.on("change"); // disable notification when updating
     check.on("change", null);
     check.node().checked = that.isValid();
