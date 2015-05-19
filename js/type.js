@@ -480,6 +480,8 @@ function Type(p, g, typeId, dictionary) {
   this.createListEntry = function(sel, level, isInner, isExpanded) {
     check = sel.append("input").attr({
       "type": "checkbox"
+    }).style({
+      "display": "none"
     }).on("change", function() {
       that.setValid(check.node().checked);
     });
