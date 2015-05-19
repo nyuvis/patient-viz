@@ -14,8 +14,8 @@ if [ ! -z "${TEST_DEBUG}" ]; then
   # in the parent script like this:
   #
   # exec 3>&2
-  # export TEST_DEBUG="TEST_DEBUG"
+  # export TEST_DEBUG=3
   #
-  echo "$@" >&3
+  echo "$@" >&${TEST_DEBUG}
 fi
 python "$@"
