@@ -5,7 +5,7 @@
 cd "$(dirname $0)"
 
 exec 3>&2
-export TEST_DEBUG="TEST_DEBUG"
+export TEST_DEBUG=3
 
 CMS_DIR="./cms"
 ERR_FILE="err.txt"
