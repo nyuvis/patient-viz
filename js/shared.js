@@ -350,6 +350,7 @@ function setupClickAction(pool, blank) {
         if(!first) first = e;
         e.setSelected(true);
       });
+      pool.highlightMode(TypePool.HIGHLIGHT_VER);
     } else {
       pool.traverseTypes(function(gid, tid, type) {
         var rangeY = pool.getRangeY(type);
@@ -360,6 +361,7 @@ function setupClickAction(pool, blank) {
           });
         }
       });
+      pool.highlightMode(TypePool.HIGHLIGHT_HOR);
     }
     pool.highlightEvent(first);
     pool.greyOutRest(false);

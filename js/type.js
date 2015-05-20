@@ -519,6 +519,7 @@ function Type(p, g, typeId, dictionary) {
           }
         });
       }
+      pool.highlightMode(TypePool.HIGHLIGHT_HOR);
       pool.highlightEvent(first);
       pool.fixSelection(true);
       pool.greyOutRest(false);

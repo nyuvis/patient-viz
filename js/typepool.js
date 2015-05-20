@@ -1130,6 +1130,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         e.setSelected(true);
       });
     });
+    pool.highlightMode(TypePool.HIGHLIGHT_NONE);
     that.highlightEvent(null);
     that.fixSelection(true);
     that.greyOutRest(true);
@@ -1156,16 +1157,24 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   };
   var highlightEvent = null;
   var highlightListeners = [];
+  var highlightMode = TypePool.HIGHLIGHT_HOR;
+  var hm = highlightMode;
+  this.highlightMode = function(_) {
+    if(!arguments.length) return highlightMode;
+    highlightMode = _;
+  };
   this.highlightEvent = function(_) {
     if(!arguments.length) return highlightEvent;
-    if(highlightEvent === _) return;
+    if(highlightEvent === _ && highlightMode === hm) return;
     highlightEvent = _;
+    hm = highlightMode;
     if(helpV) {
       overview.clearShadow();
+      var hv = highlightEvent && (highlightMode & TypePool.HIGHLIGHT_VER);
       helpV.attr({
-        "x": highlightEvent ? that.getXByEventTime(highlightEvent) : 0
+        "x": hv ? that.getXByEventTime(highlightEvent) : 0
       }).style({
-        "opacity": highlightEvent ? 1 : 0
+        "opacity": hv ? 1 : 0
       });
       overview.onBoxUpdate();
     }
@@ -1174,10 +1183,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       if(type && type.getProxed().length) {
         type = type.getProxed()[0];
       }
+      var hh = type && (highlightMode & TypePool.HIGHLIGHT_HOR);
       helpH.attr({
-        "y": type ? type.getY() : 0
+        "y": hh ? type.getY() : 0
       }).style({
-        "opacity": highlightEvent ? 1 : 0
+        "opacity": hh ? 1 : 0
       });
     }
     if(inBulkSelection > 0) return;
@@ -1304,3 +1314,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   };
 } // TypePool
 TypePool.hasWeightedEvent = false;
+TypePool.HIGHLIGHT_NONE = 0;
+TypePool.HIGHLIGHT_HOR = 1;
+TypePool.HIGHLIGHT_VER = 2;
+TypePool.HIGHLIGHT_BOTH = TypePool.HIGHLIGHT_HOR | TypePool.HIGHLIGHT_VER;

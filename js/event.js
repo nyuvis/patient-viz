@@ -134,6 +134,7 @@ function Event(e, pool, dictionary) {
   };
   this.clickSelected = function() {
     var pool = that.getType().getPool();
+    pool.highlightMode(TypePool.HIGHLIGHT_BOTH);
     pool.highlightEvent(that);
   };
   this.setSelected = function(isSelected) {
@@ -278,7 +279,7 @@ function Event(e, pool, dictionary) {
   };
   this.updateListEntry = function(sel, singleSlot, singleType) {
     var color = that.getBaseColor();
-    var showSelection = that.getType().getPool().highlightEvent() === that;
+    var showSelection = pool.highlightEvent() === that && (pool.highlightMode() === TypePool.HIGHLIGHT_BOTH);
     // removes all children of sel
     sel.selectAll("span").text(that.getDesc()).style({
       "background-color": showSelection ? color : null,
