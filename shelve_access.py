@@ -116,7 +116,7 @@ def printList(settings):
             for line in f:
                 if line == '':
                     continue
-                print(line.strip(), file=sys.stdout)
+                print(line.strip().split()[0], file=sys.stdout)
 
 ### argument API
 
