@@ -78,7 +78,7 @@ function TypeView(pool, sel, sortDropdownSel) {
       var fpSel = d3.select(this);
       var pSel = d3.select(fpSel.node().parentNode);
       var types = d.types;
-      var h = 15;
+      var h = 14;
       var w = totalWidth - 44;
       var tw = w;
       var th = h * types.length;
