@@ -61,10 +61,11 @@
     </ul>
   </div>
 </header>
+<div id="pTypesLeft"></div>
 <div id="pContent">
   <div id="pSVG"></div>
 </div>
-<div id="pTypes"></div>
+<div id="pTypesRight"></div>
 
 <script>
 var SLOW_MODE = false;
@@ -209,7 +210,7 @@ function start() {
     });
   }
   var suppl = divSVG.append("svg");
-  var overview = new Overview(d3.select("#pTypes"), handler);
+  var overview = new Overview(d3.select("#pTypesRight"), handler);
   overview.getSVG().on("mousedown.labels", function() {
     labels && labels.setShowLabels(false);
   }).on("mouseup.labels", function() {
@@ -295,7 +296,7 @@ function start() {
     }
   }
 
-  var views = initViews(mainG, secG, suppl, blank, d3.select("#pTypes"), d3.select("#pTypes"), overview, setBox, onVC, busy, updateViewport);
+  var views = initViews(mainG, secG, suppl, blank, d3.select("#pTypesRight"), d3.select("#pTypesLeft"), overview, setBox, onVC, busy, updateViewport);
   pool = views[0];
   eventList = views[1];
   typeList = views[2];
@@ -409,29 +410,34 @@ function start() {
     });
     var bodyPadding = topPad;
     var bodyWidth = body.node().offsetWidth;
-    var listWidth = d3.select("#pTypes").node().offsetWidth;
-    var correctWidth = bodyWidth - listWidth - 36; // 2 * 5px margin on both sides + 16px buffer
+    var listWidthLeft = d3.select("#pTypesLeft").node().offsetWidth;
+    var listWidthRight = d3.select("#pTypesRight").node().offsetWidth;
+    var correctWidth = bodyWidth - listWidthLeft - listWidthRight - 36; // 2 * 5px margin on both sides + 16px buffer
     var allowedHeight = bodyHeight - bodyPadding - 16; // 10px bottom margin + 6px buffer
+    var bodyHPad = 18;
     divContent.style({
+      "left": (listWidthLeft + bodyHPad) + "px",
       "height": allowedHeight + "px",
       "width": correctWidth + "px"
     });
     divSVG.style({
+      "left": (listWidthLeft + bodyHPad) + "px",
       "height": allowedHeight + "px",
       "width": correctWidth + "px",
       "position": "absolute",
       "top": bodyPadding + "px"
     });
-    if(ovWidth !== listWidth) {
-      var ovw = listWidth;
+    if(ovWidth !== listWidthRight) {
+      var ovw = listWidthRight;
       ovHeight = overview.getHeightForWidth(ovw);
       ovWidth = ovw;
       overview.onSizeUpdate();
     }
-    var shadowHeight = overview.getHeightForWidth(listWidth);
-    var listHeight = (allowedHeight - shadowHeight) * 0.4;
-    eventList && eventList.resize(listHeight, bodyPadding);
-    typeList && typeList.resize(allowedHeight - shadowHeight - listHeight, bodyPadding);
+    var shadowHeight = overview.getHeightForWidth(listWidthRight);
+    var listHeightLeft = allowedHeight;
+    var listHeightRight = allowedHeight - shadowHeight;
+    eventList && eventList.resize(listHeightRight, bodyPadding);
+    typeList && typeList.resize(listHeightLeft, bodyPadding);
     if(box) {
       var supplHeight = suppl.node().offsetHeight;
       // firefox might not have values for that

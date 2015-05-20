@@ -9,13 +9,17 @@ function EventView(sel) {
   var singleSlot = false;
   var singleType = false;
   var events = [];
+  sel.style({
+    "display": "inline-block",
+    "padding": 0,
+    "width": totalWidth + "px"
+  });
   var full = sel.append("div");
   var header = full.append("span").text("Selection").style({
     "font-weight": 500
   });
   var list = full.append("div").style({
     "overflow": "auto",
-    "max-height": "200px"
   });
   var sortAndGroup = null;
   var dropdown = header.append("select").classed("dropdown", true).on("change", function() {
@@ -28,6 +32,13 @@ function EventView(sel) {
   });
   // TODO
   this.resize = function(allowedHeight, bodyPadding) {
+    sel.style({
+      "position": "absolute",
+      "top": bodyPadding + "px",
+      "right": 10 + "px",
+      "width": totalWidth + "px",
+      "height": allowedHeight + "px"
+    });
     full.style({
       "width": totalWidth + "px",
       "height": allowedHeight + "px"

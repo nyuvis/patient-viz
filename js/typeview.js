@@ -49,7 +49,7 @@ function TypeView(pool, sel, sortDropdownSel) {
     sel.style({
       "position": "absolute",
       "top": bodyPadding + "px",
-      "right": 10 + "px",
+      "left": 10 + "px",
       "width": totalWidth + "px",
       "height": totalHeight + "px"
     });
@@ -419,7 +419,9 @@ function TypeView(pool, sel, sortDropdownSel) {
       fpSel.enter().append("canvas").classed("fingerprint", true);
     });
 
-    divs.selectAll("div.pT").each(function(t) {
+    divs.selectAll("div.pT").style({
+      "min-width": totalWidth + "px"
+    }).each(function(t) {
       var div = d3.select(this);
       var pt = t.proxyType();
       var hasSelected = pt.getId() in selectedTypes;
