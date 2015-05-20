@@ -929,7 +929,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       while(pt !== pt.proxyType()) {
         pt = pt.proxyType();
       }
-      displayTypes[pt.getTypeId()] = pt;
+      displayTypes[pt.getGroupId() + '__' + pt.getTypeId()] = pt;
     });
     displayTypes = Object.keys(displayTypes).map(function(id) {
       var type = displayTypes[id];
