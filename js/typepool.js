@@ -922,6 +922,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     that.updateLook();
   };
 
+  var showSpans = true;
+  this.showSpans = function(_) {
+    if(!arguments.length) return showSpans;
+    showSpans = _;
+  };
   this.updateLook = function() {
     var displayTypes = {};
     that.traverseTypes(function(gid, tid, type) {
@@ -1038,12 +1043,12 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         "opacity": 0.2,
         "color": "gray"
       }));
-      if(!vis) {
+      if(!vis || !showSpans) {
         span.sel.style({
           "opacity": 0
         });
       };
-      if(!vis) return;
+      if(!vis || !showSpans) return;
       var x1 = that.getXByTime(span.start);
       var x2 = that.getXByTime(span.end);
       span.sel.attr({

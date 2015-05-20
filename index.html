@@ -36,8 +36,11 @@
         <strong>Time:</strong>
         <span id="pStart"></span> - <span id="pEnd"></span>
       </div></li><li><div class="checkbox">
+        <label>
+          <input id="pShowSpans" type="checkbox" checked="checked"> Show Spans
+        </label>
         <label id="pShowLabel">
-          <input id="pShow" type="checkbox" checked="checked"> Show All Events
+          <input id="pShow" type="checkbox"> Show All Events
         </label>
         <label>
           <input id="pVSel" type="checkbox"> Vertical Sel.
@@ -304,6 +307,11 @@ function start() {
   });
   d3.select("#pShow").on("change", function() {
     pool.showOnlyWeightedEvents(!d3.select("#pShow").node().checked);
+  });
+  d3.select("#pShowSpans").on("change", function() {
+    pool.showSpans(d3.select("#pShowSpans").node().checked);
+    overview.clearShadow();
+    pool.updateLook();
   });
 
   function updateRange() {
