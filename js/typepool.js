@@ -715,6 +715,9 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   this.getRangeX = function() {
     return [ that.getXByTime(startTime), that.getXByTime(endTime) ];
   };
+  this.getRangeTime = function() {
+    return [ startTime, endTime ];
+  };
   this.getRangeDate = function() {
     return [ new Date(startTime * 1000), new Date(endTime * 1000) ];
   };
@@ -919,6 +922,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     that.updateLook();
   };
 
+  var showSpans = true;
+  this.showSpans = function(_) {
+    if(!arguments.length) return showSpans;
+    showSpans = _;
+  };
   this.updateLook = function() {
     var displayTypes = {};
     that.traverseTypes(function(gid, tid, type) {
@@ -926,7 +934,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       while(pt !== pt.proxyType()) {
         pt = pt.proxyType();
       }
-      displayTypes[pt.getTypeId()] = pt;
+      displayTypes[pt.getGroupId() + '__' + pt.getTypeId()] = pt;
     });
     displayTypes = Object.keys(displayTypes).map(function(id) {
       var type = displayTypes[id];
@@ -1035,12 +1043,12 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         "opacity": 0.2,
         "color": "gray"
       }));
-      if(!vis) {
+      if(!vis || !showSpans) {
         span.sel.style({
           "opacity": 0
         });
       };
-      if(!vis) return;
+      if(!vis || !showSpans) return;
       var x1 = that.getXByTime(span.start);
       var x2 = that.getXByTime(span.end);
       span.sel.attr({
@@ -1121,19 +1129,16 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
     }
     that.traverseTypes(function(gid, tid, type) {
       if(!type.isValid()) return;
-      var tRect = {
-        x: 0,
-        y: type.getY(),
-        width: w,
-        height: rowH
-      };
-      if(!jkjs.util.rectIntersect(sRect, tRect)) return;
       type.traverseEventRange(sRect.x - colW, sRect.x + sRect.width, function(e) {
         return that.getXByEventTime(e);
       }, function(e) {
         e.setSelected(true);
       });
     });
+    pool.highlightMode(TypePool.HIGHLIGHT_NONE);
+    that.highlightEvent(null);
+    that.fixSelection(true);
+    that.greyOutRest(true);
     that.endBulkSelection();
   };
   this.startBulkSelection = function() {
@@ -1145,13 +1150,70 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       that.updateSelection();
     }
   };
+  var greyOutRest = false;
+  this.greyOutRest = function(_) {
+    if(!arguments.length) return greyOutRest;
+    greyOutRest = _;
+  };
+  var fixSelection = false;
+  this.fixSelection = function(_) {
+    if(!arguments.length) return fixSelection;
+    fixSelection = _;
+  };
+  var highlightEvent = null;
+  var highlightListeners = [];
+  var highlightMode = TypePool.HIGHLIGHT_HOR;
+  var hm = highlightMode;
+  this.highlightMode = function(_) {
+    if(!arguments.length) return highlightMode;
+    highlightMode = _;
+  };
+  this.highlightEvent = function(_) {
+    if(!arguments.length) return highlightEvent;
+    if(highlightEvent === _ && highlightMode === hm) return;
+    highlightEvent = _;
+    hm = highlightMode;
+    if(helpV) {
+      overview.clearShadow();
+      var hv = highlightEvent && (highlightMode & TypePool.HIGHLIGHT_VER);
+      helpV.attr({
+        "x": hv ? that.getXByEventTime(highlightEvent) : 0
+      }).style({
+        "opacity": hv ? 1 : 0
+      });
+      overview.onBoxUpdate();
+    }
+    if(helpH) {
+      var type = highlightEvent ? highlightEvent.getType() : null;
+      if(type && type.getProxed().length) {
+        type = type.getProxed()[0];
+      }
+      var hh = type && (highlightMode & TypePool.HIGHLIGHT_HOR);
+      helpH.attr({
+        "y": hh ? type.getY() : 0
+      }).style({
+        "opacity": hh ? 1 : 0
+      });
+    }
+    if(inBulkSelection > 0) return;
+    highlightListeners.forEach(function(cb) {
+      cb();
+    });
+  };
+  this.addHighlightListener = function(cb) {
+    highlightListeners.push(cb);
+  };
+  var hasSelection = false;
+  this.hasSelection = function() {
+    return hasSelection;
+  };
   this.updateSelection = function() {
     if(inBulkSelection > 0) return;
     overview.clearShadow();
     var onlyTime = Number.NaN;
     var repr = null;
     var types = {};
-    var events = [];
+    var eventMap = {};
     that.traverseEvents(function(gid, tid, e) {
       e.updateLook();
       var type = e.getType();
@@ -1174,8 +1236,12 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
         }
 
         addType(type);
-        events.push(e);
+        var fog = e.firstOfGroup();
+        eventMap[fog.getId()] = fog;
       }
+    });
+    var events = Object.keys(eventMap).map(function(k) {
+      return eventMap[k];
     });
     var singleSlot = false;
     var singleType = false;
@@ -1187,21 +1253,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
       onlyType = types[Object.keys(types)[0]];
       singleType = true;
     }
-    // ===== update helper bars =====
-    if(helpV) {
-      helpV.attr({
-        "x": singleSlot ? that.getXByEventTime(repr) : 0
-      }).style({
-        "opacity": singleSlot ? 1 : 0
-      });
-    }
-    if(helpH) {
-      helpH.attr({
-        "y": singleType ? onlyType.getProxed()[0].getY() : 0
-      }).style({
-        "opacity": singleType ? 1 : 0
-      });
-    }
+    hasSelection = !!events.length;
     // ===== notify listeners =====
     seListeners.forEach(function(l) {
       l(events, types, singleSlot, singleType);
@@ -1212,6 +1264,11 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   this.joinSelections = function(js) {
     if(!arguments.length) return joinSelections;
     joinSelections = !!js;
+  };
+  var verticalSelection = false;
+  this.verticalSelection = function(_) {
+    if(!arguments.length) return verticalSelection;
+    verticalSelection = !!_;
   };
   var seListeners = [];
   this.addSelectionListener = function(listen) {
@@ -1262,3 +1319,7 @@ function TypePool(busy, overview, setBox, onVC, cw, rh) {
   };
 } // TypePool
 TypePool.hasWeightedEvent = false;
+TypePool.HIGHLIGHT_NONE = 0;
+TypePool.HIGHLIGHT_HOR = 1;
+TypePool.HIGHLIGHT_VER = 2;
+TypePool.HIGHLIGHT_BOTH = TypePool.HIGHLIGHT_HOR | TypePool.HIGHLIGHT_VER;

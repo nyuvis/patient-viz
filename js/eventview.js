@@ -4,20 +4,22 @@
 
 function EventView(sel) {
   var that = this;
+  var totalHeight = Number.NaN;
+  var totalWidth = 265;
   var singleSlot = false;
   var singleType = false;
   var events = [];
-  var full = sel.classed("popover", true).style({
-    "display": "none",
-    "position": "fixed",
-    "left": "20px",
-    "top": "80px",
-    "max-width": 325 + "px"
+  sel.style({
+    "display": "inline-block",
+    "padding": 0,
+    "width": totalWidth + "px"
   });
-  var header = full.append("h3").classed("popover-title", true).text("Selection");
-  var list = full.append("div").classed("popover-content", true).style({
+  var full = sel.append("div");
+  var header = full.append("span").text("Selection").style({
+    "font-weight": 500
+  });
+  var list = full.append("div").style({
     "overflow": "auto",
-    "max-height": "200px"
   });
   var sortAndGroup = null;
   var dropdown = header.append("select").classed("dropdown", true).on("change", function() {
@@ -30,11 +32,20 @@ function EventView(sel) {
   });
   // TODO
   this.resize = function(allowedHeight, bodyPadding) {
-    full.style({
-      "top": (bodyPadding + 20) + "px"
+    sel.style({
+      "position": "absolute",
+      "top": bodyPadding + "px",
+      "right": 10 + "px",
+      "width": totalWidth + "px",
+      "height": allowedHeight + "px"
     });
+    full.style({
+      "width": totalWidth + "px",
+      "height": allowedHeight + "px"
+    });
+    var head = header.node().offsetHeight;
     list.style({
-      "max-height": (allowedHeight - 80) + "px"
+      "max-height": (allowedHeight - head - 10) + "px"
     });
   };
 
@@ -49,6 +60,9 @@ function EventView(sel) {
       } else {
         that.setEvents(es, singleSlot, singleType);
       }
+    });
+    pool.addHighlightListener(function() {
+      that.updateEntries();
     });
   };
 
@@ -131,13 +145,12 @@ function EventView(sel) {
     if(sortAndGroup && sortAndGroup.sort) {
       es.sort(sortAndGroup.sort);
     }
-    es.each(function(e) {
+    that.updateEntries();
+  };
+  this.updateEntries = function() {
+    list.selectAll("li.pElem").each(function(e) {
       var li = d3.select(this);
       e.updateListEntry(li, singleSlot, singleType);
-    });
-
-    full.style({
-      "display": events.length ? "block" : "none"
     });
   };
 

@@ -25,24 +25,14 @@
 
 .pT {
     text-align: left;
-    background-color: white;
     color: black;
     white-space: nowrap;
     width: auto;
     cursor: default;
 }
 
-.pT:nth-child(even) {
-    background-color: lightgrey;
-}
-
 .pElem div {
     display: inline-block;
-    background-color: white;
-}
-
-.pElem:nth-child(odd) {
-    background-color: lightgrey;
 }
 
 .pElem {

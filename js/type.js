@@ -109,6 +109,56 @@ function Type(p, g, typeId, dictionary) {
   this.hasRealProxy = function() {
     return that.proxyType() !== that;
   };
+  var fingerprint = null;
+  var fingerprintTypes = {};
+  this.setFingerprintTypes = function(types) {
+    var oldT = Object.keys(fingerprintTypes);
+    fingerprintTypes = types;
+    var newT = Object.keys(fingerprintTypes);
+    var chg = true;
+    if(oldT.length === newT.length) {
+      chg = false;
+      oldT.sort();
+      newT.sort();
+      for(var ix = 0;ix < oldT.length;ix += 1) {
+        if(oldT[ix] !== newT[ix]) {
+          chg = true;
+          break;
+        }
+      }
+    }
+    if(chg) {
+      fingerprint = null;
+    }
+    return chg;
+  };
+  this.fillFingerprint = function(ctx, w, h) {
+    if(!fingerprint) {
+      fingerprint = {};
+      Object.keys(fingerprintTypes).forEach(function(tid) {
+        fingerprintTypes[tid].traverseProxedEvents(function(e) {
+          fingerprint[e.getTime()] = 1;
+        });
+      });
+    }
+    var timeRange = pool.getRangeTime();
+    var min = timeRange[0];
+    var max = timeRange[1];
+    var baseAlpha = 1;
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = that.getColor();
+    Object.keys(fingerprint).forEach(function(t) {
+      var x = (t - min) / (max - min) * w;
+      if(Number.isNaN(x)) return;
+      ctx.globalAlpha = Math.min(1, baseAlpha * fingerprint[t]);
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
+      ctx.stroke();
+    });
+    ctx.restore();
+  };
 
   this.getParentString = function() {
     return parent;
@@ -422,12 +472,16 @@ function Type(p, g, typeId, dictionary) {
     return valid;
   };
 
+  var entryW = Number.NaN;
+  var entryH = Number.NaN;
   var check = null;
   var span = null;
   var space = null;
   this.createListEntry = function(sel, level, isInner, isExpanded) {
     check = sel.append("input").attr({
       "type": "checkbox"
+    }).style({
+      "display": "none"
     }).on("change", function() {
       that.setValid(check.node().checked);
     });
@@ -444,11 +498,14 @@ function Type(p, g, typeId, dictionary) {
         });
       }
       var none = true;
+      var first = null;
       that.traverseProxedEvents(function(e) {
+        if(!first) first = e;
         e.setSelected(true);
         none = false;
       });
       if(none) {
+        first = null;
         // we clicked on an inner node
         // we can determine selection through parenthood
         pool.traverseEvents(function(gid, tid, e) {
@@ -462,6 +519,10 @@ function Type(p, g, typeId, dictionary) {
           }
         });
       }
+      pool.highlightMode(TypePool.HIGHLIGHT_HOR);
+      pool.highlightEvent(first);
+      pool.fixSelection(true);
+      pool.greyOutRest(false);
       pool.endBulkSelection();
     });
     return {
@@ -476,9 +537,6 @@ function Type(p, g, typeId, dictionary) {
       "background-color": hasSelected ? color : null,
       "color": hasSelected ? jkjs.util.getFontColor(color) : null
     });
-    if(hasSelected && onlyOneTypeSelected) {
-      sel.node().scrollIntoView(true);
-    }
     var tmp = check.on("change"); // disable notification when updating
     check.on("change", null);
     check.node().checked = that.isValid();

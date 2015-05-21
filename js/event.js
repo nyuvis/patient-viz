@@ -88,6 +88,37 @@ function Event(e, pool, dictionary) {
   this.getEventGroupId = function() {
     return eg_id;
   };
+  var fog = null
+  this.firstOfGroup = function(_) {
+    if(!arguments.length) {
+      if(!fog) {
+        fog = getFirstOfGroup();
+      }
+      return fog;
+    }
+    fog = _;
+  };
+
+  function getFirstOfGroup() {
+    if(!eg_id.length) return that;
+    var typeId = that.getType().getTypeId();
+    var time = that.getTime();
+    var eve = that;
+    var eves = pool.getEventGroup(eg_id).filter(function(e) {
+      return typeId === e.getType().getTypeId();
+    });
+    eves.forEach(function(e) {
+      var t = e.getTime();
+      if(t < time) {
+        time = t;
+        eve = e;
+      }
+    });
+    eves.forEach(function(e) {
+      e.firstOfGroup(eve);
+    });
+    return eve;
+  }
 
   this.isFirstOfType = function() {
     return type.getCount() && type.getEventByIndex(0) === that;
@@ -103,17 +134,9 @@ function Event(e, pool, dictionary) {
   };
   this.clickSelected = function() {
     var pool = that.getType().getPool();
-    if(pool.joinSelections()) {
-      that.setSelected(!that.isSelected());
-    } else {
-      pool.startBulkSelection();
-      pool.traverseEvents(function(gid, tid, e) {
-        e.setSelected(false);
-      });
-      that.setSelected(true);
-      pool.endBulkSelection();
-    }
-  }
+    pool.highlightMode(TypePool.HIGHLIGHT_BOTH);
+    pool.highlightEvent(that);
+  };
   this.setSelected = function(isSelected) {
     var old = selected;
     selected = !!isSelected;
@@ -131,7 +154,8 @@ function Event(e, pool, dictionary) {
     return type;
   };
   this.getColor = function() {
-    if(that.isSelected()) {
+    var pool = type.getPool();
+    if(pool.greyOutRest() && pool.hasSelection() && pool.fixSelection() && !that.isSelected()) {
       return d3.rgb("darkgray");
     }
     return that.getBaseColor();
@@ -255,7 +279,7 @@ function Event(e, pool, dictionary) {
   };
   this.updateListEntry = function(sel, singleSlot, singleType) {
     var color = that.getBaseColor();
-    var showSelection = singleSlot && that.isSelected();
+    var showSelection = pool.highlightEvent() === that && (pool.highlightMode() === TypePool.HIGHLIGHT_BOTH);
     // removes all children of sel
     sel.selectAll("span").text(that.getDesc()).style({
       "background-color": showSelection ? color : null,
