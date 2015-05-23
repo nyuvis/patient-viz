@@ -1,0 +1,185 @@
+{
+  "diagnosis": {
+    "": {
+      "color": "#4daf4a", 
+      "desc": "Condition", 
+      "id": "", 
+      "name": "Condition", 
+      "parent": ""
+    }, 
+    "HIERARCHY.13": {
+      "desc": "Diseases of the musculoskeletal system and connective tissue", 
+      "id": "HIERARCHY.13", 
+      "name": "Diseases of the musculoskeletal system and connective tissue", 
+      "parent": ""
+    }, 
+    "HIERARCHY.13.2": {
+      "desc": "Non-traumatic joint disorders", 
+      "id": "HIERARCHY.13.2", 
+      "name": "Non-traumatic joint disorders", 
+      "parent": "HIERARCHY.13"
+    }, 
+    "HIERARCHY.13.2.3": {
+      "desc": "Other non-traumatic joint disorders [204.]", 
+      "id": "HIERARCHY.13.2.3", 
+      "name": "Other non-traumatic joint disorders [204.]", 
+      "parent": "HIERARCHY.13.2"
+    }, 
+    "HIERARCHY.13.3": {
+      "desc": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
+      "id": "HIERARCHY.13.3", 
+      "name": "Spondylosis; intervertebral disc disorders; other back problems [205.]", 
+      "parent": "HIERARCHY.13"
+    }, 
+    "HIERARCHY.13.3.2": {
+      "desc": "Intervertebral disc disorders                                                                           -", 
+      "id": "HIERARCHY.13.3.2", 
+      "name": "Intervertebral disc disorders                                                                           -", 
+      "parent": "HIERARCHY.13.3"
+    }, 
+    "HIERARCHY.13.8": {
+      "desc": "Other connective tissue disease [211.]", 
+      "id": "HIERARCHY.13.8", 
+      "name": "Other connective tissue disease [211.]", 
+      "parent": "HIERARCHY.13"
+    }, 
+    "HIERARCHY.16": {
+      "desc": "Injury and poisoning", 
+      "id": "HIERARCHY.16", 
+      "name": "Injury and poisoning", 
+      "parent": ""
+    }, 
+    "HIERARCHY.17": {
+      "desc": "Symptoms; signs; and ill-defined conditions and factors influencing health status", 
+      "id": "HIERARCHY.17", 
+      "name": "Symptoms; signs; and ill-defined conditions and factors influencing health status", 
+      "parent": ""
+    }, 
+    "HIERARCHY.17.1": {
+      "desc": "Symptoms; signs; and ill-defined conditions", 
+      "id": "HIERARCHY.17.1", 
+      "name": "Symptoms; signs; and ill-defined conditions", 
+      "parent": "HIERARCHY.17"
+    }, 
+    "HIERARCHY.17.2": {
+      "desc": "Factors influencing health care", 
+      "id": "HIERARCHY.17.2", 
+      "name": "Factors influencing health care", 
+      "parent": "HIERARCHY.17"
+    }, 
+    "HIERARCHY.17.2.4": {
+      "desc": "Other aftercare [257.]", 
+      "id": "HIERARCHY.17.2.4", 
+      "name": "Other aftercare [257.]", 
+      "parent": "HIERARCHY.17.2"
+    }, 
+    "HIERARCHY.3": {
+      "desc": "Endocrine; nutritional; and metabolic diseases and immunity disorders", 
+      "id": "HIERARCHY.3", 
+      "name": "Endocrine; nutritional; and metabolic diseases and immunity disorders", 
+      "parent": ""
+    }, 
+    "HIERARCHY.3.1": {
+      "desc": "Thyroid disorders [48.]", 
+      "id": "HIERARCHY.3.1", 
+      "name": "Thyroid disorders [48.]", 
+      "parent": "HIERARCHY.3"
+    }, 
+    "HIERARCHY.5": {
+      "desc": "Mental illness", 
+      "id": "HIERARCHY.5", 
+      "name": "Mental illness", 
+      "parent": ""
+    }, 
+    "HIERARCHY.5.4": {
+      "desc": "Delirium, dementia, and amnestic and other cognitive disorders [653.]", 
+      "id": "HIERARCHY.5.4", 
+      "name": "Delirium, dementia, and amnestic and other cognitive disorders [653.]", 
+      "parent": "HIERARCHY.5"
+    }, 
+    "HIERARCHY.6": {
+      "desc": "Diseases of the nervous system and sense organs", 
+      "id": "HIERARCHY.6", 
+      "name": "Diseases of the nervous system and sense organs", 
+      "parent": ""
+    }, 
+    "HIERARCHY.6.7": {
+      "desc": "Eye disorders", 
+      "id": "HIERARCHY.6.7", 
+      "name": "Eye disorders", 
+      "parent": "HIERARCHY.6"
+    }, 
+    "HIERARCHY.6.9": {
+      "desc": "Other nervous system disorders [95.]", 
+      "id": "HIERARCHY.6.9", 
+      "name": "Other nervous system disorders [95.]", 
+      "parent": "HIERARCHY.6"
+    }, 
+    "HIERARCHY.7": {
+      "desc": "Diseases of the circulatory system", 
+      "id": "HIERARCHY.7", 
+      "name": "Diseases of the circulatory system", 
+      "parent": ""
+    }, 
+    "HIERARCHY.7.2": {
+      "desc": "Diseases of the heart", 
+      "id": "HIERARCHY.7.2", 
+      "name": "Diseases of the heart", 
+      "parent": "HIERARCHY.7"
+    }, 
+    "HIERARCHY.7.2.9": {
+      "desc": "Cardiac dysrhythmias [106.]", 
+      "id": "HIERARCHY.7.2.9", 
+      "name": "Cardiac dysrhythmias [106.]", 
+      "parent": "HIERARCHY.7.2"
+    }, 
+    "HIERARCHY.8": {
+      "desc": "Diseases of the respiratory system", 
+      "id": "HIERARCHY.8", 
+      "name": "Diseases of the respiratory system", 
+      "parent": ""
+    }, 
+    "HIERARCHY.8.1": {
+      "desc": "Respiratory infections", 
+      "id": "HIERARCHY.8.1", 
+      "name": "Respiratory infections", 
+      "parent": "HIERARCHY.8"
+    }, 
+    "icd9__25000": {
+      "desc": "diagnosis (icd9) 25000", 
+      "id": "25000", 
+      "name": "25000", 
+      "parent": "", 
+      "unmapped": true
+    }, 
+    "icd9__2720": {
+      "desc": "diagnosis (icd9) 2720", 
+      "id": "2720", 
+      "name": "2720", 
+      "parent": "", 
+      "unmapped": true
+    }, 
+    "icd9__2724": {
+      "desc": "diagnosis (icd9) 2724", 
+      "id": "2724", 
+      "name": "2724", 
+      "parent": "", 
+      "unmapped": true
+    }
+  }, 
+  "info": {
+    "": {
+      "color": "pink", 
+      "desc": "Info", 
+      "id": "", 
+      "name": "Info", 
+      "parent": ""
+    }, 
+    "age_80_90": {
+      "desc": "Info: age_80_90", 
+      "id": "age_80_90", 
+      "name": "age_80_90", 
+      "parent": ""
+    }
+  }
+}

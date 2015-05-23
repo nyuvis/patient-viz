@@ -1,11 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Created on 2015-04-10
-
-@author: joschi
-"""
+# -*- mode: python; -*-
+"""exec" "`dirname \"$0\"`/../call.sh" "$0" "$@"; """
 from __future__ import print_function
+
 import time as time_lib
 from datetime import datetime, timedelta
 import sys
@@ -16,6 +13,12 @@ import random
 sys.path.append('..')
 
 import util
+
+__doc__ = """
+Created on 2015-04-10
+
+@author: joschi
+"""
 
 def doMerge(input, casesFlag, testPerc, sanity, out):
     with open(input, 'r') as fin:

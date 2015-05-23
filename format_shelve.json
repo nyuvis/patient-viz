@@ -1,12 +1,25 @@
 {
   "patient_id": "MEMBER_ID",
+  "age": "ELIG_AGE",
+  "gender": "ELIG_GENDER",
+  "provider_ibc": [
+    "MED_CLMS_SERVICE_PLACE",
+    "RX_CLMS_SERVICE_PLACE",
+    "ENCS_SERVICE_PLACE"
+  ],
+  "provider_cms": [
+  ],
+  "physician_ibc": [
+    "ENCS_SPECIALTY",
+    "MED_CLMS_SPECIALTY"
+  ],
+  "physician_cms": [
+  ],
   "claim_id": [
     "ENCS_CLAIM_NUMBER",
     "MED_CLMS_CLAIM_NUMBER",
     "RX_CLMS_CLAIM_NUMBER"
   ],
-  "age": "ELIG_AGE",
-  "gender": "ELIG_GENDER",
   "claim_amount": [
     "ENCS_CHARGE_AMT",
     "MED_CLMS_CHARGE_AMT"
@@ -15,7 +28,19 @@
     "ENCS_SERVICE_DATE",
     "MED_CLMS_SERVICE_DATE"
   ],
-  "diagnosis": [
+  "admission": [
+    "ENCS_ADMIT_DATE",
+    "MED_CLMS_ADMIT_DATE"
+  ],
+  "discharge": [
+    "ENCS_DISCHARGE_DATE",
+    "MED_CLMS_DISCHARGE_DATE"
+  ],
+  "location_flag": [
+    "ENCS_FACILITY_TYPE",
+    "MED_CLMS_FACILITY_TYPE"
+  ],
+  "diagnosis_icd9": [
     "ENCS_DX_CD1",
     "ENCS_DX_CD2",
     "ENCS_DX_CD3",
@@ -47,8 +72,7 @@
     "MED_CLMS_DX_CD14",
     "MED_CLMS_DX_CD15"
   ],
-  "procedures": [
-    "ENCS_CPTCODE",
+  "procedures_icd9": [
     "ENCS_ICD9PROC1",
     "ENCS_ICD9PROC2",
     "ENCS_ICD9PROC3",
@@ -64,7 +88,6 @@
     "ENCS_ICD9PROC13",
     "ENCS_ICD9PROC14",
     "ENCS_ICD9PROC15",
-    "MED_CLMS_CPTCODE",
     "MED_CLMS_ICD9PROC1",
     "MED_CLMS_ICD9PROC2",
     "MED_CLMS_ICD9PROC3",
@@ -80,6 +103,12 @@
     "MED_CLMS_ICD9PROC13",
     "MED_CLMS_ICD9proc14",
     "MED_CLMS_ICD9PROC15"
+  ],
+  "procedures_cpt": [
+    "ENCS_CPTCODE",
+    "MED_CLMS_CPTCODE",
+  ],
+  "procedures_hcpcs": [
   ],
   "prescribed_date": "RX_CLMS_SERVICE_DATE",
   "prescribed": "RX_CLMS_NDC",

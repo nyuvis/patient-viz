@@ -10,6 +10,8 @@ Enrico Bertini, and [David Sontag](http://cs.nyu.edu/~dsontag/).
 
 ![The tool in action!](overview.png)
 
+[![Build Status](https://travis-ci.org/nyuvis/patient-viz.svg?branch=master)](https://travis-ci.org/nyuvis/patient-viz)
+
 ## Setup
 
 Setting up the project can be done without prerequisites on *MacOS* and *linux*.
@@ -59,7 +61,7 @@ Patient files can be created manually from the example claims data by
 issuing the following commands:
 
 ```bash
-./cms_get_patient.py -p AEF023C2029F05BC -f format.json -o json/AEF023C2029F05BC.json -c style_classes.json -- cms
+./cms_get_patient.py -p AEF023C2029F05BC -f format.json -o json/%p.json -c style_classes.json -- cms
 ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 ./start.sh --list-update
 ```
@@ -76,7 +78,7 @@ The system can also handle data stored in a shelve db. However, you need to manu
 patients stored this way and update the `config.txt` file.
 
 ```bash
-./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./cms_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/AEF023C2029F05BC.json -c style_classes.json -- -
+./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./cms_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/%p.json -c style_classes.json -- -
 ./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 ./start.sh --list-update
 ```
@@ -86,6 +88,8 @@ The list of available patient ids can be seen using:
 ```bash
 ./shelve_access.py -c config.txt -l
 ```
+
+The `./start.sh` and `./setup.sh` scripts also accept `--shelve` as argument to use this behavior.
 
 ## Feature Extraction and Model Creation
 

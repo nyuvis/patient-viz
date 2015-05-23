@@ -43,22 +43,76 @@ function TypeView(pool, sel, sortDropdownSel) {
     "padding": 0,
     "width": totalWidth + "px"
   });
+
   this.resize = function(allowedHeight, bodyPadding) {
     totalHeight = allowedHeight;
     sel.style({
       "position": "absolute",
       "top": bodyPadding + "px",
-      "right": 10 + "px",
+      "left": 10 + "px",
       "width": totalWidth + "px",
       "height": totalHeight + "px"
     });
     this.updateLists();
+    fingerQueue += 2;
+    fingerprints();
   };
+
+  var fingerQueue = 0;
+  function fingerprints() {
+    if(fingerQueue > 1) {
+      fingerQueue -= 1;
+      sel.selectAll("canvas.fingerprint").style({
+        "display": "none"
+      });
+      setTimeout(fingerprints, 0);
+      return;
+    }
+    if(fingerQueue <= 0) {
+      return;
+    }
+    fingerQueue = 0;
+    sel.selectAll("canvas.fingerprint").style({
+      "display": null
+    }).each(function(d) {
+      var fpSel = d3.select(this);
+      var pSel = d3.select(fpSel.node().parentNode);
+      var types = d.types;
+      var h = 14;
+      var w = totalWidth - 44;
+      var tw = w;
+      var th = h * types.length;
+      fpSel.attr({
+        "width": tw,
+        "height": th
+      }).style({
+        "position": "absolute",
+        "top": 0,
+        "left": 22 + "px",
+        "width": tw + "px",
+        "height": th + "px",
+        "z-index": -1000
+      });
+      jkjs.util.toFront(fpSel, true);
+      var ctx = fpSel.node().getContext("2d");
+      ctx.globalAlpha = 1;
+      ctx.clearRect(0, 0, totalWidth, totalHeight);
+      ctx.save();
+      types.forEach(function(type) {
+        //ctx.fillStyle = "black";
+        //ctx.fillText(type.getDesc(), 0, h);
+        type.fillFingerprint(ctx, w, h);
+        ctx.translate(0, h);
+      });
+      ctx.restore();
+    });
+  }
 
   this.clearLists = function() {
     sel.selectAll("div.pType").remove();
   };
 
+  var oldTypes = [];
   var nodeRoots = [];
   var groupIx = 0;
   this.updateLists = function() {
@@ -96,7 +150,9 @@ function TypeView(pool, sel, sortDropdownSel) {
     var pe = pType.enter().append("div").classed("pType", true);
     var head = pe.append("div").classed("pTypeHead", true);
     head.append("span").classed("pTypeLeft", true);
-    head.append("span").classed("pTypeSpan", true);
+    head.append("span").classed("pTypeSpan", true).style({
+      "position": "relative"
+    });
     head.append("span").classed("pTypeRight", true);
     pe.append("div").classed("pTypeDiv", true);
 
@@ -158,13 +214,16 @@ function TypeView(pool, sel, sortDropdownSel) {
       "font-family": "monospace",
       "white-space": "nowrap",
       "max-height": h + "px",
+      "max-width": totalWidth + "px",
       "margin": "0 0 12px 0",
+      "position": "absolute"
     });
 
     function Node(id, type) {
       var that = this;
       var children = {};
       var childs = null;
+      var descendants = null;
       var count = Number.NaN;
       var y = Number.NaN;
       var isRoot = false;
@@ -224,6 +283,19 @@ function TypeView(pool, sel, sortDropdownSel) {
           });
         }
         return childs;
+      };
+      this.getDescendantTypes = function() {
+        if(!descendants) {
+          descendants = {};
+          descendants[that.getId()] = that.getType();
+          that.getChildren().forEach(function(c) {
+            var cdt = c.getDescendantTypes();
+            Object.keys(cdt).forEach(function(d) {
+              descendants[d] = cdt[d];
+            });
+          });
+        }
+        return descendants;
       };
       this.hasChildren = function() {
         return that.getChildren().length > 0;
@@ -314,16 +386,22 @@ function TypeView(pool, sel, sortDropdownSel) {
       pool.endBulkValidity();
     }
 
+    var fingerprintTypes = [];
+    var updateFingerprints = false;
     divs.selectAll("div.pT").remove();
     divs.each(function(gid) {
       var pT = d3.select(this);
+      var types = [];
       roots[gid].preorder(function(level, node, isInner, isExpanded) {
         var type = node.getType();
         if(type.getTypeId() == "") {
           return;
         }
+        updateFingerprints = type.setFingerprintTypes(node.getDescendantTypes()) || updateFingerprints;
+        fingerprintTypes.push(type.getTypeId());
         var div = pT.append("div").classed("pT", true).datum(type);
         if("createListEntry" in type) {
+          types.push(type);
           var objs = type.createListEntry(div, level, isInner, isExpanded);
           objs["space"].on("click", function() {
             toggle(node, isExpanded);
@@ -331,9 +409,19 @@ function TypeView(pool, sel, sortDropdownSel) {
           });
         }
       }, 0, true);
+      var fpSel = pT.selectAll("canvas.fingerprint").data([{
+        id: gid,
+        types: types
+      }], function(d) {
+        return d.id;
+      });
+      fpSel.exit().remove();
+      fpSel.enter().append("canvas").classed("fingerprint", true);
     });
 
-    divs.selectAll("div.pT").each(function(t) {
+    divs.selectAll("div.pT").style({
+      "min-width": totalWidth + "px"
+    }).each(function(t) {
       var div = d3.select(this);
       var pt = t.proxyType();
       var hasSelected = pt.getId() in selectedTypes;
@@ -345,11 +433,35 @@ function TypeView(pool, sel, sortDropdownSel) {
       if("updateListEntry" in t) {
         t.updateListEntry(div, hasSelected, onlyOneTypeSelected);
       }
+      // TODO detect when it's not a manual selection and then scroll
+      //if(hasSelected && onlyOneTypeSelected) {
+      //  div.node().scrollIntoView(true);
+      //}
     });
 
     nodeRoots = Object.keys(roots).map(function(r) {
       return roots[r];
     });
+
+    fingerprintTypes.sort();
+    if(!updateFingerprints) {
+      if(fingerprintTypes.length === oldTypes.length) {
+        for(var ix = 0;ix < oldTypes.length;ix += 1) {
+          if(oldTypes[ix] !== fingerprintTypes[ix]) {
+            updateFingerprints = true;
+            break;
+          }
+        }
+      } else {
+        updateFingerprints = true;
+      }
+    }
+    oldTypes = fingerprintTypes;
+
+    if(updateFingerprints) {
+      fingerQueue += 2;
+      fingerprints();
+    }
   };
   this.getNodeRoots = function() {
     return nodeRoots;

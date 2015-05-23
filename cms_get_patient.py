@@ -1,21 +1,22 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 20 14:10:00 2015
-
-@author: joschi
-"""
+# -*- mode: python; -*-
+"""exec" "`dirname \"$0\"`/call.sh" "$0" "$@"; """
 from __future__ import print_function
-import time as time_lib
-from datetime import datetime, timedelta
+
 import collections
 import os
 import sys
 import csv
-#import simplejson as json
 import json
+import re
 
 import util
+
+__doc__ = """
+Created on Tue Jan 20 14:10:00 2015
+
+@author: joschi
+"""
 
 input_format = {}
 
@@ -24,6 +25,7 @@ TYPE_LABTEST    = "lab-test"
 TYPE_DIAGNOSIS  = "diagnosis"
 TYPE_PROCEDURE  = "procedure"
 TYPE_PROVIDER   = "provider"
+TYPE_PHYSICIAN  = "physician"
 
 MODE_OPTIONAL = 0
 MODE_DEFAULT = 1
@@ -31,7 +33,14 @@ MODE_ARRAY = 2
 
 STATUS_UNKNOWN = 0
 STATUS_IN = 1
+STATUS_PROF = 2
 STATUS_OUT = -1
+
+STATUS_FLAG_MAP = {
+    "I": STATUS_IN,
+    "O": STATUS_OUT,
+    "P": STATUS_PROF
+}
 
 gender_label = {
     "1": "primary",
@@ -45,12 +54,6 @@ gender_map = {
     "M": "M",
     "W": "W"
 }
-
-def toTime(s):
-    return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
-
-def nextDay(stamp):
-    return int(time_lib.mktime((datetime.fromtimestamp(stamp) + timedelta(days = 1)).timetuple()))
 
 def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     for info in obj["info"]:
@@ -67,9 +70,6 @@ def addInfo(obj, id, key, value, hasLabel = False, label = ""):
         node["label"] = label
     obj["info"].append(node)
 
-def is_array(v):
-    return not isinstance(v, (str, unicode)) and isinstance(v, collections.Sequence)
-
 def handleKey(row, key, mode, hnd):
     if mode == MODE_ARRAY:
         for k in input_format[key]:
@@ -79,7 +79,7 @@ def handleKey(row, key, mode, hnd):
     ignore_missing = mode == MODE_DEFAULT
     if key in input_format:
         k = input_format[key]
-        if is_array(k):
+        if util.is_array(k):
             found = False
             for key in k:
                 if key in row and row[key] != '':
@@ -114,10 +114,15 @@ def handleEvent(row, claim_id):
         if value != '':
             res.append(createEntry(type, value, claim_id))
 
+    handleKey(row, "diagnosis_icd9", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, "icd9__" + value))
+    handleKey(row, "procedures_icd9", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "icd9__" + value))
+    handleKey(row, "procedures_cpt", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "cpt__" + value))
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
-    handleKey(row, "diagnosis", MODE_ARRAY, lambda value: emit(TYPE_DIAGNOSIS, value))
-    handleKey(row, "procedures", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, value))
-    handleKey(row, "provider", MODE_OPTIONAL, lambda value: emit(TYPE_PROVIDER, value))
+    #handleKey(row, "procedures_hcpcs", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "hcpcs__" + value))
+    handleKey(row, "provider_ibc", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, "ibc__" + value))
+    handleKey(row, "provider_cms", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, "cms__" + value))
+    handleKey(row, "physician_ibc", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, "ibc__" + value))
+    handleKey(row, "physician_cms", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, "cms__" + value))
     return res
 
 def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
@@ -147,14 +152,34 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
     def addCost(event, amount):
         event['cost'] = amount
 
-    def handleStatusEvent(date):
+    def handleStatusEvent(date, st):
         if date in statusMap:
-            if statusMap[date] != STATUS_IN and curStatus == STATUS_IN:
-                statusMap[date] = curStatus
+            if statusMap[date] != STATUS_IN and st == STATUS_IN:
+                statusMap[date] = st
+            elif statusMap[date] != STATUS_PROF and st == STATUS_PROF:
+                statusMap[date] = st
             elif statusMap[date] == STATUS_UNKNOWN:
-                statusMap[date] = curStatus
-        elif curStatus != STATUS_UNKNOWN:
-            statusMap[date] = curStatus
+                statusMap[date] = st
+        else:
+            statusMap[date] = st
+
+    def admissionDates(fromDate, toDate):
+        if fromDate == '':
+            if toDate == '':
+                return
+            fromDate = toDate
+            toDate = ''
+        curDate = util.toTime(fromDate)
+        endDate = util.toTime(toDate) if toDate != '' else curDate
+        while curDate <= endDate:
+            handleStatusEvent(curDate, STATUS_IN)
+            curDate = util.nextDay(curDate)
+
+    handleKey(row, "admission", MODE_OPTIONAL, lambda in_from:
+        handleKey(row, "discharge", MODE_OPTIONAL, lambda in_to:
+                admissionDates(in_from, in_to)
+            )
+        )
 
     def dates(fromDate, toDate):
         if fromDate == '':
@@ -162,28 +187,20 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
                 return
             fromDate = toDate
             toDate = ''
-        curDate = toTime(fromDate)
-        if toDate != '':
-            # time span
-            endDate = toTime(toDate)
-            while curDate <= endDate:
-                for event in handleEvent(row, claim_id):
-                    event['time'] = curDate
-                    handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
-                        addCost(event, amount)
-                    )
-                    obj['events'].append(event)
-                handleStatusEvent(curDate)
-                curDate = nextDay(curDate)
-        else:
-            # single event
+        curDate = util.toTime(fromDate)
+        endDate = util.toTime(toDate) if toDate != '' else curDate
+        while curDate <= endDate:
             for event in handleEvent(row, claim_id):
                 event['time'] = curDate
                 handleKey(row, "claim_amount", MODE_OPTIONAL, lambda amount:
                     addCost(event, amount)
                 )
                 obj['events'].append(event)
-            handleStatusEvent(curDate)
+            handleStatusEvent(curDate, curStatus)
+            handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
+                handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
+            )
+            curDate = util.nextDay(curDate)
 
     handleKey(row, "claim_from", MODE_OPTIONAL, lambda fromDate:
             handleKey(row, "claim_to", MODE_DEFAULT, lambda toDate:
@@ -192,9 +209,13 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitNDC(date, ndc):
-        # TODO add provider here as well?
-        event = createEntry(TYPE_PRESCRIBED, ndc, claim_id)
-        event['time'] = toTime(date)
+        # TODO add provider/physician here as well?
+        event = createEntry(TYPE_PRESCRIBED, "ndc__" + ndc, claim_id)
+        curDate = util.toTime(date)
+        event['time'] = curDate
+        handleKey(row, "location_flag", MODE_OPTIONAL, lambda flag:
+            handleStatusEvent(curDate, STATUS_FLAG_MAP.get(flag, STATUS_UNKNOWN))
+        )
         handleKey(row, "prescribed_amount", MODE_OPTIONAL, lambda amount:
             addCost(event, amount)
         )
@@ -207,9 +228,9 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
 
     def emitLab(date, loinc, result, resultFlag):
-        # TODO add provider here as well?
-        event = createEntry(TYPE_LABTEST, loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
-        event['time'] = toTime(date)
+        # TODO add provider/physician here as well?
+        event = createEntry(TYPE_LABTEST, "loinc__" + loinc, claim_id, result != '' or resultFlag != '', resultFlag, result)
+        event['time'] = util.toTime(date)
         obj['events'].append(event)
 
     handleKey(row, "lab_date", MODE_OPTIONAL, lambda date:
@@ -238,27 +259,6 @@ def processFile(inputFile, id, obj, statusMap):
                     status = STATUS_OUT
                 handleRow(row, obj, statusMap, status)
 
-def processDirectory(dir, id, obj, statusMap):
-    for (root, _, files) in os.walk(dir):
-        if root != dir:
-            segs = root.split('/') # **/A/4/2/*.csv
-            if len(segs) >= 4:
-                segs = segs[-3:]
-                if (
-                        len(segs[0]) == 1 and
-                        len(segs[1]) == 1 and
-                        len(segs[2]) == 1 and
-                        (
-                            segs[0][0] != id[0] or
-                            segs[1][0] != id[1] or
-                            segs[2][0] != id[2]
-                        )
-                    ):
-                    continue
-        for file in files:
-            if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id, obj, statusMap)
-
 def processLine(obj, line):
     sp = line.strip().split(':', 2)
     if len(sp) < 2:
@@ -276,10 +276,10 @@ def processLine(obj, line):
     else:
         sps = sp[1].split('-', 1)
         o = {
-            "from": toTime(sps[0])
+            "from": util.toTime(sps[0])
         }
         if len(sps) > 1:
-            o["to"] = toTime(sps[1])
+            o["to"] = util.toTime(sps[1])
         if len(sp) > 2:
             o["class"] = sp[2]
         obj["v_spans"].append(o)
@@ -294,14 +294,6 @@ def usage():
     print('-c <file>: specifies a file for class definitions as json object', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
     exit(1)
-
-def read_format(file):
-    global input_format
-    if not os.path.isfile(file):
-        print('invalid format file: {0}'.format(file), file=sys.stderr)
-        usage()
-    with open(file) as formatFile:
-        input_format = json.loads(formatFile.read())
 
 if __name__ == '__main__':
     lineFile = None
@@ -320,12 +312,13 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            read_format(args.pop(0))
+            util.read_format(args.pop(0), input_format, usage)
         elif arg == '-o':
             if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
                 usage()
             output = args.pop(0)
+            output = re.sub(r'(^|[^%])((?:%%)*)%p', r'\1\2foo', output).replace('%%', '%')
         elif arg == '-p':
             if not args or args[0] == '--':
                 print('no id specified', file=sys.stderr)
@@ -380,25 +373,34 @@ if __name__ == '__main__':
         if isfile:
             processFile(path, id, obj, statusMap)
         else:
-            processDirectory(path, id, obj, statusMap)
+            util.process_id_directory(path, id, lambda file, id: processFile(file, id, obj, statusMap))
     curInStart = None
     curInEnd = None
+    curStatus = STATUS_UNKNOWN
     for k in sorted(statusMap):
         status = statusMap[k]
-        if status == STATUS_IN:
+        if status == curStatus:
             if curInStart is None:
                 curInStart = k
             curInEnd = k
-        elif status == STATUS_OUT:
+        else:
             if curInStart is not None:
-                obj["v_spans"].append({
-                    "from": curInStart,
-                    "to": nextDay(curInEnd),
-                    "class": "in_hospital"
-                })
+                if curStatus == STATUS_IN:
+                    obj["v_spans"].append({
+                        "from": curInStart,
+                        "to": util.nextDay(curInEnd),
+                        "class": "in_hospital"
+                    })
+                elif curStatus == STATUS_PROF:
+                    obj["v_spans"].append({
+                        "from": curInStart,
+                        "to": util.nextDay(curInEnd),
+                        "class": "professional"
+                    })
                 curInStart = None
-    min_time = sys.maxint
-    max_time = -sys.maxint-1
+            curStatus = status
+    min_time = float('inf')
+    max_time = float('-inf')
     for e in obj["events"]:
         time = e["time"]
         if time < min_time:
@@ -411,4 +413,4 @@ if __name__ == '__main__':
     if output != '-' and not os.path.exists(os.path.dirname(output)):
         os.makedirs(os.path.dirname(output))
     with util.OutWrapper(output) as out:
-        print(json.dumps(obj, indent=2), file=out)
+        print(json.dumps(obj, indent=2, sort_keys=True), file=out)

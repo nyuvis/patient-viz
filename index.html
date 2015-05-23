@@ -3,6 +3,7 @@
 <head>
   <title>Patient Viz</title>
   <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
@@ -35,11 +36,14 @@
         <strong>Time:</strong>
         <span id="pStart"></span> - <span id="pEnd"></span>
       </div></li><li><div class="checkbox">
+        <label>
+          <input id="pShowSpans" type="checkbox" checked="checked"> Show Spans
+        </label>
         <label id="pShowLabel">
-          <input id="pShow" type="checkbox" checked="checked"> Show All Events
+          <input id="pShow" type="checkbox"> Show All Events
         </label>
         <label>
-          <input id="pJoin" type="checkbox"> Join Selections
+          <input id="pVSel" type="checkbox"> Vertical Sel.
         </label>
         <label>
           <input id="pUseLens" type="checkbox"> Use Lens
@@ -57,11 +61,11 @@
     </ul>
   </div>
 </header>
+<div id="pTypesLeft"></div>
 <div id="pContent">
   <div id="pSVG"></div>
 </div>
-<div id="pTypes"></div>
-<div id="pList"></div>
+<div id="pTypesRight"></div>
 
 <script>
 var SLOW_MODE = false;
@@ -206,7 +210,7 @@ function start() {
     });
   }
   var suppl = divSVG.append("svg");
-  var overview = new Overview(d3.select("#pTypes"), handler);
+  var overview = new Overview(d3.select("#pTypesRight"), handler);
   overview.getSVG().on("mousedown.labels", function() {
     labels && labels.setShowLabels(false);
   }).on("mouseup.labels", function() {
@@ -292,18 +296,23 @@ function start() {
     }
   }
 
-  var views = initViews(mainG, secG, suppl, blank, d3.select("#pList"), d3.select("#pTypes"), overview, setBox, onVC, busy, updateViewport);
+  var views = initViews(mainG, secG, suppl, blank, d3.select("#pTypesRight"), d3.select("#pTypesLeft"), overview, setBox, onVC, busy, updateViewport);
   pool = views[0];
   eventList = views[1];
   typeList = views[2];
   linechart = views[3];
   histogram = views[4];
   labels = views[5];
-  d3.select("#pJoin").on("change", function() {
-    pool.joinSelections(d3.select("#pJoin").node().checked);
+  d3.select("#pVSel").on("change", function() {
+    pool.verticalSelection(d3.select("#pVSel").node().checked);
   });
   d3.select("#pShow").on("change", function() {
     pool.showOnlyWeightedEvents(!d3.select("#pShow").node().checked);
+  });
+  d3.select("#pShowSpans").on("change", function() {
+    pool.showSpans(d3.select("#pShowSpans").node().checked);
+    overview.clearShadow();
+    pool.updateLook();
   });
 
   function updateRange() {
@@ -401,28 +410,34 @@ function start() {
     });
     var bodyPadding = topPad;
     var bodyWidth = body.node().offsetWidth;
-    var listWidth = d3.select("#pTypes").node().offsetWidth;
-    var correctWidth = bodyWidth - listWidth - 36; // 2 * 5px margin on both sides + 16px buffer
+    var listWidthLeft = d3.select("#pTypesLeft").node().offsetWidth;
+    var listWidthRight = d3.select("#pTypesRight").node().offsetWidth;
+    var correctWidth = bodyWidth - listWidthLeft - listWidthRight - 36; // 2 * 5px margin on both sides + 16px buffer
     var allowedHeight = bodyHeight - bodyPadding - 16; // 10px bottom margin + 6px buffer
+    var bodyHPad = 18;
     divContent.style({
+      "left": (listWidthLeft + bodyHPad) + "px",
       "height": allowedHeight + "px",
       "width": correctWidth + "px"
     });
     divSVG.style({
+      "left": (listWidthLeft + bodyHPad) + "px",
       "height": allowedHeight + "px",
       "width": correctWidth + "px",
       "position": "absolute",
       "top": bodyPadding + "px"
     });
-    if(ovWidth !== listWidth) {
-      var ovw = listWidth;
+    if(ovWidth !== listWidthRight) {
+      var ovw = listWidthRight;
       ovHeight = overview.getHeightForWidth(ovw);
       ovWidth = ovw;
       overview.onSizeUpdate();
     }
-    var shadowHeight = overview.getHeightForWidth(listWidth);
-    eventList && eventList.resize(allowedHeight, bodyPadding);
-    typeList && typeList.resize(allowedHeight - shadowHeight, bodyPadding);
+    var shadowHeight = overview.getHeightForWidth(listWidthRight);
+    var listHeightLeft = allowedHeight;
+    var listHeightRight = allowedHeight - shadowHeight;
+    eventList && eventList.resize(listHeightRight, bodyPadding);
+    typeList && typeList.resize(listHeightLeft, bodyPadding);
     if(box) {
       var supplHeight = suppl.node().offsetHeight;
       // firefox might not have values for that

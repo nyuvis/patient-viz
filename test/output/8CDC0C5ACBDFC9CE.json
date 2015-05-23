@@ -1,0 +1,383 @@
+{
+  "classes": {
+    "in_hospital": {
+      "fill": "cornflowerblue"
+    }, 
+    "occurrence": {
+      "fill": "crimson", 
+      "opacity": 0.5
+    }, 
+    "professional": {
+      "fill": "#9be0d9", 
+      "opacity": 0
+    }
+  }, 
+  "end": 1288137600, 
+  "events": [
+    {
+      "group": "diagnosis", 
+      "id": "icd9__4299", 
+      "row_id": "533613344926964", 
+      "time": 1222992000
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__3294034755", 
+      "row_id": "533613344926964", 
+      "time": 1222992000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__73399", 
+      "row_id": "533463343559253", 
+      "time": 1242604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__7231", 
+      "row_id": "533463343559253", 
+      "time": 1242604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__7234", 
+      "row_id": "533463343559253", 
+      "time": 1242604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__72885", 
+      "row_id": "533463343559253", 
+      "time": 1242604800
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__4644692002", 
+      "row_id": "533463343559253", 
+      "time": 1242604800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__7080", 
+      "row_id": "533193344797461", 
+      "time": 1245196800
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__5543357769", 
+      "row_id": "533193344797461", 
+      "time": 1245196800
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__71891", 
+      "row_id": "533933343463534", 
+      "time": 1245888000
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__5310045804", 
+      "row_id": "533933343463534", 
+      "time": 1245888000
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__5310045804", 
+      "row_id": "533933343463534", 
+      "time": 1245888000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__412", 
+      "row_id": "533833344457918", 
+      "time": 1256169600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__42731", 
+      "row_id": "533833344457918", 
+      "time": 1256169600
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__2414615937", 
+      "row_id": "533833344457918", 
+      "time": 1256169600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__71660", 
+      "row_id": "533093344989084", 
+      "time": 1271462400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__2809", 
+      "row_id": "533093344989084", 
+      "time": 1271462400
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__2803644204", 
+      "row_id": "533093344989084", 
+      "time": 1271462400
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__41189", 
+      "row_id": "533953345458932", 
+      "time": 1275955200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__4292", 
+      "row_id": "533953345458932", 
+      "time": 1275955200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__78605", 
+      "row_id": "533953345458932", 
+      "time": 1275955200
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__2595965533", 
+      "row_id": "533953345458932", 
+      "time": 1275955200
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__72232", 
+      "row_id": "533813346240061", 
+      "time": 1277424000
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__4596946292", 
+      "row_id": "533813346240061", 
+      "time": 1277424000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__4271", 
+      "row_id": "533753347032318", 
+      "time": 1278720000
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__3663078548", 
+      "row_id": "533753347032318", 
+      "time": 1278720000
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__4271", 
+      "row_id": "533243345851954", 
+      "time": 1284249600
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__8290608621", 
+      "row_id": "533243345851954", 
+      "time": 1284249600
+    }, 
+    {
+      "group": "diagnosis", 
+      "id": "icd9__4462", 
+      "row_id": "533893342733892", 
+      "time": 1285977600
+    }, 
+    {
+      "group": "physician", 
+      "id": "cms__2949548858", 
+      "row_id": "533893342733892", 
+      "time": 1285977600
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "icd9__03284", 
+      "row_id": "188492238934750", 
+      "time": 1256688000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "icd9__78052", 
+      "row_id": "188492238934750", 
+      "time": 1256688000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "provider", 
+      "id": "cms__3902UU", 
+      "row_id": "188492238934750", 
+      "time": 1256688000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "physician", 
+      "id": "cms__7687398245", 
+      "row_id": "188492238934750", 
+      "time": 1256688000
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "physician", 
+      "id": "cms__7687398245", 
+      "row_id": "188492238934750", 
+      "time": 1256688000
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "icd9__72292", 
+      "row_id": "188872238828607", 
+      "time": 1257897600
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "provider", 
+      "id": "cms__3100YQ", 
+      "row_id": "188872238828607", 
+      "time": 1257897600
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "cms__1051734277", 
+      "row_id": "188872238828607", 
+      "time": 1257897600
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "cms__0518849399", 
+      "row_id": "188872238828607", 
+      "time": 1257897600
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "icd9__2842", 
+      "row_id": "188752239259964", 
+      "time": 1262044800
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "icd9__25000", 
+      "row_id": "188752239259964", 
+      "time": 1262044800
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "icd9__2724", 
+      "row_id": "188752239259964", 
+      "time": 1262044800
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "diagnosis", 
+      "id": "icd9__3310", 
+      "row_id": "188752239259964", 
+      "time": 1262044800
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "provider", 
+      "id": "cms__3902UU", 
+      "row_id": "188752239259964", 
+      "time": 1262044800
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "cms__7687398245", 
+      "row_id": "188752239259964", 
+      "time": 1262044800
+    }, 
+    {
+      "cost": "200.00", 
+      "group": "physician", 
+      "id": "cms__7687398245", 
+      "row_id": "188752239259964", 
+      "time": 1262044800
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "diagnosis", 
+      "id": "icd9__42760", 
+      "row_id": "188452239052439", 
+      "time": 1262563200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "provider", 
+      "id": "cms__3902UU", 
+      "row_id": "188452239052439", 
+      "time": 1262563200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "physician", 
+      "id": "cms__7687398245", 
+      "row_id": "188452239052439", 
+      "time": 1262563200
+    }, 
+    {
+      "cost": "10.00", 
+      "group": "prescribed", 
+      "id": "ndc__59012041141", 
+      "time": 1283385600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "ndc__00677169401", 
+      "time": 1286409600
+    }, 
+    {
+      "cost": "0.00", 
+      "group": "prescribed", 
+      "id": "ndc__36987152404", 
+      "time": 1288137600
+    }
+  ], 
+  "h_bars": [], 
+  "info": [
+    {
+      "id": "pid", 
+      "name": "Patient", 
+      "value": "8CDC0C5ACBDFC9CE"
+    }, 
+    {
+      "id": "born", 
+      "name": "Born", 
+      "value": 1941
+    }, 
+    {
+      "id": "death", 
+      "name": "Died", 
+      "value": "N/A"
+    }, 
+    {
+      "id": "gender", 
+      "label": "danger", 
+      "name": "Gender", 
+      "value": "W"
+    }, 
+    {
+      "id": "event_count", 
+      "name": "Events", 
+      "value": 52
+    }
+  ], 
+  "start": 1222992000, 
+  "v_bars": [
+    "auto"
+  ], 
+  "v_spans": []
+}

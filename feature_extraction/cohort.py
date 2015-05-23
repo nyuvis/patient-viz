@@ -1,19 +1,15 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Created on 2015-03-08
-
-@author: joschi
-"""
+# -*- mode: python; -*-
+"""exec" "`dirname \"$0\"`/../call.sh" "$0" "$@"; """
 from __future__ import print_function
 from __future__ import division
+
 import time as time_lib
 from datetime import datetime, timedelta
 import re
 import sys
 import os.path
 import csv
-#import simplejson as json
 import json
 
 sys.path.append('..')
@@ -22,8 +18,17 @@ import build_dictionary
 import cms_get_patient
 import util
 
-def toTime(s):
-    return int(time_lib.mktime(datetime.strptime(s, "%Y%m%d").timetuple()))
+__doc__ = """
+Created on 2015-03-08
+
+@author: joschi
+"""
+
+debug_inspect = False
+inspect_pids = set([
+    'ADEDFB0ACC2513AD',
+    'FEE931854890F1F0'
+])
 
 class Range:
     """TODO"""
@@ -32,7 +37,7 @@ class Range:
         self.end = end
 
     def __str__(self):
-        return "[{0}:{1}]".format(str(self.start), str(self.end))
+        return "[{0}:{1}]".format(repr(self.start), repr(self.end))
 
     def inRange(self, value):
         if self.start is None:
@@ -150,7 +155,7 @@ def parseQuery(query):
     def date():
         lit = literal()
         try:
-            return toTime(lit)
+            return util.toTime(lit)
         except Exception, e:
             err(State.pos - len(lit), State.pos, "cannot convert to date: " + str(e))
 
@@ -192,7 +197,14 @@ def parseQuery(query):
     # <ids>: <id> | "(" <id> { "|" <id> }* ")"
     def ids():
         res = []
-        parse_disjunction(lambda: res.append(literal()))
+
+        def addId():
+            lit = literal()
+            res.append(lit)
+            if "__" in lit:
+                res.append(lit.split("__", 1)[1])
+
+        parse_disjunction(addId)
         return res
 
     # <type>: <group> ":" <ids> | "age" ":" <ranges> "@" <date>
@@ -264,16 +276,16 @@ def parseQuery(query):
             d = date()
             return {
                 "<": Range(None, d),
-                "<=": Range(None, d + 1), # 1s is enough
-                ">": Range(d + 1, None), # 1s is enough
+                "<=": Range(None, util.nextDay(d)),
+                ">": Range(util.nextDay(d), None),
                 ">=": Range(d, None)
             }[c]
         start = date()
         if peek("-"):
             char("-")
             end = date()
-            return Range(start, end + 1) # 1s is enough
-        return Range(start, start + 1) # 1s is enough
+            return Range(start, util.nextDay(end))
+        return Range(start, util.nextDay(start))
 
     # <times>: <time> | "(" <time> { "|" <time> }* ")"
     def times():
@@ -305,12 +317,26 @@ def parseQuery(query):
                     raise NotImplementedError("special casing for special types")
                 if group != groupId:
                     return False
-                return any(typeId.startswith(tid) for tid in t["id"])
+
+                def check(tid):
+                    res = typeId.startswith(tid)
+                    if debug_inspect and candidate.pid in inspect_pids:
+                        print("{0} {1} {2} {3} {4}".format(repr(typeId), repr(tid), repr(res), repr(candidate.pid), repr(negate)), file=sys.stderr)
+                    return res
+
+                return any(check(tid) for tid in t["id"])
 
             if not any(checkType(t) for t in ts):
                 return
             time = event["time"]
-            if not any(t.inRange(time) for t in trs):
+
+            def checkTime(r):
+                res = r.inRange(time)
+                if debug_inspect and candidate.pid in inspect_pids:
+                    print("{0} {1} {2} {3} {4} {5}".format(repr(time), str(r), repr(res), repr(typeId), repr(candidate.pid), repr(negate)), file=sys.stderr)
+                return res
+
+            if not any(checkTime(r) for r in trs):
                 return
             candidate.setMem(id, {
                 "match": True
@@ -354,12 +380,6 @@ def parseQuery(query):
 
     return pQuery()
 
-""" FIXME currently not in use
-def toAge(s):
-    # TODO there could be a more precise way
-    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(toTime(str(s) + "0101")).year
-"""
-
 def handleRow(row, id, eventCache, infoCache):
     obj = {
         "info": [],
@@ -391,8 +411,9 @@ def handleRow(row, id, eventCache, infoCache):
                 infoCache.append("sex_f")
     """
 
-def processFile(inputFile, id_column, qm, candidates):
-    print("processing file: {0}".format(inputFile), file=sys.stderr)
+def processFile(inputFile, id_column, qm, candidates, printInfo):
+    if printInfo:
+        print("processing file: {0}".format(inputFile), file=sys.stderr)
     id_event_cache = {}
     id_info_cache = {}
 
@@ -430,6 +451,8 @@ def processFile(inputFile, id_column, qm, candidates):
         for group in dict.keys():
             cb(id, group, dict[group].keys())
         """
+        if debug_inspect and id in inspect_pids:
+            print("{0} {1}".format(qm.isMatch(candidate), id), file=sys.stderr)
 
     if inputFile == '-':
         handleRows(csv.DictReader(sys.stdin))
@@ -444,10 +467,10 @@ def processFile(inputFile, id_column, qm, candidates):
         processDict(eventCache, id)
         del eventCache[:]
         num += 1
-        if sys.stderr.isatty():
+        if not debug_inspect and printInfo and sys.stderr.isatty():
             sys.stderr.write("processing: {0:.2%}\r".format(num / num_total))
             sys.stderr.flush()
-    if sys.stderr.isatty():
+    if not debug_inspect and printInfo and sys.stderr.isatty():
         print("", file=sys.stderr)
     """ FIXME no info handling yet
     for id in id_info_cache.keys():
@@ -455,20 +478,14 @@ def processFile(inputFile, id_column, qm, candidates):
         cb(id, "info", infoCache)
     """
 
-def processDirectory(dir, id_column, qm, candidates):
-    for (root, _, files) in os.walk(dir):
-        for file in files:
-            if file.endswith(".csv"):
-                processFile(os.path.join(root, file), id_column, qm, candidates)
-
 def processAll(qm, cohort, path_tuples):
     candidates = {}
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, qm, candidates)
+            processFile(path, id_column, qm, candidates, not debug_inspect)
         else:
-            processDirectory(path, id_column, qm, candidates)
+            util.process_directory(path, lambda file, printInfo: processFile(file, id_column, qm, candidates, not debug_inspect and printInfo), not debug_inspect)
     for c in candidates.values():
         if qm.isMatch(c):
             cohort.append(c.getPid())
@@ -479,12 +496,13 @@ def printResult(cohort, out):
         print(c, file=out)
 
 def usage():
-    print('usage: {0} [-h] [-o <output>] -f <format> -c <config> -q <query> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
-    print('usage: {0} [-h] [-o <output>] -f <format> -c <config> --query-file <file> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [-o <output>] -f <format> -c <config> -q <query> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [-o <output>] -f <format> -c <config> --query-file <file> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('--debug: prints debug output', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
-    print('-c <config>: specify config file. "-" uses default settings', file=sys.stderr)
+    print('-c <config>: specify config file', file=sys.stderr)
     print('-q <query>: specifies the query', file=sys.stderr)
     print('--query-file <file>: specifies a file containing the query', file=sys.stderr)
     print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
@@ -492,16 +510,9 @@ def usage():
 
 if __name__ == '__main__':
     output = '-'
-    settings = {
-        'delim': ',',
-        'quote': '"',
-        'filename': build_dictionary.globalSymbolsFile,
-        'ndc_prod': build_dictionary.productFile,
-        'ndc_package': build_dictionary.packageFile,
-        'icd9': build_dictionary.icd9File,
-        'ccs_diag': build_dictionary.ccs_diag_file,
-        'ccs_proc': build_dictionary.ccs_proc_file
-    }
+    settings = build_dictionary.defaultSettings
+    settings['delim'] = ','
+    settings['quote'] = '"'
     query = ""
     args = sys.argv[:]
     args.pop(0)
@@ -532,7 +543,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-f requires format file', file=sys.stderr)
                 usage()
-            cms_get_patient.read_format(args.pop(0))
+            util.read_format(args.pop(0), cms_get_patient.input_format, usage)
         elif arg == '-o':
             if not args or args[0] == '--':
                 print('-o requires output file', file=sys.stderr)
@@ -542,7 +553,9 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            build_dictionary.readConfig(settings, args.pop(0))
+            util.read_config(settings, args.pop(0), build_dictionary.debugOutput)
+        elif arg == '--debug':
+            build_dictionary.debugOutput = True
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
@@ -551,9 +564,7 @@ if __name__ == '__main__':
         print('query is required', file=sys.stderr)
         usage()
 
-    build_dictionary.setPathCorrection('../')
-    build_dictionary.reportMissingEntries = False
-    build_dictionary.init()
+    build_dictionary.init(settings)
 
     allPaths = []
     while args:

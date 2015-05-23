@@ -23,6 +23,8 @@ server_log="server_log.txt"
 server_err="server_err.txt"
 file_list="patients.txt"
 fetch_samples="10"
+venv=".venv"
+venv_activate="${venv}/bin/activate"
 
 no_prompt=
 pn=
@@ -35,8 +37,9 @@ do_convert=
 do_clean=
 do_nop=
 do_burst=
+shelve=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--shelve] [--nop]"
 
 usage() {
     echo $USAGE
@@ -48,7 +51,7 @@ usage() {
     echo "--samples-all: download all samples"
     echo "--convert <list of ids>: specify which patients to convert"
     echo "--convert-num <top n>: specify how many patients to convert (top n by the total number of events)"
-    echo "--default: use default settings (equal to --icd9 --ccs --ndc --pnt --cms --do-convert)"
+    echo "--default: use default settings (equal to --pip --icd9 --ccs --ndc --pnt --cms --do-convert)"
     echo "--icd9: downloads ICD9 definitions"
     echo "--ccs: downloads CCS ICD9 hierarchies"
     echo "--ndc: downloads NDC definitions"
@@ -57,7 +60,8 @@ usage() {
     echo "--burst: splits the patient claim files for faster individual access"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
-    echo "--pip: install python packages. (not required for all use cases)"
+    echo "--pip: install python packages"
+    echo "--shelve: use shelve input for conversion. (also switches to format_shelve.json except when -f is specified after)"
     echo "--nop: performs no operation besides basic setup tasks"
     exit 1
 }
@@ -67,6 +71,8 @@ if [ $# -eq 0 ]; then
 fi
 while [ $# -gt 0 ]; do
   case "$1" in
+  "")
+    ;;
   -h)
     usage ;;
   -c)
@@ -96,6 +102,7 @@ while [ $# -gt 0 ]; do
     convert_top_n="$1"
     ;;
   --default)
+    pip=1
     icd9=1
     ccs=1
     ndc=1
@@ -133,6 +140,10 @@ while [ $# -gt 0 ]; do
     ;;
   --pip)
     pip=1
+    ;;
+  --shelve)
+    format="format_shelve.json"
+    shelve="--shelve"
     ;;
   --nop)
     do_nop=1
@@ -252,57 +263,42 @@ prompt() {
 }
 
 pip_install() {
-  probe_pip=`command -v pip 2>/dev/null 1>&2; echo $?`
-  if [ "${probe_pip}" -ne 0 ]; then
-    echo "pip is required to install python dependencies."
-    echo "This script will attempt to install a user local version."
-    echo "If you want to install pip yourself follow the instructions at [i]"
-    echo "and use [n] after the installation to continue with the setup."
-    prompt "Do you want to install pip?" 'https://pip.pypa.io/en/latest/installing.html'
-    if [ $? -eq 0 ]; then
-      PIP_INSTALL_FILE="get-pip.py"
-      curl -# -o "${PIP_INSTALL_FILE}" 'https://bootstrap.pypa.io/get-pip.py'
-      test_fail $?
-      # FIXME we should use virtualenv here
-      ### patching for user installation leaves pip in a state where it cannot be
-      ### accessed without knowing where it is and also it cannot be installed
-      ### normally -- we need to ask for super-user :/
-#      cat << EOF | patch "${PIP_INSTALL_FILE}"
-#130c130
-#<         sys.exit(pip.main(["install", "--upgrade"] + packages + args))
-#---
-#>         sys.exit(pip.main(["install", "--user", "--upgrade"] + packages + args))
-#EOF
-#      test_fail $?
-      chmod u+x "${PIP_INSTALL_FILE}"
-      test_fail $?
-      echo "Installing pip requires super-user rights. Please confirm the"
-      echo "integrity of ${PIP_INSTALL_FILE} and enter your password for super-user rights."
-      echo "This script will exit afterwards for security reasons and"
-      echo "you need to re-run it in order to proceed."
-      sudo ./get-pip.py
-      test_fail $?
-      rm -r -- "${PIP_INSTALL_FILE}" 2> /dev/null
-      test_fail $?
-      echo "Please re-run the script in order to proceed!"
-      exit 4
+  # install virtualenv first
+  if [ ! -d ${venv} ]; then
+    venv_version="12.1.1"
+    venv_md5="901ecbf302f5de9fdb31d843290b7217"
+    venv_dir="virtualenv-${venv_version}"
+    venv_file="${venv_dir}.tar.gz"
+    venv_url="https://pypi.python.org/packages/source/v/virtualenv/${venv_file}?md5=${venv_md5}"
+    echo "downloading ${venv_url}"
+    curl -# -o "${venv_file}" "${venv_url}"
+    test_fail $?
+    md5 -q "${venv_file}" | xargs test "${venv_md5}" =
+    if [ $? != 0 ]; then
+      echo "invalid md5 sum!"
+      echo "expected ${venv_md5} got `md5 -q \"${venv_file}\"`"
+      exit 10
     fi
+    tar xfz "${venv_file}"
+    test_fail $?
+    ${venv_dir}/virtualenv.py "${venv}"
+    test_fail $?
+    rm -rf -- "${venv_dir}"
+    test_fail $?
+    rm -- "${venv_file}"
+    test_fail $?
   fi
-  pip install --user -r requirements.txt
+  source ${venv_activate}
+  test_fail $?
+  echo "install python packages"
+  pip install -r requirements.txt
   test_fail $?
 }
 
-if [ ! -z "${pip}" ]; then
-  pip_install
-fi
-
-if [ ! -z "${do_nop}" ]; then
-  exit 0
-fi
-
+venv_clean=
+file_clean=()
 allow_clean=
 allow_stop=
-file_clean=()
 ask_for_clean() {
   name=$1
   shift
@@ -312,6 +308,22 @@ ask_for_clean() {
     file_clean+=($@)
   fi
 }
+
+if [ ! -z "${pip}" ]; then
+  if [ ! -z "${do_clean}" ]; then
+    ask_for_clean "python virtualenv" "${venv}"
+    for file in "${file_clean[@]}"; do
+      echo "remove ${file}" && rm -r -- "${file}" 2> /dev/null
+    done
+    venv_clean=1
+    file_clean=()
+  fi
+  pip_install
+fi
+
+if [ ! -z "${do_nop}" ]; then
+  exit 0
+fi
 
 ask_all_clean() {
   allow_clean=1
@@ -325,6 +337,9 @@ ask_all_clean() {
   ask_for_clean "error output files" "${err_file}" "${err_dict_file}"
   ask_for_clean "server logs" "${server_log}" "${server_err}"
   ask_for_clean "config files" "${config}"
+  if [ -z ${venv_clean} ]; then
+    ask_for_clean "python virtualenv" "${venv}"
+  fi
 
   prompt "Do you want to stop the server?"
   if [ $? -eq 0 ]; then
@@ -550,25 +565,41 @@ convert_patients() {
 
   if [ -z "${convert_list}" ]; then
     echo "find top ${convert_top_n} patients"
-    ids=`./cms_analyze.py -m -f "${format}" -- ${CMS_DIR} | tail -n ${convert_top_n}`
+    if [ -z $shelve ]; then
+      ids=`./cms_analyze.py -m -f "${format}" -- ${CMS_DIR} | tail -n ${convert_top_n}`
+    else
+      # FIXME not the top n patients!
+      ids=`./shelve_access.py -c "${config}" -l | cut -d" " -f1 | head -n ${convert_top_n}`
+    fi
   else
     ids="${convert_list}"
   fi
   for id in $ids; do
     file="${JSON_DIR}/${id}.json"
     echo "create ${file}"
-    echo "config file is ${config}"
+    echo "config file is '${config}' format file is '${format}'"
     echo "script output can be found in ${err_file} and ${err_dict_file}"
-    ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2> $err_file || {
-      echo "failed during patient conversion"
-      cd_back
-      exit 6
-    }
-    ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2> $err_dict_file || {
+    if [ -z $shelve ]; then
+      ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- "${CMS_DIR}" 2>> $err_file
+      if [ $? -ne 0 ]; then
+        echo "failed during patient conversion"
+        cd_back
+        exit 6
+      fi
+    else
+      ./shelve_access.py -p "${id}" -c "${config}" | ./cms_get_patient.py -p "${id}" -f "${format}" -o "${file}" -c "${style_classes}" -- - 2>> $err_file
+      if [ $? -ne 0 ]; then
+        echo "failed during patient conversion"
+        cd_back
+        exit 9
+      fi
+    fi
+    ./build_dictionary.py -p "${file}" -c "${config}" -o "${dictionary}" 2>> $err_dict_file
+    if [ $? -ne 0 ]; then
       echo "failed during dictionary creation"
       cd_back
       exit 7
-    }
+    fi
     echo "conversion successful"
   done
 

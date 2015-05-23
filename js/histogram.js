@@ -65,7 +65,7 @@ function Histogram(svg) {
     rects.enter().append("rect").classed("hist", true).attr({
       "stroke": "black",
       "stroke-width": 0.2
-    });
+    }).append("title");
     var smallestWidth = Number.POSITIVE_INFINITY;
     rects.each(function(t, ix) {
       if(ix + 1 < times.length) {
@@ -90,6 +90,9 @@ function Histogram(svg) {
         var bucket = Math.max(Math.min(Math.floor(Math.log10(valueMap[t])), colors.length), 0);
         return colors[bucket];
       }
+    });
+    rects.selectAll("title").text(function(t) {
+      return "$" + valueMap[t];
     });
     smallestWidth > 0 || console.warn("smallest width is zero");
 

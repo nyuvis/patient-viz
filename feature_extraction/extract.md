@@ -54,7 +54,8 @@ This creates the feature vectors in `output.csv` and readable column headers in 
 
 Feature extraction using a shelve db is the same as above except you need to pipe
 the patient data into your scripts. The following commands assume you updated
-your `config.txt` (absolute file paths are recommended) and `format_shelve.json` has the correct headers.
+your `config.txt` (absolute file paths are recommended; relative paths are from
+the location of the config file) and `format_shelve.json` has the correct headers.
 
 ```bash
 ../shelve_access.py --all -c ../config.txt | ./cohort.py --query-file cases.txt -f ../format_shelve.json -c ../config.txt -o cohort_cases.txt -- -
@@ -85,7 +86,7 @@ where the column names equal the feature names.
 The prediction for one patient can be computed by the following formula
 
 ```javascript
-1 / (1 + Math.exp( -( bias + w_a + w_b + w_e + w_h + …) )) > 0.5
+1 / (1 + Math.exp( -( bias + w_a + w_b + w_e + w_h + … ) )) > 0.5
 ```
 
 Where `bias` is the bias of the model and `w_a` is the weight of feature `a`

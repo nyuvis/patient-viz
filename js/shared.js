@@ -309,9 +309,9 @@ function setupRectSelection(pool, blank) {
     var cur = pool.getMousePos();
     rect = {
       x: cur[0],
-      y: cur[1],
+      y: -0.5 * jkjs.util.BIG_NUMBER,
       width: 0,
-      height: 0
+      height: jkjs.util.BIG_NUMBER
     };
     updateSelectionRect();
   }).on("drag", function() {
@@ -319,7 +319,6 @@ function setupRectSelection(pool, blank) {
     if(!rect) return;
     var cur = pool.getMousePos();
     rect.width = cur[0] - rect.x;
-    rect.height = cur[1] - rect.y;
     pool.selectInRect(makeAbsRect(rect), false);
     updateSelectionRect();
   }).on("dragend", function() {
@@ -334,12 +333,9 @@ function setupRectSelection(pool, blank) {
 }
 
 function setupClickAction(pool, blank) {
-  var lastE = null;
-  blank.on("click", function() {
-    if(blank.__ignoreClick) {
-      blank.__ignoreClick = false;
-      return;
-    }
+
+  function selectCur() {
+    if(pool.fixSelection()) return;
     var cur = pool.getMousePos();
     var hasEvent = false;
     pool.startBulkSelection();
@@ -348,37 +344,63 @@ function setupClickAction(pool, blank) {
         e.setSelected(false);
       });
     }
-    var slot = [];
-    pool.traverseEventsForX(cur[0], function(e) {
-      var rangeY = pool.getRangeY(e.getType());
-      if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
-        e.setSelected(pool.joinSelections() ? true : !e.isSelected());
-        hasEvent = true;
-      }
-      slot.push(e);
-    });
-    if(!hasEvent) {
-      slot.forEach(function(e) {
+    var first = null;
+    if(pool.verticalSelection()) {
+      pool.traverseEventsForX(cur[0], function(e) {
+        if(!first) first = e;
         e.setSelected(true);
       });
-    }
-    pool.endBulkSelection();
-  })
-  if(SHOW_EVENT_GROUPS) {
-    blank.on("mousemove", function() {
-      var cur = pool.getMousePos();
-      var e = null;
-      pool.traverseEventsForX(cur[0], function(eve) {
-        if(e) return;
-        var rangeY = pool.getRangeY(eve.getType());
+      pool.highlightMode(TypePool.HIGHLIGHT_VER);
+    } else {
+      pool.traverseTypes(function(gid, tid, type) {
+        var rangeY = pool.getRangeY(type);
         if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
-          e = eve;
+          type.traverseEvents(function(e) {
+            if(!first) first = e;
+            e.setSelected(true);
+          });
         }
       });
-      if(lastE === e) return;
-      lastE = e;
-      pool.updateEventGroupLines(e);
-    });
+      pool.highlightMode(TypePool.HIGHLIGHT_HOR);
+    }
+    pool.highlightEvent(first);
+    pool.greyOutRest(false);
+    pool.endBulkSelection();
+  }
+
+  var lastE = null;
+  blank.on("click", function() {
+    if(blank.__ignoreClick) {
+      blank.__ignoreClick = false;
+      return;
+    }
+    pool.startBulkSelection();
+    selectCur();
+    pool.fixSelection(!pool.fixSelection());
+    pool.endBulkSelection();
+  });
+  if(!SLOW_MODE) {
+    if(SHOW_EVENT_GROUPS) {
+      blank.on("mousemove", function() {
+        selectCur();
+        var cur = pool.getMousePos();
+        var e = null;
+        pool.traverseEventsForX(cur[0], function(eve) {
+          if(e) return;
+          var rangeY = pool.getRangeY(eve.getType());
+          if(cur[1] >= rangeY[0] && cur[1] < rangeY[1]) {
+            e = eve;
+          }
+        });
+        if(lastE === e) return;
+        lastE = e;
+        pool.updateEventGroupLines(e);
+      });
+    } else {
+      blank.on("mousemove", function() {
+        selectCur();
+      });
+    }
   }
   pool.updateSelection();
 }
