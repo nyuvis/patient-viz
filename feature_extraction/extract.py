@@ -233,7 +233,8 @@ def usage():
 
 if __name__ == '__main__':
     output = '-'
-    settings = build_dictionary.defaultSettings
+    settingsFile = None
+    settings = {}
     settings['delim'] = ','
     settings['quote'] = '"'
     whitelist = None
@@ -295,7 +296,8 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            util.read_config(settings, args.pop(0), build_dictionary.debugOutput)
+            settingsFile = args.pop(0)
+            util.read_config(settings, settingsFile, build_dictionary.debugOutput)
         elif arg == '--debug':
             build_dictionary.debugOutput = True
         else:
@@ -303,7 +305,7 @@ if __name__ == '__main__':
             usage()
 
     build_dictionary.reportMissingEntries = False
-    build_dictionary.init(settings)
+    build_dictionary.init(settings, settingsFile)
 
     allPaths = []
     while args:

@@ -91,23 +91,10 @@ class EntryCreator(object):
             res["flags"] = flags
         return res
 
-    def init(self, settings):
-    	global globalSymbolsFile
-    	global icd9File
-    	global pntFile
-    	global ccs_diag_file
-    	global ccs_proc_file
-    	global productFile
-    	global packageFile
-    	globalSymbolsFile = settings['filename']
-    	icd9File = settings['icd9']
-    	pntFile = settings['pnt']
-    	ccs_diag_file = settings['ccs_diag']
-    	ccs_proc_file = settings['ccs_proc']
-    	productFile = settings['ndc_prod']
-    	packageFile = settings['ndc_package']
+    def init(self, settings, settingsFile):
     	for k in self._baseTypes.keys():
-            self._codeTables[k] = self._baseTypes[k].init()
+            self._codeTables[k] = self._baseTypes[k].init(settings)
+        util.read_config(settings, settingsFile, False)
 
 dictionary = EntryCreator()
 
@@ -124,10 +111,10 @@ class TypeBase(object):
         return {}
     def addCodeType(self, code, codeType):
         self._codeTypes[code] = codeType
-    def init(self):
+    def init(self, settings):
         res = {}
         for code in self._codeTypes.keys():
-            res[code] = self._codeTypes[code].init()
+            res[code] = self._codeTypes[code].init(settings)
         return res
     def create(self, symbols, type, id, code):
         candidate = None
@@ -161,7 +148,7 @@ class TypeBase(object):
         return (candidate, code)
 
 class TypeCode(object):
-    def init(self):
+    def init(self, settings):
         raise NotImplementedError()
     def create(self, symbols, type, id):
         raise NotImplementedError
@@ -183,9 +170,9 @@ class CmsProviderCode(TypeCode):
         if len(id) == 2:
             return createUnknownEntry(symbols, type, id, pid, code=self.code)
         return toEntry(id, pid, id, "Provider Number: {0}".format(id))
-    def init(self):
+    def init(self, settings):
         res = {}
-        file = util.get_file(pntFile, debugOutput)
+        file = get_file(settings, 'pnt', 'code/pnt/pnt.txt', debugOutput)
         if not os.path.isfile(file):
             return res
         with open(file, 'r') as pnt:
@@ -213,7 +200,7 @@ class CmsPhysicianCode(TypeCode):
     def create(self, symbols, type, id):
         pid = ""
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
-    def init(self):
+    def init(self, settings):
         return {}
 
 ### prescribed ###
@@ -232,9 +219,9 @@ class NdcPrescribedCode(TypeCode):
             l = symbols[id]
             return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
-    def init(self):
+    def init(self, settings):
         prescribeLookup = {}
-        fileA = util.get_file(productFile, debugOutput)
+        fileA = get_file(settings, 'ndc_prod', 'code/ndc/product.txt', debugOutput)
         if not os.path.isfile(fileA):
             return prescribeLookup
         uidLookup = {}
@@ -287,7 +274,7 @@ class NdcPrescribedCode(TypeCode):
                 prescribeLookup[ndc] = obj
                 prescribeLookup[normndc] = obj
                 prescribeLookup[fullndc] = obj
-        fileB = util.get_file(packageFile, debugOutput)
+        fileB = get_file(settings, 'ndc_package', 'code/ndc/package.txt', debugOutput)
         if not os.path.isfile(fileB):
             return prescribeLookup
         with open(fileB, 'r') as paFile:
@@ -356,8 +343,8 @@ class LoincLabtestCode(TypeCode):
         if id in symbols:
             return toEntry(id, pid, symbols[id], symbols[id])
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
-    def init(self):
-        return getGlobalSymbols()
+    def init(self, settings):
+        return getGlobalSymbols(settings)
 
 ### diagnosis ###
 @dictionary.baseType("diagnosis")
@@ -380,10 +367,10 @@ class Icd9DiagnosisCode(TypeCode):
                 return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", "") if "HIERARCHY" not in id else None)
             prox_id = prox_id[:-1]
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
-    def init(self):
-        codes = getGlobalSymbols()
-        codes.update(getICD9())
-        self._parents = readCCS(util.get_file(ccs_diag_file, debugOutput), codes)
+    def init(self, settings):
+        codes = getGlobalSymbols(settings)
+        codes.update(getICD9(settings))
+        self._parents = readCCS(get_file(settings, 'ccs_diag', 'code/ccs/multi_diag.txt', debugOutput), codes)
         return codes
 
 ### procedure ###
@@ -407,10 +394,10 @@ class Icd9ProcedureCode(TypeCode):
                 return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", "") if "HIERARCHY" not in id else None)
             prox_id = prox_id[:-1]
         return createUnknownEntry(symbols, type, id, pid)
-    def init(self):
-        codes = getGlobalSymbols()
-        codes.update(getICD9())
-        self._parents = readCCS(util.get_file(ccs_proc_file, debugOutput), codes)
+    def init(self, settings):
+        codes = getGlobalSymbols(settings)
+        codes.update(getICD9(settings))
+        self._parents = readCCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt', debugOutput), codes)
         return codes
 
 ### info ###
@@ -426,7 +413,7 @@ class InfoInfoCode(TypeCode):
     def create(self, symbols, type, id):
         pid = ""
         return toEntry(id, pid, id, "Info: " + id)
-    def init(self):
+    def init(self, settings):
         return {}
 
 
@@ -439,7 +426,7 @@ class TypeUnknown(TypeBase):
         return UNKNOWN
     def color(self):
         return "red"
-    def init(self):
+    def init(self, settings):
         raise NotImplementedError()
     def create(self, symbols, type, id, code):
         return createUnknownEntry(symbols, type, id, code=code)
@@ -470,15 +457,15 @@ def toEntry(id, pid, name, desc, alias=None):
 
 globalICD9 = {}
 
-def getICD9():
+def getICD9(settings):
     global globalICD9
     if not len(globalICD9.keys()):
-        globalICD9 = initICD9()
+        globalICD9 = initICD9(settings)
     return globalICD9.copy()
 
-def initICD9():
+def initICD9(settings):
     codes = {}
-    f = util.get_file(icd9File, debugOutput)
+    f = get_file(settings, 'icd9', 'code/icd9/ucod.txt', debugOutput)
     if not os.path.isfile(f):
         return codes
     with open(f, 'r') as file:
@@ -535,15 +522,15 @@ def readCCS(ccsFile, codes):
 
 globalSymbols = {}
 
-def getGlobalSymbols():
+def getGlobalSymbols(settings):
     global globalSymbols
     if not len(globalSymbols.keys()):
-        globalSymbols = initGlobalSymbols()
+        globalSymbols = initGlobalSymbols(settings)
     return globalSymbols.copy()
 
-def initGlobalSymbols():
+def initGlobalSymbols(settings):
     codes_dict = {}
-    f = util.get_file(globalSymbolsFile, debugOutput)
+    f = get_file(settings, 'filename', 'code/code_names.txt', debugOutput)
     if not os.path.isfile(f):
         return codes_dict
     with open(f, 'r') as file:
@@ -581,19 +568,18 @@ def enrichDict(file, mid):
     with util.OutWrapper(file) as out:
         print(json.dumps(dict, indent=2, sort_keys=True), file=out)
 
-def init(settings):
-    dictionary.init(settings)
+def init(settings, settingsFile):
+    dictionary.init(settings, settingsFile)
 
 ### argument API
 
-icd9File = 'code/icd9/ucod.txt'
-ccs_diag_file = 'code/ccs/multi_diag.txt'
-ccs_proc_file = 'code/ccs/multi_proc.txt'
-productFile = 'code/ndc/product.txt'
-packageFile = 'code/ndc/package.txt'
-pntFile = 'code/pnt/pnt.txt'
-globalSymbolsFile = 'code/code_names.txt'
-globalMid = '2507387001'
+def get_file(settings, key, default, debugOutput):
+    if key in settings:
+        file = settings[key]
+    else:
+        file = default
+        settings[key] = file
+    return util.get_file(file, debugOutput)
 
 def usage():
     print("{0}: [--debug] -p <file> -c <config> -o <output> [-h|--help] [--lookup <id...>]".format(sys.argv[0]), file=sys.stderr)
@@ -605,21 +591,12 @@ def usage():
     print("-h|--help: prints this help.", file=sys.stderr)
     sys.exit(1)
 
-defaultSettings = {
-    'filename': globalSymbolsFile,
-    'ndc_prod': productFile,
-    'ndc_package': packageFile,
-    'icd9': icd9File,
-    'pnt': pntFile,
-    'ccs_diag': ccs_diag_file,
-    'ccs_proc': ccs_proc_file,
-}
-
 def interpretArgs():
     global debugOutput
-    settings = defaultSettings
+    settings = {}
+    settingsFile = None
     info = {
-        'mid': globalMid,
+        'mid': '-',
         'output': '-'
     }
     lookupMode = False
@@ -638,7 +615,8 @@ def interpretArgs():
             if not args:
                 print('-c requires argument', file=sys.stderr)
                 usage()
-            util.read_config(settings, args.pop(0), debugOutput)
+            settingsFile = args.pop(0)
+            util.read_config(settings, settingsFile, debugOutput)
         elif val == '-o':
             if not args:
                 print('-o requires argument', file=sys.stderr)
@@ -652,11 +630,11 @@ def interpretArgs():
         else:
             print('illegal argument '+val, file=sys.stderr)
             usage()
-    return (settings, info, lookupMode, args)
+    return (settings, settingsFile, info, lookupMode, args)
 
 if __name__ == '__main__':
-    (settings, info, lookupMode, rest) = interpretArgs()
-    dictionary.init(settings)
+    (settings, settingsFile, info, lookupMode, rest) = interpretArgs()
+    dictionary.init(settings, settingsFile)
     if lookupMode:
         dict = {}
 

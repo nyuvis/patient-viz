@@ -98,6 +98,8 @@ def get_file(file, debugOutput=False):
 
 def read_config(settings, file, debugOutput=False):
     global _path_correction
+    if file is None:
+        return
     _path_correction = os.path.dirname(os.path.abspath(file))
     config = {}
     if debugOutput:
@@ -106,7 +108,14 @@ def read_config(settings, file, debugOutput=False):
         with open(file, 'r') as input:
             config = json.loads(input.read())
     settings.update(config)
-    if set(settings.keys()) - set(config.keys()):
+    if not set(settings.keys()) - set(config.keys()):
+        return
+    same = True
+    for k in settings.keys():
+        if settings[k] != config[k]:
+            same = False
+            break
+    if not same:
         with open(file, 'w') as output:
             print(json.dumps(settings, indent=2, sort_keys=True), file=output)
 
