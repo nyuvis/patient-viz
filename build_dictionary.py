@@ -344,7 +344,17 @@ class LoincLabtestCode(TypeCode):
             return toEntry(id, pid, symbols[id], symbols[id])
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
-        return getGlobalSymbols(settings)
+        res = getGlobalSymbols(settings)
+        loinc_file = get_file(settings, 'loinc', '/m/CODES/loinc/loinc_file.all.headers', debugOutput)
+        if os.path.isfile(loinc_file):
+            with open(loinc_file, 'r') as file:
+                for line in file:
+                    l = line.strip()
+                    spl = l.split('#', 1)
+                    if len(spl) < 2:
+                        continue
+                    res[spl[0]] = spl[1]
+        return res
 
 ### diagnosis ###
 @dictionary.baseType("diagnosis")
