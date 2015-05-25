@@ -172,7 +172,7 @@ class CmsProviderCode(TypeCode):
         return toEntry(id, pid, id, "Provider Number: {0}".format(id))
     def init(self, settings):
         res = {}
-        file = get_file(settings, 'pnt', 'code/pnt/pnt.txt', debugOutput)
+        file = get_file(settings, 'pnt', 'code/pnt/pnt.txt')
         if not os.path.isfile(file):
             return res
         with open(file, 'r') as pnt:
@@ -212,7 +212,7 @@ class CmsPhysicianCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         res = {}
-        spec_file = get_file(settings, 'ibc_speciality', '/m/CODES/specialty/specialty_headers.txt', debugOutput)
+        spec_file = get_file(settings, 'ibc_speciality', '/m/CODES/specialty/specialty_headers.txt')
         if os.path.isfile(spec_file):
             with open(spec_file, 'r') as file:
                 for line in file:
@@ -241,7 +241,7 @@ class NdcPrescribedCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         prescribeLookup = {}
-        fileA = get_file(settings, 'ndc_prod', 'code/ndc/product.txt', debugOutput)
+        fileA = get_file(settings, 'ndc_prod', 'code/ndc/product.txt')
         if not os.path.isfile(fileA):
             return prescribeLookup
         uidLookup = {}
@@ -294,7 +294,7 @@ class NdcPrescribedCode(TypeCode):
                 prescribeLookup[ndc] = obj
                 prescribeLookup[normndc] = obj
                 prescribeLookup[fullndc] = obj
-        fileB = get_file(settings, 'ndc_package', 'code/ndc/package.txt', debugOutput)
+        fileB = get_file(settings, 'ndc_package', 'code/ndc/package.txt')
         if not os.path.isfile(fileB):
             return prescribeLookup
         with open(fileB, 'r') as paFile:
@@ -365,7 +365,7 @@ class LoincLabtestCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         res = getGlobalSymbols(settings)
-        loinc_file = get_file(settings, 'loinc', '/m/CODES/loinc/loinc_file.all.headers', debugOutput)
+        loinc_file = get_file(settings, 'loinc', '/m/CODES/loinc/loinc_file.all.headers')
         if os.path.isfile(loinc_file):
             with open(loinc_file, 'r') as file:
                 for line in file:
@@ -400,7 +400,7 @@ class Icd9DiagnosisCode(TypeCode):
     def init(self, settings):
         codes = getGlobalSymbols(settings)
         codes.update(getICD9(settings))
-        self._parents = readCCS(get_file(settings, 'ccs_diag', 'code/ccs/multi_diag.txt', debugOutput), codes)
+        self._parents = readCCS(get_file(settings, 'ccs_diag', 'code/ccs/multi_diag.txt'), codes)
         return codes
 
 ### procedure ###
@@ -427,7 +427,7 @@ class Icd9ProcedureCode(TypeCode):
     def init(self, settings):
         codes = getGlobalSymbols(settings)
         codes.update(getICD9(settings))
-        self._parents = readCCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt', debugOutput), codes)
+        self._parents = readCCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt'), codes)
         return codes
 
 ### info ###
@@ -495,7 +495,7 @@ def getICD9(settings):
 
 def initICD9(settings):
     codes = {}
-    f = get_file(settings, 'icd9', 'code/icd9/ucod.txt', debugOutput)
+    f = get_file(settings, 'icd9', 'code/icd9/ucod.txt')
     if not os.path.isfile(f):
         return codes
     with open(f, 'r') as file:
@@ -560,7 +560,7 @@ def getGlobalSymbols(settings):
 
 def initGlobalSymbols(settings):
     codes_dict = {}
-    f = get_file(settings, 'filename', 'code/code_names.txt', debugOutput)
+    f = get_file(settings, 'filename', 'code/code_names.txt')
     if not os.path.isfile(f):
         return codes_dict
     with open(f, 'r') as file:
@@ -603,7 +603,7 @@ def init(settings, settingsFile):
 
 ### argument API
 
-def get_file(settings, key, default, debugOutput):
+def get_file(settings, key, default):
     if key in settings:
         file = settings[key]
     else:
