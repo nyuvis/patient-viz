@@ -13,7 +13,8 @@ FEATURE_EXTRACT="../feature_extraction"
 
 cohort="./etc/cohort.txt"
 format="../format.json"
-config="../config.txt"
+config="../config.txt.tmp_local"
+config_regr="../config.txt"
 
 print() {
   echo "$@" 2>&1
@@ -36,12 +37,18 @@ check_file() {
 }
 
 print "test: training predictive model"
+cp "${config_regr}" "${config}"
 
 if [ ! -f "${cohort}" ]; then
   print "building cohort"
   ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${FEATURE_EXTRACT}/cases.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_cases.txt.tmp_local" -- "$CMS_DIR"
+  check $?
+  check_file "${config_regr}" "${config}"
   ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${FEATURE_EXTRACT}/control.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_control.txt.tmp_local" -- "$CMS_DIR"
+  check $?
+  check_file "${config_regr}" "${config}"
   ${FEATURE_EXTRACT}/merge.py --cases "${OUTPUT}/cohort_cases.txt.tmp_local" --control "${OUTPUT}/cohort_control.txt.tmp_local" -o "${cohort}" --test 30 --seed 0
+  check $?
 else
   print "use existing cohort at ${cohort}"
 fi
@@ -49,10 +56,11 @@ fi
 ${FEATURE_EXTRACT}/extract.py --debug -w "${cohort}" --age-time 20100101 --to 20100101 -o - -f "${format}" -c "${config}" -- "$CMS_DIR" | \
 ${FEATURE_EXTRACT}/train.py -w --in - --out "${OUTPUT}/model" --seed 0 --model reg -v 20 2> "${OUTPUT}/train.txt.tmp_local"
 check $?
+check_file "${config_regr}" "${config}"
 check_file "${OUTPUT}/train.txt" "${OUTPUT}/train.txt.tmp_local"
 
-rm -- ${OUTPUT}/*.tmp_local
-rm -r -- ${OUTPUT}/model/
+rm -- "${config}" ${OUTPUT}/*.tmp_local
+rm -r -- "${OUTPUT}/model/"
 
 print "all tests successful!"
 exec 3>&- # don't really need to close the FD

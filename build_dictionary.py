@@ -94,7 +94,7 @@ class EntryCreator(object):
     def init(self, settings, settingsFile):
     	for k in self._baseTypes.keys():
             self._codeTables[k] = self._baseTypes[k].init(settings)
-        util.read_config(settings, settingsFile, False)
+        util.save_config(settings, settingsFile)
 
 dictionary = EntryCreator()
 
@@ -503,7 +503,7 @@ def getICD9(settings, isDiagnosis):
             globalICD9[k] = initICD9(settings)
         else:
             symbols = globalICD9[k]
-            f = fileS if not os.path.isfile(fileL)
+            f = fileS if not os.path.isfile(fileL) else fileL
             with open(f, 'r') as file:
                 for line in file:
                     l = line.strip()

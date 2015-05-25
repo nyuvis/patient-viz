@@ -1,11 +1,17 @@
 {
+  "ccs_diag": "../code/ccs/multi_diag.txt",
   "ccs_proc": "../code/ccs/multi_proc.txt",
-  "quote": "\"",
   "delim": ",",
-  "pnt": "../code/pnt/pnt.txt",
+  "diagnosis_icd9": "../code/not_found.txt",
+  "diagnosis_icd9_long": "../code/not_found.txt",
   "filename": "../code/code_names.txt",
-  "ndc_package": "../code/ndc/package.txt",
+  "ibc_speciality": "../code/code_names.txt",
   "icd9": "../code/icd9/ucod.txt",
+  "loinc": "../code/code_names.txt",
+  "ndc_package": "../code/ndc/package.txt",
   "ndc_prod": "../code/ndc/product.txt",
-  "ccs_diag": "../code/ccs/multi_diag.txt"
+  "pnt": "../code/pnt/pnt.txt",
+  "procedure_icd9": "../code/not_found.txt",
+  "procedure_icd9_long": "../code/not_found.txt",
+  "quote": "\""
 }
