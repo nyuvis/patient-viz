@@ -399,7 +399,7 @@ class Icd9DiagnosisCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         codes = getGlobalSymbols(settings)
-        codes.update(getICD9(settings))
+        codes.update(getICD9(settings, True))
         self._parents = readCCS(get_file(settings, 'ccs_diag', 'code/ccs/multi_diag.txt'), codes)
         return codes
 
@@ -426,7 +426,7 @@ class Icd9ProcedureCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid)
     def init(self, settings):
         codes = getGlobalSymbols(settings)
-        codes.update(getICD9(settings))
+        codes.update(getICD9(settings, False))
         self._parents = readCCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt'), codes)
         return codes
 
@@ -485,13 +485,33 @@ def toEntry(id, pid, name, desc, alias=None):
 
 ### icd9 ###
 
-globalICD9 = {}
+globalICD9 = {
+    'diagnosis': {},
+    'procedure': {}
+}
 
-def getICD9(settings):
-    global globalICD9
-    if not len(globalICD9.keys()):
-        globalICD9 = initICD9(settings)
-    return globalICD9.copy()
+def getICD9(settings, isDiagnosis):
+    k = 'diagnosis' if isDiagnosis else 'procedure'
+    if not len(globalICD9[k].keys()):
+        fileKeyS = k + '_icd9'
+        fileKeyL = k + '_icd9_long'
+        fileDefaultS = '/m/CODES/icd9/ICD-9-CM-v32-master-descriptions/' + ('CMS32_DESC_SHORT_DX.txt' if isDiagnosis else 'CMS32_DESC_SHORT_SG.txt')
+        fileDefaultL = '/m/CODES/icd9/ICD-9-CM-v32-master-descriptions/' + ('CMS32_DESC_LONG_DX.txt' if isDiagnosis else 'CMS32_DESC_LONG_SG.txt')
+        fileS = get_file(settings, fileKeyS, fileDefaultS)
+        fileL = get_file(settings, fileKeyL, fileDefaultL)
+        if not os.path.isfile(fileS) and not os.path.isfile(fileL):
+            globalICD9[k] = initICD9(settings)
+        else:
+            symbols = globalICD9[k]
+            f = fileS if not os.path.isfile(fileL)
+            with open(f, 'r') as file:
+                for line in file:
+                    l = line.strip()
+                    spl = l.split(' ', 1)
+                    if len(spl) < 2:
+                        continue
+                    symbols[spl[0].strip()] = spl[1].strip()
+    return globalICD9[k].copy()
 
 def initICD9(settings):
     codes = {}
