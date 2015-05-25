@@ -291,6 +291,7 @@ pip_install() {
   source ${venv_activate}
   test_fail $?
   echo "install python packages"
+  pip install --upgrade pip
   pip install -r requirements.txt
   test_fail $?
 }

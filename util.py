@@ -98,6 +98,8 @@ def get_file(file, debugOutput=False):
 
 def read_config(settings, file, debugOutput=False):
     global _path_correction
+    if file is None:
+        return
     _path_correction = os.path.dirname(os.path.abspath(file))
     config = {}
     if debugOutput:
@@ -106,9 +108,39 @@ def read_config(settings, file, debugOutput=False):
         with open(file, 'r') as input:
             config = json.loads(input.read())
     settings.update(config)
-    if set(settings.keys()) - set(config.keys()):
+    save_on_change(settings, config, file)
+
+def save_config(settings, file):
+    global _path_correction
+    if file is None:
+        return
+    _path_correction = os.path.dirname(os.path.abspath(file))
+    config = {}
+    if os.path.isfile(file):
+        with open(file, 'r') as input:
+            config = json.loads(input.read())
+    save_on_change(settings, config, file)
+
+def save_on_change(local, original, file):
+    same = True
+    lk = local.keys()
+    ok = original.keys()
+    if len(lk) != len(ok):
+        same = False
+    else:
+        for k in lk:
+            if k not in original or local[k] != original[k]:
+                same = False
+                break
+        if same:
+            # small number of keys so it is not bad to iterate twice
+            for k in ok:
+                if k not in local or original[k] != local[k]:
+                    same = False
+                    break
+    if not same:
         with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
+            print(json.dumps(local, indent=2, sort_keys=True), file=output)
 
 def read_format(file, input_format, usage):
     if not os.path.isfile(file):

@@ -15,7 +15,8 @@ FEATURE_EXTRACT="../feature_extraction"
 format="../format.json"
 style_classes="../style_classes.json"
 etc="./etc"
-config="${etc}/config.txt"
+config="${etc}/config.txt.tmp"
+config_regr="${etc}/config.txt"
 
 print() {
   echo "$@" 2>&1
@@ -53,6 +54,7 @@ convert_patient() {
   ../build_dictionary.py --debug -p "${OUTPUT}/${id}.json.tmp" -c "${config}" -o "${OUTPUT}/dictionary.json.tmp"
   check $?
   check_file "${OUTPUT}/dictionary.json" "${OUTPUT}/dictionary.json.tmp"
+  check_file "${config_regr}" "${config}"
 }
 
 create_predictive_model() {
@@ -65,24 +67,30 @@ create_predictive_model() {
   ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/cases.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_cases.txt.tmp" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/cohort_cases.txt" "${OUTPUT}/cohort_cases.txt.tmp"
+  check_file "${config_regr}" "${config}"
   ${FEATURE_EXTRACT}/cohort.py --debug --query-file "${etc}/control.txt" -f "${format}" -c "${config}" -o "${OUTPUT}/cohort_control.txt.tmp" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/cohort_control.txt" "${OUTPUT}/cohort_control.txt.tmp"
+  check_file "${config_regr}" "${config}"
   ${FEATURE_EXTRACT}/merge.py --cases "${OUTPUT}/cohort_cases.txt.tmp" --control "${OUTPUT}/cohort_control.txt.tmp" -o "${OUTPUT}/cohort.txt.tmp" --test 30 --seed 0 2> $ERR_FILE
   check $?
   check_file "${OUTPUT}/cohort.txt" "${OUTPUT}/cohort.txt.tmp"
   ${FEATURE_EXTRACT}/extract.py --debug -w "${OUTPUT}/cohort.txt.tmp" --num-cutoff 1 --age-time 20100101 --to 20100101 -o "${OUTPUT}/output.csv.tmp" -f "${format}" -c "${config}" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/output.csv" "${OUTPUT}/output.csv.tmp"
+  check_file "${config_regr}" "${config}"
   head -n 1 "${OUTPUT}/output.csv.tmp" | sed "s/,/ /g" | ../build_dictionary.py --debug -o "${OUTPUT}/headers.json.tmp" -c "${config}" --lookup -
   check $?
   check_file "${OUTPUT}/headers.json" "${OUTPUT}/headers.json.tmp"
+  check_file "${config_regr}" "${config}"
 }
+
+cp "${config_regr}" "${config}"
 
 convert_patient "8CDC0C5ACBDFC9CE"
 create_predictive_model
 
-rm -- ${ERR_FILE} ${OUTPUT}/*.tmp
+rm -- "${ERR_FILE}" "${config}" ${OUTPUT}/*.tmp
 
 print "all tests successful!"
 exec 3>&- # don't really need to close the FD
