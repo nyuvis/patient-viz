@@ -203,6 +203,26 @@ class CmsPhysicianCode(TypeCode):
     def init(self, settings):
         return {}
 
+@dictionary.codeType("physician", "ibc")
+class CmsPhysicianCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = ""
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id])
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
+    def init(self, settings):
+        res = {}
+        spec_file = get_file(settings, 'ibc_speciality', '/m/CODES/specialty/specialty_headers.txt', debugOutput)
+        if os.path.isfile(spec_file):
+            with open(spec_file, 'r') as file:
+                for line in file:
+                    l = line.strip()
+                    spl = l.split('#', 1)
+                    if len(spl) < 2:
+                        continue
+                    res[spl[0]] = spl[1]
+        return res
+
 ### prescribed ###
 @dictionary.baseType("prescribed")
 class TypePrescribed(TypeBase):
