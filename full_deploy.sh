@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # @author Joschi <josua.krause@gmail.com>
 # created 2015-02-27 10:39
 
