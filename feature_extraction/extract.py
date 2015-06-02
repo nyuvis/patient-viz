@@ -33,6 +33,8 @@ ignore = {
     "physician": True
 }
 num_cutoff = 500
+aggregate = 'binary'
+a_methods = set([ 'binary', 'sum' ])
 
 class Dispatcher():
     def __init__(self):
@@ -255,8 +257,31 @@ def createEventHandler(cb):
 
     return handleEvent
 
+def _addType(vector, type):
+    vector[type] = vector.get(type, 0) + 1
+
+_methods = {
+    'binary': [
+        lambda: set([]),
+        lambda vector, type: vector.add(type),
+        lambda vector, c: 1 if c in vector else 0
+    ],
+    'sum': [
+        lambda: {},
+        _addType,
+        lambda vector, c: vector.get(c, 0)
+    ]
+}
+_dispatch = None
+
 def emptyBitVector():
-    return set([])
+    return _dispatch[0]()
+
+def addToBitVector(vector, type):
+    _dispatch[1](vector, type)
+
+def showVectorValue(vector, c):
+    return _dispatch[2](vector, c)
 
 def getBitVector(vectors, header_list, id):
     if id in vectors:
@@ -268,6 +293,10 @@ def getBitVector(vectors, header_list, id):
 
 def getHead(group, type):
     return group + "__" + type
+
+def initAggregate(aggr):
+    global _dispatch
+    _dispatch = _methods[aggr]
 
 def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
     header = {}
@@ -281,13 +310,13 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
                 header[head] = len(header_list)
                 header_list.append(head)
             if head not in header_counts:
-                header_counts[head] =
+                header_counts[head] = 0
             else:
                 header_counts[head] += 1
         bitvec = getBitVector(vectors, header_list, id)
         for type in types:
             head = getHead(group, type)
-            bitvec.add(header[head])
+            addToBitVector(bitvec, header[head])
 
     eventHandle = createEventHandler(handle)
     id_column = cms_get_patient.input_format["patient_id"]
@@ -326,7 +355,7 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
     empty = emptyBitVector()
     for id in vectors.keys():
         bitvec = getBitVector(vectors, hl, id)
-        s = doQuote(id) + wl_row(id) + delim + delim.join(map(doQuote, map(lambda c: 1 if c in bitvec else 0, columns)))
+        s = doQuote(id) + wl_row(id) + delim + delim.join(map(doQuote, map(lambda c: showVectorValue(bitvec, c), columns)))
         vectors[id] = empty
         print(s, file=out)
 
@@ -348,9 +377,10 @@ def interpret_header_spec(header_spec, dispatcher):
     return ch
 
 def usage():
-    print('usage: {0} [-h|--debug] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [--aggregate <method>] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('--debug: prints debug output', file=sys.stderr)
+    print('--aggregate <method>: specifies the aggregation method. one of {0}. default is {1}'.format(", ".join(a_methods), str(aggregate)), file=sys.stderr)
     print('--num-cutoff <number>: specifies the minimum number of occurrences for a column to appear in the output. default is {0}'.format(str(num_cutoff)), file=sys.stderr)
     print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
@@ -382,6 +412,14 @@ if __name__ == '__main__':
                 print('--num-cutoff requires number', file=sys.stderr)
                 usage()
             num_cutoff = int(args.pop(0))
+        elif arg == '--aggregate':
+            if not args or args[0] == '--':
+                print('--aggregate requires a method', file=sys.stderr)
+                usage()
+            aggregate = args.pop(0)
+            if aggregate not in a_methods:
+                print('unknown aggregation method: {0}'.format(str(aggregate)), file=sys.stderr)
+                usage()
         elif arg == '--age-time':
             if not args or args[0] == '--':
                 print('--age-time requires a date', file=sys.stderr)
@@ -463,6 +501,7 @@ if __name__ == '__main__':
         ]
     }
     ch = interpret_header_spec(header_spec, dispatch)
+	initAggregate(aggregate)
     processAll(vectors, header_list, header_counts, allPaths, whitelist, ch)
     with util.OutWrapper(output) as out:
         printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, out)

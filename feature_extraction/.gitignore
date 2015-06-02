@@ -1,1 +1,7 @@
 /model/
+cohort.txt
+cohort_cases.txt
+cohort_control.txt
+headers.json
+output.csv
+output_small.csv
