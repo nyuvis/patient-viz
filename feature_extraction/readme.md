@@ -49,6 +49,11 @@ cd -
 ```
 
 This creates the feature vectors in `output.csv` and readable column headers in `headers.json`.
+The column headers can be mapped to the csv and the output size can be limited via the `process_csv.py` command.
+
+```bash
+./process_csv.py -c ../config.txt -i output.csv -n headers.json -l 1000 -o output_small.csv --seed 0
+```
 
 # Feature Extraction with Shelve Input
 
