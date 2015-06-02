@@ -10,7 +10,6 @@ import re
 import sys
 import os.path
 import csv
-import json
 
 sys.path.append('..')
 

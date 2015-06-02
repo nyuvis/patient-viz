@@ -9,7 +9,6 @@ from datetime import datetime, timedelta
 import sys
 import os.path
 import csv
-import json
 
 sys.path.append('..')
 
