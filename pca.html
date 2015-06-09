@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/path.js" charset="utf-8"></script>
   <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
   <script src="mdsjs/mdsjs.js" charset="utf-8"></script>
 </head>
@@ -19,6 +20,9 @@ function start() {
   var urlArgs = jkjs.util.getQueryStrings();
 
   var bitvecs = "fs" in urlArgs ? urlArgs["fs"] : "feature_extraction/output_small.csv";
+  var modelFile = "feature_extraction/model/reg_model_weights.txt"
+  var biasFile = "feature_extraction/model/reg_model_bias.txt"
+  var SAMPLE = 200;
   var COL_ID = "id";
   var COL_TARGET = "outcome";
   var COL_TEST = "test";
@@ -31,6 +35,8 @@ function start() {
   var DIST = DIST_TANIMOTO;
   var size = 500;
   var radius = 3;
+  var model = {};
+  var bias = Number.NaN;
 
   function Patient(id, ix, outcome) {
     var that = this;
@@ -41,8 +47,13 @@ function start() {
     this.outcome = function() {
       return outcome;
     };
-    this.ix = function() {
+    this.origIx = function() {
       return ix;
+    };
+    var nix = Number.NaN;
+    this.ix = function(_) {
+      if(!arguments.length) return nix;
+      nix = _;
     };
   } // Patient
 
@@ -71,7 +82,8 @@ function start() {
           "y": 0
         });
         var matArr = [];
-        var patients = [];
+        var origPatients = [];
+        var conn_ixs = [];
         var cols = null;
         csv.forEach(function(row) {
           if(!cols) {
@@ -86,12 +98,30 @@ function start() {
             return +row[c];
           });
           var outcome = !!(+row[COL_TARGET]);
-          patients.push(new Patient(id, matArr.length, outcome));
+          origPatients.push(new Patient(id, matArr.length, outcome));
           matArr.push(vec);
+          conn_ixs.push(conn_ixs.length);
         });
 
+        var sampleMat;
+        var patients;
+        var samplePos;
+        if(SAMPLE >= 0) {
+          var ixs = jkjs.util.sample(conn_ixs, SAMPLE);
+          sampleMat = ixs.map(function(ix) {
+            return matArr[ix];
+          });
+          patients = ixs.map(function(ix, nix) {
+            origPatients[ix].ix(nix);
+            return origPatients[ix];
+          });
+        } else {
+          sampleMat = matArr;
+          patients = origPatients;
+        }
+
         if(PROJ === PROJ_PCA) {
-          var mat = mdsjs.convertToMatrix(matArr);
+          var mat = mdsjs.convertToMatrix(sampleMat);
           mdsjs.pcaAsync(mat, function(pcs) {
             var points = mat.mul(pcs);
             assignPos(pcs);
@@ -111,34 +141,9 @@ function start() {
                 dm[pi][pi] = 0;
                 return;
               }
-              var vecA = matArr[pi];
-              var vecB = matArr[qi];
-              var sum = 0;
-              if(DIST === DIST_EUCLID) {
-                for(var ix = 0;ix < vecA.length;ix += 1) {
-                  var a = vecA[ix];
-                  var b = vecB[ix];
-                  sum += (a - b) * (a - b);
-                }
-                sum = Math.sqrt(sum);
-              } else if(DIST === DIST_TANIMOTO) {
-                var union = 0;
-                var intersect = 0;
-                for(var ix = 0;ix < vecA.length;ix += 1) {
-                  var a = vecA[ix];
-                  var b = vecB[ix];
-                  union += (a || b) ? 1 : 0;
-                  intersect += (a && b) ? 1 : 0;
-                }
-                if(union) {
-                  sum = 1 - intersect / union;
-                } else {
-                  sum = 0;
-                }
-              } else {
-                console.warn("invalid distance function: " + DIST);
-                throw new Error();
-              }
+              var vecA = sampleMat[pi];
+              var vecB = sampleMat[qi];
+              var sum = distance(vecA, vecB);
               dm[pi][qi] = sum;
               dm[qi][pi] = sum;
             });
@@ -167,7 +172,65 @@ function start() {
             maxY = Math.max(maxY, y);
             pos[ix] = [ x, y ];
           });
-          var circles = svg.selectAll("circle").data(patients, function(p) {
+          samplePos = pos;
+          drawCircles(minX, maxX, minY, maxY);
+          var paths = [];
+          for(var v = 0; v < 1; v += 0.05) {
+            paths.push(v);
+          }
+          paths.push(1);
+          computePaths(minX, maxX, minY, maxY, paths);
+        }
+
+        function distance(vecA, vecB) {
+          var sum = 0;
+          if(DIST === DIST_EUCLID) {
+            for(var ix = 0;ix < vecA.length;ix += 1) {
+              var a = vecA[ix];
+              var b = vecB[ix];
+              sum += (a - b) * (a - b);
+            }
+            sum = Math.sqrt(sum);
+          } else if(DIST === DIST_TANIMOTO) {
+            var union = 0;
+            var intersect = 0;
+            for(var ix = 0;ix < vecA.length;ix += 1) {
+              var a = vecA[ix];
+              var b = vecB[ix];
+              union += (a || b) ? 1 : 0;
+              intersect += (a && b) ? 1 : 0;
+            }
+            if(union) {
+              sum = 1 - intersect / union;
+            } else {
+              sum = 0;
+            }
+          } else {
+            console.warn("invalid distance function: " + DIST);
+            throw new Error();
+          }
+          return sum;
+        }
+
+        function positionPoint(row) {
+          var sum = 0;
+          var dists = [];
+          sampleMat.forEach(function(vec) {
+            var d = distance(row, vec);
+            dists.push(d);
+            sum += d;
+          });
+          var x = 0;
+          var y = 0;
+          samplePos.forEach(function(p, ix) {
+            x += p[0] * dists[ix];
+            y += p[1] * dists[ix];
+          });
+          return [ x / sum, y / sum ];
+        }
+
+        function drawCircles(minX, maxX, minY, maxY) {
+          var circles = svg.selectAll("circle").data(origPatients, function(p) {
             return p.id();
           });
           circles.exit().remove();
@@ -178,15 +241,22 @@ function start() {
             },
             "r": radius
           }).on("click", function(p) {
-            window.open("index.html?p=json/"+p.id()+".json&dict=json/dictionary.json", "_blank");
+            // window.open("index.html?p=json/"+p.id()+".json&dict=json/dictionary.json", "_blank");
           }).append("svg:title").text(function(p) {
             return p.id();
+          });
+
+          var pos = origPatients.map(function(p) {
+            if(Number.isFinite(p.ix())) {
+              return samplePos[p.ix()];
+            }
+            return positionPoint(matArr[p.origIx()]);
           });
 
           function get(p, x) {
             var min = x ? minX : minY;
             var max = x ? maxX : maxY;
-            return (pos[p.ix()][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
+            return (pos[p.origIx()][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
           }
 
           circles.attr({
@@ -199,6 +269,65 @@ function start() {
           });
         }
 
+        function computePaths(minX, maxX, minY, maxY, paths) {
+          var mins = [];
+          var maxs = [];
+          matArr.forEach(function(vals) {
+            cols.forEach(function(fid, ix) {
+              var v = vals[ix];
+              while(mins.length <= ix) {
+                mins.push(Number.POSITIVE_INFINITY);
+              }
+              while(maxs.length <= ix) {
+                maxs.push(Number.NEGATIVE_INFINITY);
+              }
+              mins[ix] = Math.min(v, mins[ix]);
+              maxs[ix] = Math.max(v, maxs[ix]);
+            });
+          });
+          var pos = paths.map(function() {
+            return [];
+          });
+          paths.forEach(function(mul, pix) {
+            cols.forEach(function(cid, cix) {
+              var row = cols.map(function(_, fix) {
+                if(fix === cix) return 0;
+                return (maxs[fix] + mins[fix]) * mul;
+              });
+              if(model[cid] < 1e-16) return;
+              var sum = 0;
+              cols.forEach(function(fid, fix) {
+                if(fix === cix) return;
+                sum += model[fid] * row[fix];
+              });
+              row[cix] = bias - sum / model[cid];
+              pos[pix].push(positionPoint(row));
+            });
+          });
+
+          var sel = svg.selectAll("paths").data(paths, function(val) {
+            return val;
+          });
+          sel.exit().remove();
+          sel.enter().append("path");
+          sel.attr({
+            "d": function(val, ix) {
+              var path = new jkjs.Path();
+              var padd = path.pointAdder(5);
+              pos[ix].map(function(p) {
+                var x = (p[0] - minX) / (maxX - minX) * (size - radius * 2) + radius;
+                var y = (p[1] - minY) / (maxY - minY) * (size - radius * 2) + radius;
+                return [ x, y ];
+              }).forEach(function(p) {
+                padd(p[0], p[1]);
+              });
+              return path;
+            },
+            "fill": "lime",
+            "stroke": "black"
+          });
+        }
+
         error = false;
       } finally {
         if(error) {
@@ -208,7 +337,28 @@ function start() {
     });
   }
 
-  load(bitvecs);
+  d3.text(biasFile, function(err, biasText) {
+    if(err) {
+      console.warn(err);
+      return;
+    }
+    bias = +biasText.trim();
+    d3.csv(modelFile, function(err, modelTab) {
+      if(err) {
+        console.warn(err);
+        return;
+      }
+      model = {};
+      if(modelTab.length != 1) {
+        console.warn('model has to be only one row', modelTab);
+        return;
+      }
+      Object.keys(modelTab[0]).forEach(function(fid) {
+        model[fid] = +modelTab[0][fid];
+      });
+      load(bitvecs);
+    });
+  });
 }
 </script>
 
