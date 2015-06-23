@@ -6,13 +6,14 @@
   <link rel="stylesheet" type="text/css" href="jk-js/lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="jk-js/jkjs/stat.js" charset="utf-8"></script>
   <script src="jk-js/jkjs/util.js" charset="utf-8"></script>
   <script src="mdsjs/mdsjs.js" charset="utf-8"></script>
 </head>
 <body onload="start()">
 
-<div id="pContent">
-</div>
+<div id="pContent"></div>
+<div id="pFeatures"></div>
 
 <script>
 function start() {
@@ -25,7 +26,7 @@ function start() {
   var IGNORE = /id|outcome|test/;
   var PROJ_PCA = "pca";
   var PROJ_MDS = "mds";
-  var PROJ = "proj" in urlArgs ? urlArgs["proj"] : PROJ_PCA;
+  var PROJ = "proj" in urlArgs ? urlArgs["proj"] : PROJ_MDS;
   var DIST_EUCLID = "euclid";
   var DIST_TANIMOTO = "tanimoto";
   var DIST = DIST_TANIMOTO;
@@ -46,6 +47,196 @@ function start() {
     };
   } // Patient
 
+  function projectMDS(dm, assignPos) {
+    var dmMat = mdsjs.convertToMatrix(dm, true);
+    mdsjs.landmarkMDSAsync(dmMat, 2, function(points) {
+      assignPos(points);
+    });
+  }
+
+  function projectFeatures(svgFeatures, matArr, cols, pixs) {
+    var fVecs = [];
+    var dm = cols.map(function(_, ix) {
+      var res = [];
+      res.length = cols.length;
+      var vec = [];
+      pixs.forEach(function(pix) {
+        vec.push(matArr[pix][ix]);
+      });
+      fVecs.push(vec);
+      return res;
+    });
+    cols.forEach(function(_, pi) {
+      cols.forEach(function(_, qi) {
+        if(pi > qi) return;
+        if(pi === qi) {
+          dm[pi][pi] = 0;
+          return;
+        }
+        var res = 1 - Math.abs(jkjs.stat.metric.pearson(fVecs[pi], fVecs[qi]));
+        dm[pi][qi] = res;
+        dm[qi][pi] = res;
+      });
+    });
+
+    function assignPos(points) {
+      var minX = Number.POSITIVE_INFINITY;
+      var minY = Number.POSITIVE_INFINITY;
+      var maxX = Number.NEGATIVE_INFINITY;
+      var maxY = Number.NEGATIVE_INFINITY;
+      var pos = [];
+      pos.length = points.rows();
+      points.rowsIter(function(row, ix) {
+        var x = row[0];
+        var y = row[1];
+        minX = Math.min(minX, x);
+        maxX = Math.max(maxX, x);
+        minY = Math.min(minY, y);
+        maxY = Math.max(maxY, y);
+        pos[ix] = [ x, y ];
+      });
+      var circles = svgFeatures.selectAll("circle").data(cols, function(_, ix) {
+        return ix;
+      });
+      circles.exit().remove();
+      circles.enter().append("circle");
+      circles.order();
+
+      function get(ix, x) {
+        var min = x ? minX : minY;
+        var max = x ? maxX : maxY;
+        return (pos[ix][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
+      }
+
+      circles.attr({
+        "cx": function(_, ix) {
+          return get(ix, true);
+        },
+        "cy": function(_, ix) {
+          return get(ix, false);
+        },
+        "stroke": "black",
+        "fill": "cornflowerblue",
+        "r": radius
+      }).append("svg:title").text(function(c) {
+        return c;
+      });
+    }
+
+    projectMDS(dm, assignPos);
+  }
+
+  function project(svg, ma, patients, fixs) {
+    matArr = ma.map(function(row) {
+      return fixs.map(function(fix) {
+        return row[fix];
+      });
+    });
+    if(PROJ === PROJ_PCA) {
+      var mat = mdsjs.convertToMatrix(matArr);
+      mdsjs.pcaAsync(mat, function(pcs) {
+        var points = mat.mul(pcs);
+        assignPos(pcs);
+      });
+    } else if(PROJ === PROJ_MDS) {
+      var dm = patients.map(function() {
+        var res = [];
+        res.length = patients.length;
+        return res;
+      });
+      patients.forEach(function(p) {
+        patients.forEach(function(q) {
+          var pi = p.ix();
+          var qi = q.ix();
+          if(pi > qi) return;
+          if(pi === qi) {
+            dm[pi][pi] = 0;
+            return;
+          }
+          var vecA = matArr[pi];
+          var vecB = matArr[qi];
+          var sum = 0;
+          if(DIST === DIST_EUCLID) {
+            for(var ix = 0;ix < vecA.length;ix += 1) {
+              var a = vecA[ix];
+              var b = vecB[ix];
+              sum += (a - b) * (a - b);
+            }
+            sum = Math.sqrt(sum);
+          } else if(DIST === DIST_TANIMOTO) {
+            var union = 0;
+            var intersect = 0;
+            for(var ix = 0;ix < vecA.length;ix += 1) {
+              var a = vecA[ix];
+              var b = vecB[ix];
+              union += (a || b) ? 1 : 0;
+              intersect += (a && b) ? 1 : 0;
+            }
+            if(union) {
+              sum = 1 - intersect / union;
+            } else {
+              sum = 0;
+            }
+          } else {
+            console.warn("invalid distance function: " + DIST);
+            throw new Error();
+          }
+          dm[pi][qi] = sum;
+          dm[qi][pi] = sum;
+        });
+      });
+      projectMDS(dm, assignPos);
+    } else {
+      console.warn("invalid projection: " + PROJ);
+    }
+
+    function assignPos(points) {
+      var minX = Number.POSITIVE_INFINITY;
+      var minY = Number.POSITIVE_INFINITY;
+      var maxX = Number.NEGATIVE_INFINITY;
+      var maxY = Number.NEGATIVE_INFINITY;
+      var pos = [];
+      pos.length = points.rows();
+      points.rowsIter(function(row, ix) {
+        var x = row[0];
+        var y = row[1];
+        minX = Math.min(minX, x);
+        maxX = Math.max(maxX, x);
+        minY = Math.min(minY, y);
+        maxY = Math.max(maxY, y);
+        pos[ix] = [ x, y ];
+      });
+      var circles = svg.selectAll("circle").data(patients, function(p) {
+        return p.id();
+      });
+      circles.exit().remove();
+      circles.enter().append("circle").attr({
+        "stroke": "black",
+        "fill": function(p) {
+          return p.outcome() ? "crimson" : "cornflowerblue"
+        },
+        "r": radius
+      }).append("svg:title").text(function(p) {
+        return p.id();
+      });
+
+      function get(p, x) {
+        var min = x ? minX : minY;
+        var max = x ? maxX : maxY;
+        return (pos[p.ix()][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
+      }
+
+      circles.attr({
+        "cx": function(p) {
+          return get(p, true);
+        },
+        "cy": function(p) {
+          return get(p, false);
+        }
+      });
+    }
+  }
+
   function load(bitvecs) {
     d3.csv(bitvecs, function(err, csv) {
       if(err) {
@@ -54,7 +245,9 @@ function start() {
       }
       var error = true;
       try {
-        var svg = d3.select("#pContent").append("svg").attr({
+        var svg = d3.select("#pContent").style({
+          "display": "inline-block"
+        }).append("svg").attr({
           "width": size,
           "height": size
         }).style({
@@ -70,6 +263,25 @@ function start() {
           "x": 0,
           "y": 0
         });
+        var svgFeatures = d3.select("#pFeatures").style({
+          "display": "inline-block"
+        }).append("svg").attr({
+          "width": size,
+          "height": size
+        }).style({
+          "width": size + "px",
+          "height": size + "px",
+          "cursor": "crosshair"
+        });
+        svgFeatures.append("rect").attr({
+          "fill": "none",
+          "stroke": "black",
+          "width": size,
+          "height": size,
+          "x": 0,
+          "y": 0
+        });
+
         var matArr = [];
         var patients = [];
         var cols = null;
@@ -89,115 +301,19 @@ function start() {
           patients.push(new Patient(id, matArr.length, outcome));
           matArr.push(vec);
         });
+        var pixs = patients.map(function(_, ix) {
+          return ix;
+        });
+        var fixs = cols.map(function(_, ix) {
+          return ix;
+        });
 
-        if(PROJ === PROJ_PCA) {
-          var mat = mdsjs.convertToMatrix(matArr);
-          mdsjs.pcaAsync(mat, function(pcs) {
-            var points = mat.mul(pcs);
-            assignPos(pcs);
-          });
-        } else if(PROJ === PROJ_MDS) {
-          var dm = patients.map(function() {
-            var res = [];
-            res.length = patients.length;
-            return res;
-          });
-          patients.forEach(function(p) {
-            patients.forEach(function(q) {
-              var pi = p.ix();
-              var qi = q.ix();
-              if(pi > qi) return;
-              if(pi === qi) {
-                dm[pi][pi] = 0;
-                return;
-              }
-              var vecA = matArr[pi];
-              var vecB = matArr[qi];
-              var sum = 0;
-              if(DIST === DIST_EUCLID) {
-                for(var ix = 0;ix < vecA.length;ix += 1) {
-                  var a = vecA[ix];
-                  var b = vecB[ix];
-                  sum += (a - b) * (a - b);
-                }
-                sum = Math.sqrt(sum);
-              } else if(DIST === DIST_TANIMOTO) {
-                var union = 0;
-                var intersect = 0;
-                for(var ix = 0;ix < vecA.length;ix += 1) {
-                  var a = vecA[ix];
-                  var b = vecB[ix];
-                  union += (a || b) ? 1 : 0;
-                  intersect += (a && b) ? 1 : 0;
-                }
-                if(union) {
-                  sum = 1 - intersect / union;
-                } else {
-                  sum = 0;
-                }
-              } else {
-                console.warn("invalid distance function: " + DIST);
-                throw new Error();
-              }
-              dm[pi][qi] = sum;
-              dm[qi][pi] = sum;
-            });
-          });
-          var dmMat = mdsjs.convertToMatrix(dm, true);
-          mdsjs.landmarkMDSAsync(dmMat, 2, function(points) {
-            assignPos(points);
-          });
-        } else {
-          console.warn("invalid projection: " + PROJ);
-        }
+        // TODO for testing only use the first 10 features and patients
+        pixs.length = 10;
+        fixs.length = 10;
 
-        function assignPos(points) {
-          var minX = Number.POSITIVE_INFINITY;
-          var minY = Number.POSITIVE_INFINITY;
-          var maxX = Number.NEGATIVE_INFINITY;
-          var maxY = Number.NEGATIVE_INFINITY;
-          var pos = [];
-          pos.length = points.rows();
-          points.rowsIter(function(row, ix) {
-            var x = row[0];
-            var y = row[1];
-            minX = Math.min(minX, x);
-            maxX = Math.max(maxX, x);
-            minY = Math.min(minY, y);
-            maxY = Math.max(maxY, y);
-            pos[ix] = [ x, y ];
-          });
-          var circles = svg.selectAll("circle").data(patients, function(p) {
-            return p.id();
-          });
-          circles.exit().remove();
-          circles.enter().append("circle").attr({
-            "stroke": "black",
-            "fill": function(p) {
-              return p.outcome() ? "crimson" : "cornflowerblue"
-            },
-            "r": radius
-          }).on("click", function(p) {
-            window.open("index.html?p=json/"+p.id()+".json&dict=json/dictionary.json", "_blank");
-          }).append("svg:title").text(function(p) {
-            return p.id();
-          });
-
-          function get(p, x) {
-            var min = x ? minX : minY;
-            var max = x ? maxX : maxY;
-            return (pos[p.ix()][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
-          }
-
-          circles.attr({
-            "cx": function(p) {
-              return get(p, true);
-            },
-            "cy": function(p) {
-              return get(p, false);
-            }
-          });
-        }
+        project(svg, matArr, patients, fixs);
+        projectFeatures(svgFeatures, matArr, cols, pixs);
 
         error = false;
       } finally {

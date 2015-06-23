@@ -162,8 +162,7 @@ fi
 # initialize git submodule if not done by user
 git_submodule=`git submodule status | grep "^-"`
 if [ ! -z "${git_submodule}" ]; then
-  git submodule init
-  git submodule update
+  git submodule update --init --recursive
 fi
 
 cd_back() {
