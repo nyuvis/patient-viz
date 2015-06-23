@@ -1,6 +1,6 @@
-[submodule "jk-js"]
-	path = jk-js
+[submodule "lib/jk-js"]
+	path = lib/jk-js
 	url = https://github.com/JosuaKrause/jk-js.git
-[submodule "mdsjs"]
-	path = mdsjs
+[submodule "lib/mdsjs"]
+	path = lib/mdsjs
 	url = https://github.com/JosuaKrause/mdsjs.git
