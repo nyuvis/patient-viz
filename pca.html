@@ -50,20 +50,39 @@ function start() {
   function projectMDS(dm, assignPos) {
     var dmMat = mdsjs.convertToMatrix(dm, true);
     mdsjs.landmarkMDSAsync(dmMat, 2, function(points) {
+      if(points.someRows(function(p) {
+        return Number.isNaN(p[0]) || Number.isNaN(p[1]);
+      })) {
+        console.warn("some NaN values in projection output")
+      }
       assignPos(points);
     });
   }
 
-  function projectFeatures(svgFeatures, matArr, cols, pixs) {
+  function projectFeatures(svgFeatures, matArr, cs, pixs) {
     var fVecs = [];
-    var dm = cols.map(function(_, ix) {
-      var res = [];
-      res.length = cols.length;
+    var cols = jkjs.util.flatMap(cs, function(c, ix) {
       var vec = [];
       pixs.forEach(function(pix) {
         vec.push(matArr[pix][ix]);
       });
-      fVecs.push(vec);
+      var first = null;
+      if(vec.some(function(v) {
+        if(first === null) {
+          first = v;
+          return false;
+        }
+        return v !== first;
+      })) {
+        fVecs.push(vec);
+        return [ c ];
+      }
+      return [];
+    });
+    cols.length || console.warn("no columns valid");
+    var dm = cols.map(function(_, ix) {
+      var res = [];
+      res.length = cols.length;
       return res;
     });
     cols.forEach(function(_, pi) {
@@ -127,7 +146,7 @@ function start() {
   }
 
   function project(svg, ma, patients, fixs) {
-    matArr = ma.map(function(row) {
+    var matArr = ma.map(function(row) {
       return fixs.map(function(fix) {
         return row[fix];
       });
@@ -308,9 +327,9 @@ function start() {
           return ix;
         });
 
-        // TODO for testing only use the first 10 features and patients
-        pixs.length = 10;
-        fixs.length = 10;
+        // TODO for testing only use the first 100 features and patients
+        pixs.length = 100;
+        fixs.length = 100;
 
         project(svg, matArr, patients, fixs);
         projectFeatures(svgFeatures, matArr, cols, pixs);
