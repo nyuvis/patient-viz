@@ -6,6 +6,8 @@
   <link rel="stylesheet" type="text/css" href="lib/jk-js/lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="lib/jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="lib/jk-js/jkjs/lasso.js" charset="utf-8"></script>
+  <script src="lib/jk-js/jkjs/path.js" charset="utf-8"></script>
   <script src="lib/jk-js/jkjs/stat.js" charset="utf-8"></script>
   <script src="lib/jk-js/jkjs/util.js" charset="utf-8"></script>
   <script src="lib/mdsjs/mdsjs.js" charset="utf-8"></script>
@@ -18,6 +20,12 @@
 <script>
 function start() {
   var urlArgs = jkjs.util.getQueryStrings();
+
+  var UPDATE_PATIENTS = 1;
+  var UPDATE_FEATURES = 2;
+
+  var duration = 750;
+  var ease = "easeInOutCubic";
 
   var bitvecs = "fs" in urlArgs ? urlArgs["fs"] : "feature_extraction/output_small.csv";
   var COL_ID = "id";
@@ -32,8 +40,21 @@ function start() {
   var DIST = DIST_TANIMOTO;
   var size = 500;
   var radius = 3;
+  var pixs = [];
+  var fixs = [];
+  var svgFeatures = null;
+  var svg = null;
 
   mdsjs.DEBUG = false;
+
+  function update(matArr, patients, cols, what) {
+    if(what & UPDATE_PATIENTS) {
+      project(matArr, patients, cols);
+    }
+    if(what & UPDATE_FEATURES) {
+      projectFeatures(matArr, patients, cols);
+    }
+  }
 
   function Patient(id, ix, outcome) {
     var that = this;
@@ -61,8 +82,9 @@ function start() {
     });
   }
 
-  function projectFeatures(svgFeatures, matArr, cs, pixs) {
+  function projectFeatures(matArr, patients, cs) {
     var fVecs = [];
+    var rIxs = [];
     var cols = jkjs.util.flatMap(cs, function(c, ix) {
       var vec = [];
       pixs.forEach(function(pix) {
@@ -77,6 +99,7 @@ function start() {
         return v !== first;
       })) {
         fVecs.push(vec);
+        rIxs.push([ rIxs.length, ix ]);
         return [ c ];
       }
       return [];
@@ -116,11 +139,23 @@ function start() {
         maxY = Math.max(maxY, y);
         pos[ix] = [ x, y ];
       });
-      var circles = svgFeatures.selectAll("circle").data(cols, function(_, ix) {
-        return ix;
+      var circles = svgFeatures.selectAll("circle").data(rIxs, function(r) {
+        return r[0];
       });
-      circles.exit().remove();
-      circles.enter().append("circle");
+      circles.exit().transition().duration(duration).ease(ease).attr({
+        "r": 0
+      }).remove();
+      circles.enter().append("circle").attr({
+        "stroke": "black",
+        "r": 0,
+        "cx": function(r) {
+          return get(r[0], true);
+        },
+        "cy": function(r) {
+          return get(r[0], false);
+        },
+        "fill": "cornflowerblue"
+      }).append("title");
       circles.order();
 
       function get(ix, x) {
@@ -129,25 +164,73 @@ function start() {
         return (pos[ix][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
       }
 
-      circles.attr({
-        "cx": function(_, ix) {
-          return get(ix, true);
+      circles.selectAll("title").text(function(r) {
+        return cols[r[0]];
+      });
+
+      circles.transition().duration(duration).ease(ease).attr({
+        "cx": function(r) {
+          return get(r[0], true);
         },
-        "cy": function(_, ix) {
-          return get(ix, false);
+        "cy": function(r) {
+          return get(r[0], false);
         },
-        "stroke": "black",
         "fill": "cornflowerblue",
         "r": radius
-      }).append("svg:title").text(function(c) {
-        return c;
+      });
+
+      var lassoSel = svgFeatures.select("path#lasso");
+      if(lassoSel.empty()) {
+        lassoSel = svgFeatures.append("path").attr({
+          "id": "lasso"
+        }).style({
+          "opacity": 0.5,
+          "stroke": "darkgray",
+          "fill": "lightgray"
+        });
+      }
+      var lasso = new jkjs.Lasso(svgFeatures);
+      lasso.objProvider(function() {
+          return rIxs;
+      });
+      lasso.objToPos(function(r) {
+          return [ get(r[0], true), get(r[0], false) ];
+      });
+      lasso.updateSel(function(selection, polygon) {
+        var path = new jkjs.Path(); // update the lasso
+        path.addPoly(polygon);
+        lassoSel.attr({
+          "d": path
+        });
+        if(!polygon.length) { // end of lasso selection
+          if(selection.length) {
+            fixs = selection.map(function(r) {
+              return r[1];
+            });
+          } else {
+            fixs = cs.map(function(_, ix) {
+              return ix;
+            });
+          }
+          update(matArr, patients, cs, UPDATE_PATIENTS);
+        } else { // temporarily select circles
+          var fs = {};
+          selection.forEach(function(r) {
+            fs[r[0]] = r[1];
+          });
+          circles.attr({
+            "fill": function(r) {
+              return r[0] in fs ? "white" : "cornflowerblue";
+            }
+          });
+        }
       });
     }
 
     projectMDS(dm, assignPos);
   }
 
-  function project(svg, ma, patients, fixs) {
+  function project(ma, patients, cols) {
     var matArr = ma.map(function(row) {
       return fixs.map(function(fix) {
         return row[fix];
@@ -230,16 +313,22 @@ function start() {
       var circles = svg.selectAll("circle").data(patients, function(p) {
         return p.id();
       });
-      circles.exit().remove();
+      circles.exit().transition().duration(duration).ease(ease).attr({
+        "r": 0
+      }).remove();
       circles.enter().append("circle").attr({
         "stroke": "black",
+        "r": 0,
         "fill": function(p) {
           return p.outcome() ? "crimson" : "cornflowerblue"
         },
-        "r": radius
-      }).append("svg:title").text(function(p) {
-        return p.id();
-      });
+        "cx": function(p) {
+          return get(p, true);
+        },
+        "cy": function(p) {
+          return get(p, false);
+        }
+      }).append("title");
 
       function get(p, x) {
         var min = x ? minX : minY;
@@ -247,12 +336,67 @@ function start() {
         return (pos[p.ix()][x ? 0 : 1] - min) / (max - min) * (size - radius * 2) + radius;
       }
 
-      circles.attr({
+      circles.selectAll("title").text(function(p) {
+        return p.id();
+      });
+
+      circles.transition().duration(duration).ease(ease).attr({
+        "r": radius,
+        "fill": function(p) {
+          return p.outcome() ? "crimson" : "cornflowerblue"
+        },
         "cx": function(p) {
           return get(p, true);
         },
         "cy": function(p) {
           return get(p, false);
+        }
+      });
+
+      var lassoSel = svg.select("path#lasso");
+      if(lassoSel.empty()) {
+        lassoSel = svg.append("path").attr({
+          "id": "lasso"
+        }).style({
+          "opacity": 0.5,
+          "stroke": "darkgray",
+          "fill": "lightgray"
+        });
+      }
+      var lasso = new jkjs.Lasso(svg);
+      lasso.objProvider(function() {
+          return patients;
+      });
+      lasso.objToPos(function(p) {
+          return [ get(p, true), get(p, false) ];
+      });
+      lasso.updateSel(function(selection, polygon) {
+        var path = new jkjs.Path(); // update the lasso
+        path.addPoly(polygon);
+        lassoSel.attr({
+          "d": path
+        });
+        var pids = {};
+        selection.forEach(function(p) {
+          pids[p.id()] = true;
+        });
+        if(!polygon.length) { // end of lasso selection
+          if(selection.length) {
+            pixs = jkjs.util.flatMap(patients, function(p, ix) {
+              return p.id() in pids ? [ ix ] : [];
+            });
+          } else {
+            pixs = patients.map(function(_, ix) {
+              return ix;
+            });
+          }
+          update(matArr, patients, cols, UPDATE_FEATURES);
+        } else { // temporarily select circles
+          circles.attr({
+            "fill": function(p) {
+              return p.id() in pids ? "white" : p.outcome() ? "crimson" : "cornflowerblue";
+            }
+          });
         }
       });
     }
@@ -266,7 +410,7 @@ function start() {
       }
       var error = true;
       try {
-        var svg = d3.select("#pContent").style({
+        svg = d3.select("#pContent").style({
           "display": "inline-block"
         }).append("svg").attr({
           "width": size,
@@ -284,7 +428,7 @@ function start() {
           "x": 0,
           "y": 0
         });
-        var svgFeatures = d3.select("#pFeatures").style({
+        svgFeatures = d3.select("#pFeatures").style({
           "display": "inline-block"
         }).append("svg").attr({
           "width": size,
@@ -322,19 +466,14 @@ function start() {
           patients.push(new Patient(id, matArr.length, outcome));
           matArr.push(vec);
         });
-        var pixs = patients.map(function(_, ix) {
+        pixs = patients.map(function(_, ix) {
           return ix;
         });
-        var fixs = cols.map(function(_, ix) {
+        fixs = cols.map(function(_, ix) {
           return ix;
         });
 
-        // TODO for testing only use the first 100 features and patients
-        // pixs.length = 10;
-        // fixs.length = 10;
-
-        project(svg, matArr, patients, fixs);
-        projectFeatures(svgFeatures, matArr, cols, pixs);
+        update(matArr, patients, cols, UPDATE_PATIENTS | UPDATE_FEATURES);
 
         error = false;
       } finally {
