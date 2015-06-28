@@ -32,13 +32,10 @@ ignore = {
     "physician": True
 }
 num_cutoff = 500
-aggregate = 'binary'
-a_methods = set([ 'binary', 'sum' ])
 
 class Dispatcher():
     def __init__(self):
         self._info_collect = {}
-        self._aggregate = {}
         self._aggregators = {}
 
     def info_collector(self, column_prefixes):
@@ -50,17 +47,12 @@ class Dispatcher():
             name = name[len(prefix):]
             if name in self._info_collect:
                 raise ValueError("info collector already defined for {0}".format(name))
-            self._info_collect[name] = (fun, column_prefixes)
+            self._info_collect[name] = (fun, [ "info__{0}".format(cp) for cp in column_prefixes ])
             return fun
         return wrapper
 
     def get_info_collector(self, name):
         return self._info_collect[name]
-
-    def set_aggregator(self, name, method):
-        if name in self._info_aggregate:
-            raise ValueError("duplicate aggregator {0} as {1} and {2}".format(name, self._info_aggregate[name], method))
-        self._info_aggregate = method
 
     def aggregator(self, default_value):
         prefix = "aggr_"
@@ -76,41 +68,43 @@ class Dispatcher():
         return wrapper
 
     def get_aggregator(self, name):
-        if name not in self._info_aggregate:
+        if name not in self._aggregators:
             raise ValueError("unknown aggregator {0}".format(name))
-        method = self._info_aggregate[name]
-        if method not in self._aggregators:
-            raise ValueError("unknown aggregator method {0}".format(method))
-        return self._aggregators[method]
+        return self._aggregators[name]
 
 dispatch = Dispatcher()
 
 class ColumnHandler:
-    def __init__(self, dispatch):
+    def __init__(self, dispatch, default_aggr):
         self._dispatch = dispatch
         self._info_collectors = []
         self._column_prefixes = []
-        self._colums = {}
+        self._columns = {}
+        aggr_fun, default_value = dispatch.get_aggregator(default_aggr)
+        self._default_aggr = (aggr_fun, default_value)
 
     def add_info_handler(self, collector, aggregator):
         collector_fun, column_prefixes = self._dispatch.get_info_collector(collector)
+        aggr_fun, default_value = self._dispatch.get_aggregator(aggregator)
         self._info_collectors.append(collector_fun)
         for cp in column_prefixes:
-            for (ocp, _) in self._column_prefixes:
+            for (ocp, _, _) in self._column_prefixes:
                 if cp.startswith(ocp) or ocp.startswith(cp):
                     raise ValueError("column prefixes shadow each other: {0} {1}".format(cp, ocp))
-            self._column_prefixes.append((cp, aggregator))
+            self._column_prefixes.append((cp, aggr_fun, default_value))
 
     def get_info_collectors(self):
         return self._info_collectors
 
     def get_column_aggregator(self, column):
-        if column not in self._colums:
-            for (cp, aggr) in self._column_prefixes:
+        if column not in self._columns:
+            for (cp, aggr_fun, default_value) in self._column_prefixes:
                 if column.startswith(cp):
-                    self._colums[column] = aggr
+                    self._columns[column] = (aggr_fun, default_value)
                     break
-        return self._colums[column]
+        if column not in self._columns:
+            self._columns[column] = self._default_aggr
+        return self._columns[column]
 
 ### aggregators ###
 
@@ -128,7 +122,7 @@ def aggr_max(aggr, cur):
 
 @dispatch.aggregator(0)
 def aggr_unique(aggr, cur):
-    if aggr != 0:
+    if aggr != 0 and cur != aggr:
         raise ValueError("multiple unique values {0} and {1}".format(aggr, cur))
     return cur
 
@@ -256,31 +250,16 @@ def createEventHandler(cb):
 
     return handleEvent
 
-def _addType(vector, type):
-    vector[type] = vector.get(type, 0) + 1
-
-_methods = {
-    'binary': [
-        lambda: set([]),
-        lambda vector, type: vector.add(type),
-        lambda vector, c: 1 if c in vector else 0
-    ],
-    'sum': [
-        lambda: {},
-        _addType,
-        lambda vector, c: vector.get(c, 0)
-    ]
-}
-_dispatch = None
-
 def emptyBitVector():
-    return _dispatch[0]()
+    return {}
 
-def addToBitVector(vector, type):
-    _dispatch[1](vector, type)
+def addToBitVector(vector, c, ch, type, value):
+    aggr_fun, default_value = ch.get_column_aggregator(type)
+    vector[c] = aggr_fun(vector.get(c, default_value), value)
 
-def showVectorValue(vector, c):
-    return _dispatch[2](vector, c)
+def showVectorValue(vector, c, type, ch):
+    _, default_value = ch.get_column_aggregator(type)
+    return str(vector.get(c, default_value))
 
 def getBitVector(vectors, header_list, id):
     if id in vectors:
@@ -292,10 +271,6 @@ def getBitVector(vectors, header_list, id):
 
 def getHead(group, type):
     return group + "__" + type
-
-def initAggregate(aggr):
-    global _dispatch
-    _dispatch = _methods[aggr]
 
 def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
     header = {}
@@ -315,7 +290,7 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
         bitvec = getBitVector(vectors, header_list, id)
         for type in types:
             head = getHead(group, type)
-            addToBitVector(bitvec, header[head])
+            addToBitVector(bitvec, header[head], ch, head, 1)
 
     eventHandle = createEventHandler(handle)
     id_column = cms_get_patient.input_format["patient_id"]
@@ -325,7 +300,7 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
         else:
             util.process_whitelisted_directory(path, whitelist, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, ch, printInfo))
 
-def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
+def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
 
     def doQuote(cell):
         cell = str(cell)
@@ -354,7 +329,7 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
     empty = emptyBitVector()
     for id in vectors.keys():
         bitvec = getBitVector(vectors, hl, id)
-        s = doQuote(id) + wl_row(id) + delim + delim.join(map(doQuote, map(lambda c: showVectorValue(bitvec, c), columns)))
+        s = doQuote(id) + wl_row(id) + delim + delim.join(map(doQuote, map(lambda c: showVectorValue(bitvec, c, hl[c], ch), columns)))
         vectors[id] = empty
         print(s, file=out)
 
@@ -368,7 +343,7 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
 ### interpret arguments ###
 
 def interpret_header_spec(header_spec, dispatcher):
-    ch = ColumnHandler(dispatcher)
+    ch = ColumnHandler(dispatcher, header_spec["default_aggr"])
     for row in header_spec["info"]:
         collector = row[0]
         aggregator = row[1]
@@ -379,7 +354,6 @@ def usage():
     print('usage: {0} [-h|--debug] [--aggregate <method>] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('--debug: prints debug output', file=sys.stderr)
-    print('--aggregate <method>: specifies the aggregation method. one of {0}. default is {1}'.format(", ".join(a_methods), str(aggregate)), file=sys.stderr)
     print('--num-cutoff <number>: specifies the minimum number of occurrences for a column to appear in the output. default is {0}'.format(str(num_cutoff)), file=sys.stderr)
     print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
@@ -411,14 +385,6 @@ if __name__ == '__main__':
                 print('--num-cutoff requires number', file=sys.stderr)
                 usage()
             num_cutoff = int(args.pop(0))
-        elif arg == '--aggregate':
-            if not args or args[0] == '--':
-                print('--aggregate requires a method', file=sys.stderr)
-                usage()
-            aggregate = args.pop(0)
-            if aggregate not in a_methods:
-                print('unknown aggregation method: {0}'.format(str(aggregate)), file=sys.stderr)
-                usage()
         elif arg == '--age-time':
             if not args or args[0] == '--':
                 print('--age-time requires a date', file=sys.stderr)
@@ -493,6 +459,7 @@ if __name__ == '__main__':
     header_list = []
     header_counts = {}
     header_spec = {
+        "default_aggr": "binary",
         "info": [
             ["age_bin", "unique"],
             ["dead_field", "unique"],
@@ -500,7 +467,6 @@ if __name__ == '__main__':
         ]
     }
     ch = interpret_header_spec(header_spec, dispatch)
-	initAggregate(aggregate)
     processAll(vectors, header_list, header_counts, allPaths, whitelist, ch)
     with util.OutWrapper(output) as out:
-        printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, out)
+        printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, ch, out)
