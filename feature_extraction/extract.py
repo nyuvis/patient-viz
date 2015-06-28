@@ -35,8 +35,9 @@ ignore = {
 num_cutoff = 500
 
 def toAge(s):
-    # TODO there could be a more precise way
-    return datetime.fromtimestamp(age_time).year - datetime.fromtimestamp(util.toTime(str(s) + "0101")).year
+    today = datetime.fromtimestamp(age_time)
+    born = datetime.fromtimestamp(util.toTime(str(s) + "0101"))
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 def handleRow(row, id, eventCache, infoCache):
     obj = {
@@ -303,6 +304,10 @@ if __name__ == '__main__':
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
+
+    if not args:
+        print('no input provided', file=sys.stderr)
+        usage()
 
     build_dictionary.reportMissingEntries = False
     build_dictionary.init(settings, settingsFile)
