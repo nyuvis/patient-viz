@@ -89,6 +89,11 @@ class OutWrapper(object):
         self.close()
         return isinstance(value, StdOutClose)
 
+def toAge(s, age_time):
+    today = datetime.fromtimestamp(age_time)
+    born = datetime.fromtimestamp(toTime(str(s) + "0101"))
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
 _path_correction = '.'
 def get_file(file, debugOutput=False):
     res = os.path.join(_path_correction, file)
@@ -158,7 +163,10 @@ def process_burst_directory(dir, cb):
                 cb(root, file)
 
 def process_directory(dir, cb, show_progress=True):
-    dirty = False
+    process_whitelisted_directory(dir, None, cb, show_progress)
+
+def process_whitelisted_directory(dir, whitelist, cb, show_progress=True):
+    wl = frozenset([ w[:3] for w in whitelist ]) if whitelist is not None else None
     for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
@@ -177,9 +185,10 @@ def process_directory(dir, cb, show_progress=True):
                             dirty = True
                         except:
                             pass
-                    for file in sorted(files):
-                        if file.endswith(".csv"):
-                            cb(os.path.join(root, file), False)
+                    if wl is None or "{0}{1}{2}".format(segs[0], segs[1], segs[2]) in wl:
+                        for file in sorted(files):
+                            if file.endswith(".csv"):
+                                cb(os.path.join(root, file), False)
                     continue
         for file in sorted(files):
             if file.endswith(".csv"):
@@ -189,7 +198,6 @@ def process_directory(dir, cb, show_progress=True):
                 cb(os.path.join(root, file), show_progress)
     if dirty and show_progress and sys.stderr.isatty():
         print("", file=sys.stderr)
-
 
 def process_id_directory(dir, id, cb):
     for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
@@ -211,4 +219,3 @@ def process_id_directory(dir, id, cb):
         for file in sorted(files):
             if file.endswith(".csv"):
                 cb(os.path.join(root, file), id)
-

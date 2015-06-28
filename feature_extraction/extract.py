@@ -26,7 +26,7 @@ Created on 2015-03-04
 from_time = -float('Inf')
 to_time = float('Inf')
 age_time = None
-age_bin = 10
+age_bin_count = 10
 ignore = {
     "prescribed": True,
     "provider": True,
@@ -34,10 +34,38 @@ ignore = {
 }
 num_cutoff = 500
 
-def toAge(s):
-    today = datetime.fromtimestamp(age_time)
-    born = datetime.fromtimestamp(util.toTime(str(s) + "0101"))
-    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+class AggregatorDispatch():
+    def __init__(self):
+        self._info_methods = {}
+
+    def info_aggregator(self, name, method):
+        def wrapper(fun):
+            ms = self._info_methods.get(name, {})
+            if method in ms:
+                raise ValueError("method {0} already defined for {1}".format(method, name))
+            ms[method] = fun
+            self._info_methods[name] = ms
+            return fun
+        return wrapper
+
+dispatch = AggregatorDispatch()
+
+@dispatch.info_aggregator("age", "bin")
+def age_bin(info, infoCache):
+    if info["id"] == "age":
+        try:
+            bin = (int(info["value"]) // age_bin_count) * age_bin_count
+            infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
+        except ValueError:
+            pass
+    elif info["id"] == "born":
+        try:
+            if info["value"] != "N/A" and age_time is not None:
+                bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
+                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
+        except ValueError:
+            pass
+
 
 def handleRow(row, id, eventCache, infoCache):
     obj = {
@@ -49,15 +77,15 @@ def handleRow(row, id, eventCache, infoCache):
     for info in obj["info"]:
         if info["id"] == "age":
             try:
-                bin = (int(info["value"]) // age_bin) * age_bin
-                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin))
+                bin = (int(info["value"]) // age_bin_count) * age_bin_count
+                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
             except ValueError:
                 pass
         elif info["id"] == "born":
             try:
                 if info["value"] != "N/A" and age_time is not None:
-                    bin = (toAge(info["value"]) // age_bin) * age_bin
-                    infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin))
+                    bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
+                    infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
             except ValueError:
                 pass
         elif info["id"] == "death" and info["value"] != "N/A":
@@ -175,7 +203,7 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
         if isfile:
             processFile(path, id_column, eventHandle, whitelist, True)
         else:
-            util.process_directory(path, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, printInfo))
+            util.process_whitelisted_directory(path, whitelist, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, printInfo))
 
 def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
 
