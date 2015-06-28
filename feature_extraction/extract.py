@@ -34,40 +34,151 @@ ignore = {
 }
 num_cutoff = 500
 
-class AggregatorDispatch():
+class Dispatcher():
     def __init__(self):
-        self._info_methods = {}
+        self._info_collect = {}
+        self._aggregate = {}
+        self._aggregators = {}
 
-    def info_aggregator(self, name, method):
+    def info_collector(self, column_prefixes):
+        prefix = "collect_"
         def wrapper(fun):
-            ms = self._info_methods.get(name, {})
-            if method in ms:
-                raise ValueError("method {0} already defined for {1}".format(method, name))
-            ms[method] = fun
-            self._info_methods[name] = ms
+            name = fun.__name__
+            if not name.startswith(prefix):
+                raise ValueError("info collector {0} must start with {1}".format(name, prefix))
+            name = name[len(prefix):]
+            if name in self._info_collect:
+                raise ValueError("info collector already defined for {0}".format(name))
+            self._info_collect[name] = (fun, column_prefixes)
             return fun
         return wrapper
 
-dispatch = AggregatorDispatch()
+    def get_info_collector(self, name):
+        return self._info_collect[name]
 
-@dispatch.info_aggregator("age", "bin")
-def age_bin(info, infoCache):
+    def set_aggregator(self, name, method):
+        if name in self._info_aggregate:
+            raise ValueError("duplicate aggregator {0} as {1} and {2}".format(name, self._info_aggregate[name], method))
+        self._info_aggregate = method
+
+    def aggregator(self, default_value):
+        prefix = "aggr_"
+        def wrapper(fun):
+            method_name = fun.__name__
+            if not method_name.startswith(prefix):
+                raise ValueError("aggregator method {0} must start with {1}".format(method_name, prefix))
+            method_name = method_name[len(prefix):]
+            if method_name in self._aggregators:
+                raise ValueError("aggregator method {0} already defined".format(method_name))
+            self._aggregators[method_name] = (fun, default_value)
+            return fun
+        return wrapper
+
+    def get_aggregator(self, name):
+        if name not in self._info_aggregate:
+            raise ValueError("unknown aggregator {0}".format(name))
+        method = self._info_aggregate[name]
+        if method not in self._aggregators:
+            raise ValueError("unknown aggregator method {0}".format(method))
+        return self._aggregators[method]
+
+dispatch = Dispatcher()
+
+class ColumnHandler:
+    def __init__(self, dispatch):
+        self._dispatch = dispatch
+        self._info_collectors = []
+        self._column_prefixes = []
+        self._colums = {}
+
+    def add_info_handler(self, collector, aggregator):
+        collector_fun, column_prefixes = self._dispatch.get_info_collector(collector)
+        self._info_collectors.append(collector_fun)
+        for cp in column_prefixes:
+            for (ocp, _) in self._column_prefixes:
+                if cp.startswith(ocp) or ocp.startswith(cp):
+                    raise ValueError("column prefixes shadow each other: {0} {1}".format(cp, ocp))
+            self._column_prefixes.append((cp, aggregator))
+
+    def get_info_collectors(self):
+        return self._info_collectors
+
+    def get_column_aggregator(self, column):
+        if column not in self._colums:
+            for (cp, aggr) in self._column_prefixes:
+                if column.startswith(cp):
+                    self._colums[column] = aggr
+                    break
+        return self._colums[column]
+
+### aggregators ###
+
+@dispatch.aggregator(0)
+def aggr_binary(_aggr, _cur):
+    return 1
+
+@dispatch.aggregator(0)
+def aggr_sum(aggr, cur):
+    return aggr + cur
+
+@dispatch.aggregator(0)
+def aggr_max(aggr, cur):
+    return max(aggr, cur)
+
+@dispatch.aggregator(0)
+def aggr_unique(aggr, cur):
+    if aggr != 0:
+        raise ValueError("multiple unique values {0} and {1}".format(aggr, cur))
+    return cur
+
+### info collectors ###
+
+@dispatch.info_collector([ "age_bin_" ])
+def collect_age_bin(info, infoCache):
     if info["id"] == "age":
         try:
             bin = (int(info["value"]) // age_bin_count) * age_bin_count
-            infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
+            infoCache.append("age_bin_" + str(bin) + "_" + str(bin + age_bin_count))
         except ValueError:
             pass
     elif info["id"] == "born":
         try:
             if info["value"] != "N/A" and age_time is not None:
                 bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
-                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
+                infoCache.append("age_bin_" + str(bin) + "_" + str(bin + age_bin_count))
         except ValueError:
             pass
 
+@dispatch.info_collector([ "age_year_" ])
+def collect_age_field(info, infoCache):
+    if info["id"] == "age":
+        try:
+            infoCache.append("age_year_" + str(int(info["value"])))
+        except ValueError:
+            pass
+    elif info["id"] == "born":
+        try:
+            if info["value"] != "N/A" and age_time is not None:
+                infoCache.append("age_year_" + str(util.toAge(info["value"], age_time)))
+        except ValueError:
+            pass
 
-def handleRow(row, id, eventCache, infoCache):
+@dispatch.info_collector([ "dead" ])
+def collect_dead_field(info, infoCache):
+    if info["id"] == "death":
+        infoCache.append("dead")
+
+@dispatch.info_collector([ "sex_" ])
+def collect_gender_field(info, infoCache):
+    if info["id"] == "gender":
+        if info["value"] == "M":
+            infoCache.append("sex_m")
+        elif info["value"] == "F":
+            infoCache.append("sex_f")
+
+### reading rows ###
+
+def handleRow(row, id, eventCache, infoCache, ch):
     obj = {
         "info": [],
         "events": []
@@ -75,29 +186,10 @@ def handleRow(row, id, eventCache, infoCache):
     cms_get_patient.handleRow(row, obj)
     eventCache.extend(filter(lambda e: e['time'] >= from_time and e['time'] <= to_time and e['group'] not in ignore, obj["events"]))
     for info in obj["info"]:
-        if info["id"] == "age":
-            try:
-                bin = (int(info["value"]) // age_bin_count) * age_bin_count
-                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
-            except ValueError:
-                pass
-        elif info["id"] == "born":
-            try:
-                if info["value"] != "N/A" and age_time is not None:
-                    bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
-                    infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
-            except ValueError:
-                pass
-        elif info["id"] == "death" and info["value"] != "N/A":
-            infoCache.append("dead")
-        elif info["id"] == "gender":
-            if info["value"] == "M":
-                infoCache.append("sex_m")
-            elif info["value"] == "F":
-                infoCache.append("sex_f")
+        for ic in ch.get_info_collectors():
+            ic(info, infoCache)
 
-
-def processFile(inputFile, id_column, eventHandle, whitelist, printInfo):
+def processFile(inputFile, id_column, eventHandle, whitelist, ch, printInfo):
     id_event_cache = {}
     id_info_cache = {}
 
@@ -114,7 +206,7 @@ def processFile(inputFile, id_column, eventHandle, whitelist, printInfo):
                 infoCache = id_info_cache[id]
             else:
                 infoCache = []
-            handleRow(row, id, eventCache, infoCache)
+            handleRow(row, id, eventCache, infoCache, ch)
             id_event_cache[id] = eventCache
             if len(infoCache) > 0:
                 id_info_cache[id] = infoCache
@@ -177,7 +269,7 @@ def getBitVector(vectors, header_list, id):
 def getHead(group, type):
     return group + "__" + type
 
-def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
+def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
     header = {}
 
     def handle(id, group, types):
@@ -189,7 +281,7 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
                 header[head] = len(header_list)
                 header_list.append(head)
             if head not in header_counts:
-                header_counts[head] = 0
+                header_counts[head] =
             else:
                 header_counts[head] += 1
         bitvec = getBitVector(vectors, header_list, id)
@@ -201,9 +293,9 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist):
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, eventHandle, whitelist, True)
+            processFile(path, id_column, eventHandle, whitelist, ch, True)
         else:
-            util.process_whitelisted_directory(path, whitelist, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, printInfo))
+            util.process_whitelisted_directory(path, whitelist, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, ch, printInfo))
 
 def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
 
@@ -244,6 +336,16 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, out):
             sys.stderr.flush()
     if sys.stderr.isatty():
         print("", file=sys.stderr)
+
+### interpret arguments ###
+
+def interpret_header_spec(header_spec, dispatcher):
+    ch = ColumnHandler(dispatcher)
+    for row in header_spec["info"]:
+        collector = row[0]
+        aggregator = row[1]
+        ch.add_info_handler(collector, aggregator)
+    return ch
 
 def usage():
     print('usage: {0} [-h|--debug] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
@@ -353,6 +455,14 @@ if __name__ == '__main__':
     vectors = {}
     header_list = []
     header_counts = {}
-    processAll(vectors, header_list, header_counts, allPaths, whitelist)
+    header_spec = {
+        "info": [
+            ["age_bin", "unique"],
+            ["dead_field", "unique"],
+            ["gender_field", "unique"]
+        ]
+    }
+    ch = interpret_header_spec(header_spec, dispatch)
+    processAll(vectors, header_list, header_counts, allPaths, whitelist, ch)
     with util.OutWrapper(output) as out:
         printResult(vectors, header_list, header_counts, settings['delim'], settings['quote'], whitelist, out)
