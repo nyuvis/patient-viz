@@ -128,33 +128,33 @@ def aggr_unique(aggr, cur):
 
 ### info collectors ###
 
-@dispatch.info_collector([ "age_bin_" ])
+@dispatch.info_collector([ "age_" ])
 def collect_age_bin(info, infoCache):
     if info["id"] == "age":
         try:
             bin = (int(info["value"]) // age_bin_count) * age_bin_count
-            infoCache.append("age_bin_" + str(bin) + "_" + str(bin + age_bin_count))
+            infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
         except ValueError:
             pass
     elif info["id"] == "born":
         try:
             if info["value"] != "N/A" and age_time is not None:
                 bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
-                infoCache.append("age_bin_" + str(bin) + "_" + str(bin + age_bin_count))
+                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
         except ValueError:
             pass
 
-@dispatch.info_collector([ "age_year_" ])
+@dispatch.info_collector([ "age_" ])
 def collect_age_field(info, infoCache):
     if info["id"] == "age":
         try:
-            infoCache.append("age_year_" + str(int(info["value"])))
+            infoCache.append("age_" + str(int(info["value"])))
         except ValueError:
             pass
     elif info["id"] == "born":
         try:
             if info["value"] != "N/A" and age_time is not None:
-                infoCache.append("age_year_" + str(util.toAge(info["value"], age_time)))
+                infoCache.append("age_" + str(util.toAge(info["value"], age_time)))
         except ValueError:
             pass
 
