@@ -316,7 +316,7 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
     columnMap = {}
     for (ix, h) in enumerate(hl):
         n = header_counts[h]
-        if n > num_cutoff and n < num_total - num_cutoff:
+        if n >= num_cutoff and n <= num_total - num_cutoff:
             columnMap[h] = ix
 
     columns = map(lambda h: columnMap[h], sorted(columnMap.keys()))
