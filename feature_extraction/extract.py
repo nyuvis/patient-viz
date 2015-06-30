@@ -229,6 +229,11 @@ def collect_hospital_days(info, infoCache):
     if info["id"] == "stay_in_hospital":
         infoCache.append(("hospital_days", info["value"]))
 
+@dispatch.info_collector([ "hospital_visits" ])
+def collect_hospital_visits(info, infoCache):
+    if info["id"] == "stay_in_hospital":
+        infoCache.append(("hospital_visits", 1))
+
 ### claim collectors ###
 
 @dispatch.claim_collector([ "claim_cost" ])
@@ -254,6 +259,10 @@ def collect_claim_cost(claim, infoCache):
         same_cost = sum(costs)
     if same_cost != 0:
         infoCache.append(("claim_cost", same_cost))
+
+@dispatch.claim_collector([ "num_claims" ])
+def collect_num_claims(claim, infoCache):
+    infoCache.append(("num_claims", 1))
 
 ### vector handling ###
 

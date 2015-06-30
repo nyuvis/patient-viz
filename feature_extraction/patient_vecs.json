@@ -5,9 +5,11 @@
     ["age_field", "max"],
     ["dead_field", "binary"],
     ["gender_field", "unique"],
-    ["hospital_days", "sum"]
+    ["hospital_days", "sum"],
+    ["hospital_visits", "count"]
   ],
   "claim": [
     ["claim_cost", "sum"]
+    ["num_claims", "count"]
   ]
 }
