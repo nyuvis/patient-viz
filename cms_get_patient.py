@@ -143,10 +143,10 @@ state_map = {
 }
 
 race_map = {
-    1: 'w',
-    2: 'b',
-    3: 'o',
-    5: 'h'
+    1: 'white',
+    2: 'black',
+    3: 'other',
+    5: 'hispanic'
 }
 
 def addInfo(obj, id, key, value, hasLabel = False, label = "", saturating=None):
