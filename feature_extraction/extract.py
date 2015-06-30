@@ -192,6 +192,11 @@ def collect_gender_field(info, infoCache):
         elif info["value"] == "F":
             infoCache.append(("gender", 2))
 
+@dispatch.info_collector([ "hospital_days" ])
+def collect_hospital_days(info, infoCache):
+    if info["id"] == "stay_in_hospital":
+        infoCache.append(("hospital_days", info["value"]))
+
 ### vector handling ###
 
 def emptyBitVector():
@@ -218,12 +223,25 @@ def getHead(group, type):
 
 ### reading rows ###
 
-def handleRow(row, id, eventCache, infoCache, ch):
+def handleRow(inputFile, row, id, eventCache, infoCache, ch):
     obj = {
         "info": [],
         "events": []
     }
-    cms_get_patient.handleRow(row, obj)
+    status_map = {}
+    status = cms_get_patient.STATUS_UNKNOWN
+    # inputFile is already lower case
+    if "inpatient" in inputFile:
+        status = cms_get_patient.STATUS_IN
+    elif "outpatient" in inputFile:
+        status = cms_get_patient.STATUS_OUT
+    cms_get_patient.handleRow(row, obj, status_map, status)
+    spans = []
+    cms_get_patient.add_status_intervals(status_map, spans)
+    obj["info"].extend([ {
+        'id': 'stay_' + s["class"],
+        'value': util.span_to_days(s["to"] - s["from"])
+    } for s in spans ])
     eventCache.extend(filter(lambda e: e['time'] >= from_time and e['time'] <= to_time and e['group'] not in ignore, obj["events"]))
     for info in obj["info"]:
         for ic in ch.get_info_collectors():
@@ -233,7 +251,7 @@ def processFile(inputFile, id_column, eventHandle, whitelist, ch, printInfo):
     id_event_cache = {}
     id_info_cache = {}
 
-    def handleRows(csvDictReader):
+    def handleRows(csvDictReader, inputFile):
         for row in csvDictReader:
             id = row[id_column]
             if whitelist is not None and id not in whitelist:
@@ -246,16 +264,16 @@ def processFile(inputFile, id_column, eventHandle, whitelist, ch, printInfo):
                 infoCache = id_info_cache[id]
             else:
                 infoCache = []
-            handleRow(row, id, eventCache, infoCache, ch)
+            handleRow(inputFile, row, id, eventCache, infoCache, ch)
             id_event_cache[id] = eventCache
             if len(infoCache) > 0:
                 id_info_cache[id] = infoCache
 
     if inputFile == '-':
-        handleRows(csv.DictReader(sys.stdin))
+        handleRows(csv.DictReader(sys.stdin), '-')
     else:
         with open(inputFile) as csvFile:
-            handleRows(csv.DictReader(csvFile))
+            handleRows(csv.DictReader(csvFile), inputFile.lower())
 
     eventHandle(inputFile, id_event_cache, id_info_cache, printInfo)
 

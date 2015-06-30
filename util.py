@@ -37,6 +37,9 @@ def toTime(s):
 def nextDay(stamp):
     return _mktime(_epoch + timedelta(days=1, seconds=stamp))
 
+def span_to_days(elapsed_seconds):
+    return elapsed_seconds / _day_seconds
+
 def is_array(v):
     try:
         if isinstance(v, unicode):

@@ -284,6 +284,33 @@ def processLine(obj, line):
             o["class"] = sp[2]
         obj["v_spans"].append(o)
 
+def add_status_intervals(statusMap, intervals):
+    curInStart = None
+    curInEnd = None
+    curStatus = STATUS_UNKNOWN
+    for k in sorted(statusMap.keys()):
+        status = statusMap[k]
+        if status == curStatus:
+            if curInStart is None:
+                curInStart = k
+            curInEnd = k
+        else:
+            if curInStart is not None:
+                if curStatus == STATUS_IN:
+                    intervals.append({
+                        "from": curInStart,
+                        "to": util.nextDay(curInEnd),
+                        "class": "in_hospital"
+                    })
+                elif curStatus == STATUS_PROF:
+                    intervals.append({
+                        "from": curInStart,
+                        "to": util.nextDay(curInEnd),
+                        "class": "professional"
+                    })
+                curInStart = None
+            curStatus = status
+
 def usage():
     print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] [-c <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
@@ -374,31 +401,7 @@ if __name__ == '__main__':
             processFile(path, id, obj, statusMap)
         else:
             util.process_id_directory(path, id, lambda file, id: processFile(file, id, obj, statusMap))
-    curInStart = None
-    curInEnd = None
-    curStatus = STATUS_UNKNOWN
-    for k in sorted(statusMap):
-        status = statusMap[k]
-        if status == curStatus:
-            if curInStart is None:
-                curInStart = k
-            curInEnd = k
-        else:
-            if curInStart is not None:
-                if curStatus == STATUS_IN:
-                    obj["v_spans"].append({
-                        "from": curInStart,
-                        "to": util.nextDay(curInEnd),
-                        "class": "in_hospital"
-                    })
-                elif curStatus == STATUS_PROF:
-                    obj["v_spans"].append({
-                        "from": curInStart,
-                        "to": util.nextDay(curInEnd),
-                        "class": "professional"
-                    })
-                curInStart = None
-            curStatus = status
+    add_status_intervals(statusMap, obj["v_spans"])
     min_time = float('inf')
     max_time = float('-inf')
     for e in obj["events"]:

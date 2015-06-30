@@ -4,6 +4,7 @@
   "info": [
     ["age_field", "max"],
     ["dead_field", "binary"],
-    ["gender_field", "unique"]
+    ["gender_field", "unique"],
+    ["hospital_days", "sum"]
   ]
 }
