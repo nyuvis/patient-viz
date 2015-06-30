@@ -32,7 +32,7 @@ ignore = {
     "provider": True,
     "physician": True
 }
-num_cutoff = 501
+num_cutoff = 500
 
 class Dispatcher():
     def __init__(self):
@@ -125,8 +125,18 @@ def aggr_count(aggr, _cur):
     return aggr + 1
 
 @dispatch.aggregator(0)
-def aggr_max_num(aggr, cur):
-    return max(aggr, int(cur.split('__')[1].strip()))
+def aggr_sum(aggr, cur):
+    return aggr + cur
+
+@dispatch.aggregator(0)
+def aggr_max(aggr, cur):
+    return max(aggr, cur)
+
+@dispatch.aggregator(None)
+def aggr_unique(aggr, cur):
+    if aggr is not None and cur != aggr:
+        raise ValueError("multiple unique values {0} and {1}".format(aggr, cur))
+    return cur
 
 ### info collectors ###
 
@@ -135,43 +145,75 @@ def collect_age_bin(info, infoCache):
     if info["id"] == "age":
         try:
             bin = (int(info["value"]) // age_bin_count) * age_bin_count
-            infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
+            infoCache.append(("age_" + str(bin) + "_" + str(bin + age_bin_count), 1))
         except ValueError:
             pass
     elif info["id"] == "born":
         try:
             if info["value"] != "N/A" and age_time is not None:
                 bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
-                infoCache.append("age_" + str(bin) + "_" + str(bin + age_bin_count))
+                infoCache.append(("age_" + str(bin) + "_" + str(bin + age_bin_count), 1))
         except ValueError:
             pass
 
-@dispatch.info_collector([ "age_" ])
+@dispatch.info_collector([ "age" ])
 def collect_age_field(info, infoCache):
     if info["id"] == "age":
         try:
-            infoCache.append("age_" + str(int(info["value"])))
+            infoCache.append(("age", int(info["value"])))
         except ValueError:
             pass
     elif info["id"] == "born":
         try:
             if info["value"] != "N/A" and age_time is not None:
-                infoCache.append("age_" + str(util.toAge(info["value"], age_time)))
+                infoCache.append(("age", util.toAge(info["value"], age_time)))
         except ValueError:
             pass
 
 @dispatch.info_collector([ "dead" ])
 def collect_dead_field(info, infoCache):
     if info["id"] == "death":
-        infoCache.append("dead")
+        infoCache.append(("dead", 1))
 
 @dispatch.info_collector([ "sex_" ])
+def collect_sex_field(info, infoCache):
+    if info["id"] == "gender":
+        if info["value"] == "M":
+            infoCache.append(("sex_m", 1))
+        elif info["value"] == "F":
+            infoCache.append(("sex_f", 1))
+
+@dispatch.info_collector([ "gender" ])
 def collect_gender_field(info, infoCache):
     if info["id"] == "gender":
         if info["value"] == "M":
-            infoCache.append("sex_m")
+            infoCache.append(("gender", 1))
         elif info["value"] == "F":
-            infoCache.append("sex_f")
+            infoCache.append(("gender", 2))
+
+### vector handling ###
+
+def emptyBitVector():
+    return {}
+
+def addToBitVector(vector, c, ch, type, value):
+    aggr_fun, default_value = ch.get_column_aggregator(type)
+    vector[c] = aggr_fun(vector.get(c, default_value), value)
+
+def showVectorValue(vector, c, type, ch):
+    _, default_value = ch.get_column_aggregator(type)
+    return str(vector.get(c, default_value))
+
+def getBitVector(vectors, header_list, id):
+    if id in vectors:
+        bitvec = vectors[id]
+    else:
+        bitvec = emptyBitVector()
+        vectors[id] = bitvec
+    return bitvec
+
+def getHead(group, type):
+    return group + "__" + type
 
 ### reading rows ###
 
@@ -252,7 +294,7 @@ def createEventHandler(cb, valid_levels):
                     event = get_real(cur_group, cur_group[ek])
                     if is_valid_level(cur_group, event):
                         ekeys.add(event["id"])
-                cb(id, group, list(ekeys))
+                cb(id, group, [ (k, 1) for k in ekeys ])
 
         num_total = len(id_event_cache.keys())
         num = 0
@@ -272,35 +314,13 @@ def createEventHandler(cb, valid_levels):
 
     return handleEvent
 
-def emptyBitVector():
-    return {}
-
-def addToBitVector(vector, c, ch, type):
-    aggr_fun, default_value = ch.get_column_aggregator(type)
-    vector[c] = aggr_fun(vector.get(c, default_value), type)
-
-def showVectorValue(vector, c, type, ch):
-    _, default_value = ch.get_column_aggregator(type)
-    return str(vector.get(c, default_value))
-
-def getBitVector(vectors, header_list, id):
-    if id in vectors:
-        bitvec = vectors[id]
-    else:
-        bitvec = emptyBitVector()
-        vectors[id] = bitvec
-    return bitvec
-
-def getHead(group, type):
-    return group + "__" + type
-
 def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
     header = {}
 
     def handle(id, group, types):
         if "__" in group:
             print("group name is using __: {0}".format(group), file=sys.stderr)
-        for type in types:
+        for type, _ in types:
             head = getHead(group, type)
             if head not in header:
                 header[head] = len(header_list)
@@ -310,9 +330,9 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
             else:
                 header_counts[head] += 1
         bitvec = getBitVector(vectors, header_list, id)
-        for type in types:
+        for type, value in types:
             head = getHead(group, type)
-            addToBitVector(bitvec, header[head], ch, head)
+            addToBitVector(bitvec, header[head], ch, type, value)
 
     eventHandle = createEventHandler(handle, ch.valid_levels())
     id_column = cms_get_patient.input_format["patient_id"]
@@ -338,7 +358,7 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
     columnMap = {}
     for (ix, h) in enumerate(hl):
         n = header_counts[h]
-        if n >= num_cutoff and n <= num_total - num_cutoff:
+        if n > num_cutoff and n < num_total - num_cutoff:
             columnMap[h] = ix
 
     columns = map(lambda h: columnMap[h], sorted(columnMap.keys()))
@@ -401,7 +421,7 @@ if __name__ == '__main__':
         "info": [
             ["age_bin", "binary"],
             ["dead_field", "binary"],
-            ["gender_field", "binary"]
+            ["sex_field", "binary"]
         ]
     }
     whitelist = None
