@@ -38,6 +38,7 @@ show_progress = True
 class Dispatcher():
     def __init__(self):
         self._info_collect = {}
+        self._claim_collect = {}
         self._aggregators = {}
 
     def info_collector(self, column_prefixes):
@@ -53,8 +54,25 @@ class Dispatcher():
             return fun
         return wrapper
 
+    def claim_collector(self, column_prefixes):
+        prefix = "collect_"
+        def wrapper(fun):
+            name = fun.__name__
+            if not name.startswith(prefix):
+                raise ValueError("claim collector {0} must start with {1}".format(name, prefix))
+            name = name[len(prefix):]
+            if name in self._claim_collect:
+                raise ValueError("claim collector already defined for {0}".format(name))
+            # we put the results into the info group
+            self._claim_collect[name] = (fun, [ "info__{0}".format(cp) for cp in column_prefixes ])
+            return fun
+        return wrapper
+
     def get_info_collector(self, name):
         return self._info_collect[name]
+
+    def get_claim_collector(self, name):
+        return self._claim_collect[name]
 
     def aggregator(self, default_value):
         prefix = "aggr_"
@@ -80,6 +98,7 @@ class ColumnHandler:
     def __init__(self, dispatch, default_aggr):
         self._dispatch = dispatch
         self._info_collectors = []
+        self._claim_collectors = []
         self._column_prefixes = []
         self._columns = {}
         self._valid_levels = None
@@ -96,8 +115,21 @@ class ColumnHandler:
                     raise ValueError("column prefixes shadow each other: {0} {1}".format(cp, ocp))
             self._column_prefixes.append((cp, aggr_fun, default_value, aggregator))
 
+    def add_claim_handler(self, collector, aggregator):
+        collector_fun, column_prefixes = self._dispatch.get_claim_collector(collector)
+        aggr_fun, default_value = self._dispatch.get_aggregator(aggregator)
+        self._claim_collectors.append(collector_fun)
+        for cp in column_prefixes:
+            for (ocp, _, _, _) in self._column_prefixes:
+                if cp.startswith(ocp) or ocp.startswith(cp):
+                    raise ValueError("column prefixes shadow each other: {0} {1}".format(cp, ocp))
+            self._column_prefixes.append((cp, aggr_fun, default_value, aggregator))
+
     def get_info_collectors(self):
         return self._info_collectors
+
+    def get_claim_collectors(self):
+        return self._claim_collectors
 
     def get_column_aggregator(self, column):
         if column not in self._columns:
@@ -197,6 +229,32 @@ def collect_hospital_days(info, infoCache):
     if info["id"] == "stay_in_hospital":
         infoCache.append(("hospital_days", info["value"]))
 
+### claim collectors ###
+
+@dispatch.claim_collector([ "claim_cost" ])
+def collect_claim_cost(claim, infoCache):
+    # we collect all costs of a claim
+    # if all costs are the same we assume that is the real cost
+    # if they are not we assume the sum of them is the real cost
+    # costs of 0 are ignored
+    same_cost = None
+    costs = []
+    for e in claim:
+        if "cost" not in e:
+            continue
+        c = float(e["cost"])
+        if c == 0:
+            continue
+        costs.append(c)
+        if same_cost is None:
+            same_cost = c
+        elif same_cost != c:
+            same_cost = 0
+    if same_cost == 0 or same_cost is None:
+        same_cost = sum(costs)
+    if same_cost != 0:
+        infoCache.append(("claim_cost", same_cost))
+
 ### vector handling ###
 
 def emptyBitVector():
@@ -223,25 +281,18 @@ def getHead(group, type):
 
 ### reading rows ###
 
-def handleRow(inputFile, row, id, eventCache, infoCache, ch):
+def handleRow(inputFile, row, id, eventCache, infoCache, spanCache, ch):
     obj = {
         "info": [],
         "events": []
     }
-    status_map = {}
     status = cms_get_patient.STATUS_UNKNOWN
     # inputFile is already lower case
     if "inpatient" in inputFile:
         status = cms_get_patient.STATUS_IN
     elif "outpatient" in inputFile:
         status = cms_get_patient.STATUS_OUT
-    cms_get_patient.handleRow(row, obj, status_map, status)
-    spans = []
-    cms_get_patient.add_status_intervals(status_map, spans)
-    obj["info"].extend([ {
-        'id': 'stay_' + s["class"],
-        'value': util.span_to_days(s["to"] - s["from"])
-    } for s in spans ])
+    cms_get_patient.handleRow(row, obj, spanCache, status)
     eventCache.extend(filter(lambda e: e['time'] >= from_time and e['time'] <= to_time and e['group'] not in ignore, obj["events"]))
     for info in obj["info"]:
         for ic in ch.get_info_collectors():
@@ -250,23 +301,21 @@ def handleRow(inputFile, row, id, eventCache, infoCache, ch):
 def processFile(inputFile, id_column, eventHandle, whitelist, ch, printInfo):
     id_event_cache = {}
     id_info_cache = {}
+    id_span_cache = {}
 
     def handleRows(csvDictReader, inputFile):
         for row in csvDictReader:
             id = row[id_column]
             if whitelist is not None and id not in whitelist:
                 continue
-            if id in id_event_cache:
-                eventCache = id_event_cache[id]
-            else:
-                eventCache = []
-            if id in id_info_cache:
-                infoCache = id_info_cache[id]
-            else:
-                infoCache = []
-            handleRow(inputFile, row, id, eventCache, infoCache, ch)
+            eventCache = id_event_cache[id] if id in id_event_cache else []
+            spanCache = id_span_cache[id] if id in id_span_cache else {}
+            infoCache = id_info_cache[id] if id in id_info_cache else []
+            handleRow(inputFile, row, id, eventCache, infoCache, spanCache, ch)
             id_event_cache[id] = eventCache
-            if len(infoCache) > 0:
+            if spanCache:
+                id_span_cache[id] = spanCache
+            if len(infoCache):
                 id_info_cache[id] = infoCache
 
     if inputFile == '-':
@@ -275,7 +324,7 @@ def processFile(inputFile, id_column, eventHandle, whitelist, ch, printInfo):
         with open(inputFile) as csvFile:
             handleRows(csv.DictReader(csvFile), inputFile.lower())
 
-    eventHandle(inputFile, id_event_cache, id_info_cache, printInfo)
+    eventHandle(inputFile, id_event_cache, id_span_cache, id_info_cache, printInfo)
 
 def createEventHandler(cb, valid_levels):
 
@@ -293,14 +342,28 @@ def createEventHandler(cb, valid_levels):
             level += 1
         return level in valid_levels
 
-    def handleEvent(inputFile, id_event_cache, id_info_cache, printInfo):
+    def handleEvent(inputFile, id_event_cache, id_span_cache, id_info_cache, printInfo):
         if printInfo:
             print("processing file: {0}".format(inputFile), file=sys.stderr)
 
         def processDict(events, id):
-            if len(events) == 0:
+            if not len(events):
                 return
-            #print("processing {1} with {0} events".format(len(events), id), file=sys.stderr)
+            # process claim collectors -- we write to info cache though
+            infoCache = id_info_cache[id] if id in id_info_cache else []
+            claims = {}
+            for e in events:
+                cid = e['row_id']
+                if cid not in claims:
+                    claims[cid] = []
+                claims[cid].append(e)
+            for cid in claims.keys():
+                c = claims[cid]
+                for ic in ch.get_claim_collectors():
+                    ic(c, infoCache)
+            if len(infoCache):
+                id_info_cache[id] = infoCache
+            # getting hierarchies
             obj = {
                 "events": events
             }
@@ -327,6 +390,21 @@ def createEventHandler(cb, valid_levels):
                 sys.stderr.flush()
         if printInfo and sys.stderr.isatty():
             print("", file=sys.stderr)
+        for id in id_span_cache.keys():
+            status_map = id_span_cache[id]
+            spans = []
+            cms_get_patient.add_status_intervals(status_map, spans)
+            new_infos = [ {
+                'id': 'stay_' + s["class"],
+                'value': util.span_to_days(s["to"] - s["from"])
+            } for s in spans ]
+            infoCache = id_info_cache[id] if id in id_info_cache else []
+            for info in new_infos:
+                for ic in ch.get_info_collectors():
+                    ic(info, infoCache)
+            if len(infoCache):
+                id_info_cache[id] = infoCache
+
         for id in id_info_cache.keys():
             infoCache = id_info_cache[id]
             cb(id, "info", infoCache)
@@ -408,10 +486,10 @@ def interpret_header_spec(header_spec, dispatcher):
     ch = ColumnHandler(dispatcher, header_spec["default_aggr"])
     if "levels" in header_spec:
         ch.set_valid_levels(header_spec["levels"])
-    for row in header_spec["info"]:
-        collector = row[0]
-        aggregator = row[1]
+    for [collector, aggregator] in header_spec["info"]:
         ch.add_info_handler(collector, aggregator)
+    for [collector, aggregator] in header_spec["claim"]:
+        ch.add_claim_handler(collector, aggregator)
     return ch
 
 def usage():
@@ -443,7 +521,8 @@ if __name__ == '__main__':
             ["age_bin", "binary"],
             ["dead_field", "binary"],
             ["sex_field", "binary"]
-        ]
+        ],
+        "claim": []
     }
     whitelist = None
     args = sys.argv[:]

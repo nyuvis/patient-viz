@@ -6,5 +6,8 @@
     ["dead_field", "binary"],
     ["gender_field", "unique"],
     ["hospital_days", "sum"]
+  ],
+  "claim": [
+    ["claim_cost", "sum"]
   ]
 }
