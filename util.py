@@ -166,6 +166,7 @@ def process_directory(dir, cb, show_progress=True):
     process_whitelisted_directory(dir, None, cb, show_progress)
 
 def process_whitelisted_directory(dir, whitelist, cb, show_progress=True):
+    dirty = False
     wl = frozenset([ w[:3] for w in whitelist ]) if whitelist is not None else None
     for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:

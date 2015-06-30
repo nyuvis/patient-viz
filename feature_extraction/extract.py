@@ -33,6 +33,7 @@ ignore = {
     "physician": True
 }
 num_cutoff = 500
+show_progress = True
 
 class Dispatcher():
     def __init__(self):
@@ -132,9 +133,9 @@ def aggr_sum(aggr, cur):
 def aggr_max(aggr, cur):
     return max(aggr, cur)
 
-@dispatch.aggregator(None)
+@dispatch.aggregator(0)
 def aggr_unique(aggr, cur):
-    if aggr is not None and cur != aggr:
+    if aggr != 0 and cur != aggr:
         raise ValueError("multiple unique values {0} and {1}".format(aggr, cur))
     return cur
 
@@ -142,13 +143,13 @@ def aggr_unique(aggr, cur):
 
 @dispatch.info_collector([ "age_" ])
 def collect_age_bin(info, infoCache):
-    if info["id"] == "age":
+    if info["id"] == "born":
         try:
             bin = (int(info["value"]) // age_bin_count) * age_bin_count
             infoCache.append(("age_" + str(bin) + "_" + str(bin + age_bin_count), 1))
         except ValueError:
             pass
-    elif info["id"] == "born":
+    elif info["id"] == "age":
         try:
             if info["value"] != "N/A" and age_time is not None:
                 bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
@@ -158,12 +159,12 @@ def collect_age_bin(info, infoCache):
 
 @dispatch.info_collector([ "age" ])
 def collect_age_field(info, infoCache):
-    if info["id"] == "age":
+    if info["id"] == "born":
         try:
             infoCache.append(("age", int(info["value"])))
         except ValueError:
             pass
-    elif info["id"] == "born":
+    elif info["id"] == "age":
         try:
             if info["value"] != "N/A" and age_time is not None:
                 infoCache.append(("age", util.toAge(info["value"], age_time)))
@@ -332,15 +333,15 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
         bitvec = getBitVector(vectors, header_list, id)
         for type, value in types:
             head = getHead(group, type)
-            addToBitVector(bitvec, header[head], ch, type, value)
+            addToBitVector(bitvec, header[head], ch, head, value)
 
     eventHandle = createEventHandler(handle, ch.valid_levels())
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
-            processFile(path, id_column, eventHandle, whitelist, ch, True)
+            processFile(path, id_column, eventHandle, whitelist, ch, show_progress)
         else:
-            util.process_whitelisted_directory(path, whitelist, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, ch, printInfo))
+            util.process_whitelisted_directory(path, whitelist, lambda file, printInfo: processFile(file, id_column, eventHandle, whitelist, ch, printInfo), show_progress=show_progress)
 
 def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
 
@@ -358,7 +359,7 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
     columnMap = {}
     for (ix, h) in enumerate(hl):
         n = header_counts[h]
-        if n > num_cutoff and n < num_total - num_cutoff:
+        if num_cutoff < 0 or (n > num_cutoff and n < num_total - num_cutoff):
             columnMap[h] = ix
 
     columns = map(lambda h: columnMap[h], sorted(columnMap.keys()))
@@ -376,10 +377,10 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
         print(s, file=out)
 
         num += 1
-        if sys.stderr.isatty():
+        if show_progress and sys.stderr.isatty():
             sys.stderr.write("writing file: {0:.2%} complete\r".format(num / num_total))
             sys.stderr.flush()
-    if sys.stderr.isatty():
+    if show_progress and sys.stderr.isatty():
         print("", file=sys.stderr)
 
 ### interpret arguments ###
@@ -395,8 +396,9 @@ def interpret_header_spec(header_spec, dispatcher):
     return ch
 
 def usage():
-    print('usage: {0} [-h|--debug] [--aggregate <method>] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-s <spec>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [-q] [--aggregate <method>] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-s <spec>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
+    print('-q: be quiet about progress', file=sys.stderr)
     print('--debug: prints debug output', file=sys.stderr)
     print('--num-cutoff <number>: specifies the minimum number of occurrences for a column to appear in the output. default is {0}'.format(str(num_cutoff)), file=sys.stderr)
     print('--age-time <date>: specifies the date to compute the age as "YYYYMMDD". can be omitted', file=sys.stderr)
@@ -453,6 +455,8 @@ if __name__ == '__main__':
                 print('--to requires a date', file=sys.stderr)
                 usage()
             to_time = util.toTime(args.pop(0))
+        elif arg == '-q':
+            show_progress = False
         elif arg == '-s':
             if not args or args[0] == '--':
                 print('-s requires specification file', file=sys.stderr)
