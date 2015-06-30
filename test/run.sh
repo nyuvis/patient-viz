@@ -75,7 +75,7 @@ create_predictive_model() {
   ${FEATURE_EXTRACT}/merge.py --cases "${OUTPUT}/cohort_cases.txt.tmp" --control "${OUTPUT}/cohort_control.txt.tmp" -o "${OUTPUT}/cohort.txt.tmp" --test 30 --seed 0 2> $ERR_FILE
   check $?
   check_file "${OUTPUT}/cohort.txt" "${OUTPUT}/cohort.txt.tmp"
-  ${FEATURE_EXTRACT}/extract.py --debug -w "${OUTPUT}/cohort.txt.tmp" --num-cutoff 2 --age-time 20100101 --to 20100101 -o "${OUTPUT}/output.csv.tmp" -f "${format}" -c "${config}" -- "${CMS_DIR}"
+  ${FEATURE_EXTRACT}/extract.py --debug -w "${OUTPUT}/cohort.txt.tmp" --num-cutoff 0 --age-time 20100101 --to 20100101 -o "${OUTPUT}/output.csv.tmp" -f "${format}" -c "${config}" -- "${CMS_DIR}"
   check $?
   check_file "${OUTPUT}/output.csv" "${OUTPUT}/output.csv.tmp"
   check_file "${config_regr}" "${config}"
