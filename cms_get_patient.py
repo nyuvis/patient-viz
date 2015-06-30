@@ -149,12 +149,13 @@ race_map = {
     5: 'h'
 }
 
-def addInfo(obj, id, key, value, hasLabel = False, label = ""):
-    for info in obj["info"]:
-        if info["id"] == id:
-            if str(value) != str(info["value"]):
-                print('duplicate "'+id+'" new: '+str(value)+' old: '+str(info["value"]), file=sys.stderr)
-            return
+def addInfo(obj, id, key, value, hasLabel = False, label = "", saturating=None):
+    if saturating is None:
+        for info in obj["info"]:
+            if info["id"] == id:
+                if str(value) != str(info["value"]):
+                    print('duplicate "'+id+'" new: '+str(value)+' old: '+str(info["value"]), file=sys.stderr)
+                return
     node = {
         "id": id,
         "name": key,
@@ -162,6 +163,12 @@ def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     }
     if hasLabel:
         node["label"] = label
+    if saturating is not None:
+        for (ix, info) in enumerate(obj["info"]):
+            if info["id"] == id:
+                if saturating.index(info["value"]) < saturating.index(node["value"]):
+                    obj["info"][ix] = node
+                return
     obj["info"].append(node)
 
 def handleKey(row, key, mode, hnd):
@@ -261,7 +268,8 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
             addInfo(obj,
                     'chronic_'+(chronic_map[name] if name in chronic_map else name.lower()),
                     'Chronic Disease: '+(chronic_name_map[name] if name in chronic_name_map else name.title()),
-                    chronic_value_map[int(value)]
+                    chronic_value_map[int(value)],
+                    saturating=['n', 'y']
                    )
         )
 
