@@ -1,0 +1,9 @@
+{
+  "default_aggr": "binary",
+  "levels": [0, 1],
+  "info": [
+    ["age_field", "max_num"],
+    ["dead_field", "binary"],
+    ["gender_field", "binary"]
+  ]
+}

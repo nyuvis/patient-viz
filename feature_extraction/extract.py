@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import sys
 import os.path
 import csv
+import json
 
 sys.path.append('..')
 
@@ -31,7 +32,7 @@ ignore = {
     "provider": True,
     "physician": True
 }
-num_cutoff = 500
+num_cutoff = 501
 
 class Dispatcher():
     def __init__(self):
@@ -80,6 +81,7 @@ class ColumnHandler:
         self._info_collectors = []
         self._column_prefixes = []
         self._columns = {}
+        self._valid_levels = None
         aggr_fun, default_value = dispatch.get_aggregator(default_aggr)
         self._default_aggr = (aggr_fun, default_value)
 
@@ -106,6 +108,12 @@ class ColumnHandler:
             self._columns[column] = self._default_aggr
         return self._columns[column]
 
+    def set_valid_levels(self, vl):
+        self._valid_levels = vl
+
+    def valid_levels(self):
+        return self._valid_levels
+
 ### aggregators ###
 
 @dispatch.aggregator(0)
@@ -113,18 +121,12 @@ def aggr_binary(_aggr, _cur):
     return 1
 
 @dispatch.aggregator(0)
-def aggr_sum(aggr, cur):
-    return aggr + cur
+def aggr_count(aggr, _cur):
+    return aggr + 1
 
 @dispatch.aggregator(0)
-def aggr_max(aggr, cur):
-    return max(aggr, cur)
-
-@dispatch.aggregator(0)
-def aggr_unique(aggr, cur):
-    if aggr != 0 and cur != aggr:
-        raise ValueError("multiple unique values {0} and {1}".format(aggr, cur))
-    return cur
+def aggr_max_num(aggr, cur):
+    return max(aggr, int(cur.split('__')[1].strip()))
 
 ### info collectors ###
 
@@ -214,7 +216,21 @@ def processFile(inputFile, id_column, eventHandle, whitelist, ch, printInfo):
 
     eventHandle(inputFile, id_event_cache, id_info_cache, printInfo)
 
-def createEventHandler(cb):
+def createEventHandler(cb, valid_levels):
+
+    def get_real(group, e):
+        if "alias" in e and e["alias"] and e["alias"] != e["id"] and e["alias"] in group:
+            return get_real(group[e["alias"]])
+        return e
+
+    def is_valid_level(group, e):
+        if valid_levels is None:
+            return True
+        level = 0
+        while e["parent"]:
+            e = get_real(group, group[e["parent"]])
+            level += 1
+        return level in valid_levels
 
     def handleEvent(inputFile, id_event_cache, id_info_cache, printInfo):
         if printInfo:
@@ -230,7 +246,13 @@ def createEventHandler(cb):
             dict = {}
             build_dictionary.extractEntries(dict, obj)
             for group in dict.keys():
-                cb(id, group, dict[group].keys())
+                cur_group = dict[group]
+                ekeys = set([])
+                for ek in cur_group.keys():
+                    event = get_real(cur_group, cur_group[ek])
+                    if is_valid_level(cur_group, event):
+                        ekeys.add(event["id"])
+                cb(id, group, list(ekeys))
 
         num_total = len(id_event_cache.keys())
         num = 0
@@ -253,9 +275,9 @@ def createEventHandler(cb):
 def emptyBitVector():
     return {}
 
-def addToBitVector(vector, c, ch, type, value):
+def addToBitVector(vector, c, ch, type):
     aggr_fun, default_value = ch.get_column_aggregator(type)
-    vector[c] = aggr_fun(vector.get(c, default_value), value)
+    vector[c] = aggr_fun(vector.get(c, default_value), type)
 
 def showVectorValue(vector, c, type, ch):
     _, default_value = ch.get_column_aggregator(type)
@@ -290,9 +312,9 @@ def processAll(vectors, header_list, header_counts, path_tuples, whitelist, ch):
         bitvec = getBitVector(vectors, header_list, id)
         for type in types:
             head = getHead(group, type)
-            addToBitVector(bitvec, header[head], ch, head, 1)
+            addToBitVector(bitvec, header[head], ch, head)
 
-    eventHandle = createEventHandler(handle)
+    eventHandle = createEventHandler(handle, ch.valid_levels())
     id_column = cms_get_patient.input_format["patient_id"]
     for (path, isfile) in path_tuples:
         if isfile:
@@ -344,6 +366,8 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
 
 def interpret_header_spec(header_spec, dispatcher):
     ch = ColumnHandler(dispatcher, header_spec["default_aggr"])
+    if "levels" in header_spec:
+        ch.set_valid_levels(header_spec["levels"])
     for row in header_spec["info"]:
         collector = row[0]
         aggregator = row[1]
@@ -351,7 +375,7 @@ def interpret_header_spec(header_spec, dispatcher):
     return ch
 
 def usage():
-    print('usage: {0} [-h|--debug] [--aggregate <method>] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('usage: {0} [-h|--debug] [--aggregate <method>] [--num-cutoff <number>] [--age-time <date>] [--from <date>] [--to <date>] [-o <output>] [-s <spec>] [-w <whitelist>] -f <format> -c <config> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
     print('--debug: prints debug output', file=sys.stderr)
     print('--num-cutoff <number>: specifies the minimum number of occurrences for a column to appear in the output. default is {0}'.format(str(num_cutoff)), file=sys.stderr)
@@ -359,6 +383,7 @@ def usage():
     print('--from <date>: specifies the start date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('--to <date>: specifies the end date as "YYYYMMDD". can be omitted', file=sys.stderr)
     print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
+    print('-s <spec>: set header specification file', file=sys.stderr)
     print('-w <whitelist>: specifies a patient whitelist. all patients if omitted (warning: slow)', file=sys.stderr)
     print('-f <format>: specifies table format file', file=sys.stderr)
     print('-c <config>: specify config file', file=sys.stderr)
@@ -371,6 +396,14 @@ if __name__ == '__main__':
     settings = {}
     settings['delim'] = ','
     settings['quote'] = '"'
+    header_spec = {
+        "default_aggr": "binary",
+        "info": [
+            ["age_bin", "binary"],
+            ["dead_field", "binary"],
+            ["gender_field", "binary"]
+        ]
+    }
     whitelist = None
     args = sys.argv[:]
     args.pop(0)
@@ -400,6 +433,12 @@ if __name__ == '__main__':
                 print('--to requires a date', file=sys.stderr)
                 usage()
             to_time = util.toTime(args.pop(0))
+        elif arg == '-s':
+            if not args or args[0] == '--':
+                print('-s requires specification file', file=sys.stderr)
+                usage()
+            with open(args.pop(0), 'r') as input:
+                header_spec = json.loads(input.read())
         elif arg == '-w':
             if not args or args[0] == '--':
                 print('-w requires whitelist file', file=sys.stderr)
@@ -458,14 +497,6 @@ if __name__ == '__main__':
     vectors = {}
     header_list = []
     header_counts = {}
-    header_spec = {
-        "default_aggr": "binary",
-        "info": [
-            ["age_bin", "unique"],
-            ["dead_field", "unique"],
-            ["gender_field", "unique"]
-        ]
-    }
     ch = interpret_header_spec(header_spec, dispatch)
     processAll(vectors, header_list, header_counts, allPaths, whitelist, ch)
     with util.OutWrapper(output) as out:
