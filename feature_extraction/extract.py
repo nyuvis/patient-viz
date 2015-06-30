@@ -84,26 +84,26 @@ class ColumnHandler:
         self._columns = {}
         self._valid_levels = None
         aggr_fun, default_value = dispatch.get_aggregator(default_aggr)
-        self._default_aggr = (aggr_fun, default_value)
+        self._default_aggr = (aggr_fun, default_value, default_aggr)
 
     def add_info_handler(self, collector, aggregator):
         collector_fun, column_prefixes = self._dispatch.get_info_collector(collector)
         aggr_fun, default_value = self._dispatch.get_aggregator(aggregator)
         self._info_collectors.append(collector_fun)
         for cp in column_prefixes:
-            for (ocp, _, _) in self._column_prefixes:
+            for (ocp, _, _, _) in self._column_prefixes:
                 if cp.startswith(ocp) or ocp.startswith(cp):
                     raise ValueError("column prefixes shadow each other: {0} {1}".format(cp, ocp))
-            self._column_prefixes.append((cp, aggr_fun, default_value))
+            self._column_prefixes.append((cp, aggr_fun, default_value, aggregator))
 
     def get_info_collectors(self):
         return self._info_collectors
 
     def get_column_aggregator(self, column):
         if column not in self._columns:
-            for (cp, aggr_fun, default_value) in self._column_prefixes:
+            for (cp, aggr_fun, default_value, name) in self._column_prefixes:
                 if column.startswith(cp):
-                    self._columns[column] = (aggr_fun, default_value)
+                    self._columns[column] = (aggr_fun, default_value, name)
                     break
         if column not in self._columns:
             self._columns[column] = self._default_aggr
@@ -174,7 +174,7 @@ def collect_age_field(info, infoCache):
 @dispatch.info_collector([ "dead" ])
 def collect_dead_field(info, infoCache):
     if info["id"] == "death":
-        infoCache.append(("dead", 1))
+        infoCache.append(("dead", 1 if info["value"] != "N/A" else 0))
 
 @dispatch.info_collector([ "sex_" ])
 def collect_sex_field(info, infoCache):
@@ -198,11 +198,11 @@ def emptyBitVector():
     return {}
 
 def addToBitVector(vector, c, ch, type, value):
-    aggr_fun, default_value = ch.get_column_aggregator(type)
+    aggr_fun, default_value, _ = ch.get_column_aggregator(type)
     vector[c] = aggr_fun(vector.get(c, default_value), value)
 
 def showVectorValue(vector, c, type, ch):
-    _, default_value = ch.get_column_aggregator(type)
+    _, default_value, _ = ch.get_column_aggregator(type)
     return str(vector.get(c, default_value))
 
 def getBitVector(vectors, header_list, id):
@@ -359,7 +359,8 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
     columnMap = {}
     for (ix, h) in enumerate(hl):
         n = header_counts[h]
-        if num_cutoff < 0 or (n > num_cutoff and n < num_total - num_cutoff):
+        _, _, name = ch.get_column_aggregator(h)
+        if name != "binary" or num_cutoff < 0 or (n > num_cutoff and n < num_total - num_cutoff):
             columnMap[h] = ix
 
     columns = map(lambda h: columnMap[h], sorted(columnMap.keys()))
