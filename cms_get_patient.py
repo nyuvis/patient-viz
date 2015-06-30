@@ -30,6 +30,7 @@ TYPE_PHYSICIAN  = "physician"
 MODE_OPTIONAL = 0
 MODE_DEFAULT = 1
 MODE_ARRAY = 2
+MODE_DISPATCH = 3
 
 STATUS_UNKNOWN = 0
 STATUS_IN = 1
@@ -55,6 +56,99 @@ gender_map = {
     "W": "W"
 }
 
+chronic_map = {
+    "SP_RA_OA": "arthritis",
+    "SP_CHF": "heart_failure",
+    "SP_DIABETES": "diabetes",
+    "SP_CHRNKIDN": "kidney_disease",
+    "SP_OSTEOPRS": "osteoporosis",
+    "SP_ALZHDMTA": "alzheimer",
+    "SP_COPD": "obstructive_pulmonary_disease",
+    "SP_ISCHMCHT": "ischemic_heart_disease",
+    "SP_DEPRESSN": "depression",
+    "SP_CNCR": "cancer",
+    "SP_STRKETIA": "stroke"
+}
+chronic_name_map = {
+    "SP_RA_OA": "Rheumatoid Arthritis and Osteoarthritis",
+    "SP_CHF": "Heart Failure",
+    "SP_DIABETES": "Diabetes",
+    "SP_CHRNKIDN": "Kidney Disease",
+    "SP_OSTEOPRS": "Osteoporosis",
+    "SP_ALZHDMTA": "Alzheimer, Related Disease, or Senile",
+    "SP_COPD": "Obstructive Pulmonary Disease",
+    "SP_ISCHMCHT": "Ischemic Heart Disease",
+    "SP_DEPRESSN": "Depression",
+    "SP_CNCR": "Cancer",
+    "SP_STRKETIA": "Stroke or Transient Ischemic Attack"
+}
+chronic_value_map = {
+    1: 'y',
+    2: 'n'
+}
+
+state_map = {
+    1: 'AL',
+    2: 'AK',
+    3: 'AZ',
+    4: 'AR',
+    5: 'CA',
+    6: 'CO',
+    7: 'CT',
+    8: 'DE',
+    9: 'DC',
+    10: 'FL',
+    11: 'GA',
+    12: 'HI',
+    13: 'ID',
+    14: 'IL',
+    15: 'IN',
+    16: 'IA',
+    17: 'KS',
+    18: 'KY',
+    19: 'LA',
+    20: 'ME',
+    21: 'MD',
+    22: 'MA',
+    23: 'MI',
+    24: 'MN',
+    25: 'MS',
+    26: 'MO',
+    27: 'MT',
+    28: 'NE',
+    29: 'NV',
+    30: 'NH',
+    31: 'NJ',
+    32: 'NM',
+    33: 'NY',
+    34: 'NC',
+    35: 'ND',
+    36: 'OH',
+    37: 'OK',
+    38: 'OR',
+    39: 'PA',
+    41: 'RI',
+    42: 'SC',
+    43: 'SD',
+    44: 'TN',
+    45: 'TX',
+    46: 'UT',
+    47: 'VT',
+    49: 'VA',
+    50: 'WA',
+    51: 'WV',
+    52: 'WI',
+    53: 'WY',
+    54: 'other'
+}
+
+race_map = {
+    1: 'w',
+    2: 'b',
+    3: 'o',
+    5: 'h'
+}
+
 def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     for info in obj["info"]:
         if info["id"] == id:
@@ -71,6 +165,11 @@ def addInfo(obj, id, key, value, hasLabel = False, label = ""):
     obj["info"].append(node)
 
 def handleKey(row, key, mode, hnd):
+    if mode == MODE_DISPATCH:
+        for k in input_format[key]:
+            if k in row:
+                hnd(row[k], k)
+        return
     if mode == MODE_ARRAY:
         for k in input_format[key]:
             if k in row and row[k] != '':
@@ -147,6 +246,23 @@ def handleRow(row, obj, statusMap={}, status=STATUS_UNKNOWN):
         )
     handleKey(row, "gender", MODE_OPTIONAL, lambda value:
             addInfo(obj, 'gender', 'Gender', gender_map.get(str(value), 'U'), True, gender_label.get(str(value), "default"))
+        )
+    handleKey(row, "county", MODE_OPTIONAL, lambda value:
+            addInfo(obj, 'county', 'County', value)
+        )
+    handleKey(row, "state", MODE_OPTIONAL, lambda value:
+            addInfo(obj, 'state', 'State', state_map[int(value)])
+        )
+    handleKey(row, "race", MODE_OPTIONAL, lambda value:
+            addInfo(obj, 'race', 'Race', race_map[int(value)])
+        )
+
+    handleKey(row, "chronic_diseases", MODE_DISPATCH, lambda value, name:
+            addInfo(obj,
+                    'chronic_'+(chronic_map[name] if name in chronic_map else name.lower()),
+                    'Chronic Disease: '+(chronic_name_map[name] if name in chronic_name_map else name.title()),
+                    chronic_value_map[int(value)]
+                   )
         )
 
     def addCost(event, amount):

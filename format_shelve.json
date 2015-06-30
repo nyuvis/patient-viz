@@ -2,6 +2,7 @@
   "patient_id": "MEMBER_ID",
   "age": "ELIG_AGE",
   "gender": "ELIG_GENDER",
+  "chronic_diseases": [],
   "provider_ibc": [
     "MED_CLMS_SERVICE_PLACE",
     "RX_CLMS_SERVICE_PLACE",

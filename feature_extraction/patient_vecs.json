@@ -2,14 +2,18 @@
   "default_aggr": "binary",
   "levels": [0, 1],
   "info": [
-    ["age_field", "max"],
+    ["age_field", "min"],
     ["dead_field", "binary"],
     ["gender_field", "unique"],
+    ["hospital_visits", "count"],
     ["hospital_days", "sum"],
-    ["hospital_visits", "count"]
+    ["chronics", "towards_yes"],
+    ["county", "unique"],
+    ["state", "unique"],
+    ["race", "unique"]
   ],
   "claim": [
-    ["claim_cost", "sum"]
+    ["claim_cost", "sum"],
     ["num_claims", "count"]
   ]
 }

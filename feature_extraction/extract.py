@@ -161,9 +161,17 @@ def aggr_count(aggr, _cur):
 def aggr_sum(aggr, cur):
     return aggr + cur
 
-@dispatch.aggregator(0)
+@dispatch.aggregator('n/a')
 def aggr_max(aggr, cur):
+    if aggr == 'n/a':
+        return cur
     return max(aggr, cur)
+
+@dispatch.aggregator('n/a')
+def aggr_min(aggr, cur):
+    if aggr == 'n/a':
+        return cur
+    return min(aggr, cur)
 
 @dispatch.aggregator(0)
 def aggr_unique(aggr, cur):
@@ -171,21 +179,29 @@ def aggr_unique(aggr, cur):
         raise ValueError("multiple unique values {0} and {1}".format(aggr, cur))
     return cur
 
+@dispatch.aggregator('n/a')
+def aggr_towards_yes(aggr, cur):
+    if cur == 'y':
+        return 'y'
+    elif cur == 'n' and aggr != 'y':
+        return 'n'
+    return aggr
+
 ### info collectors ###
 
 @dispatch.info_collector([ "age_" ])
 def collect_age_bin(info, infoCache):
     if info["id"] == "born":
         try:
-            bin = (int(info["value"]) // age_bin_count) * age_bin_count
-            infoCache.append(("age_" + str(bin) + "_" + str(bin + age_bin_count), 1))
+            if info["value"] != "N/A" and age_time is not None:
+                bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
+                infoCache.append(("age_" + str(bin) + "_" + str(bin + age_bin_count), 1))
         except ValueError:
             pass
     elif info["id"] == "age":
         try:
-            if info["value"] != "N/A" and age_time is not None:
-                bin = (util.toAge(info["value"], age_time) // age_bin_count) * age_bin_count
-                infoCache.append(("age_" + str(bin) + "_" + str(bin + age_bin_count), 1))
+            bin = (int(info["value"]) // age_bin_count) * age_bin_count
+            infoCache.append(("age_" + str(bin) + "_" + str(bin + age_bin_count), 1))
         except ValueError:
             pass
 
@@ -193,13 +209,13 @@ def collect_age_bin(info, infoCache):
 def collect_age_field(info, infoCache):
     if info["id"] == "born":
         try:
-            infoCache.append(("age", int(info["value"])))
+            if info["value"] != "N/A" and age_time is not None:
+                infoCache.append(("age", util.toAge(info["value"], age_time)))
         except ValueError:
             pass
     elif info["id"] == "age":
         try:
-            if info["value"] != "N/A" and age_time is not None:
-                infoCache.append(("age", util.toAge(info["value"], age_time)))
+            infoCache.append(("age", int(info["value"])))
         except ValueError:
             pass
 
@@ -220,9 +236,11 @@ def collect_sex_field(info, infoCache):
 def collect_gender_field(info, infoCache):
     if info["id"] == "gender":
         if info["value"] == "M":
-            infoCache.append(("gender", 1))
+            infoCache.append(("gender", 'm'))
         elif info["value"] == "F":
-            infoCache.append(("gender", 2))
+            infoCache.append(("gender", 'f'))
+        else:
+            infoCache.append(("gender", 'n/a'))
 
 @dispatch.info_collector([ "hospital_days" ])
 def collect_hospital_days(info, infoCache):
@@ -233,6 +251,26 @@ def collect_hospital_days(info, infoCache):
 def collect_hospital_visits(info, infoCache):
     if info["id"] == "stay_in_hospital":
         infoCache.append(("hospital_visits", 1))
+
+@dispatch.info_collector([ "county" ])
+def collect_county(info, infoCache):
+    if info["id"] == "county":
+        infoCache.append(("county", info["value"]))
+
+@dispatch.info_collector([ "state" ])
+def collect_state(info, infoCache):
+    if info["id"] == "state":
+        infoCache.append(("state", info["value"]))
+
+@dispatch.info_collector([ "race" ])
+def collect_race(info, infoCache):
+    if info["id"] == "race":
+        infoCache.append(("race", info["value"]))
+
+@dispatch.info_collector([ "chronic_" ])
+def collect_chronics(info, infoCache):
+    if info["id"].startswith('chronic_'):
+        infoCache.append((info["id"], info["value"]))
 
 ### claim collectors ###
 

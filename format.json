@@ -3,6 +3,22 @@
   "born": "BENE_BIRTH_DT",
   "death": "BENE_DEATH_DT",
   "gender": "BENE_SEX_IDENT_CD",
+  "chronic_diseases": [
+    "SP_RA_OA",
+    "SP_CHF",
+    "SP_DIABETES",
+    "SP_CHRNKIDN",
+    "SP_OSTEOPRS",
+    "SP_ALZHDMTA",
+    "SP_COPD",
+    "SP_ISCHMCHT",
+    "SP_DEPRESSN",
+    "SP_CNCR",
+    "SP_STRKETIA"
+  ],
+  "county": "BENE_COUNTY_CD",
+  "state": "SP_STATE_CODE",
+  "race": "BENE_RACE_CD",
   "provider_ibc": [
   ],
   "provider_cms": [
