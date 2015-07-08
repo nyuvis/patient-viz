@@ -291,7 +291,7 @@ pip_install() {
   test_fail $?
   echo "install python packages"
   pip install --upgrade pip
-  pip install -r requirements.txt
+  pip install --upgrade -r requirements.txt
   test_fail $?
 }
 
