@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # @author Joschi <josua.krause@gmail.com>
 # created 2015-02-16 09:00
 
@@ -162,8 +162,7 @@ fi
 # initialize git submodule if not done by user
 git_submodule=`git submodule status | grep "^-"`
 if [ ! -z "${git_submodule}" ]; then
-  git submodule init
-  git submodule update
+  git submodule update --init --recursive
 fi
 
 cd_back() {
@@ -291,6 +290,7 @@ pip_install() {
   source ${venv_activate}
   test_fail $?
   echo "install python packages"
+  pip install --upgrade pip
   pip install -r requirements.txt
   test_fail $?
 }

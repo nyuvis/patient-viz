@@ -89,6 +89,11 @@ class OutWrapper(object):
         self.close()
         return isinstance(value, StdOutClose)
 
+def toAge(s, age_time):
+    today = datetime.fromtimestamp(age_time)
+    born = datetime.fromtimestamp(toTime(str(s) + "0101"))
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
 _path_correction = '.'
 def get_file(file, debugOutput=False):
     res = os.path.join(_path_correction, file)
@@ -98,6 +103,8 @@ def get_file(file, debugOutput=False):
 
 def read_config(settings, file, debugOutput=False):
     global _path_correction
+    if file is None:
+        return
     _path_correction = os.path.dirname(os.path.abspath(file))
     config = {}
     if debugOutput:
@@ -106,9 +113,39 @@ def read_config(settings, file, debugOutput=False):
         with open(file, 'r') as input:
             config = json.loads(input.read())
     settings.update(config)
-    if set(settings.keys()) - set(config.keys()):
+    save_on_change(settings, config, file)
+
+def save_config(settings, file):
+    global _path_correction
+    if file is None:
+        return
+    _path_correction = os.path.dirname(os.path.abspath(file))
+    config = {}
+    if os.path.isfile(file):
+        with open(file, 'r') as input:
+            config = json.loads(input.read())
+    save_on_change(settings, config, file)
+
+def save_on_change(local, original, file):
+    same = True
+    lk = local.keys()
+    ok = original.keys()
+    if len(lk) != len(ok):
+        same = False
+    else:
+        for k in lk:
+            if k not in original or local[k] != original[k]:
+                same = False
+                break
+        if same:
+            # small number of keys so it is not bad to iterate twice
+            for k in ok:
+                if k not in local or original[k] != local[k]:
+                    same = False
+                    break
+    if not same:
         with open(file, 'w') as output:
-            print(json.dumps(settings, indent=2, sort_keys=True), file=output)
+            print(json.dumps(local, indent=2, sort_keys=True), file=output)
 
 def read_format(file, input_format, usage):
     if not os.path.isfile(file):
@@ -126,7 +163,10 @@ def process_burst_directory(dir, cb):
                 cb(root, file)
 
 def process_directory(dir, cb, show_progress=True):
-    dirty = False
+    process_whitelisted_directory(dir, None, cb, show_progress)
+
+def process_whitelisted_directory(dir, whitelist, cb, show_progress=True):
+    wl = frozenset([ w[:3] for w in whitelist ]) if whitelist is not None else None
     for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
@@ -145,9 +185,10 @@ def process_directory(dir, cb, show_progress=True):
                             dirty = True
                         except:
                             pass
-                    for file in sorted(files):
-                        if file.endswith(".csv"):
-                            cb(os.path.join(root, file), False)
+                    if wl is None or "{0}{1}{2}".format(segs[0], segs[1], segs[2]) in wl:
+                        for file in sorted(files):
+                            if file.endswith(".csv"):
+                                cb(os.path.join(root, file), False)
                     continue
         for file in sorted(files):
             if file.endswith(".csv"):
@@ -157,7 +198,6 @@ def process_directory(dir, cb, show_progress=True):
                 cb(os.path.join(root, file), show_progress)
     if dirty and show_progress and sys.stderr.isatty():
         print("", file=sys.stderr)
-
 
 def process_id_directory(dir, id, cb):
     for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
@@ -179,4 +219,3 @@ def process_id_directory(dir, id, cb):
         for file in sorted(files):
             if file.endswith(".csv"):
                 cb(os.path.join(root, file), id)
-

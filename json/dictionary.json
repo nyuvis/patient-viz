@@ -30725,11 +30725,10 @@
       "unmapped": true
     }, 
     "101350522": {
-      "desc": "prescribed (ndc) 101350522", 
+      "desc": "Primidone [Primidone HUMAN PRESCRIPTION DRUG] (Primidone) PRIMIDONE - Anti-epileptic Agent [EPC],Decreased Central Nervous System Disorganized Electrical Activity [PE] - HUMAN PRESCRIPTION DRUG", 
       "id": "101350522", 
-      "name": "101350522", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Primidone", 
+      "parent": ""
     }, 
     "101490127": {
       "desc": "prescribed (ndc) 101490127", 
@@ -32568,11 +32567,10 @@
       "parent": ""
     }, 
     "499990820": {
-      "desc": "prescribed (ndc) 499990820", 
+      "desc": "Metformin Hydrochloride [Metformin Hydrochloride HUMAN PRESCRIPTION DRUG] (Metformin Hydrochloride) METFORMIN HYDROCHLORIDE - Biguanide [EPC],Biguanides [Chemical/Ingredient] - HUMAN PRESCRIPTION DRUG", 
       "id": "499990820", 
-      "name": "499990820", 
-      "parent": "", 
-      "unmapped": true
+      "name": "Metformin Hydrochloride", 
+      "parent": ""
     }, 
     "499990903": {
       "desc": "prescribed (ndc) 499990903", 
@@ -36260,10 +36258,11 @@
       "parent": ""
     }, 
     "605052640": {
-      "desc": "Hydrochlorothiazide [Hydrochlorothiazide HUMAN PRESCRIPTION DRUG] (Hydrochlorothiazide) HYDROCHLOROTHIAZIDE - Increased Diuresis [PE],Thiazide Diuretic [EPC],Thiazides [Chemical/Ingredient] - HUMAN PRESCRIPTION DRUG", 
+      "desc": "prescribed (ndc) 605052640", 
       "id": "605052640", 
-      "name": "Hydrochlorothiazide", 
-      "parent": ""
+      "name": "605052640", 
+      "parent": "", 
+      "unmapped": true
     }, 
     "605944112": {
       "desc": "prescribed (ndc) 605944112", 
@@ -41829,11 +41828,10 @@
       "unmapped": true
     }, 
     "ndc__10135052210": {
-      "desc": "prescribed (ndc) 10135052210", 
+      "desc": "Primidone [1000 TABLET in 1 BOTTLE (10135-522-10)] (Primidone) PRIMIDONE - Anti-epileptic Agent [EPC],Decreased Central Nervous System Disorganized Electrical Activity [PE] - HUMAN PRESCRIPTION DRUG", 
       "id": "10135052210", 
-      "name": "10135052210", 
-      "parent": "101350522", 
-      "unmapped": true
+      "name": "Primidone", 
+      "parent": "101350522"
     }, 
     "ndc__10149012701": {
       "desc": "prescribed (ndc) 10149012701", 
@@ -43695,11 +43693,10 @@
       "unmapped": true
     }, 
     "ndc__49999082060": {
-      "desc": "prescribed (ndc) 49999082060", 
+      "desc": "Metformin Hydrochloride [60 TABLET, EXTENDED RELEASE in 1 BOTTLE, PLASTIC (49999-820-60)] (Metformin Hydrochloride) METFORMIN HYDROCHLORIDE - Biguanide [EPC],Biguanides [Chemical/Ingredient] - HUMAN PRESCRIPTION DRUG", 
       "id": "49999082060", 
-      "name": "49999082060", 
-      "parent": "499990820", 
-      "unmapped": true
+      "name": "Metformin Hydrochloride", 
+      "parent": "499990820"
     }, 
     "ndc__49999090330": {
       "desc": "prescribed (ndc) 49999090330", 
@@ -47744,10 +47741,11 @@
       "parent": "605052587"
     }, 
     "ndc__60505264007": {
-      "desc": "Hydrochlorothiazide [28000 TABLET in 1 BOTTLE (60505-2640-7)] (Hydrochlorothiazide) HYDROCHLOROTHIAZIDE - Increased Diuresis [PE],Thiazide Diuretic [EPC],Thiazides [Chemical/Ingredient] - HUMAN PRESCRIPTION DRUG", 
+      "desc": "prescribed (ndc) 60505264007", 
       "id": "60505264007", 
-      "name": "Hydrochlorothiazide", 
-      "parent": "605052640"
+      "name": "60505264007", 
+      "parent": "605052640", 
+      "unmapped": true
     }, 
     "ndc__60594411201": {
       "desc": "prescribed (ndc) 60594411201", 

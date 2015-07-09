@@ -12,3 +12,4 @@
 json.zip
 **/*.pyc
 /.venv/
+/config.txt.tmp_local
