@@ -8,7 +8,7 @@ We also have a [live demo](http://nyuvis.github.io/patient-viz/index.html)!
 The project is a joint product of [Josua Krause](http://josuakrause.github.io/info/), Narges Sharif Razavian,
 Enrico Bertini, and [David Sontag](http://cs.nyu.edu/~dsontag/).
 
-![The tool in action!](overview.png)
+[![The tool in action!](overview.png)](http://nyuvis.github.io/patient-viz/index.html)
 
 [![Build Status](https://travis-ci.org/nyuvis/patient-viz.svg?branch=master)](https://travis-ci.org/nyuvis/patient-viz)
 
