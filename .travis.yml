@@ -2,7 +2,7 @@ os:
   - linux
   - osx
 language: python
-sudo: true
+sudo: false
 env:
   - TEST_MODE=run_tests
 python:
@@ -11,9 +11,13 @@ python:
 #  - "3.2"
 #  - "3.3"
 #  - "3.4"
+addons:
+  apt:
+    packages:
+    - python-sklearn
+    - python-numpy
+    - python-scipy
 install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq python-sklearn python-numpy python-scipy
   - virtualenv --system-site-packages .venv && source .venv/bin/activate
   - pip install --upgrade pip
   - pip install -r requirements.txt
