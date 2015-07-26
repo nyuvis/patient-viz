@@ -6,7 +6,7 @@ from __future__ import division
 
 import sys
 import os
-from datetime import datetime, timedelta, tzinfo, fromtimestamp
+from datetime import datetime, timedelta, tzinfo
 import pytz
 import collections
 from operator import itemgetter
@@ -35,7 +35,7 @@ def toTime(s):
     return _mktime(datetime(year=int(s[0:4]), month=int(s[4:6]), day=int(s[6:8]), tzinfo=_tz))
 
 def from_time(stamp):
-    return fromtimestamp(stamp, _tz).strftime("%Y%m%d")
+    return datetime.fromtimestamp(stamp, _tz).strftime("%Y%m%d")
 
 def nextDay(stamp):
     return shift_days(stamp, 1)
