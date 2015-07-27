@@ -34,8 +34,14 @@ def _mktime(dt):
 def toTime(s):
     return _mktime(datetime(year=int(s[0:4]), month=int(s[4:6]), day=int(s[6:8]), tzinfo=_tz))
 
+def from_time(stamp):
+    return datetime.fromtimestamp(stamp, _tz).strftime("%Y%m%d")
+
 def nextDay(stamp):
-    return _mktime(_epoch + timedelta(days=1, seconds=stamp))
+    return shift_days(stamp, 1)
+
+def shift_days(stamp, days):
+    return _mktime(_epoch + timedelta(days=days, seconds=stamp))
 
 def span_to_days(elapsed_seconds):
     return elapsed_seconds / _day_seconds

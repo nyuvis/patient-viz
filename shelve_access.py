@@ -7,6 +7,8 @@ import shelve
 import sys
 import os.path
 import json
+import hashlib
+import random
 
 import util
 
@@ -70,7 +72,7 @@ def openDB(pid, data, out, writeHeader):
     db.close()
     if writeHeader:
         writeRow(all_hdrs, out, 0, len(all_hdrs), settings['join_id'])
-    return (row_definitions, len(all_hdrs))
+    return (row_definitions, len(all_hdrs), all_hdrs)
 
 def readShelve(pid, settings, output):
     pids = [ pid ]
@@ -81,24 +83,50 @@ def readShelve(pid, settings, output):
         'quote': settings['quote'],
         'out': output
     }
+    anonymize = settings['anonymize']['do']
     first = True
     for patientId in pids:
+        if anonymize:
+            realId = hashlib.sha1(patientId).hexdigest()
+            age_shift = 0
+            while age_shift == 0:
+                age_shift = random.randint(-10, 10)
+            date_shift = 0
+            while date_shift == 0:
+                date_shift = random.randint(-365 * 10, 365 * 10)
+        else
+            realId = patientId
         join_id = settings['join_id']
         splitter = settings['row_split']
-        (row_defs, length) = openDB(patientId, settings, out, first)
+        (row_defs, length, all_hdrs) = openDB(patientId, settings, out, first)
         first = False
         for row_def in row_defs:
             start = row_def['start']
+            col_num = row_def['col_num']
             skip = row_def['skip']
+            # manipulation ixs apply before skipping
+            age_ixs = [ ix - start for ix in xrange(start, start + col_num) if all_hdrs[ix] in settings['anonymize']['age_columns'] ]
+            date_ixs = [ ix - start for ix in xrange(start, start + col_num) if all_hdrs[ix] in settings['anonymize']['date_columns'] ]
+            redact_ixs = [ ix - start for ix in xrange(start, start + col_num) if all_hdrs[ix] in settings['anonymize']['redact_columns'] ]
             for row in row_def['data']:
                 if row == '':
                     continue
                 values = row.strip().split(splitter)
+                if anonymize:
+                    for ix in age_ixs:
+                        values[ix] = str(int(values[ix]) + age_shift)
+                    for ix in date_ixs:
+                        values[ix] = util.from_time(util.shift_days(util.toTime(values[ix]), date_shift))
+                    for ix in redact_ixs:
+                        values[ix] = ''
                 id = values.pop(skip)
-                if len(values) != row_def['col_num']:
-                    print("column mismatch! expected {0} got {1}: {2}".format(str(row_def['col_num']), str(len(values)), row), file=sys.stderr)
+                if len(values) != col_num:
+                    print("column mismatch! expected {0} got {1}: {2}".format(str(col_num), str(len(values)), row), file=sys.stderr)
                     continue
-                writeRow(values, out, start, length, id)
+                if id != patientId:
+                    print("unexpected id! expected {0} got {1}: {2}".format(patientId, id, row))
+                    continue
+                writeRow(values, out, start, length, realId)
 
 def getAll(settings):
     pids = []
@@ -121,13 +149,16 @@ def printList(settings):
 ### argument API
 
 def usage():
-    print("{0}: --all | -p <pid> -c <config> -o <output> [-h|--help] | [-l|--list]".format(sys.argv[0]), file=sys.stderr)
-    print("--all: print all patients", file=sys.stderr)
-    print("-p <pid>: specify patient id", file=sys.stderr)
-    print("-c <config>: specify config file", file=sys.stderr)
-    print("-o <output>: specify output file. '-' uses standard out", file=sys.stderr)
-    print("-h|--help: prints this help", file=sys.stderr)
-    print("-l|--list: prints all available patient ids and exits", file=sys.stderr)
+    print("""
+{0}: --all | -p <pid> -c <config> -o <output> [--seed <seed>] [-h|--help] | [-l|--list]
+-h|--help: prints this help
+--all: print all patients
+-p <pid>: specify patient id
+-c <config>: specify config file
+-o <output>: specify output file. '-' uses standard out
+--seed <seed>: specifies the seed for the rng. if omitted the seed is not set. needs to be integer
+-l|--list: prints all available patient ids and exits
+""".strip().format(sys.argv[0]), file=sys.stderr)
     sys.exit(1)
 
 def interpretArgs():
@@ -146,7 +177,43 @@ def interpretArgs():
         'shelve_id_files': [
             '/m/data/memberIds/mMyeloma.txt',
             '/m/data/memberIds/mdiabetes.txt'
-        ]
+        ],
+        'anonymize': {
+            'do': False,
+            'date_columns': [
+                'ELIG_EFFECTIVE_DATE',
+                'ELIG_TERMINATION_DATE',
+                'ENCS_SERVICE_DATE',
+                'ENCS_PAID_DATE',
+                'ENCS_ADMIT_DATE',
+                'ENCS_DISCHARGE_DATE',
+                'LAB_RSL_SERVICE_DATE',
+                'MED_CLMS_SERVICE_DATE',
+                'MED_CLMS_PAID_DATE',
+                'MED_CLMS_ADMIT_DATE',
+                'MED_CLMS_DISCHARGE_DATE',
+                'RX_CLMS_SERVICE_DATE',
+                'RX_CLMS_PAID_DATE',
+                'RX_CLMS_PRESCRIPTION_DATE'
+            ],
+            'age_columns': [
+                'ELIG_AGE',
+                'LAB_RSL_AGE',
+                'RX_CLMS_AGE'
+            ],
+            'redact_columns': [
+                'ELIG_PATIENT_KEY',
+                'ELIG_OLD_MEMBER_ID',
+                'ELIG_SUBSCRIBER_ID',
+                'ELIG_ZIP',
+                'ELIG_COUNTRY_CODE',
+                'ELIG_PCP_ID',
+                'ELIG_GROUP_ID',
+                'ELIG_SUB_GROUP_ID',
+                'ELIG_PLAN_ID',
+                'LAB_RSL_SUBSCRIBER_ID'
+            ]
+        }
     }
     info = {
         'pid': '',
@@ -178,6 +245,16 @@ def interpretArgs():
                 print('-o requires argument', file=sys.stderr)
                 usage()
             info['output'] = args.pop(0)
+        elif arg == '--seed':
+            if not len(args):
+                print('--seed requires integer seed', file=sys.stderr)
+                usage()
+            try:
+                seed = int(args.pop(0))
+                random.seed(seed)
+            except:
+                print('--seed requires integer seed', file=sys.stderr)
+                usage()
         else:
             print('illegal argument '+val, file=sys.stderr)
             usage()
