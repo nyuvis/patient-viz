@@ -4,3 +4,6 @@
 [submodule "lib/mdsjs"]
 	path = lib/mdsjs
 	url = https://github.com/JosuaKrause/mdsjs.git
+[submodule "lib/curl-chk"]
+	path = lib/curl-chk
+	url = https://github.com/JosuaKrause/curl-chk.git
