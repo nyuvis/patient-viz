@@ -11,5 +11,6 @@
 /patients.txt
 json.zip
 **/*.pyc
+*.pyc
 /.venv/
 /config.txt.tmp_local

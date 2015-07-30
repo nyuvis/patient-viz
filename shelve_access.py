@@ -94,7 +94,7 @@ def readShelve(pid, settings, output):
             date_shift = 0
             while date_shift == 0:
                 date_shift = random.randint(-365 * 10, 365 * 10)
-        else
+        else:
             realId = patientId
         join_id = settings['join_id']
         splitter = settings['row_split']
