@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Matrix</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="lib/jk-js/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="lib/jk-js/lib/d3/d3.min.js" charset="utf-8"></script>
+  <script src="lib/colorbrewer/colorbrewer.js" charset="utf-8"></script>
+  <script src="lib/jk-js/jkjs/load.js" charset="utf-8"></script>
+  <script src="lib/jk-js/jkjs/stat.js" charset="utf-8"></script>
+  <script src="lib/jk-js/jkjs/util.js" charset="utf-8"></script>
+  <style>
+    div#main {
+      padding: 0;
+      margin: 5px;
+    }
+
+    svg {
+      padding: 0;
+      margin: 0;
+      display: block;
+    }
+  </style>
+</head>
+<body onload="start()">
+  <div id="main">
+    <svg id="svg_head"></svg>
+  </div>
+<script>
+function start() {
+  jkjs.LOAD_VERBOSE = false;
+  var urlArgs = jkjs.util.getQueryStrings();
+
+  var duration = 750;
+  var ease = "easeInOutCubic";
+  var size = 10;
+
+  var colId = 'id';
+  var colMatches = [
+    /^info__/,
+    /HIERARCHY\.[0-9]+$/
+  ];
+
+  function distance(features, aix, bix) {
+    return features.reduce(function(sum, f) {
+      return sum + f.distSq(aix, bix);
+    }, 0);
+  }
+
+  function kmedoids(features, ixs, clusters, maxRounds) {
+    var medoidIxs = jkjs.util.sample(ixs, clusters);
+    var labels = [];
+    for(var rounds = 0;rounds < maxRounds;rounds += 1) {
+      var oldLabels = labels;
+      labels = ixs.map(function(ix) {
+        return medoidIxs.reduce(function(best, mix) {
+          var curDist = distance(features, ix, mix);
+          return curDist < best[1] ? [ mix, curDist ] : best;
+        }, [ -1, Number.POSITIVE_INFINITY ])[0];
+      });
+      if(jkjs.util.eqArr(labels, oldLabels)) {
+        // converged
+        console.log("converged", rounds);
+        return labels;
+      }
+      var clusterSet = {};
+      labels.forEach(function(l, ix) {
+        if(!(l in clusterSet)) {
+          clusterSet[l] = [];
+        }
+        clusterSet[l].push(ixs[ix]);
+      });
+      medoidIxs = Object.keys(clusterSet).map(function(set) {
+        var matrix = new Float64Array(set.length * set.length);
+        for(var a = 0;a < set.length;a += 1) {
+          for(var b = 0;b < a;b += 1) {
+            var d = distance(features, set[a], set[b]);
+            matrix[a + b * set.length] = d;
+            matrix[b + a * set.length] = d;
+          }
+        }
+        var bestSum = Number.POSITIVE_INFINITY;
+        var bestIx = -1;
+        for(var a = 0;a < set.length;a += 1) {
+          var sum = 0;
+          for(var b = 0;b < set.length;b += 1) {
+            sum += matrix[b + a * set.length];
+          }
+          if(sum < bestSum) {
+            bestSum = sum;
+            bestIx = set[a];
+          }
+        }
+        return bestIx;
+      }).filter(function(ix) {
+        return ix >= 0;
+      });
+    }
+    console.log("count", rounds);
+    return labels;
+  } // kmedoids
+
+  var file = "f" in urlArgs ? urlArgs["f"] : "pvecs_small.csv";
+  function Feature(name, size, isNominal) {
+    var that = this;
+    var arr = isNominal ? new Uint32Array(size) : new Float64Array(size);
+    var valMap = isNominal ? {} : null;
+    var revMap = isNominal ? {} : null;
+    var counts = isNominal ? {} : null;
+    this.setValue = function(ix, v) {
+      if(!isNominal) {
+        arr[ix] = +v;
+        return;
+      }
+      if(!(v in valMap)) {
+        var s = Object.keys(valMap).length;
+        valMap[v] = s;
+        revMap[s] = v;
+        counts[s] = 0;
+      }
+      arr[ix] = valMap[v];
+      counts[s] += 1;
+    };
+    var mean = Number.NaN;
+    var stddev = Number.NaN;
+    var min = Number.NaN;
+    var max = Number.NaN;
+    this.finishInit = function() {
+      if(isNominal) {
+        return;
+      }
+      var minmax = jkjs.stat.minmax(arr);
+      min = minmax[0];
+      max = minmax[1];
+      mean = jkjs.stat.mean(arr);
+      if(!Number.isFinite(mean)) {
+        mean = 0;
+      }
+      stddev = jkjs.stat.stddev(arr, mean);
+      if(!Number.isFinite(stddev) || stddev == 0) {
+        stddev = 1;
+      }
+    };
+    this.name = function() {
+      return name;
+    };
+    this.value = function(ix) {
+      return arr[ix];
+    };
+    this.stringValue = function(ix) {
+      return "" + (isNominal ? revMap[arr[ix]] : arr[ix]);
+    };
+    this.distSq = function(aix, bix) {
+      if(isNominal) {
+        return arr[aix] === arr[bix] ? 0 : 1;
+      }
+      var diff = (arr[aix] - arr[bix]) / stddev * 0.5;
+      return diff * diff;
+    };
+    var palette = null;
+    this.color = function(ix) {
+      if(!palette) {
+        if(isNominal) {
+          var vals = Object.keys(counts).map(function(k) {
+            return k;
+          });
+          vals.sort(function(a, b) {
+            return d3.descending(counts[a], counts[b]);
+          });
+          var colors = {};
+          var colSet = colorbrewer.Set3[12];
+          vals.forEach(function(k, ix) {
+            if(ix >= colSet.length) {
+              colors[k] = "gray";
+            } else {
+              colors[k] = colSet[ix];
+            }
+          });
+          palette = function(k) {
+            return colors[k];
+          };
+        } else {
+          var rest = max - min;
+          palette = d3.scale.linear().domain(
+            [min, min + rest * 0.25, min + rest * 0.5, min + rest * 0.75, max]
+          ).range(
+            ["#f1eef6", "#bdc9e1", "#74a9cf", "#2b8cbe", "#045a8d"]
+          );
+        }
+      }
+      return palette(arr[ix]);
+    };
+  } // Feature
+
+  var main_features = null;
+  var main_ids = null;
+  var main_ixs = null;
+  function update() {
+    var main = d3.select("#main");
+    var fixs = main_features.map(function(_, ix) {
+      return ix;
+    });
+    var topH = size * 10;
+    var fontSize = 8;
+    var head = main.select("#svg_head").attr({
+      "width": fixs.length * size,
+      "height": topH
+    }).style({
+      "width": fixs.length * size + "px",
+      "height": topH + "px",
+      "overflow": "visible"
+    });
+    var hsel = head.selectAll("text.head_text").data(fixs, function(fix) {
+      return fix;
+    });
+    hsel.exit().remove();
+    hsel.enter().append("text").classed("head_text", true);
+    hsel.order();
+    hsel.attr({
+      "transform": function(_, ix) {
+        return "translate("+((ix + 0.5) * size)+" "+topH+") rotate(-45)";
+      },
+      "font-size": fontSize
+    }).text(function(fix) {
+      var f = main_features[fix];
+      return f.name();
+    });
+    var svg = main.selectAll("svg.svg_row").data(main_ixs, function(ix) {
+      return ix;
+    });
+    svg.exit().remove();
+    svg.enter().append("svg").classed("svg_row", true);
+    svg.order();
+    svg.attr({
+      "width": size * main_features.length,
+      "height": size
+    }).style({
+      "width": size * main_features.length + "px",
+      "height": size + "px"
+    });
+    svg.each(function(rix) {
+      var sel = d3.select(this).selectAll("rect.cell_rect").data(fixs, function(fix) {
+        return fix;
+      });
+      sel.exit().remove();
+      sel.enter().append("rect").classed("cell_rect", true).append("title").classed("cell_title", true);
+      sel.order();
+      sel.selectAll("title.cell_title").text(function(fix) {
+        var f = main_features[fix];
+        return main_ids.stringValue(rix) + ": " + f.name() + ": " + f.stringValue(rix);
+      });
+      sel.attr({
+        "x": function(_, fix) {
+          return size * fix;
+        },
+        "y": 0,
+        "width": size,
+        "height": size,
+        "stroke": "black",
+        "stroke-width": 0.1,
+        "fill": function(fix) {
+          var f = main_features[fix];
+          return f.color(rix);
+        }
+      });
+    });
+  } // update()
+
+  jkjs.load(file).featureConstructor(function(name, size, isNominal) {
+    return new Feature(name, size, isNominal);
+  }).get(function(features, ixs) {
+    var ids = null;
+    features = features.filter(function(f) {
+      if(f.name() === colId) {
+        ids = f;
+        return false;
+      }
+      return colMatches.some(function(m) {
+        return f.name().match(m);
+      });
+    });
+    if(!ids) {
+      console.warn("no id column");
+      return;
+    }
+    var clusters = 8;
+    var maxRounds = 50;
+    var labels = kmedoids(features, ixs, clusters, maxRounds);
+    var labelCount = {};
+    labels.forEach(function(l) {
+      if(!(l in labelCount)) {
+        labelCount[l] = 0;
+      }
+      labelCount[l] += 1;
+    });
+    var labelFeature = new Feature("cluster_label", ixs.length, true);
+    ixs.forEach(function(ix, pos) {
+      labelFeature.setValue(ix, labels[pos]);
+      // sorting requires ix and pos being equal
+      ix === pos || console.warn("indices are scrambled", ix, pos);
+    });
+    labelFeature.finishInit();
+    ixs.sort(function(aix, bix) {
+      return d3.descending(labelCount[labels[aix]], labelCount[labels[bix]]);
+    });
+    main_features = [];
+    main_features.push(labelFeature);
+    features.forEach(function(f) {
+      main_features.push(f);
+    });
+    main_ids = ids;
+    main_ixs = ixs;
+    update();
+  }, function(err) {
+    console.warn(err);
+  });
+}
+</script>
+
+</body>
+</html>
