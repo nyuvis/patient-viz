@@ -25,7 +25,7 @@
 </head>
 <body onload="start()">
   <div id="main">
-    <svg id="svg_head"></svg>
+    <svg id="svg_main"></svg>
   </div>
 <script>
 function start() {
@@ -34,74 +34,12 @@ function start() {
 
   var duration = 750;
   var ease = "easeInOutCubic";
-  var size = 10;
 
-  var colId = 'id';
-  var colMatches = [
-    /^info__/,
-    /HIERARCHY\.[0-9]+$/
-  ];
+  var size = 500;
+  var width = 20;
+  var height = 10;
 
-  function distance(features, aix, bix) {
-    return features.reduce(function(sum, f) {
-      return sum + f.distSq(aix, bix);
-    }, 0);
-  }
-
-  function kmedoids(features, ixs, clusters, maxRounds) {
-    var medoidIxs = jkjs.util.sample(ixs, clusters);
-    var labels = [];
-    for(var rounds = 0;rounds < maxRounds;rounds += 1) {
-      var oldLabels = labels;
-      labels = ixs.map(function(ix) {
-        return medoidIxs.reduce(function(best, mix) {
-          var curDist = distance(features, ix, mix);
-          return curDist < best[1] ? [ mix, curDist ] : best;
-        }, [ -1, Number.POSITIVE_INFINITY ])[0];
-      });
-      if(jkjs.util.eqArr(labels, oldLabels)) {
-        // converged
-        console.log("converged", rounds);
-        return labels;
-      }
-      var clusterSet = {};
-      labels.forEach(function(l, ix) {
-        if(!(l in clusterSet)) {
-          clusterSet[l] = [];
-        }
-        clusterSet[l].push(ixs[ix]);
-      });
-      medoidIxs = Object.keys(clusterSet).map(function(set) {
-        var matrix = new Float64Array(set.length * set.length);
-        for(var a = 0;a < set.length;a += 1) {
-          for(var b = 0;b < a;b += 1) {
-            var d = distance(features, set[a], set[b]);
-            matrix[a + b * set.length] = d;
-            matrix[b + a * set.length] = d;
-          }
-        }
-        var bestSum = Number.POSITIVE_INFINITY;
-        var bestIx = -1;
-        for(var a = 0;a < set.length;a += 1) {
-          var sum = 0;
-          for(var b = 0;b < set.length;b += 1) {
-            sum += matrix[b + a * set.length];
-          }
-          if(sum < bestSum) {
-            bestSum = sum;
-            bestIx = set[a];
-          }
-        }
-        return bestIx;
-      }).filter(function(ix) {
-        return ix >= 0;
-      });
-    }
-    console.log("count", rounds);
-    return labels;
-  } // kmedoids
-
-  var file = "f" in urlArgs ? urlArgs["f"] : "pvecs_small.csv";
+  var file = "f" in urlArgs ? urlArgs["f"] : "feature_extraction/proj_very_small.json";
   function Feature(name, size, isNominal) {
     var that = this;
     var arr = isNominal ? new Uint32Array(size) : new Float64Array(size);
@@ -121,6 +59,14 @@ function start() {
       }
       arr[ix] = valMap[v];
       counts[s] += 1;
+    };
+    this.makeNumeric = function() {
+      var newF = new Feature(name, size, false);
+      that.ixs().forEach(function(ix) {
+        newF.setValue(ix, that.stringValue(ix));
+      });
+      newF.finishInit();
+      return newF;
     };
     var mean = Number.NaN;
     var stddev = Number.NaN;
@@ -142,6 +88,20 @@ function start() {
         stddev = 1;
       }
     };
+    this.range = function() {
+      if(isNominal) {
+        console.warn("not numeric");
+        return null;
+      }
+      return [ min, max ];
+    };
+    this.ixs = function() {
+      var ixs = new Array(+size);
+      for(var ix = 0;ix < size;ix += 1) {
+        ixs[ix] = ix;
+      }
+      return ixs;
+    };
     this.name = function() {
       return name;
     };
@@ -150,13 +110,6 @@ function start() {
     };
     this.stringValue = function(ix) {
       return "" + (isNominal ? revMap[arr[ix]] : arr[ix]);
-    };
-    this.distSq = function(aix, bix) {
-      if(isNominal) {
-        return arr[aix] === arr[bix] ? 0 : 1;
-      }
-      var diff = (arr[aix] - arr[bix]) / stddev * 0.5;
-      return diff * diff;
     };
     var palette = null;
     this.color = function(ix) {
@@ -193,127 +146,100 @@ function start() {
     };
   } // Feature
 
-  var main_features = null;
-  var main_ids = null;
-  var main_ixs = null;
+  var outcome_id = null;
+  var outcome_out = null;
+  var features = [];
+  var points = [];
+  var rangeX = [ 0, 0 ];
+  var rangeY = [ 0, 0 ];
   function update() {
-    var main = d3.select("#main");
-    var fixs = main_features.map(function(_, ix) {
-      return ix;
-    });
-    var topH = size * 10;
-    var fontSize = 8;
-    var head = main.select("#svg_head").attr({
-      "width": fixs.length * size,
-      "height": topH
-    }).style({
-      "width": fixs.length * size + "px",
-      "height": topH + "px",
-      "overflow": "visible"
-    });
-    var hsel = head.selectAll("text.head_text").data(fixs, function(fix) {
-      return fix;
-    });
-    hsel.exit().remove();
-    hsel.enter().append("text").classed("head_text", true);
-    hsel.order();
-    hsel.attr({
-      "transform": function(_, ix) {
-        return "translate("+((ix + 0.5) * size)+" "+topH+") rotate(-45)";
-      },
-      "font-size": fontSize
-    }).text(function(fix) {
-      var f = main_features[fix];
-      return f.name();
-    });
-    var svg = main.selectAll("svg.svg_row").data(main_ixs, function(ix) {
-      return ix;
-    });
-    svg.exit().remove();
-    svg.enter().append("svg").classed("svg_row", true);
-    svg.order();
-    svg.attr({
-      "width": size * main_features.length,
-      "height": size
-    }).style({
-      "width": size * main_features.length + "px",
+    var svg = d3.select("#svg_main");
+    svg.style({
+      "width": size + "px",
       "height": size + "px"
+    }).attr({
+      "width": size,
+      "height": size
     });
-    svg.each(function(rix) {
-      var sel = d3.select(this).selectAll("rect.cell_rect").data(fixs, function(fix) {
-        return fix;
-      });
-      sel.exit().remove();
-      sel.enter().append("rect").classed("cell_rect", true).append("title").classed("cell_title", true);
-      sel.order();
-      sel.selectAll("title.cell_title").text(function(fix) {
-        var f = main_features[fix];
-        return main_ids.stringValue(rix) + ": " + f.name() + ": " + f.stringValue(rix);
-      });
-      sel.attr({
-        "x": function(_, fix) {
-          return size * fix;
-        },
-        "y": 0,
-        "width": size,
-        "height": size,
-        "stroke": "black",
-        "stroke-width": 0.1,
-        "fill": function(fix) {
-          var f = main_features[fix];
-          return f.color(rix);
-        }
-      });
+    var sx = d3.scale.linear().domain(rangeX).range([ width*0.5, size-width*0.5 ]);
+    var sy = d3.scale.linear().domain(rangeY).range([ height*0.5, size-height*0.5 ]);
+    var ixs = outcome_id.ixs();
+    var sel = svg.selectAll("g.glyph").data(ixs, function(id) {
+      return id;
+    });
+    sel.exit().remove();
+    var selE = sel.enter().append("g").classed("glyph", true).attr({
+      "transform": function(ix) {
+        return "translate(" + sx(points[ix][0]) + " " + sy(points[ix][1]) + ")";
+      }
+    });
+    sel.transition().duration(duration).ease(ease).attr({
+      "transform": function(ix) {
+        return "translate(" + sx(points[ix][0]) + " " + sy(points[ix][1]) + ")";
+      }
+    });
+
+    var sh = d3.scale.linear().domain(outcome_out.range()).range([ height + 0.1, height ]);
+    selE.append("rect").classed("gl", true).attr({
+      "fill": "black",
+      "opacity": 0.3
+    }).append("title").classed("gl_title", true);
+    sel.selectAll(".gl").attr({
+      "x": -width*0.5,
+      "width": width,
+      "y": function(ix) {
+        return height - sh(outcome_out.value(ix));
+      },
+      "height": function(ix) {
+        return sh(outcome_out.value(ix));
+      }
+    });
+    sel.selectAll(".gl_title").text(function(ix) {
+      return outcome_out.stringValue(ix);
     });
   } // update()
 
-  jkjs.load(file).featureConstructor(function(name, size, isNominal) {
-    return new Feature(name, size, isNominal);
-  }).get(function(features, ixs) {
-    var ids = null;
-    features = features.filter(function(f) {
-      if(f.name() === colId) {
-        ids = f;
-        return false;
-      }
-      return colMatches.some(function(m) {
-        return f.name().match(m);
-      });
-    });
-    if(!ids) {
-      console.warn("no id column");
+  d3.json(file, function(err, data) {
+    if(err) {
+      console.warn(err);
       return;
     }
-    var clusters = 8;
-    var maxRounds = 50;
-    var labels = kmedoids(features, ixs, clusters, maxRounds);
-    var labelCount = {};
-    labels.forEach(function(l) {
-      if(!(l in labelCount)) {
-        labelCount[l] = 0;
-      }
-      labelCount[l] += 1;
+
+    function loads(arr, obj, isCategorical) {
+      var names = obj['names'];
+      var rows = obj['data'];
+      var off = arr.length;
+      names.forEach(function(n) {
+        arr.push(new Feature(n, rows.length, isCategorical));
+      });
+      rows.forEach(function(r, rix) {
+        r.forEach(function(v, cix) {
+          arr[off + cix].setValue(rix, v);
+        });
+      });
+      names.forEach(function(_, ix) {
+        arr[off + ix].finishInit();
+      });
+    }
+
+    features = [];
+    var outs = [];
+    loads(features, data['nums'], false);
+    loads(features, data['cats'], true);
+    loads(outs, data['outs'], true);
+    points = data['projection']['points'].map(function(pos) {
+      return [ +pos[0], +pos[1] ];
     });
-    var labelFeature = new Feature("cluster_label", ixs.length, true);
-    ixs.forEach(function(ix, pos) {
-      labelFeature.setValue(ix, labels[pos]);
-      // sorting requires ix and pos being equal
-      ix === pos || console.warn("indices are scrambled", ix, pos);
-    });
-    labelFeature.finishInit();
-    ixs.sort(function(aix, bix) {
-      return d3.descending(labelCount[labels[aix]], labelCount[labels[bix]]);
-    });
-    main_features = [];
-    main_features.push(labelFeature);
-    features.forEach(function(f) {
-      main_features.push(f);
-    });
-    main_ids = ids;
-    main_ixs = ixs;
+    rangeX = jkjs.stat.minmax(points.map(function(pos) { return pos[0]; }));
+    rangeY = jkjs.stat.minmax(points.map(function(pos) { return pos[1]; }));
+    outcome_id = outs.reduce(function(cur, f) {
+      return f.name() === 'id' ? f : cur;
+    }, null);
+    outcome_out = outs.reduce(function(cur, f) {
+      return f.name() === 'info__claim_cost' ? f : cur;
+    }, null);
+    outcome_out = outcome_out.makeNumeric();
     update();
-  }, function(err) {
-    console.warn(err);
   });
 }
 </script>
