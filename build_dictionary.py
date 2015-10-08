@@ -240,11 +240,27 @@ class NdcPrescribedCode(TypeCode):
             return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
-        prescribeLookup = {}
+        uidLookup = {}
+        file_main = get_file(settings, 'ndc', '')
+        if file_main and os.path.isfile(file_main):
+            with open(file_main, 'r') as fm:
+                for line in fm.readlines():
+                    if '---' not in line:
+                        continue
+                    key, name = line.split('---', 1)
+                    uidLookup[key.strip()] = {
+                        "pType": '',
+                        "prop": '',
+                        "nonp": name.strip(),
+                        "subst": '',
+                        "pharm": '',
+                        "desc": ''
+                    }
+            return uidLookup
         fileA = get_file(settings, 'ndc_prod', 'code/ndc/product.txt')
         if not os.path.isfile(fileA):
-            return prescribeLookup
-        uidLookup = {}
+            return uidLookup
+        prescribeLookup = {}
         with open(fileA, 'r') as prFile:
             for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
                 uid = row['PRODUCTID'].strip()
