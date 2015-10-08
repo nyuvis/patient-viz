@@ -84,6 +84,12 @@ patients stored this way and update the `config.txt` file.
 ./start.sh --list-update
 ```
 
+or in short:
+
+```bash
+./setup.sh --shelve --do-convert --convert AEF023C2029F05BC
+```
+
 The list of available patient ids can be seen using:
 
 ```bash
