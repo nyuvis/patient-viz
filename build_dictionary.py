@@ -446,6 +446,27 @@ class Icd9ProcedureCode(TypeCode):
         self._parents = readCCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt'), codes)
         return codes
 
+@dictionary.codeType("procedure", "cpt")
+class CPTProcedureCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = ""
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id], None)
+        return createUnknownEntry(symbols, type, id, pid)
+    def init(self, settings):
+        file = get_file(settings, 'procedure_cpt_long', '/m/CODES/cpt/cpt_codes_long_descr.csv')
+        codes = {}
+        if not os.path.isfile(file):
+            return codes
+        with open(file, 'r') as f:
+            for row in csv.DictReader(f):
+                key = row['CPT_CODE']
+                value = row['CPT_LONG_DESCRIPTION']
+                if not key or not value:
+                    continue
+                codes[key.strip()] = value.strip()
+        return codes
+
 ### info ###
 @dictionary.baseType("info")
 class TypeInfo(TypeBase):

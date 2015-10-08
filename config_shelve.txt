@@ -58,6 +58,7 @@
   "pnt": "code/pnt/pnt.txt", 
   "procedure_icd9": "/m/CODES/icd9/ICD-9-CM-v32-master-descriptions/CMS32_DESC_SHORT_SG.txt", 
   "procedure_icd9_long": "/m/CODES/icd9/ICD-9-CM-v32-master-descriptions/CMS32_DESC_LONG_SG.txt", 
+  "procedure_cpt_long": "/m/CODES/cpt/cpt_codes_long_descr.csv",
   "quote": "\"", 
   "row_split": "|", 
   "shelve_id_files": [
