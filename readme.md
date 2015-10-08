@@ -75,11 +75,12 @@ can consult the help (`./start.sh -h`) and the [JSON specification](spec.md).
 ## Using Shelve Input
 
 The system can also handle data stored in a shelve db. However, you need to manually convert
-patients stored this way and update the `config_shelve.txt` file.
+patients stored this way and update the `config.txt` file.
+(Note: copy `config_shelve.txt` to `config.txt` as initial config file)
 
 ```bash
-./shelve_access.py -p AEF023C2029F05BC -c config_shelve.txt | ./cms_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/%p.json -c style_classes.json -- -
-./build_dictionary.py -p json/AEF023C2029F05BC.json -c config_shelve.txt -o json/dictionary.json
+./shelve_access.py -p AEF023C2029F05BC -c config.txt | ./cms_get_patient.py -p AEF023C2029F05BC -f format_shelve.json -o json/%p.json -c style_classes.json -- -
+./build_dictionary.py -p json/AEF023C2029F05BC.json -c config.txt -o json/dictionary.json
 ./start.sh --list-update
 ```
 
