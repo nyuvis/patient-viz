@@ -510,7 +510,12 @@ def getICD9(settings, isDiagnosis):
                     spl = l.split(' ', 1)
                     if len(spl) < 2:
                         continue
-                    symbols[spl[0].strip()] = spl[1].strip()
+                    key = spl[0].strip()
+                    value = spl[1].strip()
+                    if len(key) > 3:
+                        key_dot = key[:3] + '.' + key[3:]
+                        symbols[key_dot] = value
+                    symbols[key] = value
     return globalICD9[k].copy()
 
 def initICD9(settings):
