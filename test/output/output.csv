@@ -1,5 +1,5 @@
-id,test,outcome,diagnosis__HIERARCHY.13.2.3,diagnosis__HIERARCHY.13.3.2,diagnosis__HIERARCHY.13.8,diagnosis__HIERARCHY.16,diagnosis__HIERARCHY.17.1,diagnosis__HIERARCHY.17.2.4,diagnosis__HIERARCHY.3,diagnosis__HIERARCHY.3.1,diagnosis__HIERARCHY.5,diagnosis__HIERARCHY.5.4,diagnosis__HIERARCHY.6.7,diagnosis__HIERARCHY.6.9,diagnosis__HIERARCHY.7.2.9,diagnosis__HIERARCHY.8,diagnosis__HIERARCHY.8.1,diagnosis__icd9__25000,diagnosis__icd9__2720,diagnosis__icd9__2724,info__age_80_90
-8CDC206EAB83724E,0,0,0,1,0,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0
-8CDC46F10204CB83,1,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,1,1,1,1,1
-8CDCBC16C542B813,1,0,1,1,1,1,0,1,1,1,0,0,1,1,1,1,1,0,0,0,0
-8CDC0C5ACBDFC9CE,1,1,1,1,1,0,1,0,0,0,1,1,0,0,1,0,0,1,0,1,0
+id,test,outcome,diagnosis__25000,diagnosis__2720,diagnosis__2724,diagnosis__HIERARCHY.13.2.3,diagnosis__HIERARCHY.13.3.2,diagnosis__HIERARCHY.13.8,diagnosis__HIERARCHY.16,diagnosis__HIERARCHY.17.1,diagnosis__HIERARCHY.17.2.4,diagnosis__HIERARCHY.3,diagnosis__HIERARCHY.3.1,diagnosis__HIERARCHY.5,diagnosis__HIERARCHY.5.4,diagnosis__HIERARCHY.6.7,diagnosis__HIERARCHY.6.9,diagnosis__HIERARCHY.7.2.9,diagnosis__HIERARCHY.8,diagnosis__HIERARCHY.8.1,info__age_80_90
+8CDC206EAB83724E,0,0,0,1,1,0,1,0,0,1,1,1,1,1,1,1,1,0,1,1,0
+8CDC46F10204CB83,1,0,1,1,1,1,0,1,1,1,1,0,0,1,1,1,0,1,1,1,1
+8CDCBC16C542B813,1,0,0,0,0,1,1,1,1,0,1,1,1,0,0,1,1,1,1,1,0
+8CDC0C5ACBDFC9CE,1,1,1,0,1,1,1,1,0,1,0,0,0,1,1,0,0,1,0,0,0

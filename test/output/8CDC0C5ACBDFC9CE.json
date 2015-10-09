@@ -370,6 +370,76 @@
       "value": "W"
     }, 
     {
+      "id": "county", 
+      "name": "County", 
+      "value": "420"
+    }, 
+    {
+      "id": "state", 
+      "name": "State", 
+      "value": "PA"
+    }, 
+    {
+      "id": "race", 
+      "name": "Race", 
+      "value": "white"
+    }, 
+    {
+      "id": "chronic_arthritis", 
+      "name": "Chronic Disease: Rheumatoid Arthritis and Osteoarthritis", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_heart_failure", 
+      "name": "Chronic Disease: Heart Failure", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_diabetes", 
+      "name": "Chronic Disease: Diabetes", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_kidney_disease", 
+      "name": "Chronic Disease: Kidney Disease", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_osteoporosis", 
+      "name": "Chronic Disease: Osteoporosis", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_alzheimer", 
+      "name": "Chronic Disease: Alzheimer, Related Disease, or Senile", 
+      "value": "y"
+    }, 
+    {
+      "id": "chronic_obstructive_pulmonary_disease", 
+      "name": "Chronic Disease: Obstructive Pulmonary Disease", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_ischemic_heart_disease", 
+      "name": "Chronic Disease: Ischemic Heart Disease", 
+      "value": "y"
+    }, 
+    {
+      "id": "chronic_depression", 
+      "name": "Chronic Disease: Depression", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_cancer", 
+      "name": "Chronic Disease: Cancer", 
+      "value": "n"
+    }, 
+    {
+      "id": "chronic_stroke", 
+      "name": "Chronic Disease: Stroke or Transient Ischemic Attack", 
+      "value": "n"
+    }, 
+    {
       "id": "event_count", 
       "name": "Events", 
       "value": 52
