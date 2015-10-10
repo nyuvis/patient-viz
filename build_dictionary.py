@@ -240,11 +240,27 @@ class NdcPrescribedCode(TypeCode):
             return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
-        prescribeLookup = {}
+        uidLookup = {}
+        file_main = get_file(settings, 'ndc', '')
+        if file_main and os.path.isfile(file_main):
+            with open(file_main, 'r') as fm:
+                for line in fm.readlines():
+                    if '---' not in line:
+                        continue
+                    key, name = line.split('---', 1)
+                    uidLookup[key.strip()] = {
+                        "pType": '',
+                        "prop": '',
+                        "nonp": name.strip(),
+                        "subst": '',
+                        "pharm": '',
+                        "desc": ''
+                    }
+            return uidLookup
         fileA = get_file(settings, 'ndc_prod', 'code/ndc/product.txt')
         if not os.path.isfile(fileA):
-            return prescribeLookup
-        uidLookup = {}
+            return uidLookup
+        prescribeLookup = {}
         with open(fileA, 'r') as prFile:
             for row in csv.DictReader(prFile, delimiter='\t', quoting=csv.QUOTE_NONE):
                 uid = row['PRODUCTID'].strip()
@@ -430,6 +446,27 @@ class Icd9ProcedureCode(TypeCode):
         self._parents = readCCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt'), codes)
         return codes
 
+@dictionary.codeType("procedure", "cpt")
+class CPTProcedureCode(TypeCode):
+    def create(self, symbols, type, id):
+        pid = ""
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id], None)
+        return createUnknownEntry(symbols, type, id, pid)
+    def init(self, settings):
+        file = get_file(settings, 'procedure_cpt_long', '/m/CODES/cpt/cpt_codes_long_descr.csv')
+        codes = {}
+        if not os.path.isfile(file):
+            return codes
+        with open(file, 'r') as f:
+            for row in csv.DictReader(f):
+                key = row['CPT_CODE']
+                value = row['CPT_LONG_DESCRIPTION']
+                if not key or not value:
+                    continue
+                codes[key.strip()] = value.strip()
+        return codes
+
 ### info ###
 @dictionary.baseType("info")
 class TypeInfo(TypeBase):
@@ -510,7 +547,12 @@ def getICD9(settings, isDiagnosis):
                     spl = l.split(' ', 1)
                     if len(spl) < 2:
                         continue
-                    symbols[spl[0].strip()] = spl[1].strip()
+                    key = spl[0].strip()
+                    value = spl[1].strip()
+                    if len(key) > 3:
+                        key_dot = key[:3] + '.' + key[3:]
+                        symbols[key_dot] = value
+                    symbols[key] = value
     return globalICD9[k].copy()
 
 def initICD9(settings):

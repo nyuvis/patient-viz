@@ -8,9 +8,11 @@
   "ibc_speciality": "../code/code_names.txt",
   "icd9": "../code/icd9/ucod.txt",
   "loinc": "../code/code_names.txt",
+  "ndc": "",
   "ndc_package": "../code/ndc/package.txt",
   "ndc_prod": "../code/ndc/product.txt",
   "pnt": "../code/pnt/pnt.txt",
+  "procedure_cpt_long": "../code/not_found.txt",
   "procedure_icd9": "../code/not_found.txt",
   "procedure_icd9_long": "../code/not_found.txt",
   "quote": "\""
