@@ -1,4 +1,5 @@
-**/.DS_Store
+.DS_Store
+.cmd_history
 /err.txt
 /cms/
 /json/
@@ -10,7 +11,6 @@
 /server_err.txt
 /patients.txt
 json.zip
-**/*.pyc
 *.pyc
 /.venv/
 /config.txt.tmp_local
