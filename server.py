@@ -53,10 +53,7 @@ if not os.path.isfile(patients_list):
     tf.flush()
     tf.seek(0)
     with open(patients_list, 'w') as pf:
-        for line in tf.readlines():
-            max_num -= 1
-            if max_num < 0:
-                break
+        for line in tf.readlines()[-max_num:]:
             print(json_dir + line.strip() + '.json', file=pf)
 
 dict = {}
@@ -86,10 +83,13 @@ def get_patient(req, args):
         pid = pid[:-len('.json')]
     if not os.path.isfile(cache_file):
         patient = cms_get_patient.process(all_paths, line_file, class_file, pid)
-        build_dictionary.extractEntries(dict, patient)
         with open(cache_file, 'w') as pf:
             pf.write(json.dumps(patient))
             pf.flush()
+        build_dictionary.extractEntries(dict, patient)
+        with open(dictionary_file, 'w') as output:
+            output.write(json.dumps(dict))
+            output.flush()
     with open(cache_file, 'r') as pf:
         return json.loads(pf.read())
 
@@ -101,7 +101,3 @@ msg("starting server at {0}:{1}", addr if addr else 'localhost', port)
 server.serve_forever()
 msg("shutting down..")
 server.server_close()
-
-with open(dictionary_file, 'w') as output:
-    output.write(json.dumps(dict))
-    output.flush()
