@@ -40,12 +40,14 @@ function refreshInfo(pid, person) {
     headList.push(li);
   }
 
-  person["info"].sort(function(a, b) {
-    return d3.descending(a["id"], b["id"]);
-  });
-  person["info"].forEach(function(item) {
-    addItem(item);
-  });
+  if("info" in person) {
+    person["info"].sort(function(a, b) {
+      return d3.descending(a["id"], b["id"]);
+    });
+    person["info"].forEach(function(item) {
+      addItem(item);
+    });
+  }
 
   if(!hasId) {
     addItem({

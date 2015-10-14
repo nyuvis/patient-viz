@@ -343,20 +343,6 @@ function start() {
   }
 
   function loadFile(pid, dictionaryFile, createState) {
-    if(!dictionary || lastDictionaryFile != dictionaryFile) {
-      d3.json(dictionaryFile, function(err, json) {
-        if(err) {
-          console.warn("Failed loading dictionary: '"+dictionaryFile+"'");
-          busy.setState(jkjs.busy.state.warn, "Invalid dictionary file.");
-          return console.warn(err);
-        }
-        dictionary = json;
-        lastDictionaryFile = dictionaryFile;
-        loadFile(pid, dictionaryFile, createState);
-        return;
-      });
-      return;
-    }
     if(createState) {
       var url = jkjs.util.getOwnURL() + "?p=" + pid + "&d=" + dictionaryFile;
       window.history.pushState({
@@ -369,24 +355,33 @@ function start() {
     overview.clearShadow(); // having a use element would slow down DOM manipulations by at least 20s
     typeList.clearLists();
     eventList.setEvents([], false, false);
-    d3.json(inputFile, function(err, json) {
+    d3.json(inputFile, function(err, json_patient) {
       if(err) {
         console.warn("Failed loading patient: '"+inputFile+"' Note: Give the patient file as argument 'p'");
         busy.setState(jkjs.busy.state.warn, "Failed loading file: '"+inputFile+"' Note: Put the file as argument 'p'.");
         return console.warn(err);
       }
-      var error = true;
-      try {
-        setPidSel(loadPerson(pid, json, pool, eventList, typeList, linechart, histogram, dictionary, suppl));
-        busy.setState(jkjs.busy.state.norm);
-        relayout();
-        zui.showAll(false);
-        error = false;
-      } finally {
-        if(error) {
-          busy.setState(jkjs.busy.state.warn, "Error while loading file.");
+      d3.json(dictionaryFile, function(err_dict, json_dictionary) {
+        if(err_dict) {
+          console.warn("Failed loading dictionary: '"+dictionaryFile+"'");
+          busy.setState(jkjs.busy.state.warn, "Invalid dictionary file.");
+          return console.warn(err_dict);
         }
-      }
+        dictionary = json_dictionary;
+        lastDictionaryFile = dictionaryFile;
+        var error = true;
+        try {
+          setPidSel(loadPerson(pid, json_patient, pool, eventList, typeList, linechart, histogram, dictionary, suppl));
+          busy.setState(jkjs.busy.state.norm);
+          relayout();
+          zui.showAll(false);
+          error = false;
+        } finally {
+          if(error) {
+            busy.setState(jkjs.busy.state.warn, "Error while loading file.");
+          }
+        }
+      });
     });
   }
 

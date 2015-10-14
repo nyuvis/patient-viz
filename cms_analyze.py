@@ -30,7 +30,7 @@ def analyzeFile(inputFile, counter):
             else:
                 counter[id] = 1
 
-def compute(allPaths, counter, human_readable, output):
+def compute(allPaths, counter, human_readable, output, filter_zero=False):
     for (path, isfile) in allPaths:
         if isfile:
             analyzeFile(path, counter)
@@ -38,6 +38,8 @@ def compute(allPaths, counter, human_readable, output):
             util.process_directory(path, lambda file, printInfo: analyzeFile(file, counter))
 
     list = counter.keys()
+    if filter_zero:
+        list = [ k for k in list if counter[k] > 0 ]
     list.sort(key = lambda k: counter[k])
     padding = len(str(counter[list[len(list) - 1]])) if list else 0
     total = 0

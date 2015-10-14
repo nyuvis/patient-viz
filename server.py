@@ -47,14 +47,20 @@ dictionary_file = os.path.join(json_dir, 'dictionary.json')
 
 max_num = 100
 
+patients = set()
+def save_patients():
+    with open(patients_list, 'w') as pf:
+        pf.write('\n'.join(sorted(list(patients))))
+        pf.flush()
+
 if not os.path.isfile(patients_list):
     tf = StringIO()
-    cms_analyze.compute(all_paths, {}, False, tf)
+    cms_analyze.compute(all_paths, {}, False, tf, filter_zero=True)
     tf.flush()
     tf.seek(0)
-    with open(patients_list, 'w') as pf:
-        for line in tf.readlines()[-max_num:]:
-            print(json_dir + line.strip() + '.json', file=pf)
+    for line in tf.readlines()[-max_num:]:
+        patients.add(json_dir + line.strip() + '.json')
+    save_patients()
 
 dict = {}
 if os.path.isfile(dictionary_file):
@@ -65,20 +71,28 @@ addr = ''
 port = 8000
 server = create_server((addr, port))
 server.bind_path('/', '..')
-server.add_default_white_list()
-server.favicon_fallback = 'favicon.ico'
 
 prefix = '/' + os.path.basename(os.path.normpath(server.base_path))
 
-@server.text_get(prefix + '/' + patients_list)
+server.add_default_white_list()
+server.add_file_patterns([
+        prefix + '/' + json_dir + '*',
+        prefix + '/' + patients_list
+    ], True)
+server.favicon_fallback = 'favicon.ico'
+
+@server.text_get(prefix + '/' + patients_list, 0)
 def get_list(req, args):
-    with open(patients_list, 'r') as pf:
-        return pf.read()
+    return '\n'.join(sorted(list(patients)))
 
 @server.json_get(prefix + '/' + json_dir, 1)
 def get_patient(req, args):
     pid = args['paths'][0]
     cache_file = os.path.join(json_dir, pid)
+    p_name = json_dir + pid.strip()
+    if p_name not in patients:
+        patients.add(p_name)
+        save_patients()
     if pid.endswith('.json'):
         pid = pid[:-len('.json')]
     if not os.path.isfile(cache_file):
