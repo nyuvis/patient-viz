@@ -225,3 +225,13 @@ def process_id_directory(dir, id, cb):
         for file in sorted(files):
             if file.endswith(".csv"):
                 cb(os.path.join(root, file), id)
+
+def convert_paths(args, allPaths):
+    while args:
+        path = args.pop(0)
+        if os.path.isfile(path) or path == '-':
+            allPaths.append((path, True))
+        elif os.path.isdir(path):
+            allPaths.append((path, False))
+        else:
+            print('illegal argument: '+path+' is neither file nor directory', file=sys.stderr)

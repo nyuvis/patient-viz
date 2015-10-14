@@ -30,6 +30,35 @@ def analyzeFile(inputFile, counter):
             else:
                 counter[id] = 1
 
+def compute(allPaths, counter, human_readable, output):
+    for (path, isfile) in allPaths:
+        if isfile:
+            analyzeFile(path, counter)
+        else:
+            util.process_directory(path, lambda file, printInfo: analyzeFile(file, counter))
+
+    list = counter.keys()
+    list.sort(key = lambda k: counter[k])
+    padding = len(str(counter[list[len(list) - 1]])) if list else 0
+    total = 0
+    try:
+        for id in list:
+            num = counter[id]
+            total += num
+            if human_readable:
+                print('{0:{width}}'.format(num, width=padding) + ' ' + id, file=output)
+            else:
+                print(id, file=output)
+        if human_readable:
+            print('', file=output)
+            print('time: '+str(time.clock() - starttime)+'s', file=output)
+            print('ids: '+str(len(list)), file=output)
+            print('entries: '+str(total), file=output)
+            print('mean: '+str(total / len(list)), file=output)
+    except IOError as e:
+        if e.errno != 32:
+            raise
+
 def usage():
     print('usage: {0} [-h] [-m] -f <format> -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
     print('-h: print help', file=sys.stderr)
@@ -61,42 +90,8 @@ if __name__ == '__main__':
         else:
             print('illegal argument: '+arg, file=sys.stderr)
             usage()
-    while args:
-        path = args.pop(0)
-        if os.path.isfile(path) or path == '-':
-            allPaths.append((path, True))
-        elif os.path.isdir(path):
-            allPaths.append((path, False))
-        else:
-            print('illegal argument: '+path+' is neither file nor directory', file=sys.stderr)
+    util.convert_paths(args, allPaths)
     if not len(allPaths):
         print('no path given', file=sys.stderr)
         usage()
-
-    for (path, isfile) in allPaths:
-        if isfile:
-            analyzeFile(path, counter)
-        else:
-            util.process_directory(path, lambda file, printInfo: analyzeFile(file, counter))
-
-    list = counter.keys()
-    list.sort(key = lambda k: counter[k])
-    padding = len(str(counter[list[len(list) - 1]])) if list else 0
-    total = 0
-    try:
-        for id in list:
-            num = counter[id]
-            total += num
-            if human_readable:
-                print('{0:{width}}'.format(num, width=padding) + ' ' + id, file=sys.stdout)
-            else:
-                print(id, file=sys.stdout)
-        if human_readable:
-            print('', file=sys.stdout)
-            print('time: '+str(time.clock() - starttime)+'s', file=sys.stdout)
-            print('ids: '+str(len(list)), file=sys.stdout)
-            print('entries: '+str(total), file=sys.stdout)
-            print('mean: '+str(total / len(list)), file=sys.stdout)
-    except IOError as e:
-        if e.errno != 32:
-            raise
+    compute(allPaths, counter, human_readable, sys.stdout)

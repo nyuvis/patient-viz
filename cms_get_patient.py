@@ -284,71 +284,7 @@ def processLine(obj, line):
             o["class"] = sp[2]
         obj["v_spans"].append(o)
 
-def usage():
-    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] [-c <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
-    print('-h: print help', file=sys.stderr)
-    print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
-    print('-f <format>: specifies table format file', file=sys.stderr)
-    print('-p <id>: specifies the patient id', file=sys.stderr)
-    print('-l <file>: specifies a file for line and span infos', file=sys.stderr)
-    print('-c <file>: specifies a file for class definitions as json object', file=sys.stderr)
-    print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
-    exit(1)
-
-if __name__ == '__main__':
-    lineFile = None
-    classFile = None
-    id = None
-    output = '-'
-    args = sys.argv[:]
-    args.pop(0)
-    while args:
-        arg = args.pop(0)
-        if arg == '--':
-            break
-        if arg == '-h':
-            usage()
-        if arg == '-f':
-            if not args or args[0] == '--':
-                print('-f requires format file', file=sys.stderr)
-                usage()
-            util.read_format(args.pop(0), input_format, usage)
-        elif arg == '-o':
-            if not args or args[0] == '--':
-                print('-o requires output file', file=sys.stderr)
-                usage()
-            output = args.pop(0)
-            output = re.sub(r'(^|[^%])((?:%%)*)%p', r'\1\2foo', output).replace('%%', '%')
-        elif arg == '-p':
-            if not args or args[0] == '--':
-                print('no id specified', file=sys.stderr)
-                usage()
-            id = args.pop(0)
-        elif arg == '-l':
-            if not args or args[0] == '--':
-                print('no file specified', file=sys.stderr)
-                usage()
-            lineFile = args.pop(0)
-        elif arg == '-c':
-            if not args or args[0] == '--':
-                print('no file specified', file=sys.stderr)
-                usage()
-            classFile = args.pop(0)
-        else:
-            print('unrecognized argument: ' + arg, file=sys.stderr)
-            usage()
-    if id is None:
-        print('need to specify id with -p', file=sys.stderr)
-        usage()
-    allPaths = []
-    while args:
-        path = args.pop(0)
-        if os.path.isfile(path) or path == '-':
-            allPaths.append((path, True))
-        elif os.path.isdir(path):
-            allPaths.append((path, False))
-        else:
-            print('illegal argument: '+path+' is neither file nor directory', file=sys.stderr)
+def process(allPaths, lineFile, classFile, id):
     obj = {
         "info": [],
         "events": [],
@@ -410,6 +346,67 @@ if __name__ == '__main__':
     obj["start"] = min_time
     obj["end"] = max_time
     addInfo(obj, "event_count", "Events", len(obj["events"]))
+    return obj
+
+def usage():
+    print('usage: {0} [-h] [-o <output>] -f <format> -p <id> [-l <file>] [-c <file>] -- <file or path>...'.format(sys.argv[0]), file=sys.stderr)
+    print('-h: print help', file=sys.stderr)
+    print('-o <output>: specifies output file. stdout if omitted or "-"', file=sys.stderr)
+    print('-f <format>: specifies table format file', file=sys.stderr)
+    print('-p <id>: specifies the patient id', file=sys.stderr)
+    print('-l <file>: specifies a file for line and span infos', file=sys.stderr)
+    print('-c <file>: specifies a file for class definitions as json object', file=sys.stderr)
+    print('<file or path>: a list of input files or paths containing them. "-" represents stdin', file=sys.stderr)
+    exit(1)
+
+if __name__ == '__main__':
+    lineFile = None
+    classFile = None
+    id = None
+    output = '-'
+    args = sys.argv[:]
+    args.pop(0)
+    while args:
+        arg = args.pop(0)
+        if arg == '--':
+            break
+        if arg == '-h':
+            usage()
+        if arg == '-f':
+            if not args or args[0] == '--':
+                print('-f requires format file', file=sys.stderr)
+                usage()
+            util.read_format(args.pop(0), input_format, usage)
+        elif arg == '-o':
+            if not args or args[0] == '--':
+                print('-o requires output file', file=sys.stderr)
+                usage()
+            output = args.pop(0)
+            output = re.sub(r'(^|[^%])((?:%%)*)%p', r'\1\2foo', output).replace('%%', '%')
+        elif arg == '-p':
+            if not args or args[0] == '--':
+                print('no id specified', file=sys.stderr)
+                usage()
+            id = args.pop(0)
+        elif arg == '-l':
+            if not args or args[0] == '--':
+                print('no file specified', file=sys.stderr)
+                usage()
+            lineFile = args.pop(0)
+        elif arg == '-c':
+            if not args or args[0] == '--':
+                print('no file specified', file=sys.stderr)
+                usage()
+            classFile = args.pop(0)
+        else:
+            print('unrecognized argument: ' + arg, file=sys.stderr)
+            usage()
+    if id is None:
+        print('need to specify id with -p', file=sys.stderr)
+        usage()
+    allPaths = []
+    util.convert_paths(args, allPaths)
+    obj = process(allPaths, lineFile, classFile, id)
     if output != '-' and not os.path.exists(os.path.dirname(output)):
         os.makedirs(os.path.dirname(output))
     with util.OutWrapper(output) as out:
