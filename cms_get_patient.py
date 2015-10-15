@@ -259,31 +259,6 @@ def processFile(inputFile, id, obj, statusMap):
                     status = STATUS_OUT
                 handleRow(row, obj, statusMap, status)
 
-def processLine(obj, line):
-    sp = line.strip().split(':', 2)
-    if len(sp) < 2:
-        print('invalid line in line file: '+line, file=sys.stderr)
-        return
-    lid = sp[0]
-    if lid != id and len(lid):
-        return
-    if "__" in sp[1]:
-        sps = sp[1].split('__', 1)
-        obj["h_bars"].append({
-            "group": sps[0],
-            "id": sps[1]
-        })
-    else:
-        sps = sp[1].split('-', 1)
-        o = {
-            "from": util.toTime(sps[0])
-        }
-        if len(sps) > 1:
-            o["to"] = util.toTime(sps[1])
-        if len(sp) > 2:
-            o["class"] = sp[2]
-        obj["v_spans"].append(o)
-
 def process(allPaths, lineFile, classFile, id):
     obj = {
         "info": [],
@@ -293,13 +268,7 @@ def process(allPaths, lineFile, classFile, id):
         "v_spans": [],
         "classes": {}
     }
-    if lineFile is not None:
-        with open(lineFile, 'r') as lf:
-            for line in lf:
-                processLine(obj, line)
-    if classFile is not None:
-        with open(classFile, 'r') as cf:
-            obj["classes"] = json.loads(cf.read())
+    util.add_files(obj, lineFile, classFile)
 
     addInfo(obj, "pid", "Patient", id)
     if len(allPaths) == 0:

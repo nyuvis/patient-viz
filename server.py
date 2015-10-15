@@ -19,7 +19,7 @@ sys.path.append('lib')
 
 from quick_server.quick_server import create_server, msg, json_dumps
 
-use_cache = False
+use_cache = True
 max_num = 100
 settings_file = 'config.txt'
 format_file = 'format.json'
@@ -111,7 +111,7 @@ def get_patient(req, args):
         pid = pid[:-len('.json')]
     if not os.path.isfile(cache_file) or not use_cache:
         if use_db:
-            patient = omop.get_patient(pid, dict)
+            patient = omop.get_patient(pid, dict, line_file, class_file)
         else:
             patient = cms_get_patient.process(all_paths, line_file, class_file, pid)
             build_dictionary.extractEntries(dict, patient)

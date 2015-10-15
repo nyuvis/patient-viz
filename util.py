@@ -226,6 +226,40 @@ def process_id_directory(dir, id, cb):
             if file.endswith(".csv"):
                 cb(os.path.join(root, file), id)
 
+def add_files(obj, line_file, class_file):
+    if line_file is not None:
+        with open(line_file, 'r') as lf:
+            for line in lf:
+                process_line(obj, line)
+    if class_file is not None:
+        with open(class_file, 'r') as cf:
+            obj["classes"] = json.loads(cf.read())
+
+def process_line(obj, line):
+    sp = line.strip().split(':', 2)
+    if len(sp) < 2:
+        print('invalid line in line file: '+line, file=sys.stderr)
+        return
+    lid = sp[0]
+    if lid != id and len(lid):
+        return
+    if "__" in sp[1]:
+        sps = sp[1].split('__', 1)
+        obj["h_bars"].append({
+            "group": sps[0],
+            "id": sps[1]
+        })
+    else:
+        sps = sp[1].split('-', 1)
+        o = {
+            "from": toTime(sps[0])
+        }
+        if len(sps) > 1:
+            o["to"] = toTime(sps[1])
+        if len(sp) > 2:
+            o["class"] = sp[2]
+        obj["v_spans"].append(o)
+
 def convert_paths(args, allPaths):
     while args:
         path = args.pop(0)
