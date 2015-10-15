@@ -302,11 +302,11 @@ pip_install() {
   source ${venv_activate}
   test_fail $?
   if [ ! -z $apt ]; then
-    no_apt_get=0
-    command -v apt-get >/dev/null 2>&1 || no_apt_get=$?
+    no_apt_get=`command -v apt-get 2>/dev/null 1>&2; echo $?`
     if [ $no_apt_get == 0 ]; then
-      echo "installing apt-get packages to speed up pip"
-      sudo apt-get install git python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy libpq-dev python-dev
+      echo "installing apt-get packages to speed up pip:"
+      echo "sudo apt-get install git python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy libpq-dev python-dev" | "${SHELL}" -x
+      test_fail $?
     fi
   fi
   echo "install python packages"
