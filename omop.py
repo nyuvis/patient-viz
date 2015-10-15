@@ -8,13 +8,6 @@ import sys
 import json
 import sqlalchemy
 
-TYPE_PRESCRIBED = "prescribed"
-TYPE_LABTEST    = "lab-test"
-TYPE_DIAGNOSIS  = "diagnosis"
-TYPE_PROCEDURE  = "procedure"
-TYPE_PROVIDER   = "provider"
-TYPE_PHYSICIAN  = "physician"
-
 gender_label = {
     "M": "primary",
     "W": "danger",
@@ -135,8 +128,8 @@ class OMOP():
             c.vocabulary_id as d_vocab,
             c.concept_code as d_num
            FROM
-            test.condition_occurrence as o,
-            test.concept as c
+            {schema}.condition_occurrence as o,
+            {schema}.concept as c
            WHERE
             o.person_id = :pid
             and c.concept_id = o.condition_concept_id

@@ -33,6 +33,7 @@ cms=
 icd9=
 ccs=
 pip=
+apt=
 psql=
 do_convert=
 do_clean=
@@ -62,6 +63,7 @@ usage() {
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
     echo "--pip: install python packages"
+    echo "--apt: use apt-get if available"
     echo "--psql: install python PostgreSQL connector (implies --pip)"
     echo "--shelve: use shelve input for conversion. (also switches to format_shelve.json except when -f is specified after)"
     echo "--nop: performs no operation besides basic setup tasks"
@@ -142,6 +144,9 @@ while [ $# -gt 0 ]; do
     ;;
   --pip)
     pip=1
+    ;;
+  --apt)
+    apt=1
     ;;
   --psql)
     pip=1
@@ -296,6 +301,14 @@ pip_install() {
   fi
   source ${venv_activate}
   test_fail $?
+  if [ ! -z $apt ]; then
+    no_apt_get=0
+    command -v apt-get >/dev/null 2>&1 || no_apt_get=$?
+    if [ $no_apt_get == 0 ]; then
+      echo "installing apt-get packages to speed up pip"
+      sudo apt-get install git python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy libpq-dev python-dev
+    fi
+  fi
   echo "install python packages"
   pip install --upgrade pip
   pip install --upgrade -r requirements.txt
