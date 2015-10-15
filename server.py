@@ -19,7 +19,6 @@ sys.path.append('lib')
 
 from quick_server.quick_server import create_server, msg, json_dumps
 
-use_cache = True
 max_num = 100
 settings_file = 'config.txt'
 format_file = 'format.json'
@@ -35,6 +34,7 @@ def usage():
 
 settings = {}
 util.read_config(settings, settings_file, True)
+use_cache = settings.get('use_cache', True)
 
 all_paths = []
 input_format = {}

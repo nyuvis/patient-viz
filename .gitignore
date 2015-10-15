@@ -1,3 +1,4 @@
+*.swp
 .DS_Store
 .cmd_history
 /err.txt
