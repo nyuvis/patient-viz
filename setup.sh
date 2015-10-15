@@ -33,6 +33,7 @@ cms=
 icd9=
 ccs=
 pip=
+psql=
 do_convert=
 do_clean=
 do_nop=
@@ -61,6 +62,7 @@ usage() {
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
     echo "--pip: install python packages"
+    echo "--psql: install python PostgreSQL connector (implies --pip)"
     echo "--shelve: use shelve input for conversion. (also switches to format_shelve.json except when -f is specified after)"
     echo "--nop: performs no operation besides basic setup tasks"
     exit 1
@@ -140,6 +142,10 @@ while [ $# -gt 0 ]; do
     ;;
   --pip)
     pip=1
+    ;;
+  --psql)
+    pip=1
+    psql=1
     ;;
   --shelve)
     format="format_shelve.json"
@@ -292,7 +298,10 @@ pip_install() {
   test_fail $?
   echo "install python packages"
   pip install --upgrade pip
-  pip install -r requirements.txt
+  pip install --upgrade -r requirements.txt
+  if [ ! -z $psql ]; then
+    pip install --upgrade psycopg2
+  fi
   test_fail $?
 }
 
