@@ -156,7 +156,7 @@ class OMOP():
             if code == 0:
                 code = row['d_orig']
                 unmapped = True
-            id_row = row['id_row']
+            id_row = 'c' + str(row['id_row'])
             d_id = row['d_id']
             name = row['d_name']
             vocab = row['d_vocab']
@@ -172,6 +172,44 @@ class OMOP():
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 
+    def get_procedures(self, pid, obj, dict):
+        query = """SELECT
+            o.procedure_occurrence_id as id_row,
+            o.procedure_date as p_date,
+            o.procedure_concept_id as p_id,
+            o.procedure_source_value as p_orig,
+            c.domain_id as p_domain,
+            c.concept_name as p_name,
+            c.vocabulary_id as p_vocab,
+            c.concept_code as p_num,
+            p.total_paid as p_cost
+           FROM
+            {schema}.procedure_occurrence as o,
+            {schema}.concept as c,
+            {schema}.procedure_cost as p
+           WHERE
+            o.person_id = :pid
+            and c.concept_id = o.procedure_concept_id
+            and p.procedure_occurrence_id = o.procedure_occurrence_id
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['p_num']
+            unmapped = False
+            if code == 0:
+                code = row['p_orig']
+                unmapped = True
+            id_row = 'p' + str(row['id_row'])
+            d_id = row['p_id']
+            name = row['p_name']
+            vocab = row['p_vocab']
+            group = row['p_domain']
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, group, vocab, d_id, name, desc, "#ff7f00", unmapped)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row)
+            event['time'] = self.to_time(row['p_date'])
+            event['cost'] = row('p_cost')
+            obj['events'].append(event)
+
     def get_patient(self, pid, dictionary, line_file, class_file):
         obj = {
             "info": [],
@@ -186,6 +224,7 @@ class OMOP():
         self.add_info(obj, "pid", "Patient", pid)
         self.get_info(pid, obj)
         self.get_diagnoses(pid, obj, dictionary)
+        self.get_procedures(pid, obj, dictionary)
         min_time = float('inf')
         max_time = float('-inf')
         for e in obj["events"]:
