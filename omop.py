@@ -197,7 +197,6 @@ class OMOP():
            )
            WHERE
             o.person_id = :pid
-            and
         """
         for row in self._exec(query, pid=pid):
             code = row['p_num']
@@ -214,7 +213,7 @@ class OMOP():
             self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
-            if row['p_cost']:
+            if 'p_cost' in row and row['p_cost']:
                 event['cost'] = row['p_cost']
             obj['events'].append(event)
 
@@ -223,7 +222,7 @@ class OMOP():
             o.drug_exposure_id as id_row,
             o.drug_exposure_start_date as date_start,
             o.drug_exposure_end_date as date_end,
-            o.drug_type_concept_id as m_id,
+            o.drug_concept_id as m_id,
             o.drug_source_value as m_orig,
             c.domain_id as m_domain,
             c.concept_name as m_name,
@@ -233,7 +232,7 @@ class OMOP():
            FROM
             {schema}.drug_exposure as o
            LEFT JOIN {schema}.concept as c ON (
-            c.concept_id = o.drug_type_concept_id
+            c.concept_id = o.drug_concept_id
            )
            LEFT OUTER JOIN {schema}.drug_cost as p ON (
             p.drug_exposure_id = o.drug_exposure_id
@@ -261,7 +260,7 @@ class OMOP():
                 event = self.create_event(group, str(vocab) + str(d_id), id_row)
                 event['time'] = date_cur
                 obj['events'].append(event)
-                if row['p_cost']:
+                if 'p_cost' in row and row['p_cost']:
                     event['cost'] = row['p_cost']
                     row['p_cost'] = None
                 date_cur = util.nextDay(date_cur)
