@@ -16,6 +16,13 @@ addons:
     - python-sklearn
     - python-numpy
     - python-scipy
+    - python-matplotlib
+    - ipython
+    - ipython-notebook
+    - python-pandas
+    - python-sympy
+    - libpq-dev
+    - python-dev
 install:
   - virtualenv --system-site-packages .venv && source .venv/bin/activate
   - pip install --upgrade pip
