@@ -187,13 +187,13 @@ class OMOP():
             c.concept_code as p_num,
             p.total_paid as p_cost
            FROM
-            {schema}.procedure_occurrence as o,
-            {schema}.concept as c
+            {schema}.procedure_occurrence o,
+            {schema}.concept c
            LEFT OUTER JOIN
-            {schema}.procedure_cost as p
-           ON
+            {schema}.procedure_cost p
+           ON (
             p.procedure_occurrence_id = o.procedure_occurrence_id
-           WHERE
+           ) WHERE
             o.person_id = :pid
             and c.concept_id = o.procedure_concept_id
         """
@@ -229,13 +229,13 @@ class OMOP():
             c.concept_code as m_num,
             p.total_paid as m_cost
            FROM
-            {schema}.drug_exposure as o,
-            {schema}.concept as c
+            {schema}.drug_exposure o,
+            {schema}.concept c
            LEFT OUTER JOIN
-            {schema}.drug_cost as p
-           ON
-            o.drug_exposure_id = p.drug_exposure_id
-           WHERE
+            {schema}.drug_cost p
+           ON (
+            p.drug_exposure_id = o.drug_exposure_id
+           ) WHERE
             o.person_id = :pid
             and c.concept_id = o.drug_type_concept_id
         """
