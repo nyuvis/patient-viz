@@ -147,11 +147,12 @@ class OMOP():
             c.vocabulary_id as d_vocab,
             c.concept_code as d_num
            FROM
-            {schema}.condition_occurrence as o,
-            {schema}.concept as c
+            {schema}.condition_occurrence as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.condition_concept_id
+           )
            WHERE
             o.person_id = :pid
-            and c.concept_id = o.condition_concept_id
         """
         for row in self._exec(query, pid=pid):
             code = row['d_num']
@@ -187,15 +188,16 @@ class OMOP():
             c.concept_code as p_num,
             p.total_paid as p_cost
            FROM
-            {schema}.procedure_occurrence o,
-            {schema}.concept c
-           LEFT OUTER JOIN
-            {schema}.procedure_cost p
-           ON (
+            {schema}.procedure_occurrence as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.procedure_concept_id
+           )
+           LEFT OUTER JOIN {schema}.procedure_cost as p ON (
             p.procedure_occurrence_id = o.procedure_occurrence_id
-           ) WHERE
+           )
+           WHERE
             o.person_id = :pid
-            and c.concept_id = o.procedure_concept_id
+            and
         """
         for row in self._exec(query, pid=pid):
             code = row['p_num']
@@ -229,15 +231,15 @@ class OMOP():
             c.concept_code as m_num,
             p.total_paid as m_cost
            FROM
-            {schema}.drug_exposure o,
-            {schema}.concept c
-           LEFT OUTER JOIN
-            {schema}.drug_cost p
-           ON (
+            {schema}.drug_exposure as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.drug_type_concept_id
+           )
+           LEFT OUTER JOIN {schema}.drug_cost as p ON (
             p.drug_exposure_id = o.drug_exposure_id
-           ) WHERE
+           )
+           WHERE
             o.person_id = :pid
-            and c.concept_id = o.drug_type_concept_id
         """
         for row in self._exec(query, pid=pid):
             code = row['m_num']
