@@ -26,7 +26,7 @@ addons:
 install:
   - virtualenv --system-site-packages .venv && source .venv/bin/activate
   - pip install --upgrade pip
-  - pip install -r requirements.txt
+  - pip install --upgrade -r requirements.txt
 script: test/run.sh
 notifications:
   email:
