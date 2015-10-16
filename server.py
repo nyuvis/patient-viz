@@ -26,7 +26,7 @@ class_file = 'style_classes.json'
 line_file = None
 cms_path = 'cms/'
 addr = ''
-port = 8000
+port = 8080
 
 def usage():
     msg("ERROR!")

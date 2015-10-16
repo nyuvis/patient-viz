@@ -33,26 +33,38 @@ class OMOP():
         self.schema = settings['omop_schema']
         self.db = sqlalchemy.create_engine('postgresql://{0}:{1}@{2}:{3}/{4}'.format(username, password, host, port, database))
 
-    def _exec(self, query, *args):
+    def _exec(self, query, **args):
         connection = None
         try:
             connection = self.db.connect()
-            return connection.execute(query.format(schema=self.schema), *args)
+            q = query.format(schema=self.schema)
+            # DEBUG!
+            qq = q
+            for k in args.keys():
+                qq = qq.replace(':'+str(k), "'" + str(args[k]) + "'")
+            qq = qq + ';'
+            print("{0}".format(qq))
+            return connection.execute(sqlalchemy.text(q), **args)
         finally:
             if connection is not None:
                 connection.close()
 
-    def _exec_one(self, query, *args):
-        result = self._exec(query, *args)
-        if len(result) != 1:
-            raise ValueError("expected one result row got {0}\n{1}\n".format(len(result), query))
-        return result[0]
+    def _exec_one(self, query, **args):
+        result = self._exec(query, **args)
+        res = None
+        for r in result:
+            if res is not None:
+                raise ValueError("expected one result row got more\n{0}\n".format(query))
+            res = r
+        if res is None:
+            raise ValueError("expected one result row got 0\n{0}\n".format(query))
+        return res
 
     def list_patients(self, patients, prefix="", limit=None):
-        limit_str = "LIMIT :limit"+limit if limit is not None else ""
-        query = "SELECT person_id FROM {schema}.person{limit}".format(limit=limit_str)
+        limit_str = " LIMIT :limit" if limit is not None else ""
+        query = "SELECT person_id FROM {schema}.person{limit}".format(schema=self.schema, limit=limit_str)
         for r in self._exec(query, limit=limit):
-            patients.add(prefix = r['person_id'])
+            patients.add(str(prefix) + str(r['person_id']))
 
     def add_info(self, obj, id, key, value, has_label = False, label = ""):
         for info in obj["info"]:
@@ -71,13 +83,13 @@ class OMOP():
 
     def get_info(self, pid, obj):
         query = "SELECT year_of_birth, gender_source_value FROM {schema}.person WHERE person_id = :pid"
-        result = self._exec_one(query, pid=pid)
+        result = self._exec_one(query, pid=str(pid))
         self.add_info(obj, 'born', 'Born', int(result['year_of_birth']))
         gender = str(result['gender_source_value'])
         self.add_info(obj, 'gender', 'Gender', gender_map.get(gender, 'U'), True, gender_label.get(gender, "default"))
 
     def to_time(self, value):
-        return util.toTime(''.join(value.split('-')))
+        return util.toTime(value.strftime("%Y%m%d")) 
 
     def create_event(self, group, id, claim_id, has_result=False, result_flag=False, result=""):
         res = {
@@ -102,7 +114,7 @@ class OMOP():
                 "parent": ""
             }
         g = dict[group]
-        full_id = prefix + id
+        full_id = str(prefix) + str(id)
         if full_id not in g:
             res = {
                 "id": id,
@@ -151,8 +163,8 @@ class OMOP():
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
             while date_cur <= date_end:
-                event = self.create_event(group, vocab + d_id, id_row)
-                event['time'] = curDate
+                event = self.create_event(group, str(vocab) + str(d_id), id_row)
+                event['time'] = date_cur
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 
@@ -166,10 +178,10 @@ class OMOP():
             "classes": {}
         }
         util.add_files(obj, line_file, class_file)
-        self.get_info(pid, obj["info"])
+        self.get_info(pid, obj)
         self.add_info(obj, "pid", "Patient", pid)
         self.get_info(pid, obj)
-        self.get_diagnoses(pid, obj, dict)
+        self.get_diagnoses(pid, obj, dictionary)
         min_time = float('inf')
         max_time = float('-inf')
         for e in obj["events"]:
