@@ -67,7 +67,7 @@ def save_patients():
 
 if not os.path.isfile(patients_list) or not use_cache:
     if use_db:
-        omop.list_patients(patients, prefix=json_dir, limit=max_num)
+        omop.list_patients(patients, prefix=json_dir, limit=max_num, show_old_ids=True)
     else:
         tf = StringIO()
         cms_analyze.compute(all_paths, {}, False, tf, filter_zero=True)
@@ -102,6 +102,9 @@ def get_list(req, args):
 @server.json_get(prefix + '/' + json_dir, 1)
 def get_patient(req, args):
     pid = args['paths'][0]
+    if pid.endswith('.json') and use_db:
+        pid = pid[:-len('.json')]
+        pid = omop.get_person_id(pid)
     cache_file = os.path.join(json_dir, pid)
     p_name = json_dir + pid.strip()
     if p_name not in patients:
