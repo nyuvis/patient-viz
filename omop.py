@@ -340,6 +340,7 @@ class OMOP():
         self.get_diagnoses(pid, obj, dictionary)
         self.get_procedures(pid, obj, dictionary)
         self.get_drugs(pid, obj, dictionary)
+        self.get_measurements(pid, obj, dictionary)
         min_time = float('inf')
         max_time = float('-inf')
         for e in obj["events"]:
