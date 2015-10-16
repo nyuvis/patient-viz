@@ -19,6 +19,11 @@ gender_map = {
     "F": "F"
 }
 
+color_map = {
+    "Condition": "#4daf4a",
+    "Procedure": "#ff7f00"
+}
+
 from StringIO import StringIO
 
 import util
@@ -107,14 +112,14 @@ class OMOP():
             res["flag"] = result_flag
         return res
 
-    def add_dict(self, dict, group, prefix, id, name, desc, color, unmapped):
+    def add_dict(self, dict, group, prefix, id, name, desc, unmapped):
         if group not in dict:
             dict[group] = {}
             dict[group][""] = {
                 "id": "",
                 "name": group,
                 "desc": group,
-                "color": color,
+                "color": color_map.get(group, "lightgray"),
                 "parent": ""
             }
         g = dict[group]
@@ -128,8 +133,6 @@ class OMOP():
             }
             if unmapped:
                 res["unmapped"] = True
-            if g[""]["color"] != color:
-                res["color"] = color
             g[full_id] = res
 
     def get_diagnoses(self, pid, obj, dict):
@@ -162,7 +165,7 @@ class OMOP():
             vocab = row['d_vocab']
             group = row['d_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, group, vocab, d_id, name, desc, "#4daf4a", unmapped)
+            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
@@ -185,12 +188,14 @@ class OMOP():
             p.total_paid as p_cost
            FROM
             {schema}.procedure_occurrence as o,
-            {schema}.concept as c,
+            {schema}.concept as c
+           LEFT OUTER JOIN
             {schema}.procedure_cost as p
+           ON
+            p.procedure_occurrence_id = o.procedure_occurrence_id
            WHERE
             o.person_id = :pid
             and c.concept_id = o.procedure_concept_id
-            and p.procedure_occurrence_id = o.procedure_occurrence_id
         """
         for row in self._exec(query, pid=pid):
             code = row['p_num']
@@ -204,11 +209,60 @@ class OMOP():
             vocab = row['p_vocab']
             group = row['p_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, group, vocab, d_id, name, desc, "#ff7f00", unmapped)
+            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
-            event['cost'] = row('p_cost')
+            if row['p_cost']:
+                event['cost'] = row['p_cost']
             obj['events'].append(event)
+
+    def get_drugs(self, pid, obj, dict):
+        query = """SELECT
+            o.drug_exposure_id as id_row,
+            o.drug_exposure_start_date as date_start,
+            o.drug_exposure_end_date as date_end,
+            o.drug_type_concept_id as m_id,
+            o.drug_source_value as m_orig,
+            c.domain_id as m_domain,
+            c.concept_name as m_name,
+            c.vocabulary_id as m_vocab,
+            c.concept_code as m_num,
+            p.total_paid as m_cost
+           FROM
+            {schema}.drug_exposure as o,
+            {schema}.concept as c
+           LEFT OUTER JOIN
+            {schema}.drug_cost as p
+           ON
+            o.drug_exposure_id = p.drug_exposure_id
+           WHERE
+            o.person_id = :pid
+            and c.concept_id = o.drug_type_concept_id
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['m_num']
+            unmapped = False
+            if code == 0:
+                code = row['m_orig']
+                unmapped = True
+            id_row = 'm' + str(row['id_row'])
+            d_id = row['m_id']
+            name = row['m_name']
+            vocab = row['m_vocab']
+            group = row['m_domain']
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
+            date_start = self.to_time(row['date_start'])
+            date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
+            date_cur = date_start
+            while date_cur <= date_end:
+                event = self.create_event(group, str(vocab) + str(d_id), id_row)
+                event['time'] = date_cur
+                obj['events'].append(event)
+                if row['p_cost']:
+                    event['cost'] = row['p_cost']
+                    row['p_cost'] = None
+                date_cur = util.nextDay(date_cur)
 
     def get_patient(self, pid, dictionary, line_file, class_file):
         obj = {
@@ -225,6 +279,7 @@ class OMOP():
         self.get_info(pid, obj)
         self.get_diagnoses(pid, obj, dictionary)
         self.get_procedures(pid, obj, dictionary)
+        self.get_drugs(pid, obj, dictionary)
         min_time = float('inf')
         max_time = float('-inf')
         for e in obj["events"]:
