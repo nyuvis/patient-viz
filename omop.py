@@ -310,7 +310,7 @@ class OMOP():
             name = row['m_name']
             vocab = row['m_vocab']
             group = row['m_domain']
-            lab_value = float(row['m_value']) if 'm_value' in row and row['m_value'] else row['m_orig_value']
+            lab_value = float(row['m_value']) if 'm_value' in row and row['m_value'] else float(row['m_orig_value'])
             lab_low = float(row['m_low'])
             lab_high = float(row['m_high'])
             lab_flag = ""

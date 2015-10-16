@@ -300,7 +300,7 @@ Event.nextId = function() {
 Event.eventDesc = function(e, type) {
   var add;
   if("flag" in e) {
-    add = ": " + e["flag_value"];
+    add = e["flag_value"] + (e["flag"] ? " ["+e["flag"]+"]" : "") + ": ";
   } else {
     add = "";
   }
