@@ -21,7 +21,17 @@ gender_map = {
 
 color_map = {
     "Condition": "#4daf4a",
-    "Procedure": "#ff7f00"
+    "Procedure": "#ff7f00",
+    "Drug": "#eb9adb",
+    "Measurement": "#80b1d3"
+}
+measure_flag_map = {
+    "L": {
+        "color": "#fb8072"
+    },
+    "H": {
+        "color": "#fb8072"
+    }
 }
 
 from StringIO import StringIO
@@ -100,7 +110,7 @@ class OMOP():
     def to_time(self, value):
         return util.toTime(value.strftime("%Y%m%d"))
 
-    def create_event(self, group, id, claim_id, has_result=False, result_flag=False, result=""):
+    def create_event(self, group, id, claim_id, has_result=False, result_flag="", result=""):
         res = {
             "id": id,
             "group": group
@@ -122,6 +132,8 @@ class OMOP():
                 "color": color_map.get(group, "lightgray"),
                 "parent": ""
             }
+            if group == "Measurement":
+                dict[group]["flags"] = measure_flag_map
         g = dict[group]
         full_id = str(prefix) + str(id)
         if full_id not in g:
@@ -259,11 +271,58 @@ class OMOP():
             while date_cur <= date_end:
                 event = self.create_event(group, str(vocab) + str(d_id), id_row)
                 event['time'] = date_cur
-                obj['events'].append(event)
                 if 'p_cost' in row and row['p_cost']:
                     event['cost'] = row['p_cost']
                     row['p_cost'] = None
+                obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
+
+    def get_measurements(self, pid, obj, dict):
+        query = """SELECT
+            o.measurement_id as id_row,
+            o.measurement_date as m_date,
+            o.measurement_concept_id as m_id,
+            o.measurement_source_value as m_orig,
+            o.value_source_value as m_orig_value,
+            o.value_as_number as m_value,
+            o.range_low as m_low,
+            o.range_high as m_high,
+            c.domain_id as m_domain,
+            c.concept_name as m_name,
+            c.vocabulary_id as m_vocab,
+            c.concept_code as m_num
+           FROM
+            {schema}.measurement as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.measurement_concept_id
+           )
+           WHERE
+            o.person_id = :pid
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['m_num']
+            unmapped = False
+            if code == 0:
+                code = row['m_orig']
+                unmapped = True
+            id_row = 'l' + str(row['id_row'])
+            d_id = row['m_id']
+            name = row['m_name']
+            vocab = row['m_vocab']
+            group = row['m_domain']
+            lab_value = float(row['m_value']) if 'm_value' in row and row['m_value'] else row['m_orig_value']
+            lab_low = float(row['m_low'])
+            lab_high = float(row['m_high'])
+            lab_flag = ""
+            if lab_value <= lab_low:
+                lab_flag = "L"
+            elif lab_value >= lab_high:
+                lab_flag = "H"
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row, True, lab_flag, str(lab_value))
+            event['time'] = self.to_time(row['m_date'])
+            obj['events'].append(event)
 
     def get_patient(self, pid, dictionary, line_file, class_file):
         obj = {
