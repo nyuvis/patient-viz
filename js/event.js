@@ -304,5 +304,5 @@ Event.eventDesc = function(e, type) {
   } else {
     add = "";
   }
-  return type.getDesc() + add;
+  return add + type.getDesc();
 };
