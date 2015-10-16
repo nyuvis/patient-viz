@@ -68,7 +68,7 @@ class OMOP():
 
     def get_person_id(self, pid):
         query = "SELECT person_id FROM {schema}.person WHERE person_source_value = :pid"
-        return _exec_one(query, pid=pid)
+        return str(self._exec_one(query, pid=pid)['person_id'])
 
     def add_info(self, obj, id, key, value, has_label = False, label = ""):
         for info in obj["info"]:
