@@ -122,7 +122,7 @@ class OMOP():
             res["flag"] = result_flag
         return res
 
-    def add_dict(self, dict, group, prefix, id, name, desc, unmapped):
+    def add_dict(self, dict, new_dict_entries, group, prefix, id, name, desc, unmapped):
         if group not in dict:
             dict[group] = {}
             dict[group][""] = {
@@ -146,8 +146,62 @@ class OMOP():
             if unmapped:
                 res["unmapped"] = True
             g[full_id] = res
+            new_dict_entries.add((group, full_id, id))
 
-    def get_diagnoses(self, pid, obj, dict):
+    def get_dict_entry(self, dict, group, prefix, id):
+        if group not in dict:
+            return None
+        full_id = str(prefix) + str(id)
+        return dict[group].get(full_id, None)
+
+    def update_hierarchies(self, dict, new_dict_entries):
+        while len(new_dict_entries):
+            query = """SELECT
+                 c.concept_id as c_id,
+                 c.domain_id as c_domain,
+                 c.concept_name as c_name,
+                 c.vocabulary_id as c_vocab,
+                 c.concept_code as c_num,
+                 ca.min_levels_of_separation as c_distance,
+                 ca.descendant_concept_id as c_desc_id,
+                 cc.domain_id as c_desc_domain,
+                 cc.vocabulary_id as c_desc_vocab
+                FROM
+                 {schema}.concept_ancestor as ca
+                LEFT JOIN {schema}.concept as c ON (
+                 c.concept_id = ca.ancestor_concept_id
+                LEFT JOIN {schema}.concept as cc ON (
+                 cc.concept_id = ca.descendant_concept_id
+                ) WHERE
+                 ca.descendant_concept_id IN :cids
+            """
+            result = self._exec(query, cids = sorted(list(new_dict_entries)))
+            new_dict_entries.clear()
+            for row in result:
+                parent_id = row['c_id']
+                parent_group = row['c_domain']
+                parent_name = row['c_name']
+                parent_vocab = row['c_vocab']
+                parent_code = row['d_num']
+                unmapped = False
+                if parent_code == 0:
+                    parent_code = row['d_orig']
+                    unmapped = True
+                parent_desc = "{0} ({1} {2})".format(parent_name, parent_vocab, parent_code)
+                self.add_dict(dict, new_dict_entries, parent_group, parent_vocab, parent_id, parent_name, parent_desc, unmapped)
+                dos = int(row['c_distance'])
+                desc_id = row['c_desc_id']
+                desc_vocab = row['c_desc_vocab']
+                desc_group = row['c_desc_domain']
+                if desc_group != parent_group:
+                    print("WARNING: intra group inheritance: {0} << {1}".format(parent_group, desc_group), file=sys.stderr)
+                desc_entry = self.get_dict_entry(dict, desc_group, desc_vocab, desc_id)
+                if desc_entry is not None and ('dos' not in desc_entry or desc_entry['dos'] > dos):
+                    desc_entry['dos'] = dos
+                    desc_entry['parent'] = str(parent_vocab) + str(parent_id)
+
+
+    def get_diagnoses(self, pid, obj, dict, new_dict_entries):
         query = """SELECT
             o.condition_occurrence_id as id_row,
             o.condition_start_date as date_start,
@@ -178,7 +232,7 @@ class OMOP():
             vocab = row['d_vocab']
             group = row['d_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
@@ -188,7 +242,7 @@ class OMOP():
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 
-    def get_procedures(self, pid, obj, dict):
+    def get_procedures(self, pid, obj, dict, new_dict_entries):
         query = """SELECT
             o.procedure_occurrence_id as id_row,
             o.procedure_date as p_date,
@@ -222,14 +276,14 @@ class OMOP():
             vocab = row['p_vocab']
             group = row['p_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
             if 'p_cost' in row and row['p_cost']:
                 event['cost'] = row['p_cost']
             obj['events'].append(event)
 
-    def get_drugs(self, pid, obj, dict):
+    def get_drugs(self, pid, obj, dict, new_dict_entries):
         query = """SELECT
             o.drug_exposure_id as id_row,
             o.drug_exposure_start_date as date_start,
@@ -264,7 +318,7 @@ class OMOP():
             vocab = row['m_vocab']
             group = row['m_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
@@ -277,7 +331,7 @@ class OMOP():
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 
-    def get_measurements(self, pid, obj, dict):
+    def get_measurements(self, pid, obj, dict, new_dict_entries):
         query = """SELECT
             o.measurement_id as id_row,
             o.measurement_date as m_date,
@@ -319,7 +373,7 @@ class OMOP():
             elif lab_value >= lab_high:
                 lab_flag = "H"
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row, True, lab_flag, str(lab_value))
             event['time'] = self.to_time(row['m_date'])
             obj['events'].append(event)
@@ -333,14 +387,15 @@ class OMOP():
             "v_spans": [],
             "classes": {}
         }
+        new_dict_entries = set()
         util.add_files(obj, line_file, class_file)
         self.get_info(pid, obj)
         self.add_info(obj, "pid", "Patient", pid)
         self.get_info(pid, obj)
-        self.get_diagnoses(pid, obj, dictionary)
-        self.get_procedures(pid, obj, dictionary)
-        self.get_drugs(pid, obj, dictionary)
-        self.get_measurements(pid, obj, dictionary)
+        self.get_diagnoses(pid, obj, dictionary, new_dict_entries)
+        self.get_procedures(pid, obj, dictionary, new_dict_entries)
+        self.get_drugs(pid, obj, dictionary, new_dict_entries)
+        self.get_measurements(pid, obj, dictionary, new_dict_entries)
         min_time = float('inf')
         max_time = float('-inf')
         for e in obj["events"]:
@@ -352,4 +407,5 @@ class OMOP():
         obj["start"] = min_time
         obj["end"] = max_time
         self.add_info(obj, "event_count", "Events", len(obj["events"]))
+        self.update_hierarchies(dictionary, new_dict_entries)
         return obj
