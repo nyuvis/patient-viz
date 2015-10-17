@@ -156,7 +156,7 @@ class OMOP():
                         "parent": ah.get(key, "")
                     }
             if group == "Measurement":
-                dict[group]["flags"] = measure_flag_map
+                dict[group][""]["flags"] = measure_flag_map
         g = dict[group]
         full_id = str(prefix) + str(id)
         if full_id not in g:
