@@ -180,8 +180,8 @@ class OMOP():
                     res["parent"] = ah[code]
                     do_add = False
                 else:
-                    print("code: {0}".format(code), file=sys.stderr)
                     code = code.replace('.', '')
+                    print("code: {0}".format(code), file=sys.stderr)
                     if code in ah:
                         print("true fb", file=sys.stderr)
                         res["parent"] = ah[code]
