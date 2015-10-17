@@ -290,7 +290,7 @@ def read_CCS(ccs_file, codes):
                 par = spl[0].rstrip('0123456789').rstrip('.')
                 cur = "HIERARCHY." + spl[0]
                 parents[cur] = "HIERARCHY." + par if len(par) > 0 else ""
-                codes[cur] = spl[1].rstrip('0123456789 \t\n\r')
+                codes[cur] = spl[1].rstrip('0123456789 \t\n\r-')
             else:
                 print("invalid CCS line: '" + line.rstrip() + "'", file=sys.stderr)
     return parents

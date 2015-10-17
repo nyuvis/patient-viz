@@ -147,7 +147,7 @@ class OMOP():
                 ah = {}
                 if alt_hierarchies in self._parents:
                     ah = self._parents[alt_hierarchies]
-                for (key, value) in self._codes.items():
+                for (key, value) in self._codes[alt_hierarchies].items():
                     dict[group][key] = {
                         "id": key,
                         "name": value,
@@ -170,8 +170,11 @@ class OMOP():
             g[full_id] = res
             do_add = True
             if alt_hierarchies in self._parents:
+                print("AH: {0}".format(alt_hierarchies), file=sys.stderr)
                 ah = self._parents[alt_hierarchies]
+                print("code: {0}".format(code), file=sys.stderr)
                 if code in ah:
+                    print("true", file=sys.stderr)
                     res["parent"] = ah[code]
                     do_add = False
             if id != 0 and do_add:
