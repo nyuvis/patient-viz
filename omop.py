@@ -152,6 +152,7 @@ class OMOP():
                         "id": key,
                         "name": value,
                         "desc": value,
+                        "los": 0,
                         "parent": ah.get(key, "")
                     }
             if group == "Measurement":
@@ -175,6 +176,7 @@ class OMOP():
                 print("code: {0}".format(code), file=sys.stderr)
                 if code in ah:
                     print("true", file=sys.stderr)
+                    res["los"] = 0
                     res["parent"] = ah[code]
                     do_add = False
             if id != 0 and do_add:
