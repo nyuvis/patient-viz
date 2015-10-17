@@ -146,7 +146,7 @@ class OMOP():
             if unmapped:
                 res["unmapped"] = True
             g[full_id] = res
-            new_dict_entries.add((group, full_id, id))
+            new_dict_entries.add(str(id))
 
     def get_dict_entry(self, dict, group, prefix, id):
         if group not in dict:
@@ -155,7 +155,7 @@ class OMOP():
         return dict[group].get(full_id, None)
 
     def update_hierarchies(self, dict, new_dict_entries):
-        while len(new_dict_entries):
+        while new_dict_entries:
             query = """SELECT
                  c.concept_id as c_id,
                  c.domain_id as c_domain,
@@ -170,22 +170,22 @@ class OMOP():
                  {schema}.concept_ancestor as ca
                 LEFT JOIN {schema}.concept as c ON (
                  c.concept_id = ca.ancestor_concept_id
-                LEFT JOIN {schema}.concept as cc ON (
+                ) LEFT JOIN {schema}.concept as cc ON (
                  cc.concept_id = ca.descendant_concept_id
                 ) WHERE
-                 ca.descendant_concept_id IN :cids
-            """
-            result = self._exec(query, cids = sorted(list(new_dict_entries)))
+                 ca.descendant_concept_id IN ( {id_list} )
+            """.format(schema=self.schema, id_list=','.join(sorted(list(new_dict_entries))))
+            result = self._exec(query)
             new_dict_entries.clear()
             for row in result:
                 parent_id = row['c_id']
                 parent_group = row['c_domain']
                 parent_name = row['c_name']
                 parent_vocab = row['c_vocab']
-                parent_code = row['d_num']
+                parent_code = row['c_num']
                 unmapped = False
                 if parent_code == 0:
-                    parent_code = row['d_orig']
+                    parent_code = row['c_orig']
                     unmapped = True
                 parent_desc = "{0} ({1} {2})".format(parent_name, parent_vocab, parent_code)
                 self.add_dict(dict, new_dict_entries, parent_group, parent_vocab, parent_id, parent_name, parent_desc, unmapped)
