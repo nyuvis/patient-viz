@@ -174,7 +174,9 @@ class OMOP():
                 ) LEFT JOIN {schema}.concept as cc ON (
                  cc.concept_id = ca.descendant_concept_id
                 ) WHERE
-                 ca.descendant_concept_id IN ( {id_list} )
+                 ca.descendant_concept_id <> 0
+                 AND ca.ca.ancestor_concept_id <> 0
+                 AND ca.descendant_concept_id IN ( {id_list} )
             """.format(schema=self.schema, id_list=','.join(sorted(list(new_dict_entries))))
             result = self._exec(query)
             new_dict_entries.clear()
