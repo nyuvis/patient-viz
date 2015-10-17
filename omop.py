@@ -412,10 +412,13 @@ class OMOP():
             lab_low = float(row['m_low'])
             lab_high = float(row['m_high'])
             lab_flag = ""
-            if lab_value <= lab_low:
-                lab_flag = "L"
-            elif lab_value >= lab_high:
-                lab_flag = "H"
+            if lab_value is not None:
+                if lab_value <= lab_low:
+                    lab_flag = "L"
+                elif lab_value >= lab_high:
+                    lab_flag = "H"
+            else:
+                lab_value = "n/a"
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row, True, lab_flag, str(lab_value))
