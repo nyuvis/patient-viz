@@ -178,7 +178,7 @@ class OMOP():
             result = self._exec(query)
             new_dict_entries.clear()
             for row in result:
-                parent_id = row['c_id']
+                parent_id = str(row['c_id'])
                 parent_group = row['c_domain']
                 parent_name = row['c_name']
                 parent_vocab = row['c_vocab']
@@ -190,16 +190,17 @@ class OMOP():
                 parent_desc = "{0} ({1} {2})".format(parent_name, parent_vocab, parent_code)
                 self.add_dict(dict, new_dict_entries, parent_group, parent_vocab, parent_id, parent_name, parent_desc, unmapped)
                 dos = int(row['c_distance'])
-                desc_id = row['c_desc_id']
+                desc_id = str(row['c_desc_id'])
                 desc_vocab = row['c_desc_vocab']
                 desc_group = row['c_desc_domain']
                 if desc_group != parent_group:
                     print("WARNING: intra group inheritance: {0} << {1}".format(parent_group, desc_group), file=sys.stderr)
-                desc_entry = self.get_dict_entry(dict, desc_group, desc_vocab, desc_id)
-                if desc_entry is not None and ('dos' not in desc_entry or desc_entry['dos'] > dos):
-                    desc_entry['dos'] = dos
-                    desc_entry['parent'] = str(parent_vocab) + str(parent_id)
-
+                else:
+                    desc_entry = self.get_dict_entry(dict, desc_group, desc_vocab, desc_id)
+                    if desc_entry is not None and parent_id != desc_id and ('dos' not in desc_entry or desc_entry['dos'] > dos):
+                        desc_entry['dos'] = dos
+                        desc_entry['parent'] = str(parent_vocab) + str(parent_id)
+            new_dict_entries.clear() # we covered everything already (because the table is the full matrix)
 
     def get_diagnoses(self, pid, obj, dict, new_dict_entries):
         query = """SELECT
