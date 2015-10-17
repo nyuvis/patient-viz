@@ -179,6 +179,11 @@ class OMOP():
                     res["los"] = 0
                     res["parent"] = ah[code]
                     do_add = False
+                code = code.replace('.', '')
+                if code in ah:
+                    print("true fb", file=sys.stderr)
+                    res["parent"] = ah[code]
+                    do_add = False
             if id != 0 and do_add:
                 new_dict_entries.add(str(id))
 
