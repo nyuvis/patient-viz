@@ -146,7 +146,8 @@ class OMOP():
             if unmapped:
                 res["unmapped"] = True
             g[full_id] = res
-            new_dict_entries.add(str(id))
+            if id != 0:
+                new_dict_entries.add(str(id))
 
     def get_dict_entry(self, dict, group, prefix, id):
         if group not in dict:
