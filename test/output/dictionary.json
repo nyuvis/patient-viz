@@ -32,9 +32,9 @@
       "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.13.3.2": {
-      "desc": "Intervertebral disc disorders                                                                           -", 
+      "desc": "Intervertebral disc disorders", 
       "id": "HIERARCHY.13.3.2", 
-      "name": "Intervertebral disc disorders                                                                           -", 
+      "name": "Intervertebral disc disorders", 
       "parent": "HIERARCHY.13.3"
     }, 
     "HIERARCHY.13.3.3": {
@@ -44,15 +44,15 @@
       "parent": "HIERARCHY.13"
     }, 
     "HIERARCHY.13.3.3.1": {
-      "desc": "Cervical radiculitis                                                                                    -", 
+      "desc": "Cervical radiculitis", 
       "id": "HIERARCHY.13.3.3.1", 
-      "name": "Cervical radiculitis                                                                                    -", 
+      "name": "Cervical radiculitis", 
       "parent": "HIERARCHY.13.3.3"
     }, 
     "HIERARCHY.13.3.3.7": {
-      "desc": "Other back pain and disorders                                                                           -", 
+      "desc": "Other back pain and disorders", 
       "id": "HIERARCHY.13.3.3.7", 
-      "name": "Other back pain and disorders                                                                           -", 
+      "name": "Other back pain and disorders", 
       "parent": "HIERARCHY.13.3.3"
     }, 
     "HIERARCHY.13.8": {
@@ -116,15 +116,15 @@
       "parent": "HIERARCHY.7.2"
     }, 
     "HIERARCHY.7.2.4.3": {
-      "desc": "Other acute and subacute forms of ischemic heart disease                                                -", 
+      "desc": "Other acute and subacute forms of ischemic heart disease", 
       "id": "HIERARCHY.7.2.4.3", 
-      "name": "Other acute and subacute forms of ischemic heart disease                                                -", 
+      "name": "Other acute and subacute forms of ischemic heart disease", 
       "parent": "HIERARCHY.7.2.4"
     }, 
     "HIERARCHY.7.2.4.5": {
-      "desc": "Other forms of chronic heart disease                                                                    -", 
+      "desc": "Other forms of chronic heart disease", 
       "id": "HIERARCHY.7.2.4.5", 
-      "name": "Other forms of chronic heart disease                                                                    -", 
+      "name": "Other forms of chronic heart disease", 
       "parent": "HIERARCHY.7.2.4"
     }, 
     "HIERARCHY.7.2.7": {
@@ -140,21 +140,21 @@
       "parent": "HIERARCHY.7.2"
     }, 
     "HIERARCHY.7.2.9.2": {
-      "desc": "Paroxysmal ventricular tachycardia                                                                      -", 
+      "desc": "Paroxysmal ventricular tachycardia", 
       "id": "HIERARCHY.7.2.9.2", 
-      "name": "Paroxysmal ventricular tachycardia                                                                      -", 
+      "name": "Paroxysmal ventricular tachycardia", 
       "parent": "HIERARCHY.7.2.9"
     }, 
     "HIERARCHY.7.2.9.3": {
-      "desc": "Atrial fibrillation                                                                                     -", 
+      "desc": "Atrial fibrillation", 
       "id": "HIERARCHY.7.2.9.3", 
-      "name": "Atrial fibrillation                                                                                     -", 
+      "name": "Atrial fibrillation", 
       "parent": "HIERARCHY.7.2.9"
     }, 
     "HIERARCHY.7.2.9.5": {
-      "desc": "Premature beats                                                                                         -", 
+      "desc": "Premature beats", 
       "id": "HIERARCHY.7.2.9.5", 
-      "name": "Premature beats                                                                                         -", 
+      "name": "Premature beats", 
       "parent": "HIERARCHY.7.2.9"
     }, 
     "icd9__03284": {
