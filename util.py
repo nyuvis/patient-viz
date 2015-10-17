@@ -269,3 +269,28 @@ def convert_paths(args, allPaths):
             allPaths.append((path, False))
         else:
             print('illegal argument: '+path+' is neither file nor directory', file=sys.stderr)
+
+def read_CCS(ccs_file, codes):
+    parents = {}
+    if not os.path.isfile(ccs_file):
+        return codes
+    with open(ccs_file, 'r') as file:
+        cur = ""
+        for line in file:
+            if len(line) < 1:
+                continue
+            if not line[0].isdigit():
+                if line[0] == ' ' and cur != "":
+                    nums = line.split()
+                    for n in nums:
+                        parents[n] = cur
+                continue
+            spl = line.split(None, 1)
+            if len(spl) == 2:
+                par = spl[0].rstrip('0123456789').rstrip('.')
+                cur = "HIERARCHY." + spl[0]
+                parents[cur] = "HIERARCHY." + par if len(par) > 0 else ""
+                codes[cur] = spl[1].rstrip('0123456789 \t\n\r')
+            else:
+                print("invalid CCS line: '" + line.rstrip() + "'", file=sys.stderr)
+    return parents

@@ -416,7 +416,7 @@ class Icd9DiagnosisCode(TypeCode):
     def init(self, settings):
         codes = getGlobalSymbols(settings)
         codes.update(getICD9(settings, True))
-        self._parents = readCCS(get_file(settings, 'ccs_diag', 'code/ccs/multi_diag.txt'), codes)
+        self._parents = util.read_CCS(get_file(settings, 'ccs_diag', 'code/ccs/multi_diag.txt'), codes)
         return codes
 
 ### procedure ###
@@ -443,7 +443,7 @@ class Icd9ProcedureCode(TypeCode):
     def init(self, settings):
         codes = getGlobalSymbols(settings)
         codes.update(getICD9(settings, False))
-        self._parents = readCCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt'), codes)
+        self._parents = util.read_CCS(get_file(settings, 'ccs_proc', 'code/ccs/multi_proc.txt'), codes)
         return codes
 
 @dictionary.codeType("procedure", "cpt")
@@ -582,33 +582,6 @@ def initICD9(settings):
                 if line[0] != '(':
                     print("invalid ICD9 line: '" + line.rstrip() + "'", file=sys.stderr)
     return codes
-
-### ccs ###
-
-def readCCS(ccsFile, codes):
-    parents = {}
-    if not os.path.isfile(ccsFile):
-        return codes
-    with open(ccsFile, 'r') as file:
-        cur = ""
-        for line in file:
-            if len(line) < 1:
-                continue
-            if not line[0].isdigit():
-                if line[0] == ' ' and cur != "":
-                    nums = line.split()
-                    for n in nums:
-                        parents[n] = cur
-                continue
-            spl = line.split(None, 1)
-            if len(spl) == 2:
-                par = spl[0].rstrip('0123456789').rstrip('.')
-                cur = "HIERARCHY." + spl[0]
-                parents[cur] = "HIERARCHY." + par if len(par) > 0 else ""
-                codes[cur] = spl[1].rstrip('0123456789 \t\n\r')
-            else:
-                print("invalid CCS line: '" + line.rstrip() + "'", file=sys.stderr)
-    return parents
 
 ### general lookup table ###
 

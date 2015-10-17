@@ -42,7 +42,7 @@ use_db = False
 omop = None
 if settings.get('omop_use_db', False):
     use_db = True
-    omop = OMOP(settings)
+    omop = OMOP(settings, True)
 else:
     util.convert_paths([ cms_path ], all_paths)
 

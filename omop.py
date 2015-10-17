@@ -39,12 +39,21 @@ from StringIO import StringIO
 import util
 
 class OMOP():
-    def __init__(self, settings):
+    def __init__(self, settings, debug_output):
         username = settings['omop_user']
         password = settings['omop_passwd']
         host = settings['omop_host']
         port = settings['omop_port']
         database = settings['omop_db']
+        self._parents = {}
+        self._codes = {}
+        if settings['omop_use_alt_hierarchies']:
+            if 'ccs_diag' in settings:
+                self._codes['Condition_ICD9CM'] = {}
+                self._parents['Condition_ICD9CM'] = util.read_CCS(util.get_file(settings['ccs_diag'], debug_output), self._codes['Condition_ICD9CM'])
+            if 'ccs_proc' in settings:
+                self._codes['Procedure_ICD9CM'] = {}
+                self._parents['Procedure_ICD9CM'] = util.read_CCS(util.get_file(settings['ccs_proc'], debug_output), self._codes['Procedure_ICD9CM'])
         self.schema = settings['omop_schema']
         self.db = sqlalchemy.create_engine('postgresql://{0}:{1}@{2}:{3}/{4}'.format(username, password, host, port, database))
 
@@ -59,6 +68,7 @@ class OMOP():
                 qq = qq.replace(':'+str(k), "'" + str(args[k]) + "'")
             qq = qq + ';'
             print("{0}".format(qq))
+            # DEBUG! END
             return connection.execute(sqlalchemy.text(q), **args)
         finally:
             if connection is not None:
@@ -122,7 +132,8 @@ class OMOP():
             res["flag"] = result_flag
         return res
 
-    def add_dict(self, dict, new_dict_entries, group, prefix, id, name, desc, unmapped):
+    def add_dict(self, dict, new_dict_entries, group, prefix, id, name, desc, code, unmapped):
+        alt_hierarchies = str(group) + '_' + str(prefix)
         if group not in dict:
             dict[group] = {}
             dict[group][""] = {
@@ -132,6 +143,17 @@ class OMOP():
                 "color": color_map.get(group, "lightgray"),
                 "parent": ""
             }
+            if alt_hierarchies in self._codes:
+                ah = {}
+                if alt_hierarchies in self._parents:
+                    ah = self._parents[alt_hierarchies]
+                for (key, value) in self._codes.items():
+                    dict[group][key] = {
+                        "id": key,
+                        "name": value,
+                        "desc": value,
+                        "parent": ah.get(key, "")
+                    }
             if group == "Measurement":
                 dict[group]["flags"] = measure_flag_map
         g = dict[group]
@@ -146,7 +168,13 @@ class OMOP():
             if unmapped:
                 res["unmapped"] = True
             g[full_id] = res
-            if id != 0:
+            do_add = True
+            if alt_hierarchies in self._parents:
+                ah = self._parents[alt_hierarchies]
+                if code in ah:
+                    res["parent"] = ah[code]
+                    do_add = False
+            if id != 0 and do_add:
                 new_dict_entries.add(str(id))
 
     def get_dict_entry(self, dict, group, prefix, id):
@@ -191,7 +219,7 @@ class OMOP():
                     parent_code = row['c_orig']
                     unmapped = True
                 parent_desc = "{0} ({1} {2})".format(parent_name, parent_vocab, parent_code)
-                self.add_dict(dict, new_dict_entries, parent_group, parent_vocab, parent_id, parent_name, parent_desc, unmapped)
+                self.add_dict(dict, new_dict_entries, parent_group, parent_vocab, parent_id, parent_name, parent_desc, parent_code, unmapped)
                 dos = int(row['c_distance'])
                 desc_id = str(row['c_desc_id'])
                 desc_vocab = row['c_desc_vocab']
@@ -236,7 +264,7 @@ class OMOP():
             vocab = row['d_vocab']
             group = row['d_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
@@ -280,7 +308,7 @@ class OMOP():
             vocab = row['p_vocab']
             group = row['p_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
             if 'p_cost' in row and row['p_cost']:
@@ -322,7 +350,7 @@ class OMOP():
             vocab = row['m_vocab']
             group = row['m_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
@@ -377,7 +405,7 @@ class OMOP():
             elif lab_value >= lab_high:
                 lab_flag = "H"
             desc = "{0} ({1} {2})".format(name, vocab, code)
-            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, unmapped)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row, True, lab_flag, str(lab_value))
             event['time'] = self.to_time(row['m_date'])
             obj['events'].append(event)
