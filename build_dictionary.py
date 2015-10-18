@@ -203,7 +203,7 @@ class CmsPhysicianCode(TypeCode):
     def init(self, settings):
         return {}
 
-@dictionary.codeType("physician", "ibc")
+@dictionary.codeType("physician", "alt")
 class CmsPhysicianCode(TypeCode):
     def create(self, symbols, type, id):
         pid = ""
@@ -212,7 +212,7 @@ class CmsPhysicianCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         res = {}
-        spec_file = get_file(settings, 'ibc_speciality', '/m/CODES/specialty/specialty_headers.txt')
+        spec_file = get_file(settings, 'alt_speciality', 'code/specialty/specialty_headers.txt')
         if os.path.isfile(spec_file):
             with open(spec_file, 'r') as file:
                 for line in file:
@@ -381,7 +381,7 @@ class LoincLabtestCode(TypeCode):
         return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         res = getGlobalSymbols(settings)
-        loinc_file = get_file(settings, 'loinc', '/m/CODES/loinc/loinc_file.all.headers')
+        loinc_file = get_file(settings, 'loinc', 'code/loinc/loinc_file.all.headers')
         if os.path.isfile(loinc_file):
             with open(loinc_file, 'r') as file:
                 for line in file:
@@ -454,7 +454,7 @@ class CPTProcedureCode(TypeCode):
             return toEntry(id, pid, symbols[id], symbols[id], None)
         return createUnknownEntry(symbols, type, id, pid)
     def init(self, settings):
-        file = get_file(settings, 'procedure_cpt_long', '/m/CODES/cpt/cpt_codes_long_descr.csv')
+        file = get_file(settings, 'procedure_cpt_long', 'code/cpt/cpt_codes_long_descr.csv')
         codes = {}
         if not os.path.isfile(file):
             return codes
@@ -532,8 +532,8 @@ def getICD9(settings, isDiagnosis):
     if not len(globalICD9[k].keys()):
         fileKeyS = k + '_icd9'
         fileKeyL = k + '_icd9_long'
-        fileDefaultS = '/m/CODES/icd9/ICD-9-CM-v32-master-descriptions/' + ('CMS32_DESC_SHORT_DX.txt' if isDiagnosis else 'CMS32_DESC_SHORT_SG.txt')
-        fileDefaultL = '/m/CODES/icd9/ICD-9-CM-v32-master-descriptions/' + ('CMS32_DESC_LONG_DX.txt' if isDiagnosis else 'CMS32_DESC_LONG_SG.txt')
+        fileDefaultS = 'code/icd9/' + ('CMS32_DESC_SHORT_DX.txt' if isDiagnosis else 'CMS32_DESC_SHORT_SG.txt')
+        fileDefaultL = 'code/icd9/' + ('CMS32_DESC_LONG_DX.txt' if isDiagnosis else 'CMS32_DESC_LONG_SG.txt')
         fileS = get_file(settings, fileKeyS, fileDefaultS)
         fileL = get_file(settings, fileKeyL, fileDefaultL)
         if not os.path.isfile(fileS) and not os.path.isfile(fileL):

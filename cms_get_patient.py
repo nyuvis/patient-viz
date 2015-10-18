@@ -119,9 +119,9 @@ def handleEvent(row, claim_id):
     handleKey(row, "procedures_cpt", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "cpt__" + value))
     # TODO HCPCS_CD_1 – HCPCS_CD_45: DESYNPUF: Revenue Center HCFA Common Procedure Coding System
     #handleKey(row, "procedures_hcpcs", MODE_ARRAY, lambda value: emit(TYPE_PROCEDURE, "hcpcs__" + value))
-    handleKey(row, "provider_ibc", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, "ibc__" + value))
+    handleKey(row, "provider_alt", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, "alt__" + value))
     handleKey(row, "provider_cms", MODE_ARRAY, lambda value: emit(TYPE_PROVIDER, "cms__" + value))
-    handleKey(row, "physician_ibc", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, "ibc__" + value))
+    handleKey(row, "physician_alt", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, "alt__" + value))
     handleKey(row, "physician_cms", MODE_ARRAY, lambda value: emit(TYPE_PHYSICIAN, "cms__" + value))
     return res
 

@@ -5,7 +5,7 @@
   "diagnosis_icd9": "../code/not_found.txt",
   "diagnosis_icd9_long": "../code/not_found.txt",
   "filename": "../code/code_names.txt",
-  "ibc_speciality": "../code/code_names.txt",
+  "alt_speciality": "../code/code_names.txt",
   "icd9": "../code/icd9/ucod.txt",
   "loinc": "../code/code_names.txt",
   "ndc": "",

@@ -167,16 +167,16 @@ def interpretArgs():
         'quote': '"',
         'hdr_split': '|',
         'row_split': '|',
-        'database': '/m/data/data_April24_2014.db',
-        'header_elig': '/m/data/headers/elig.hdr',
-        'header_encs': '/m/data/headers/encs.hdr',
-        'header_lab_rsl': '/m/data/headers/lab_rsl.hdr',
-        'header_med_clms': '/m/data/headers/med_clms.hdr',
-        'header_rx_clms': '/m/data/headers/rx_clms.hdr',
+        'database': 'db/members.db',
+        'header_elig': 'code/headers/elig.hdr',
+        'header_encs': 'code/headers/encs.hdr',
+        'header_lab_rsl': 'code/headers/lab_rsl.hdr',
+        'header_med_clms': 'code/headers/med_clms.hdr',
+        'header_rx_clms': 'code/headers/rx_clms.hdr',
         'join_id': 'MEMBER_ID',
         'shelve_id_files': [
-            '/m/data/memberIds/mMyeloma.txt',
-            '/m/data/memberIds/mdiabetes.txt'
+            'code/db/set_myeloma.txt',
+            'code/db/set_diabetes.txt'
         ],
         'anonymize': {
             'do': False,

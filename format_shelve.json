@@ -2,14 +2,14 @@
   "patient_id": "MEMBER_ID",
   "age": "ELIG_AGE",
   "gender": "ELIG_GENDER",
-  "provider_ibc": [
+  "provider_alt": [
     "MED_CLMS_SERVICE_PLACE",
     "RX_CLMS_SERVICE_PLACE",
     "ENCS_SERVICE_PLACE"
   ],
   "provider_cms": [
   ],
-  "physician_ibc": [
+  "physician_alt": [
     "ENCS_SPECIALTY",
     "MED_CLMS_SPECIALTY"
   ],

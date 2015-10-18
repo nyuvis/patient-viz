@@ -29,12 +29,12 @@ TODO arrays for first match
   <"born">: "BENE_BIRTH_DT",
   <"death">: "BENE_DEATH_DT",
   <"gender">: "BENE_SEX_IDENT_CD",
-  "provider_ibc": [
+  "provider_alt": [
   ],
   "provider_cms": [
     "PRVDR_NUM"
   ],
-  "physician_ibc": [
+  "physician_alt": [
   ],
   "physician_cms": [
     "AT_PHYSN_NPI",
