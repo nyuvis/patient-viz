@@ -313,9 +313,12 @@ configure_value() {
   file=$1
   key=$2
   msg=$3
+  default=$4
   read -p "${msg}: " value
   if [ ! -z "${value}" ]; then
     ./poke_json.py -f "${file}" -- "${key}" "${value}"
+  else
+    ./poke_json.py -f "${file}" -- "${key}" "${default}"
   fi
 }
 
@@ -323,9 +326,11 @@ configure_bool() {
   file=$1
   key=$2
   msg=$3
+  default=$4
   while true; do
     read -p "${msg}? [y]es [n]o: " resp
     if [ -z $resp ]; then
+      ./poke_json.py -b -f "${file}" -- "${key}" "${default}"
       break
     fi
     case $resp in
@@ -347,14 +352,14 @@ omop_configure() {
   fi
   echo "configuring OMOP PostgreSQL database connection"
   ./poke_json.py -b -f "${config}" -- "omop_use_db" "true"
-  configure_value "${config}" "omop_host" "database host (localhost)"
-  configure_value "${config}" "omop_port" "database port (5433)"
-  configure_value "${config}" "omop_user" "database user (user)"
-  configure_value "${config}" "omop_passwd" "database password (password)"
-  configure_value "${config}" "omop_db" "database name (db)"
-  configure_value "${config}" "omop_schema" "database schema (schema)"
-  configure_bool "${config}" "omop_use_alt_hierarchies" "use external CCS hierarchies (y)"
-  configure_bool "${config}" "use_cache" "use caching (y)"
+  configure_value "${config}" "omop_host" "database host (localhost)" "localhost"
+  configure_value "${config}" "omop_port" "database port (5433)" "5433"
+  configure_value "${config}" "omop_user" "database user (user)" "user"
+  configure_value "${config}" "omop_passwd" "database password (password)" "password"
+  configure_value "${config}" "omop_db" "database name (db)" "db"
+  configure_value "${config}" "omop_schema" "database schema (schema)" "schema"
+  configure_bool "${config}" "omop_use_alt_hierarchies" "use external CCS hierarchies (y)" "true"
+  configure_bool "${config}" "use_cache" "use caching (y)" "true"
   echo "configuration can be found in '${config}'"
 }
 
