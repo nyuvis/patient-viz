@@ -324,7 +324,10 @@ configure_bool() {
   key=$2
   msg=$3
   while true; do
-    read -p "${msg}? [y]es [n]o [d]efault: " resp
+    read -p "${msg}? [y]es [n]o: " resp
+    if [ -z $resp ]; then
+      break
+    fi
     case $resp in
       [Yy]* )
         ./poke_json.py -b -f "${file}" -- "${key}" "true"
@@ -332,9 +335,6 @@ configure_bool() {
         ;;
       [Nn]* )
         ./poke_json.py -b -f "${file}" -- "${key}" "false"
-        break
-        ;;
-      [Dd]* )
         break
         ;;
     esac
