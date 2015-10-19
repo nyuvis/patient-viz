@@ -369,13 +369,13 @@ class OMOP():
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
+            cost = row['m_cost'] if 'm_cost' in row else None
             while date_cur <= date_end:
                 event = self.create_event(group, str(vocab) + str(d_id), id_row)
                 event['time'] = date_cur
-                print(repr(row['m_cost']), file=sys.stderr)
-                if 'm_cost' in row and row['m_cost']:
-                    event['cost'] = float(row['m_cost'])
-                    row['m_cost'] = None
+                if cost:
+                    event['cost'] = float(cost)
+                    cost = None
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 
