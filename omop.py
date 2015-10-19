@@ -325,8 +325,9 @@ class OMOP():
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
+            print(repr(row['p_cost']), file=sys.stderr)
             if 'p_cost' in row and row['p_cost']:
-                event['cost'] = row['p_cost']
+                event['cost'] = float(row['p_cost'])
             obj['events'].append(event)
 
     def get_drugs(self, pid, obj, dict, new_dict_entries):
@@ -371,9 +372,10 @@ class OMOP():
             while date_cur <= date_end:
                 event = self.create_event(group, str(vocab) + str(d_id), id_row)
                 event['time'] = date_cur
-                if 'p_cost' in row and row['p_cost']:
-                    event['cost'] = row['p_cost']
-                    row['p_cost'] = None
+                print(repr(row['m_cost']), file=sys.stderr)
+                if 'm_cost' in row and row['m_cost']:
+                    event['cost'] = float(row['m_cost'])
+                    row['m_cost'] = None
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 
