@@ -15,6 +15,7 @@ convert_top_n=3
 convert_list=
 dictionary="${JSON_DIR}/dictionary.json"
 config="config.txt"
+config_omop="config_omop.txt"
 format="format.json"
 style_classes="style_classes.json"
 err_file="err.txt"
@@ -35,13 +36,16 @@ ccs=
 pip=
 apt=
 psql=
+omop=
 do_convert=
 do_clean=
+do_clean_cache=
+do_update=
 do_nop=
 do_burst=
 shelve=
 
-USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--pip] [--shelve] [--nop]"
+USAGE="Usage: $0 -hs [-c <dictionary config file>] [-f <table format file>] [--samples <list of samples>] [--samples-all] [--convert <list of ids>] [--convert-num <top n>] [--default] [--default-omop] [--icd9] [--ccs] [--ndc] [--pnt] [--cms] [--burst] [--do-convert] [--clean] [--clean-cache] [--update] [--pip] [--apt] [--psql] [--omop] [--shelve] [--nop]"
 
 usage() {
     echo $USAGE
@@ -54,6 +58,7 @@ usage() {
     echo "--convert <list of ids>: specify which patients to convert"
     echo "--convert-num <top n>: specify how many patients to convert (top n by the total number of events)"
     echo "--default: use default settings (equal to --pip --icd9 --ccs --ndc --pnt --cms --do-convert)"
+    echo "--default-omop: use default OMOP configuration (equal to --pip --apt --ccs --omop --psql)"
     echo "--icd9: downloads ICD9 definitions"
     echo "--ccs: downloads CCS ICD9 hierarchies"
     echo "--ndc: downloads NDC definitions"
@@ -62,9 +67,12 @@ usage() {
     echo "--burst: splits the patient claim files for faster individual access"
     echo "--do-convert: converts patients"
     echo "--clean: removes all created files"
+    echo "--clean-cache: removes cached files"
+    echo "--update: updates the repository to the latest version (implies --clean-cache --pip --psql)"
     echo "--pip: install python packages"
     echo "--apt: use apt-get if available"
     echo "--psql: install python PostgreSQL connector (implies --pip)"
+    echo "--omop: sets up the OMOP connection"
     echo "--shelve: use shelve input for conversion. (also switches to format_shelve.json except when -f is specified after)"
     echo "--nop: performs no operation besides basic setup tasks"
     exit 1
@@ -114,6 +122,13 @@ while [ $# -gt 0 ]; do
     cms=1
     do_convert=1
     ;;
+  --default-omop)
+    pip=1
+    ccs=1
+    apt=1
+    psql=1
+    omop=1
+    ;;
   --icd9)
     icd9=1
     ;;
@@ -141,6 +156,18 @@ while [ $# -gt 0 ]; do
     ;;
   --clean)
     do_clean=1
+    ;;
+  --clean-cache)
+    do_clean_cache=1
+    ;;
+  --update)
+    do_clean_cache=1
+    do_update=1
+    pip=1
+    psql=1
+    ;;
+  --omop)
+    omop=1
     ;;
   --pip)
     pip=1
@@ -170,10 +197,20 @@ if [[ $# -gt 1 ]]; then
   usage
 fi
 
+if [ ! -z $do_update ]; then
+  git pull origin master
+fi
+
 # initialize git submodule if not done by user
 git_submodule=`git submodule status | grep "^-"`
 if [ ! -z "${git_submodule}" ]; then
   git submodule update --init --recursive
+fi
+
+if [ ! -z $do_clean_cache ]; then
+  echo "clearing cached files"
+  rm -- "${file_list}"
+  rm -rf -- '${JSON_DIR}/*'
 fi
 
 cd_back() {
@@ -272,6 +309,55 @@ prompt() {
   return 0
 }
 
+configure_value() {
+  file=$1
+  key=$2
+  msg=$3
+  read -p "${msg}: " value
+  if [ ! -z "${value}" ]; then
+    ./poke_json.py -f "${file}" -- "${key}" "${value}"
+  fi
+}
+
+configure_bool() {
+  file=$1
+  key=$2
+  msg=$3
+  while true; do
+    read -p "${msg}? [y]es [n]o: " resp
+    case $resp in
+      [Yy]* )
+        ./poke_json.py -b -f "${file}" -- "${key}" "true"
+        break
+        ;;
+      [Nn]* )
+        ./poke_json.py -b -f "${file}" -- "${key}" "false"
+        break
+        ;;
+      )
+        break
+        ;;
+    esac
+  done
+}
+
+omop_configure() {
+  if [ ! -f "${config}" ]; then
+    cp -- "${config_omop}" "${config}"
+  fi
+  echo "configuring OMOP PostgreSQL database connection"
+  ./poke_json.py -b -f "${config}" -- "omop_use_db" "true"
+  configure_value "${config}" "omop_host" "database host (localhost)"
+  configure_value "${config}" "omop_port" "database port (5433)"
+  configure_value "${config}" "omop_user" "database user (user)"
+  configure_value "${config}" "omop_passwd" "database password (password)"
+  configure_value "${config}" "omop_db" "database name (db)"
+  configure_value "${config}" "omop_schema" "database schema (schema)"
+  configure_bool "${config}" "omop_use_alt_hierarchies" "use external CCS hierarchies (y)"
+  configure_bool "${config}" "use_cache" "use caching (y)"
+  echo "configuration can be found in '${config}'"
+}
+
 pip_install() {
   # install virtualenv first
   if [ ! -d ${venv} ]; then
@@ -331,6 +417,10 @@ ask_for_clean() {
     file_clean+=($@)
   fi
 }
+
+if [ ! -z "${omop}" ]; then
+  omop_configure
+fi
 
 if [ ! -z "${pip}" ]; then
   if [ ! -z "${do_clean}" ]; then
