@@ -425,6 +425,31 @@ class OMOP():
             event['time'] = self.to_time(row['m_date'])
             obj['events'].append(event)
 
+    def get_visits(self, pid, obj):
+        classes = obj["classes"]
+        query = """SELECT
+             v.visit_start_date as date_start,
+             v.visit_end_date as date_end,
+             c.concept_name as c_name
+            FROM
+             {schema}.visit_occurrence as v
+            LEFT JOIN {schema}.concept as c ON (
+             v.visit_concept_id = c.concept_id
+            ) WHERE
+             v.person_id = :pid
+             AND c.concept_name IN ( {classes} )
+        """.format(schema=self.schema, classes=','.join(sorted(list(classes.keys()))))
+        v_spans = obj["v_spans"]
+        for row in self._exec(query, pid=pid):
+            visit_name = str(row['c_name'])
+            date_start = self.to_time(row['date_start'])
+            date_end = self.to_time(row['date_end'])
+            v_spans.append({
+                "class": visit_name,
+                "from": date_start,
+                "to": date_end
+            })
+
     def get_patient(self, pid, dictionary, line_file, class_file):
         obj = {
             "info": [],
@@ -443,6 +468,7 @@ class OMOP():
         self.get_procedures(pid, obj, dictionary, new_dict_entries)
         self.get_drugs(pid, obj, dictionary, new_dict_entries)
         self.get_measurements(pid, obj, dictionary, new_dict_entries)
+        self.get_visits(pid, obj)
         min_time = float('inf')
         max_time = float('-inf')
         for e in obj["events"]:

@@ -9,5 +9,8 @@
   "professional": {
     "fill": "#9be0d9",
     "opacity": 0
+  },
+  "Inpatient Visit": {
+    "fill": "cornflowerblue"
   }
 }

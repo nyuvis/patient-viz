@@ -1,5 +1,8 @@
 {
   "classes": {
+    "Inpatient Visit": {
+      "fill": "cornflowerblue"
+    }, 
     "in_hospital": {
       "fill": "cornflowerblue"
     }, 
