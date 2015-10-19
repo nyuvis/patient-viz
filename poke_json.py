@@ -49,7 +49,8 @@ if __name__ == '__main__':
         usage()
     obj = {}
     if os.path.isfile(file):
-        obj = json.load(file)
+        with open(file, 'r') as f:
+            obj = json.load(f)
     elif not create:
         print("'{0}' is not a file".format(file), file=sys.stderr)
         usage()
@@ -60,4 +61,5 @@ if __name__ == '__main__':
         value = args.pop(0)
         value = value if not bool_values else value == 'true'
         obj[key] = value
-    print(json.dumps(obj, indent=2, sort_keys=True), file=file)
+    with open(file, 'w') as f:
+        print(json.dumps(obj, indent=2, sort_keys=True), file=f)
