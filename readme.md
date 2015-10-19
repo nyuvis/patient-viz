@@ -105,9 +105,8 @@ Please refer to the [documentation](feature_extraction/extract.md).
 
 ## Publications
 
-[[ VAHC 2015 Demo ]](pub/vahc_2015_demo)
-
-[[ AMIA 2015 Demo ]](pub/amia_2015_demo)
+[[ 2015 Workshop on Visual Analytics in Healthcare - Demo ]](pub/vahc_2015_demo)
+[[ AMIA 2015 Annual Symposium - Demo ]](pub/amia_2015_demo)
 
 ## Contributing
 
