@@ -438,7 +438,7 @@ class OMOP():
             ) WHERE
              v.person_id = :pid
              AND c.concept_name IN ( {classes} )
-        """.format(schema=self.schema, classes=','.join(sorted(list(classes.keys()))))
+        """.format(schema=self.schema, classes=','.join(sorted([ "'{0}'".format(k) for k in classes.keys()])))
         v_spans = obj["v_spans"]
         for row in self._exec(query, pid=pid):
             visit_name = str(row['c_name'])
