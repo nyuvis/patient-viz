@@ -325,7 +325,6 @@ class OMOP():
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
-            print(repr(row['p_cost']), file=sys.stderr)
             if 'p_cost' in row and row['p_cost']:
                 event['cost'] = float(row['p_cost'])
             obj['events'].append(event)
