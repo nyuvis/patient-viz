@@ -103,6 +103,12 @@ The `./start.sh` and `./setup.sh` scripts also accept `--shelve` as argument to 
 The data can also be used for predictive modeling.
 Please refer to the [documentation](feature_extraction/extract.md).
 
+## Publications
+
+[[ VAHC 2015 Demo ]](pub/vahc_2015_demo)
+
+[[ AMIA 2015 Demo ]](pub/amia_2015_demo)
+
 ## Contributing
 
 Pull requests are highly appreciated :)
