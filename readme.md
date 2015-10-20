@@ -50,6 +50,7 @@ or
 ```
 
 if `apt-get` is available on your system (requires sudo rights when prompted).
+(Note: Installing `psycopg2` on MacOS may fail. Please refer to the [Psycopg installation guide](http://initd.org/psycopg/docs/install.html))
 
 You will be prompted questions to configure the connection to the PostgreSQL database
 containing the data. Using the external CCS hierarchy and caching are recommended
