@@ -17,10 +17,10 @@ linked in the [publications section](#publications).
 ## Setup
 
 Setting up the project can be done without prerequisites on *MacOS* and *linux*.
-For windows you need to install [git](https://msysgit.github.io/).
+For windows you need to install [git](https://git-for-windows.github.io/).
 You can use *git BASH* to execute the shell commands.
 For setting up a connection to the OMOP Common Data Model please refer to
-the [OMOP Common Data Model](#omop_common_data_model) section.
+the [OMOP Common Data Model](#omop-common-data-model) section.
 
 In order to set up the tool please run the following command:
 
