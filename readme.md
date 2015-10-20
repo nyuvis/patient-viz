@@ -49,8 +49,12 @@ or
 ./setup.sh --default-omop --apt
 ```
 
-if `apt-get` is available on your system (requires sudo rights when prompted).
-Note: Installing `psycopg2` on MacOS may fail. Please refer to the [psycopg installation guide](http://initd.org/psycopg/docs/install.html).
+if `apt-get` is available on your system.
+Installing `psycopg2` on MacOS may fail. In this case please refer to the
+[psycopg installation guide](http://initd.org/psycopg/docs/install.html).
+
+Note: Dependency installation may require sudo rights and will prompt as needed.
+Do *not* run `setup.sh` with sudo.
 
 You will be prompted questions to configure the connection to the PostgreSQL database
 containing the data. Using the external CCS hierarchy and caching are recommended
