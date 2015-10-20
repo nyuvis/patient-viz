@@ -1,6 +1,6 @@
 # patient-viz
 
-*patient-viz* is a tool allowing to view and explore insurance claim
+*patient-viz* is a tool allowing to view and explore electronic medical records
 or other time sequence event data. The web-based tool is mostly written in
 [d3](http://d3js.org/) and uses [python](https://www.python.org/) and shell on the back-end.
 Example data from medical insurance claim data can be downloaded automatically.
@@ -25,7 +25,7 @@ For windows you need to install [git](https://git-for-windows.github.io/) and
 * OMOP Common Data Model: A PostgreSQL based data model. Instructions for setting
   up the connection can be found [here](#omop-common-data-model).
 
-* CMS data model: A tabular data model in CSV files. Example data is openly available.
+* CMS Data Model: A tabular data model in CSV files. Example data is openly available.
   Instructions on how to set up the tool for CMS data and how to download example data
   can be found [here](cms_shelve.md).
 
@@ -49,7 +49,7 @@ or
 ./setup.sh --default-omop --apt
 ```
 
-if `apt-get` is available on your system.
+if `apt-get` is available on your system (requires sudo rights).
 
 You will be prompted questions to configure the connection to the PostgreSQL database
 containing the data. Using the external CCS hierarchy and caching are recommended
