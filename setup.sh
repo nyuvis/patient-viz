@@ -384,7 +384,7 @@ pip_install() {
   pip install --upgrade pip
   pip install --upgrade -r requirements.txt
   if [ ! -z $psql ]; then
-    pip install --upgrade psycopg2
+    pip install psycopg2
   fi
   test_fail $?
 }
