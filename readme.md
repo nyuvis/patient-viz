@@ -7,6 +7,8 @@ Example data from medical insurance claim data can be downloaded automatically.
 We also have a [live demo](http://nyuvis.github.io/patient-viz/index.html)!
 The project is a joint product of [Josua Krause](http://josuakrause.github.io/info/), Narges Sharif Razavian,
 Enrico Bertini, and [David Sontag](http://cs.nyu.edu/~dsontag/).
+A short description of how to read the visualization can be found in the PDFs
+linked in the [publications section](#publications).
 
 [![The tool in action!](overview.png)](http://nyuvis.github.io/patient-viz/index.html)
 
@@ -17,6 +19,8 @@ Enrico Bertini, and [David Sontag](http://cs.nyu.edu/~dsontag/).
 Setting up the project can be done without prerequisites on *MacOS* and *linux*.
 For windows you need to install [git](https://msysgit.github.io/).
 You can use *git BASH* to execute the shell commands.
+For setting up a connection to the OMOP Common Data Model please refer to
+the [OMOP Common Data Model](#omop_common_data_model) section.
 
 In order to set up the tool please run the following command:
 
@@ -102,6 +106,52 @@ The `./start.sh` and `./setup.sh` scripts also accept `--shelve` as argument to 
 
 The data can also be used for predictive modeling.
 Please refer to the [documentation](feature_extraction/extract.md).
+
+## OMOP Common Data Model
+
+*patient-viz* can connect to PostgreSQL databases in the
+[OMOP Common Data Model](https://github.com/OHDSI/CommonDataModel/).
+In order to do so you can use the following commands (assuming a fresh clone
+of the repository):
+
+```bash
+./setup.sh --default-omop
+```
+
+You will be prompted questions about the PostgreSQL database containing the data.
+Using the external CCS hierarchy and caching are recommended options that allow
+for a richer and smoother user experience.
+
+If you are setting up *patient-viz* on an OS with `apt` you may run
+
+```bash
+sudo apt-get install git python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy libpq-dev python-dev
+```
+
+to speed up dependecy installation. This should normally happen during setup,
+however, on some systems it does not get detected automatically.
+
+After successfully configuring the connection you can run
+
+```bash
+./server.py
+```
+
+to start the visualization server. Please refer to `./server.py -h` for command
+line arguments. With the default command line arguments (ie. none) you can now
+browse to [http://localhost:8080/patient-viz/](http://localhost:8080/patient-viz/)
+given the repository is in a folder called `patient-viz`.
+If you want to inspect a certain patient you can browse to
+`http://localhost:8080/patient-viz/?p=json/PID&d=json/dictionary.json`
+directly where `PID` is the `person_id` as found in the `person` table.
+You can also set `PID` to the value of `person_source_value` if you append `.json` to it.
+
+The server can be stopped by typing `quit` in its console or by issuing a
+keyboard interrupt (`CTRL-C`).
+
+Updating the repository to the newest version found on Github is
+recommended via ```./setup.sh --update``` as it cleans the cache and updates
+dependencies as well.
 
 ## Publications
 
