@@ -387,12 +387,12 @@ pip_install() {
   test_fail $?
   if [ ! -z $psql ]; then
     probe_fink=`command -v fink 2>/dev/null 1>&2; echo $?`
-    if [ "${probe_fink}" -ne 0 ]; then
+    if [ "${probe_fink}" -eq 0 ]; then
       fink install psycopg2-py27
       test_fail $?
     else
       probe_port=`command -v port 2>/dev/null 1>&2; echo $?`
-      if [ "${probe_port}" -ne 0 ]; then
+      if [ "${probe_port}" -eq 0 ]; then
         echo "sudo port install py27-psycopg2" | "${SHELL}" -x
         test_fail $?
       fi
