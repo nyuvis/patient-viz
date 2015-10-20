@@ -58,7 +58,7 @@ usage() {
     echo "--convert <list of ids>: specify which patients to convert"
     echo "--convert-num <top n>: specify how many patients to convert (top n by the total number of events)"
     echo "--default: use default settings (equal to --pip --icd9 --ccs --ndc --pnt --cms --do-convert)"
-    echo "--default-omop: use default OMOP configuration (equal to --pip --apt --ccs --omop --psql)"
+    echo "--default-omop: use default OMOP configuration (equal to --pip --ccs --omop --psql)"
     echo "--icd9: downloads ICD9 definitions"
     echo "--ccs: downloads CCS ICD9 hierarchies"
     echo "--ndc: downloads NDC definitions"
@@ -125,7 +125,6 @@ while [ $# -gt 0 ]; do
   --default-omop)
     pip=1
     ccs=1
-    apt=1
     psql=1
     omop=1
     ;;
@@ -393,12 +392,9 @@ pip_install() {
   source ${venv_activate}
   test_fail $?
   if [ ! -z $apt ]; then
-    no_apt_get=`command -v apt-get 2>/dev/null 1>&2; echo $?`
-    if [ $no_apt_get == 0 ]; then
-      echo "installing apt-get packages to speed up pip:"
-      echo "sudo apt-get install git python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy libpq-dev python-dev" | "${SHELL}" -x
-      test_fail $?
-    fi
+    echo "installing apt-get packages to speed up pip:"
+    echo "sudo apt-get install git python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy libpq-dev python-dev" | "${SHELL}" -x
+    test_fail $?
   fi
   echo "install python packages"
   pip install --upgrade pip
