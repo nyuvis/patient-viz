@@ -68,10 +68,10 @@ browse [http://localhost:8080/patient-viz/](http://localhost:8080/patient-viz/)
 contains `server.py`). If you want to inspect a certain patient you can browse to
 the corresponding id directly. For example, to show the patient with the
 `person_id` 1234 as found in the `person` table you can browse
-[http://localhost:8080/patient-viz/?p=json/1234&d=json/dictionary.json]([http://localhost:8080/patient-viz/?p=json/1234&d=json/dictionary.json]).
+[http://localhost:8080/patient-viz/?p=json/1234&d=json/dictionary.json](http://localhost:8080/patient-viz/?p=json/1234&d=json/dictionary.json).
 You can also use the `person_source_value` using a different notation. The
 patient with the `person_source_value` of 12345678 can be found at
-[http://localhost:8080/patient-viz/?p=json/12345678.json&d=json/dictionary.json]([http://localhost:8080/patient-viz/?p=json/12345678.json&d=json/dictionary.json])
+[http://localhost:8080/patient-viz/?p=json/12345678.json&d=json/dictionary.json](http://localhost:8080/patient-viz/?p=json/12345678.json&d=json/dictionary.json)
 (Note the `.json` after the id).
 
 If you want to stop the server you can type `quit` into its console or issue a
