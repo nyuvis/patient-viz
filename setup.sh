@@ -382,11 +382,24 @@ pip_install() {
   fi
   echo "install python packages"
   pip install --upgrade pip
-  pip install --upgrade -r requirements.txt
-  if [ ! -z $psql ]; then
-    pip install psycopg2
-  fi
   test_fail $?
+  pip install --upgrade -r requirements.txt
+  test_fail $?
+  if [ ! -z $psql ]; then
+    probe_fink=`command -v fink 2>/dev/null 1>&2; echo $?`
+    if [ "${probe_fink}" -ne 0 ]; then
+      fink install psycopg2-py27
+      test_fail $?
+    else
+      probe_port=`command -v port 2>/dev/null 1>&2; echo $?`
+      if [ "${probe_port}" -ne 0 ]; then
+        echo "sudo port install py27-psycopg2" | "${SHELL}" -x
+        test_fail $?
+      fi
+    fi
+    pip install psycopg2
+    test_fail $?
+  fi
 }
 
 venv_clean=
@@ -702,10 +715,6 @@ if [ ! -z $do_clean_cache ]; then
   rm -rf -- '${JSON_DIR}/*'
 fi
 
-if [ ! -z "${omop}" ]; then
-  omop_configure
-fi
-
 if [ ! -z "${pip}" ]; then
   if [ ! -z "${do_clean}" ]; then
     ask_for_clean "python virtualenv" "${venv}"
@@ -716,6 +725,10 @@ if [ ! -z "${pip}" ]; then
     file_clean=()
   fi
   pip_install
+fi
+
+if [ ! -z "${omop}" ]; then
+  omop_configure
 fi
 
 if [ ! -z "${do_nop}" ]; then
