@@ -196,22 +196,6 @@ if [[ $# -gt 1 ]]; then
   usage
 fi
 
-if [ ! -z $do_update ]; then
-  git pull origin master
-fi
-
-# initialize git submodule if not done by user
-git_submodule=`git submodule status | grep "^-"`
-if [ ! -z "${git_submodule}" ]; then
-  git submodule update --init --recursive
-fi
-
-if [ ! -z $do_clean_cache ]; then
-  echo "clearing cached files"
-  rm -- "${file_list}"
-  rm -rf -- '${JSON_DIR}/*'
-fi
-
 cd_back() {
   cd "${base_dir}"
 }
@@ -418,26 +402,6 @@ ask_for_clean() {
     file_clean+=($@)
   fi
 }
-
-if [ ! -z "${omop}" ]; then
-  omop_configure
-fi
-
-if [ ! -z "${pip}" ]; then
-  if [ ! -z "${do_clean}" ]; then
-    ask_for_clean "python virtualenv" "${venv}"
-    for file in "${file_clean[@]}"; do
-      echo "remove ${file}" && rm -r -- "${file}" 2> /dev/null
-    done
-    venv_clean=1
-    file_clean=()
-  fi
-  pip_install
-fi
-
-if [ ! -z "${do_nop}" ]; then
-  exit 0
-fi
 
 ask_all_clean() {
   allow_clean=1
@@ -719,6 +683,44 @@ convert_patients() {
 
   ./start.sh --list-update
 }
+
+### main script
+
+if [ ! -z $do_update ]; then
+  git pull origin master
+fi
+
+# initialize git submodule if not done by user
+git_submodule=`git submodule status | grep "^-"`
+if [ ! -z "${git_submodule}" ]; then
+  git submodule update --init --recursive
+fi
+
+if [ ! -z $do_clean_cache ]; then
+  echo "clearing cached files"
+  rm -- "${file_list}"
+  rm -rf -- '${JSON_DIR}/*'
+fi
+
+if [ ! -z "${omop}" ]; then
+  omop_configure
+fi
+
+if [ ! -z "${pip}" ]; then
+  if [ ! -z "${do_clean}" ]; then
+    ask_for_clean "python virtualenv" "${venv}"
+    for file in "${file_clean[@]}"; do
+      echo "remove ${file}" && rm -r -- "${file}" 2> /dev/null
+    done
+    venv_clean=1
+    file_clean=()
+  fi
+  pip_install
+fi
+
+if [ ! -z "${do_nop}" ]; then
+  exit 0
+fi
 
 # ask user for permission
 if [ ! -z $do_clean ]; then
