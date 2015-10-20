@@ -50,7 +50,7 @@ or
 ```
 
 if `apt-get` is available on your system.
-Installing `psycopg2` on MacOS may fail. In this case please refer to the
+On MacOS the installation of the dependency `psycopg2` may fail. In this case please refer to the
 [psycopg installation guide](http://initd.org/psycopg/docs/install.html).
 
 Note: Dependency installation may require sudo rights and will prompt as needed.
