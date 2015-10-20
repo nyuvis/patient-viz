@@ -687,14 +687,14 @@ convert_patients() {
 ### main script
 
 if [ ! -z $do_update ]; then
-  git pull origin master
+  git_branch=`git rev-parse --abbrev-ref HEAD`
+  test_fail $?
+  git pull origin "${git_branch}"
+  test_fail $?
 fi
 
-# initialize git submodule if not done by user
-git_submodule=`git submodule status | grep "^-"`
-if [ ! -z "${git_submodule}" ]; then
-  git submodule update --init --recursive
-fi
+git submodule update --init --recursive
+test_fail $?
 
 if [ ! -z $do_clean_cache ]; then
   echo "clearing cached files"
