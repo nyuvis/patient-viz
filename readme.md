@@ -49,7 +49,7 @@ or
 ./setup.sh --default-omop --apt
 ```
 
-if `apt-get` is available on your system (requires sudo rights).
+if `apt-get` is available on your system (requires sudo rights when prompted).
 
 You will be prompted questions to configure the connection to the PostgreSQL database
 containing the data. Using the external CCS hierarchy and caching are recommended
