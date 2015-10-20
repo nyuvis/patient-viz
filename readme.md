@@ -27,7 +27,7 @@ For windows you need to install [git](https://git-for-windows.github.io/) and
 
 * CMS Data Model: A tabular data model in CSV files. Example data is openly available.
   Instructions on how to set up the tool for CMS data and how to download example data
-  can be found [here](cms_shelve.md).
+  can be found [here](cms_shelve.md#cms-setup).
 
 * Shelve DB: A faster wrapper for CMS data. Instructions can be
   found [here](cms_shelve.md#using-shelve-input).
@@ -65,17 +65,19 @@ to start the visualization server. Please refer to `./server.py -h` for command
 line arguments. With the default command line arguments (ie. none) you can now
 browse [http://localhost:8080/patient-viz/](http://localhost:8080/patient-viz/)
 (Note that `patient-viz` in the URL depends on the name of the folder that
-contains `server.py`). If you want to inspect a certain patient you can browse to
+contains `server.py`).
+
+If you want to inspect a certain patient you can browse to
 the corresponding id directly. For example, to show the patient with the
-`person_id` 1234 as found in the `person` table you can browse
+`person_id` **1234** as found in the `person` table you can browse
 [http://localhost:8080/patient-viz/?p=json/1234&d=json/dictionary.json](http://localhost:8080/patient-viz/?p=json/1234&d=json/dictionary.json).
 You can also use the `person_source_value` using a different notation. The
-patient with the `person_source_value` of 12345678 can be found at
+patient with the `person_source_value` of **12345678** can be found at
 [http://localhost:8080/patient-viz/?p=json/12345678.json&d=json/dictionary.json](http://localhost:8080/patient-viz/?p=json/12345678.json&d=json/dictionary.json)
 (Note the `.json` after the id).
 
 If you want to stop the server you can type `quit` into its console or issue a
-keyboard interrupt (`CTRL-C`).
+keyboard interrupt via `CTRL-C`. Type `help` for available server commands.
 
 Updating the git repository to the newest version found on Github should be
 done via `./setup.sh --update` as it cleans the cache and updates
@@ -89,4 +91,4 @@ dependencies as well.
 ## Contributing
 
 Pull requests are highly appreciated :)
-Also, feel free to open [issues](https://github.com/nyuvis/patient-viz/issues) for any questions or bugs you may encounter.
+Also, feel free to open [issues](issues) for any questions or bugs you may encounter.
