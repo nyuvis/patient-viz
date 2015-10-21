@@ -220,7 +220,7 @@ open_pdf() {
 }
 
 curl_unzip() {
-  curl -# -o "tmp.zip" "$1" && unzip -q "tmp.zip" && rm -- "tmp.zip"
+  curl -# -Lo "tmp.zip" "$1" && unzip -q "tmp.zip" && rm -- "tmp.zip"
   test_fail $?
 }
 
@@ -267,7 +267,7 @@ prompt() {
           if [ ! -z "${read_terms}" ]; then
             if [ ! -f "${read_terms}" ]; then
               echo "downloading disclaimer and terms"
-              curl -# -o "${read_terms}" "${url_terms}"
+              curl -# -Lo "${read_terms}" "${url_terms}"
               test_fail $?
             fi
             open_pdf "${read_terms}"
@@ -355,7 +355,7 @@ pip_install() {
     venv_file="${venv_dir}.tar.gz"
     venv_url="https://pypi.python.org/packages/source/v/virtualenv/${venv_file}?md5=${venv_md5}"
     echo "downloading ${venv_url}"
-    curl -# -o "${venv_file}" "${venv_url}"
+    curl -# -Lo "${venv_file}" "${venv_url}"
     test_fail $?
     # FIXME temp ignore md5
     #md5 -q "${venv_file}" | xargs test "${venv_md5}" =
@@ -495,7 +495,7 @@ fetch_icd9() {
   if [ ! -f "${ICD9_DIR}/ucod.txt" ]; then
     cd "${ICD9_DIR}"
     echo "downloading ICD9 definitions"
-    curl -# -o "ucod.txt" "${ICD9_URL}"
+    curl -# -Lo "ucod.txt" "${ICD9_URL}"
     # temporary quick fix for encoding issues
     grep 386.0 ucod.txt | hexdump | grep 82 > /dev/null
     if [ $? -eq 0 ]; then
@@ -531,10 +531,10 @@ fetch_ccs() {
   if [ ! -f "${CCS_DIR}/single_diag.txt" ] || [ ! -f "${CCS_DIR}/single_proc.txt" ] || [ ! -f "${CCS_DIR}/multi_diag.txt" ] || [ ! -f "${CCS_DIR}/multi_proc.txt" ]; then
     cd "${CCS_DIR}"
     echo "downloading CCS hierarchies"
-    curl -# -o "single_diag.txt" "${CCS_SINGLE_DIAG_URL}"
-    curl -# -o "single_proc.txt" "${CCS_SINGLE_PROC_URL}"
-    curl -# -o "multi_diag.txt" "${CCS_MULTI_DIAG_URL}"
-    curl -# -o "multi_proc.txt" "${CCS_MULTI_PROC_URL}"
+    curl -# -Lo "single_diag.txt" "${CCS_SINGLE_DIAG_URL}"
+    curl -# -Lo "single_proc.txt" "${CCS_SINGLE_PROC_URL}"
+    curl -# -Lo "multi_diag.txt" "${CCS_MULTI_DIAG_URL}"
+    curl -# -Lo "multi_proc.txt" "${CCS_MULTI_PROC_URL}"
     cd_back
   fi
 }
@@ -580,7 +580,7 @@ fetch_pn() {
   if [ ! -f "${PNT_DIR}/pnt.txt" ]; then
     cd "${PNT_DIR}"
     echo "downloading provider numbers"
-    curl -# -o "pnt.txt" "${PNT_URL}"
+    curl -# -Lo "pnt.txt" "${PNT_URL}"
     cd_back
   fi
 }
