@@ -173,6 +173,7 @@ def process_directory(dir, cb, show_progress=True):
 
 def process_whitelisted_directory(dir, whitelist, cb, show_progress=True):
     wl = frozenset([ w[:3] for w in whitelist ]) if whitelist is not None else None
+    dirty = False
     for (root, _, files) in sorted(os.walk(dir), key=itemgetter(0)):
         if root != dir:
             segs = root.split('/') # **/A/4/2/*.csv
