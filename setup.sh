@@ -549,7 +549,7 @@ ask_ndc() {
 }
 
 fetch_ndc() {
-  NDC_URL="http://www.fda.gov/downloads/Drugs/DevelopmentApprovalProcess/UCM070838.zip"
+  NDC_URL="http://www.accessdata.fda.gov/cder/ndc.zip"
   if [ ! -d "${NDC_DIR}" ]; then
     mkdir -p "${NDC_DIR}"
   fi
