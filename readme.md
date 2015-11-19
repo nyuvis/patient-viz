@@ -32,6 +32,8 @@ For windows you need to install [git](https://git-for-windows.github.io/) and
 * Shelve DB: A faster wrapper for CMS data. Instructions can be
   found [here](cms_shelve.md#using-shelve-input).
 
+* JSON input files. Directly access JSON files using the URL `http://localhost:8000/patient-viz/?p=json/ABC.json&d=json/DEF.json` where `json/ABC.json` and `json/DEF.json` are respectively events and dictionary JSON files as specified [here](https://github.com/nyuvis/patient-viz/blob/master/spec.md). A `python -m SimpleHTTPServer` server needs to be running in the parent dictionary.
+
 ## OMOP Common Data Model
 
 *patient-viz* can connect to PostgreSQL databases in the
