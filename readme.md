@@ -20,7 +20,7 @@ Setting up the project can be done without prerequisites on *MacOS* and *linux*.
 For windows you need to install [git](https://git-for-windows.github.io/) and
 [python](https://www.python.org/downloads/) and use *git BASH* to execute shell commands.
 
-*patient-viz* supports three data formats as input:
+*patient-viz* supports four data formats as input:
 
 * OMOP Common Data Model: A PostgreSQL based data model. Instructions for setting
   up the connection can be found [here](#omop-common-data-model).
