@@ -39,6 +39,7 @@ class Dispatcher():
     def __init__(self):
         self._info_collect = {}
         self._claim_collect = {}
+        self._event_collect = {}
         self._aggregators = {}
 
     def info_collector(self, column_prefixes):
@@ -68,11 +69,27 @@ class Dispatcher():
             return fun
         return wrapper
 
+    def event_collector(self):
+        prefix = "collect_"
+        def wrapper(fun):
+            name = fun.__name__
+            if not name.startswith(prefix):
+                raise ValueError("event collector {0} must start with {1}".format(name, prefix))
+            name = name[len(prefix):]
+            if name in self._event_collect:
+                raise ValueError("event collector already defined for {0}".format(name))
+            self._event_collect[name] = fun
+            return fun
+        return wrapper
+
     def get_info_collector(self, name):
         return self._info_collect[name]
 
     def get_claim_collector(self, name):
         return self._claim_collect[name]
+
+    def get_event_collector(self, name):
+        return self._event_collect[name]
 
     def aggregator(self, default_value):
         prefix = "aggr_"
@@ -95,7 +112,7 @@ class Dispatcher():
 dispatch = Dispatcher()
 
 class ColumnHandler:
-    def __init__(self, dispatch, default_aggr):
+    def __init__(self, dispatch, default_aggr, event_collector):
         self._dispatch = dispatch
         self._info_collectors = []
         self._claim_collectors = []
@@ -104,6 +121,7 @@ class ColumnHandler:
         self._valid_levels = None
         aggr_fun, default_value = dispatch.get_aggregator(default_aggr)
         self._default_aggr = (aggr_fun, default_value, default_aggr)
+        self._event_collector = event_collector
 
     def add_info_handler(self, collector, aggregator):
         collector_fun, column_prefixes = self._dispatch.get_info_collector(collector)
@@ -130,6 +148,9 @@ class ColumnHandler:
 
     def get_claim_collectors(self):
         return self._claim_collectors
+
+    def get_event_collector(self):
+        return self._dispatch.get_event_collector(self._event_collector)
 
     def get_column_aggregator(self, column):
         if column not in self._columns:
@@ -302,6 +323,18 @@ def collect_claim_cost(claim, infoCache):
 def collect_num_claims(claim, infoCache):
     infoCache.append(("num_claims", 1))
 
+### event collectors ###
+
+@dispatch.event_collector()
+def collect_event_fix(claim):
+    return 1
+
+@dispatch.event_collector()
+def collect_event_cost(claim):
+    cache = []
+    collect_claim_cost(claim, cache)
+    return cache[0][1] if len(cache) else 0
+
 ### vector handling ###
 
 def emptyBitVector():
@@ -411,19 +444,22 @@ def createEventHandler(cb, valid_levels):
             if len(infoCache):
                 id_info_cache[id] = infoCache
             # getting hierarchies
-            obj = {
-                "events": events
-            }
-            dict = {}
-            build_dictionary.extractEntries(dict, obj)
-            for group in dict.keys():
-                cur_group = dict[group]
-                ekeys = set([])
-                for ek in cur_group.keys():
-                    event = get_real(cur_group, cur_group[ek])
-                    if is_valid_level(cur_group, event):
-                        ekeys.add(event["id"])
-                cb(id, group, [ (k, 1) for k in ekeys ])
+            ec = ch.get_event_collector()
+            for c in claims.values():
+                obj = {
+                    "events": c
+                }
+                increment = ec(c)
+                dict = {}
+                build_dictionary.extractEntries(dict, obj)
+                for group in dict.keys():
+                    cur_group = dict[group]
+                    ekeys = set([])
+                    for ek in cur_group.keys():
+                        event = get_real(cur_group, cur_group[ek])
+                        if is_valid_level(cur_group, event):
+                            ekeys.add(event["id"])
+                    cb(id, group, [ (k, increment) for k in ekeys ])
 
         num_total = len(id_event_cache.keys())
         num = 0
@@ -530,7 +566,7 @@ def printResult(vectors, hl, header_counts, delim, quote, whitelist, ch, out):
 ### interpret arguments ###
 
 def interpret_header_spec(header_spec, dispatcher):
-    ch = ColumnHandler(dispatcher, header_spec["default_aggr"])
+    ch = ColumnHandler(dispatcher, header_spec["default_aggr"], header_spec["event_collector"])
     if "levels" in header_spec:
         ch.set_valid_levels(header_spec["levels"])
     for [collector, aggregator] in header_spec["info"]:
@@ -564,6 +600,7 @@ if __name__ == '__main__':
     settings['quote'] = '"'
     header_spec = {
         "default_aggr": "binary",
+        "event_collector": "event_fix",
         "info": [
             ["age_bin", "binary"],
             ["dead_field", "binary"],

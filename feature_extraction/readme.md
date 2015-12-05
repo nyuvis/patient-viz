@@ -26,6 +26,17 @@ from the root folder to look up proper names for the columns.
 Alternatively you can dump all column names with:
 `head -n 1 feature_extraction/output.csv | sed "s/,/ /g" | ./build_dictionary.py -o feature_extraction/headers.json -c config.txt --lookup -`
 
+# Feature Extraction using header specification
+
+You can define aggregation and columns using a header specification. The command
+then looks like:
+
+```bash
+./extract.py --age-time 20100101 --to 20100101 -o output_large.csv -f ../format.json -c ../config.txt -s header_spec.json -- ../cms/
+```
+
+The header spec defines aggregation methods and types.
+
 # Feature Extraction using Cohorts
 
 In order to get meaningful feature vectors you need to define two cohorts: *cases* and *controls*.

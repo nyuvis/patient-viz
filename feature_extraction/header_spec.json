@@ -1,0 +1,18 @@
+{
+  "default_aggr": "sum",
+  "event_collector": "event_cost",
+  "info": [
+    ["age_bin", "binary"],
+    ["dead_field", "binary"],
+    ["sex_field", "binary"],
+    ["gender_field", "binary"],
+    ["hospital_days", "sum"],
+    ["county", "unique"],
+    ["state", "unique"],
+    ["race", "unique"],
+    ["chronics", "towards_yes"]
+  ],
+  "claim": [
+    ["claim_cost", "sum"]
+  ]
+}
