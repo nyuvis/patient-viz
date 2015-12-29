@@ -69,9 +69,16 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
         save_patients()
 
     dict = {}
-    if os.path.isfile(dictionary_file) and use_cache:
-        with open(dictionary_file, 'r') as input:
-            dict = json.loads(input.read())
+    if use_cache:
+        if os.path.isfile(dictionary_file):
+            with open(dictionary_file, 'r') as input:
+                dict = json.loads(input.read())
+        else:
+            os.makedirs(json_dir)
+            # write the initial empty dictionary
+            # also ensures that the folder is writeable
+            with open(dictionary_file, 'w') as output:
+                output.write("{}")
 
     server = create_server((addr, port))
     server.bind_path('/', '..')
