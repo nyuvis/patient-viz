@@ -45,6 +45,7 @@ class OMOP():
         host = settings['omop_host']
         port = settings['omop_port']
         database = settings['omop_db']
+        engine = settings.get('omop_engine', 'postgresql')
         self._parents = {}
         self._codes = {}
         if settings['omop_use_alt_hierarchies']:
@@ -55,7 +56,7 @@ class OMOP():
                 self._codes['Procedure_ICD9CM'] = {}
                 self._parents['Procedure_ICD9CM'] = util.read_CCS(util.get_file(settings['ccs_proc'], debug_output), self._codes['Procedure_ICD9CM'])
         self.schema = settings['omop_schema']
-        self.db = sqlalchemy.create_engine('postgresql://{0}:{1}@{2}:{3}/{4}'.format(username, password, host, port, database))
+        self.db = sqlalchemy.create_engine('{0}://{1}:{2}@{3}:{4}/{5}'.format(engine, username, password, host, port, database))
 
     def _exec(self, query, **args):
         connection = None

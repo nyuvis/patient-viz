@@ -341,6 +341,7 @@ omop_configure() {
   configure_value "${config}" "omop_passwd" "database password (password)" "password"
   configure_value "${config}" "omop_db" "database name (db)" "db"
   configure_value "${config}" "omop_schema" "database schema (schema)" "schema"
+  configure_value "${config}" "omop_engine" "database engine (postgresql)" "postgresql"
   configure_bool "${config}" "omop_use_alt_hierarchies" "use external CCS hierarchies (y)" "true"
   configure_bool "${config}" "use_cache" "use caching (y)" "true"
   echo "configuration can be found in '${config}'"
