@@ -330,7 +330,7 @@ class OMOP():
                 event['cost'] = float(row['p_cost'])
             obj['events'].append(event)
 
-    def get_observations(self, pid, obj, dict, new_dict_entries):
+    def get_observations_concept_valued(self, pid, obj, dict, new_dict_entries):
         query = """SELECT
             o.observation_id as id_row,
             o.observation_date as o_date,
@@ -366,10 +366,80 @@ class OMOP():
             group = row['o_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
-            event = self.create_event(group, str(vocab) + str(d_id), id_row)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "C",str(row['o_val_concept_name']))
             event['time'] = self.to_time(row['o_date'])
-            if 'o_val_concept_name' in row and row['o_val_concept_name']:
-                event['o_val_concept_name'] = str(row['o_val_concept_name'])
+            obj['events'].append(event)
+
+    def get_observations_string_valued(self, pid, obj, dict, new_dict_entries):
+        query = """SELECT
+            o.observation_id as id_row,
+            o.observation_date as o_date,
+            o.observation_concept_id as o_id,
+            o.observation_source_value as o_orig,
+            o.value_as_string  as o_val_string,
+            c.domain_id as o_domain,
+            c.concept_name as o_name,
+            c.vocabulary_id as o_vocab,
+            c.concept_code as o_num
+           FROM
+            {schema}.observation as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.observation_concept_id
+           )
+           WHERE
+            o.person_id = :pid AND o.value_as_string is not null
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['o_num']
+            unmapped = False
+            if code == 0:
+                code = row['o_orig']
+                unmapped = True
+            id_row = 'p' + str(row['id_row'])
+            d_id = row['o_id']
+            name = row['o_name']
+            vocab = row['o_vocab']
+            group = row['o_domain']
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "S", row['o_val_string'])
+            event['time'] = self.to_time(row['o_date'])
+            obj['events'].append(event)
+
+    def get_observations_number_valued(self, pid, obj, dict, new_dict_entries):
+        query = """SELECT
+            o.observation_id as id_row,
+            o.observation_date as o_date,
+            o.observation_concept_id as o_id,
+            o.observation_source_value as o_orig,
+            o.value_as_number as o_val_number,
+            c.domain_id as o_domain,
+            c.concept_name as o_name,
+            c.vocabulary_id as o_vocab,
+            c.concept_code as o_num
+           FROM
+            {schema}.observation as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.observation_concept_id
+           )
+           WHERE
+            o.person_id = :pid AND o.value_as_number is not null
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['o_num']
+            unmapped = False
+            if code == 0:
+                code = row['o_orig']
+                unmapped = True
+            id_row = 'p' + str(row['id_row'])
+            d_id = row['o_id']
+            name = row['o_name']
+            vocab = row['o_vocab']
+            group = row['o_domain']
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "N",str(row['o_val_number']))
+            event['time'] = self.to_time(row['o_date'])
             obj['events'].append(event)
 
     def get_drugs(self, pid, obj, dict, new_dict_entries):
@@ -511,7 +581,9 @@ class OMOP():
         self.add_info(obj, "pid", "Patient", pid)
         self.get_info(pid, obj)
         self.get_diagnoses(pid, obj, dictionary, new_dict_entries)
-        self.get_observations(pid, obj, dictionary, new_dict_entries)
+        self.get_observations_concept_valued(pid, obj, dictionary, new_dict_entries)
+        self.get_observations_string_valued(pid, obj, dictionary, new_dict_entries)
+        self.get_observations_number_valued(pid, obj, dictionary, new_dict_entries)
         self.get_procedures(pid, obj, dictionary, new_dict_entries)
         self.get_drugs(pid, obj, dictionary, new_dict_entries)
         self.get_measurements(pid, obj, dictionary, new_dict_entries)
