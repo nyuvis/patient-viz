@@ -21,9 +21,10 @@ gender_map = {
 
 color_map = {
     "Condition": "#4daf4a",
-    "Procedure": "#ff7f00",
     "Drug": "#eb9adb",
-    "Measurement": "#80b1d3"
+    "Measurement": "#80b1d3",
+    "Observation": "#ccffff",
+    "Procedure": "#ff7f00"
 }
 measure_flag_map = {
     "L": {
@@ -361,7 +362,8 @@ class OMOP():
                 unmapped = True
             id_row = 'p' + str(row['id_row'])
             d_id = row['o_id']
-            name = row['o_name']
+            name = "unknown" if row['o_name'] is None else row['o_name']
+            #name = row['o_name']
             vocab = row['o_vocab']
             group = row['o_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
@@ -397,7 +399,8 @@ class OMOP():
                 unmapped = True
             id_row = 'p' + str(row['id_row'])
             d_id = row['o_id']
-            name = row['o_name']
+            name = "unknown" if row['o_name'] is None else row['o_name']
+            #name = row['o_name']
             vocab = row['o_vocab']
             group = row['o_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
@@ -433,7 +436,8 @@ class OMOP():
                 unmapped = True
             id_row = 'p' + str(row['id_row'])
             d_id = row['o_id']
-            name = row['o_name']
+            name = "unknown" if row['o_name'] is None else row['o_name']
+            #name = row['o_name']
             vocab = row['o_vocab']
             group = row['o_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
