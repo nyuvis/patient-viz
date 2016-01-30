@@ -16,7 +16,9 @@ gender_label = {
 gender_map = {
     "M": "M",
     "W": "F",
-    "F": "F"
+    "F": "F",
+    "MALE":"M",
+    "FEMALE":"F"
 }
 
 color_map = {
@@ -113,13 +115,18 @@ class OMOP():
         obj["info"].append(node)
 
     def get_info(self, pid, obj):
-        query = "SELECT person_source_value, year_of_birth, gender_source_value FROM {schema}.person WHERE person_id = :pid"
+        query = '''
+SELECT concept_name as gender_concept_name, 
+       person_source_value, 
+       year_of_birth 
+FROM person left outer join concept on gender_concept_id = concept_id
+WHERE person_id = :pid'''
         result = self._exec_one(query, pid=str(pid))
         if result['person_source_value']:
             self.add_info(obj, 'id_alt', 'ID', str(result['person_source_value']) + ".json")
         self.add_info(obj, 'born', 'Born', int(result['year_of_birth']))
-        gender = str(result['gender_source_value'])
-        self.add_info(obj, 'gender', 'Gender', gender_map.get(gender, 'U'), True, gender_label.get(gender, "default"))
+        gender = str(result['gender_concept_name'])
+        self.add_info(obj, 'gender', 'Gender', gender_map.get(gender.upper(), 'U'), True, gender_label.get(gender, "default"))
 
     def to_time(self, value):
         return util.toTime(value.strftime("%Y%m%d"))
