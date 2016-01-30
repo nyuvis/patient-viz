@@ -370,9 +370,8 @@ WHERE person_id = :pid'''
             id_row = 'p' + str(row['id_row'])
             d_id = row['o_id']
             name = "unknown" if row['o_name'] is None else row['o_name']
-            #name = row['o_name']
             vocab = row['o_vocab']
-            group = row['o_domain']
+            group  = "Observation" if row['o_domain'] is None else row['o_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "C",str(row['o_val_concept_name']))
@@ -407,9 +406,8 @@ WHERE person_id = :pid'''
             id_row = 'p' + str(row['id_row'])
             d_id = row['o_id']
             name = "unknown" if row['o_name'] is None else row['o_name']
-            #name = row['o_name']
             vocab = row['o_vocab']
-            group = row['o_domain']
+            group  = "Observation" if row['o_domain'] is None else row['o_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "S", row['o_val_string'])
@@ -444,9 +442,8 @@ WHERE person_id = :pid'''
             id_row = 'p' + str(row['id_row'])
             d_id = row['o_id']
             name = "unknown" if row['o_name'] is None else row['o_name']
-            #name = row['o_name']
             vocab = row['o_vocab']
-            group = row['o_domain']
+            group  = "Observation" if row['o_domain'] is None else row['o_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "N",str(row['o_val_number']))
