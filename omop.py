@@ -16,14 +16,17 @@ gender_label = {
 gender_map = {
     "M": "M",
     "W": "F",
-    "F": "F"
+    "F": "F",
+    "MALE":"M",
+    "FEMALE":"F"
 }
 
 color_map = {
     "Condition": "#4daf4a",
-    "Procedure": "#ff7f00",
     "Drug": "#eb9adb",
-    "Measurement": "#80b1d3"
+    "Measurement": "#80b1d3",
+    "Observation": "#ccffff",
+    "Procedure": "#ff7f00"
 }
 measure_flag_map = {
     "L": {
@@ -112,13 +115,24 @@ class OMOP():
         obj["info"].append(node)
 
     def get_info(self, pid, obj):
-        query = "SELECT person_source_value, year_of_birth, gender_source_value FROM {schema}.person WHERE person_id = :pid"
+        query = """SELECT
+             concept_name as gender_concept_name,
+             person_source_value,
+             year_of_birth
+            FROM
+             {schema}.person
+            LEFT JOIN {schema}.concept ON (
+             gender_concept_id = concept_id
+            ) WHERE
+             person_id = :pid
+        """
         result = self._exec_one(query, pid=str(pid))
         if result['person_source_value']:
             self.add_info(obj, 'id_alt', 'ID', str(result['person_source_value']) + ".json")
         self.add_info(obj, 'born', 'Born', int(result['year_of_birth']))
-        gender = str(result['gender_source_value'])
-        self.add_info(obj, 'gender', 'Gender', gender_map.get(gender, 'U'), True, gender_label.get(gender, "default"))
+        gender = str(result['gender_concept_name'])
+        # defaults to 'U' for "unknown"
+        self.add_info(obj, 'gender', 'Gender', gender_map.get(gender.upper(), 'U'), True, gender_label.get(gender, 'U'))
 
     def to_time(self, value):
         return util.toTime(value.strftime("%Y%m%d"))
@@ -277,7 +291,7 @@ class OMOP():
             d_id = row['d_id']
             name = row['d_name']
             vocab = row['d_vocab']
-            group = row['d_domain']
+            group = "Condition" if row['d_domain'] is None else row['d_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             date_start = self.to_time(row['date_start'])
@@ -305,7 +319,7 @@ class OMOP():
            LEFT JOIN {schema}.concept as c ON (
             c.concept_id = o.procedure_concept_id
            )
-           LEFT OUTER JOIN {schema}.procedure_cost as p ON (
+           LEFT JOIN {schema}.procedure_cost as p ON (
             p.procedure_occurrence_id = o.procedure_occurrence_id
            )
            WHERE
@@ -321,13 +335,128 @@ class OMOP():
             d_id = row['p_id']
             name = row['p_name']
             vocab = row['p_vocab']
-            group = row['p_domain']
+            group = "Procedure" if row['p_domain'] is None else row['p_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
             if 'p_cost' in row and row['p_cost']:
                 event['cost'] = float(row['p_cost'])
+            obj['events'].append(event)
+
+    def get_observations_concept_valued(self, pid, obj, dict, new_dict_entries):
+        query = """SELECT
+            o.observation_id as id_row,
+            o.observation_date as o_date,
+            o.observation_concept_id as o_id,
+            o.observation_source_value as o_orig,
+            o.value_as_concept_id as o_val_concept,
+            c_val.concept_name as o_val_concept_name,
+            c.domain_id as o_domain,
+            c.concept_name as o_name,
+            c.vocabulary_id as o_vocab,
+            c.concept_code as o_num
+           FROM
+            {schema}.observation as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.observation_concept_id
+           )
+           INNER JOIN {schema}.concept as c_val ON (
+	        c_val.concept_id = o.value_as_concept_id
+	       )
+           WHERE
+            o.person_id = :pid
+            AND o.value_as_concept_id IS NOT NULL
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['o_num']
+            unmapped = False
+            if code == 0:
+                code = row['o_orig']
+                unmapped = True
+            id_row = 'p' + str(row['id_row'])
+            d_id = row['o_id']
+            name = "unknown" if row['o_name'] is None else row['o_name']
+            vocab = row['o_vocab']
+            group  = "Observation" if row['o_domain'] is None else row['o_domain']
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "C",str(row['o_val_concept_name']))
+            event['time'] = self.to_time(row['o_date'])
+            obj['events'].append(event)
+
+    def get_observations_string_valued(self, pid, obj, dict, new_dict_entries):
+        query = """SELECT
+            o.observation_id as id_row,
+            o.observation_date as o_date,
+            o.observation_concept_id as o_id,
+            o.observation_source_value as o_orig,
+            o.value_as_string  as o_val_string,
+            c.domain_id as o_domain,
+            c.concept_name as o_name,
+            c.vocabulary_id as o_vocab,
+            c.concept_code as o_num
+           FROM
+            {schema}.observation as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.observation_concept_id
+           )
+           WHERE
+            o.person_id = :pid
+            AND o.value_as_string IS NOT NULL
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['o_num']
+            unmapped = False
+            if code == 0:
+                code = row['o_orig']
+                unmapped = True
+            id_row = 'p' + str(row['id_row'])
+            d_id = row['o_id']
+            name = "unknown" if row['o_name'] is None else row['o_name']
+            vocab = row['o_vocab']
+            group  = "Observation" if row['o_domain'] is None else row['o_domain']
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "S", row['o_val_string'])
+            event['time'] = self.to_time(row['o_date'])
+            obj['events'].append(event)
+
+    def get_observations_number_valued(self, pid, obj, dict, new_dict_entries):
+        query = """SELECT
+            o.observation_id as id_row,
+            o.observation_date as o_date,
+            o.observation_concept_id as o_id,
+            o.observation_source_value as o_orig,
+            o.value_as_number as o_val_number,
+            c.domain_id as o_domain,
+            c.concept_name as o_name,
+            c.vocabulary_id as o_vocab,
+            c.concept_code as o_num
+           FROM
+            {schema}.observation as o
+           LEFT JOIN {schema}.concept as c ON (
+            c.concept_id = o.observation_concept_id
+           )
+           WHERE
+            o.person_id = :pid
+            AND o.value_as_number IS NOT NULL
+        """
+        for row in self._exec(query, pid=pid):
+            code = row['o_num']
+            unmapped = False
+            if code == 0:
+                code = row['o_orig']
+                unmapped = True
+            id_row = 'p' + str(row['id_row'])
+            d_id = row['o_id']
+            name = "unknown" if row['o_name'] is None else row['o_name']
+            vocab = row['o_vocab']
+            group  = "Observation" if row['o_domain'] is None else row['o_domain']
+            desc = "{0} ({1} {2})".format(name, vocab, code)
+            self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
+            event = self.create_event(group, str(vocab) + str(d_id), id_row, True, "N",str(row['o_val_number']))
+            event['time'] = self.to_time(row['o_date'])
             obj['events'].append(event)
 
     def get_drugs(self, pid, obj, dict, new_dict_entries):
@@ -347,7 +476,7 @@ class OMOP():
            LEFT JOIN {schema}.concept as c ON (
             c.concept_id = o.drug_concept_id
            )
-           LEFT OUTER JOIN {schema}.drug_cost as p ON (
+           LEFT JOIN {schema}.drug_cost as p ON (
             p.drug_exposure_id = o.drug_exposure_id
            )
            WHERE
@@ -363,7 +492,7 @@ class OMOP():
             d_id = row['m_id']
             name = row['m_name']
             vocab = row['m_vocab']
-            group = row['m_domain']
+            group = "Drug" if row['m_domain'] is None else row['m_domain']
             desc = "{0} ({1} {2})".format(name, vocab, code)
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             date_start = self.to_time(row['date_start'])
@@ -411,7 +540,7 @@ class OMOP():
             d_id = row['m_id']
             name = row['m_name']
             vocab = row['m_vocab']
-            group = row['m_domain']
+            group = "Measurement" if row['m_domain'] is None else row['m_domain']
             lab_value = float(row['m_value']) if 'm_value' in row and row['m_value'] else row['m_orig_value']
             lab_low = float(row['m_low'])
             lab_high = float(row['m_high'])
@@ -469,6 +598,9 @@ class OMOP():
         self.add_info(obj, "pid", "Patient", pid)
         self.get_info(pid, obj)
         self.get_diagnoses(pid, obj, dictionary, new_dict_entries)
+        self.get_observations_concept_valued(pid, obj, dictionary, new_dict_entries)
+        self.get_observations_string_valued(pid, obj, dictionary, new_dict_entries)
+        self.get_observations_number_valued(pid, obj, dictionary, new_dict_entries)
         self.get_procedures(pid, obj, dictionary, new_dict_entries)
         self.get_drugs(pid, obj, dictionary, new_dict_entries)
         self.get_measurements(pid, obj, dictionary, new_dict_entries)
