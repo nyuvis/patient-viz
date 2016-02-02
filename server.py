@@ -23,7 +23,7 @@ json_dir = 'json/'
 patients_list = 'patients.txt'
 dictionary_bind = 'dictionary.json'
 
-def start_server(max_num, settings_file, format_file, class_file, line_file, cms_path, addr, port):
+def start_server(max_num, settings_file, format_file, class_file, line_file, cms_path, addr, port, debug):
     settings = {}
     util.read_config(settings, settings_file, True)
     use_cache = settings.get('use_cache', True)
@@ -91,6 +91,9 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
             prefix + '/' + patients_list
         ], True)
     server.favicon_fallback = 'favicon.ico'
+    server.report_slow_requests = True
+    if debug:
+        server.suppress_noise = True
 
     @server.text_get(prefix + '/' + patients_list, 0)
     def get_list(req, args):
@@ -138,7 +141,7 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
 
 def usage():
     print("""
-usage: {0} [-h] [-a <address>] [-p <port>] [-c <file>] [-f <file>] [-s <file>] [-l <file>] [--max-num <number>] [--cms-path <path>]
+usage: {0} [-h] [--debug] [-a <address>] [-p <port>] [-c <file>] [-f <file>] [-s <file>] [-l <file>] [--max-num <number>] [--cms-path <path>]
 -h: print help
 -a <address>: specifies the server address. default is 'localhost'
 -p <port>: specifies the server port. default is '8080'
@@ -148,6 +151,7 @@ usage: {0} [-h] [-a <address>] [-p <port>] [-c <file>] [-f <file>] [-s <file>] [
 -l <file>: specifies optional line and span info file
 --max-num <number>: specifies the maximal initial size of the patient list
 --cms-path <path>: specifies the path to CMS compatible files
+--debug: only report unsuccessful requests
 """.strip().format(sys.argv[0]), file=sys.stderr)
     exit(1)
 
@@ -160,6 +164,7 @@ if __name__ == '__main__':
     cms_path = 'cms/'
     addr = ''
     port = 8080
+    debug = False
     args = sys.argv[:]
     args.pop(0)
     while args:
@@ -206,7 +211,9 @@ if __name__ == '__main__':
                 print('expected argument for --cms-path', file=sys.stderr)
                 usage()
             cms_path = args.pop(0)
+        elif arg == '--debug':
+            debug = True
         else:
             print('illegal argument: '+arg, file=sys.stderr)
             usage()
-    start_server(max_num, settings_file, format_file, class_file, line_file, cms_path, addr, port)
+    start_server(max_num, settings_file, format_file, class_file, line_file, cms_path, addr, port, debug)
