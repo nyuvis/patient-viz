@@ -98,7 +98,7 @@ dependencies as well.
 
 ## Publications
 
-* 2015 Workshop on Visual Analytics in Healthcare - Demo [[PDF]](pub/vahc_2015_demo.pdf)
+* 2015 Workshop on Visual Analytics in Healthcare - Demo [[PDF]](pub/vahc_2015_demo.pdf) and [[Presentation]](pub/vahc-patient-viz-wide.key)
 * AMIA 2015 Annual Symposium - Demo [[PDF]](pub/amia_2015_demo.pdf) and Poster [[PDF]](pub/amia_2015_poster.pdf)
 
 ## Contributing
