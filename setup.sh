@@ -550,7 +550,7 @@ ask_ndc() {
 }
 
 fetch_ndc() {
-  NDC_URL="http://www.accessdata.fda.gov/cder/ndc.zip"
+  NDC_URL="https://www.accessdata.fda.gov/cder/ndctext.zip"
   if [ ! -d "${NDC_DIR}" ]; then
     mkdir -p "${NDC_DIR}"
   fi
@@ -559,7 +559,6 @@ fetch_ndc() {
     echo "downloading NDC definitions"
 
     curl_unzip "${NDC_URL}"
-    rm -- "product.xls" "package.xls"
     cd_back
   fi
 }
