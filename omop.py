@@ -319,7 +319,7 @@ class OMOP():
            LEFT JOIN {schema}.concept as c ON (
             c.concept_id = o.procedure_concept_id
            )
-           LEFT JOIN {schema}.procedure_cost as p ON (
+           LEFT JOIN {schema}.cost as p ON (
             p.procedure_occurrence_id = o.procedure_occurrence_id
            )
            WHERE
