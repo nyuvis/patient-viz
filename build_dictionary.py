@@ -6,7 +6,7 @@ from __future__ import print_function
 import time
 import datetime
 import shelve
-from datetime import datetime, timedelta
+from datetime import datetime,timedelta
 import sys
 import csv
 import json
@@ -56,34 +56,34 @@ class EntryCreator(object):
             self._unknown = obj
         return wrapper
 
-    def createEntry(self, dictionary, etype, eid, onlyAddMapped=False, code=None):
-        if not eid:
-            entry = self.createRootEntry(etype)
+    def createEntry(self, dict, type, id, onlyAddMapped=False, code=None):
+        if not id:
+            entry = self.createRootEntry(type)
         else:
-            baseType = self._baseTypes.get(etype, self._unknown)
-            symbols = self._codeTables.get(etype, {})
-            (entry, code) = baseType.create(symbols, etype, eid, code)
-        if etype not in dictionary:
-            dictionary[etype] = {}
+            baseType = self._baseTypes.get(type, self._unknown)
+            symbols = self._codeTables.get(type, {})
+            (entry, code) = baseType.create(symbols, type, id, code)
+        if type not in dict:
+            dict[type] = {}
         if onlyAddMapped and 'unmapped' in entry and entry['unmapped']:
             return
-        dictionary[etype][eid] = entry
+        dict[type][id] = entry
         pid = entry['parent']
-        if pid not in dictionary[etype]:
-            self.createEntry(dictionary, etype, pid, False, code)
+        if pid not in dict[type]:
+            self.createEntry(dict, type, pid, False, code)
         if 'alias' in entry:
             aid = entry['alias']
-            if aid not in dictionary[etype]:
-                self.createEntry(dictionary, etype, aid, True, code)
+            if aid not in dict[type]:
+                self.createEntry(dict, type, aid, True, code)
 
-    def createRootEntry(self, etype):
-        baseType = self._baseTypes.get(etype, self._unknown)
+    def createRootEntry(self, type):
+        baseType = self._baseTypes.get(type, self._unknown)
         name = baseType.name()
         if name == UNKNOWN:
-            name += " " + etype
+            name += " " + type
         desc = baseType.desc()
         if desc == UNKNOWN:
-            desc += " " + etype
+            desc += " " + type
         res = toEntry("", "", name, desc)
         res["color"] = baseType.color()
         flags = baseType.flags()
@@ -116,22 +116,22 @@ class TypeBase(object):
         for code in self._codeTypes.keys():
             res[code] = self._codeTypes[code].init(settings)
         return res
-    def create(self, symbols, etype, eid, code):
+    def create(self, symbols, type, id, code):
         candidate = None
-        if "__" in eid:
-            [ new_code, eid ] = eid.split("__", 1)
+        if "__" in id:
+            [ new_code, id ] = id.split("__", 1)
             if new_code in self._codeTypes.keys():
                 code = new_code
             elif debugOutput:
-                print("unknown code {0} in id '{1}' using {2}".format(repr(new_code), repr(new_code + "__" + eid), repr(code), file=sys.stderr))
+                print("unknown code {0} in id '{1}' using {2}".format(repr(new_code), repr(new_code + "__" + id), repr(code), file=sys.stderr))
         if code is not None:
             if code in self._codeTypes and code in symbols:
-                candidate = self._codeTypes[code].create(symbols[code], etype, eid)
+                candidate = self._codeTypes[code].create(symbols[code], type, id)
             elif debugOutput:
                 print("unknown code {0}".format(repr(code), file=sys.stderr))
         else:
             for k in self._codeTypes.keys():
-                can = self._codeTypes[k].create(symbols[k], etype, eid)
+                can = self._codeTypes[k].create(symbols[k], type, id)
                 if candidate is not None:
                     umOld = "unmapped" in candidate and candidate["unmapped"]
                     um = "unmapped" in can and can["unmapped"]
@@ -144,13 +144,13 @@ class TypeBase(object):
                         break
                 candidate = can
         if candidate is None:
-            return (createUnknownEntry({}, etype, eid, code=code), code)
+            return (createUnknownEntry({}, type, id, code=code), code)
         return (candidate, code)
 
 class TypeCode(object):
     def init(self, settings):
         raise NotImplementedError()
-    def create(self, symbols, etype, eid):
+    def create(self, symbols, type, id):
         raise NotImplementedError
 
 ### provider ###
@@ -163,13 +163,13 @@ class TypeProvider(TypeBase):
 
 @dictionary.codeType("provider", "cms")
 class CmsProviderCode(TypeCode):
-    def create(self, symbols, etype, eid):
-        pid = eid[2:4] if len(eid) >= 4 else ""
-        if eid in symbols:
-            return toEntry(eid, pid, symbols[eid], symbols[eid])
-        if len(eid) == 2:
-            return createUnknownEntry(symbols, etype, eid, pid, code=self.code)
-        return toEntry(eid, pid, eid, "Provider Number: {0}".format(eid))
+    def create(self, symbols, type, id):
+        pid = id[2:4] if len(id) >= 4 else ""
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id])
+        if len(id) == 2:
+            return createUnknownEntry(symbols, type, id, pid, code=self.code)
+        return toEntry(id, pid, id, "Provider Number: {0}".format(id))
     def init(self, settings):
         res = {}
         file = get_file(settings, 'pnt', 'code/pnt/pnt.txt')
@@ -197,19 +197,19 @@ class TypePhysician(TypeBase):
 
 @dictionary.codeType("physician", "cms")
 class CmsPhysicianCode(TypeCode):
-    def create(self, symbols, etype, eid):
+    def create(self, symbols, type, id):
         pid = ""
-        return createUnknownEntry(symbols, etype, eid, pid, code=self.code)
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         return {}
 
 @dictionary.codeType("physician", "alt")
 class CmsPhysicianCode(TypeCode):
-    def create(self, symbols, etype, eid):
+    def create(self, symbols, type, id):
         pid = ""
-        if eid in symbols:
-            return toEntry(eid, pid, symbols[eid], symbols[eid])
-        return createUnknownEntry(symbols, etype, eid, pid, code=self.code)
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id])
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         res = {}
         spec_file = get_file(settings, 'alt_speciality', 'code/specialty/specialty_headers.txt')
@@ -233,12 +233,12 @@ class TypePrescribed(TypeBase):
 
 @dictionary.codeType("prescribed", "ndc")
 class NdcPrescribedCode(TypeCode):
-    def create(self, symbols, etype, eid):
-        pid = eid[:-2] if len(eid) == 11 else ""
-        if eid in symbols:
-            l = symbols[eid]
-            return toEntry(eid, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
-        return createUnknownEntry(symbols, etype, eid, pid, code=self.code)
+    def create(self, symbols, type, id):
+        pid = id[:-2] if len(id) == 11 else ""
+        if id in symbols:
+            l = symbols[id]
+            return toEntry(id, pid, l["nonp"], l["nonp"]+" ["+l["desc"]+"] ("+l["prop"]+") "+l["subst"]+" - "+l["pharm"]+" - "+l["pType"], l["alias"] if "alias" in l else None)
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         uidLookup = {}
         file_main = get_file(settings, 'ndc', '')
@@ -374,11 +374,11 @@ class TypeLabtest(TypeBase):
 
 @dictionary.codeType("lab-test", "loinc")
 class LoincLabtestCode(TypeCode):
-    def create(self, symbols, etype, eid):
-        pid = "" # find parent eid
-        if eid in symbols:
-            return toEntry(eid, pid, symbols[eid], symbols[eid])
-        return createUnknownEntry(symbols, etype, eid, pid, code=self.code)
+    def create(self, symbols, type, id):
+        pid = "" # find parent id
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id])
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         res = getGlobalSymbols(settings)
         loinc_file = get_file(settings, 'loinc', 'code/loinc/loinc_file.all.headers')
@@ -404,15 +404,15 @@ class TypeDiagnosis(TypeBase):
 class Icd9DiagnosisCode(TypeCode):
     def __init__(self):
         self._parents = {}
-    def create(self, symbols, etype, eid):
-        prox_id = eid
+    def create(self, symbols, type, id):
+        prox_id = id
         pid = ""
         while len(prox_id) >= 3:
             pid = self._parents[prox_id] if prox_id in self._parents else pid
             if prox_id in symbols:
-                return toEntry(eid, pid, symbols[prox_id], symbols[prox_id], eid.replace(".", "") if "HIERARCHY" not in eid else None)
+                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", "") if "HIERARCHY" not in id else None)
             prox_id = prox_id[:-1]
-        return createUnknownEntry(symbols, etype, eid, pid, code=self.code)
+        return createUnknownEntry(symbols, type, id, pid, code=self.code)
     def init(self, settings):
         codes = getGlobalSymbols(settings)
         codes.update(getICD9(settings, True))
@@ -431,15 +431,15 @@ class TypeProcedure(TypeBase):
 class Icd9ProcedureCode(TypeCode):
     def __init__(self):
         self._parents = {}
-    def create(self, symbols, etype, eid):
-        prox_id = eid
+    def create(self, symbols, type, id):
+        prox_id = id
         pid = ""
         while len(prox_id) >= 3:
             pid = self._parents[prox_id] if prox_id in self._parents else pid
             if prox_id in symbols:
-                return toEntry(eid, pid, symbols[prox_id], symbols[prox_id], eid.replace(".", "") if "HIERARCHY" not in eid else None)
+                return toEntry(id, pid, symbols[prox_id], symbols[prox_id], id.replace(".", "") if "HIERARCHY" not in id else None)
             prox_id = prox_id[:-1]
-        return createUnknownEntry(symbols, etype, eid, pid)
+        return createUnknownEntry(symbols, type, id, pid)
     def init(self, settings):
         codes = getGlobalSymbols(settings)
         codes.update(getICD9(settings, False))
@@ -448,11 +448,11 @@ class Icd9ProcedureCode(TypeCode):
 
 @dictionary.codeType("procedure", "cpt")
 class CPTProcedureCode(TypeCode):
-    def create(self, symbols, etype, eid):
+    def create(self, symbols, type, id):
         pid = ""
-        if eid in symbols:
-            return toEntry(eid, pid, symbols[eid], symbols[eid], None)
-        return createUnknownEntry(symbols, etype, eid, pid)
+        if id in symbols:
+            return toEntry(id, pid, symbols[id], symbols[id], None)
+        return createUnknownEntry(symbols, type, id, pid)
     def init(self, settings):
         file = get_file(settings, 'procedure_cpt_long', 'code/cpt/cpt_codes_long_descr.csv')
         codes = {}
@@ -477,9 +477,9 @@ class TypeInfo(TypeBase):
 
 @dictionary.codeType("info", "info")
 class InfoInfoCode(TypeCode):
-    def create(self, symbols, etype, eid):
+    def create(self, symbols, type, id):
         pid = ""
-        return toEntry(eid, pid, eid, "Info: " + eid)
+        return toEntry(id, pid, id, "Info: " + id)
     def init(self, settings):
         return {}
 
@@ -495,28 +495,28 @@ class TypeUnknown(TypeBase):
         return "red"
     def init(self, settings):
         raise NotImplementedError()
-    def create(self, symbols, etype, eid, code):
-        return createUnknownEntry(symbols, etype, eid, code=code)
+    def create(self, symbols, type, id, code):
+        return createUnknownEntry(symbols, type, id, code=code)
 
-def createUnknownEntry(_, etype, eid, pid = "", code = None):
+def createUnknownEntry(_, type, id, pid = "", code = None):
     # TODO remove: can be seen by attribute unmapped
-    # if debugOutput:
-    #     print("unknown entry; type: " + etype + " id: " + eid, file=sys.stderr)
-    if "__" in eid:
-      (code, eid) = eid.split("__", 1)
-    typeText = etype + " (" + code + ")" if code is not None else etype
-    res = toEntry(eid, pid, eid, typeText + " " + eid)
+    #if debugOutput:
+    #    print("unknown entry; type: " + type + " id: " + id, file=sys.stderr)
+    if "__" in id:
+      (code, id) = id.split("__", 1)
+    typeText = type + " (" + code + ")" if code is not None else type
+    res = toEntry(id, pid, id, typeText + " " + id)
     res["unmapped"] = True
     return res
 
-def toEntry(eid, pid, name, desc, alias=None):
+def toEntry(id, pid, name, desc, alias=None):
     res = {
-        "id": eid,
+        "id": id,
         "parent": pid,
         "name": name,
         "desc": desc
     }
-    if alias is not None and alias != eid:
+    if alias is not None and alias != id:
         res["alias"] = alias
     return res
 
@@ -610,28 +610,28 @@ def initGlobalSymbols(settings):
 
 ### filling dictionary ###
 
-def extractEntries(dictionary, patient):
+def extractEntries(dict, patient):
     for event in patient['events']:
-        dictionary.createEntry(dictionary, event['group'], event['id'])
+        dictionary.createEntry(dict, event['group'], event['id'])
 
 def loadOldDict(file):
-    dictionary = {}
+    dict = {}
     if file == '-' or not os.path.isfile(file):
-        return dictionary
+        return dict
     with open(file, 'r') as input:
-        dictionary = json.loads(input.read())
-    return dictionary
+        dict = json.loads(input.read())
+    return dict
 
 def enrichDict(file, mid):
-    dictionary = loadOldDict(file)
+    dict = loadOldDict(file)
     if mid == '-':
         patient = json.loads(sys.stdin.read())
     else:
         with open(mid, 'r') as pfile:
             patient = json.loads(pfile.read())
-    extractEntries(dictionary, patient)
+    extractEntries(dict, patient)
     with util.OutWrapper(file) as out:
-        print(json.dumps(dictionary, indent=2, sort_keys=True), file=out)
+        print(json.dumps(dict, indent=2, sort_keys=True), file=out)
 
 def init(settings, settingsFile):
     dictionary.init(settings, settingsFile)
@@ -701,14 +701,14 @@ if __name__ == '__main__':
     (settings, settingsFile, info, lookupMode, rest) = interpretArgs()
     dictionary.init(settings, settingsFile)
     if lookupMode:
-        dictionary = {}
+        edict = {}
 
         def addEntry(e):
             spl = e.split('__', 1)
             if len(spl) != 2:
                 print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
                 sys.exit(1)
-            dictionary.createEntry(dictionary, spl[0].strip(), spl[1].strip())
+            dictionary.createEntry(edict, spl[0].strip(), spl[1].strip())
 
         for e in rest:
             if e == "-":
@@ -718,8 +718,8 @@ if __name__ == '__main__':
             else:
                 addEntry(e)
 
-        file = info['output']
-        with util.OutWrapper(file) as out:
-            print(json.dumps(dictionary, indent=2, sort_keys=True), file=out)
+        ofile = info['output']
+        with util.OutWrapper(ofile) as out:
+            print(json.dumps(edict, indent=2, sort_keys=True), file=out)
     else:
         enrichDict(info['output'], info['mid'])
