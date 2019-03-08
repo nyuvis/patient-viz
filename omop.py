@@ -93,7 +93,7 @@ class OMOP():
         limit_str = " LIMIT :limit" if limit is not None else ""
         query = "SELECT person_id, person_source_value FROM {schema}.person{limit}".format(schema=self.schema, limit=limit_str)
         for r in self._exec(query, limit=limit):
-            patients.add(str(prefix) + (str(r['person_id']) if not show_old_ids else str(r['person_source_value']) + '.json'))
+	    patients.add(str(prefix) + (str(r['person_id']) if not show_old_ids else str(r['person_source_value']) + '.json'))
 
     def get_person_id(self, pid):
         query = "SELECT person_id FROM {schema}.person WHERE person_source_value = :pid"
@@ -312,15 +312,11 @@ class OMOP():
             c.domain_id as p_domain,
             c.concept_name as p_name,
             c.vocabulary_id as p_vocab,
-            c.concept_code as p_num,
-            p.total_paid as p_cost
+            c.concept_code as p_num
            FROM
             {schema}.procedure_occurrence as o
            LEFT JOIN {schema}.concept as c ON (
             c.concept_id = o.procedure_concept_id
-           )
-           LEFT JOIN {schema}.cost as p ON (
-            p.procedure_occurrence_id = o.procedure_occurrence_id
            )
            WHERE
             o.person_id = :pid
@@ -340,8 +336,8 @@ class OMOP():
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
-            if 'p_cost' in row and row['p_cost']:
-                event['cost'] = float(row['p_cost'])
+            #if 'p_cost' in row and row['p_cost']:
+            #    event['cost'] = float(row['p_cost'])
             obj['events'].append(event)
 
     def get_observations_concept_valued(self, pid, obj, dict, new_dict_entries):
@@ -469,15 +465,11 @@ class OMOP():
             c.domain_id as m_domain,
             c.concept_name as m_name,
             c.vocabulary_id as m_vocab,
-            c.concept_code as m_num,
-            p.total_paid as m_cost
+            c.concept_code as m_num
            FROM
             {schema}.drug_exposure as o
            LEFT JOIN {schema}.concept as c ON (
             c.concept_id = o.drug_concept_id
-           )
-           LEFT JOIN {schema}.drug_cost as p ON (
-            p.drug_exposure_id = o.drug_exposure_id
            )
            WHERE
             o.person_id = :pid
@@ -498,13 +490,9 @@ class OMOP():
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
-            cost = row['m_cost'] if 'm_cost' in row else None
             while date_cur <= date_end:
                 event = self.create_event(group, str(vocab) + str(d_id), id_row)
                 event['time'] = date_cur
-                if cost:
-                    event['cost'] = float(cost)
-                    cost = None
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 
@@ -542,8 +530,8 @@ class OMOP():
             vocab = row['m_vocab']
             group = "Measurement" if row['m_domain'] is None else row['m_domain']
             lab_value = float(row['m_value']) if 'm_value' in row and row['m_value'] else row['m_orig_value']
-            lab_low = float(row['m_low'])
-            lab_high = float(row['m_high'])
+            lab_low = float(row['m_low'] if row['m_low'] is not None else '-inf')
+            lab_high = float(row['m_high'] if row['m_high'] is not None else 'inf')
             lab_flag = ""
             if lab_value is not None:
                 if lab_value <= lab_low:
