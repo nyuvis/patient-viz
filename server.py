@@ -27,7 +27,6 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
     settings = {}
     util.read_config(settings, settings_file, True)
     use_cache = settings.get('use_cache', True)
-
     all_paths = []
     input_format = {}
     use_db = False
@@ -58,7 +57,6 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
     if not os.path.isfile(patients_list) or not use_cache:
         if use_db:
             omop.list_patients(patients, prefix=json_dir, limit=max_num, show_old_ids=True)
-        else:
             tf = StringIO()
             cms_analyze.compute(all_paths, {}, False, tf, filter_zero=True)
             tf.flush()
@@ -68,11 +66,11 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
                 patients.add(json_dir + line.strip() + '.json')
         save_patients()
 
-    dict = {}
+    dictionary = {}
     if use_cache:
         if os.path.isfile(dictionary_file):
             with open(dictionary_file, 'r') as input:
-                dict = json.loads(input.read())
+                dictionary = json.loads(input.read())
         else:
             os.makedirs(json_dir)
             # write the initial empty dictionary
@@ -102,7 +100,7 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
     @server.json_get(prefix + '/' + json_dir, 1)
     def get_patient(req, args):
         pid = args['paths'][0]
-        if pid.endswith('.json') and use_db:
+	if pid.endswith('.json') and use_db:
             pid = pid[:-len('.json')]
             pid = omop.get_person_id(pid)
         cache_file = os.path.join(json_dir, pid)
@@ -114,17 +112,17 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
             pid = pid[:-len('.json')]
         if not os.path.isfile(cache_file) or not use_cache:
             if use_db:
-                patient = omop.get_patient(pid, dict, line_file, class_file)
+                patient = omop.get_patient(pid, dictionary, line_file, class_file)
             else:
                 patient = cms_get_patient.process(all_paths, line_file, class_file, pid)
-                build_dictionary.extractEntries(dict, patient)
+                build_dictionary.extractEntries(dictionary, patient)
             if use_cache:
                 with open(cache_file, 'w') as pf:
                     pf.write(json_dumps(patient))
                     pf.flush()
             if use_cache:
                 with open(dictionary_file, 'w') as output:
-                    output.write(json_dumps(dict))
+                    output.write(json_dumps(dictionary))
                     output.flush()
             return patient
         with open(cache_file, 'r') as pf:
@@ -132,7 +130,7 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
 
     @server.json_get(prefix + '/' + dictionary_file)
     def get_dictionary(req, args):
-        return dict
+        return dictionary
 
     msg("starting server at {0}:{1}", addr if addr else 'localhost', port)
     server.serve_forever()
