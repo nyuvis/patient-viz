@@ -21,7 +21,7 @@ usage: {0} [-h] [-bc] -f <file> -- <key> <value>...
     exit(1)
 
 if __name__ == '__main__':
-    file = None
+    ufile = None
     bool_values = False
     create = False
     args = sys.argv[:]
@@ -40,19 +40,19 @@ if __name__ == '__main__':
             if not args:
                 print("-f requires argument", file=sys.stderr)
                 usage()
-            file = args.pop(0)
+            ufile = args.pop(0)
         else:
             print("unknown argument: {0}".format(arg), file=sys.stderr)
             usage()
-    if file is None:
+    if ufile is None:
         print("must specify file", file=sys.stderr)
         usage()
     obj = {}
-    if os.path.isfile(file):
-        with open(file, 'r') as f:
+    if os.path.isfile(ufile):
+        with open(ufile, 'r') as f:
             obj = json.load(f)
     elif not create:
-        print("'{0}' is not a file".format(file), file=sys.stderr)
+        print("'{0}' is not a file".format(ufile), file=sys.stderr)
         usage()
     while args:
         key = args.pop(0)
@@ -61,5 +61,5 @@ if __name__ == '__main__':
         value = args.pop(0)
         value = value if not bool_values else value == 'true'
         obj[key] = value
-    with open(file, 'w') as f:
+    with open(ufile, 'w') as f:
         print(json.dumps(obj, indent=2, sort_keys=True), file=f)
