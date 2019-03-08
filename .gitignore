@@ -1,4 +1,5 @@
 *.swp
+.mypy_cache/
 .DS_Store
 .cmd_history
 /err.txt

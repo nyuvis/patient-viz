@@ -331,7 +331,7 @@ def usage():
 if __name__ == '__main__':
     lineFile = None
     classFile = None
-    id = None
+    pid = None
     output = '-'
     args = sys.argv[:]
     args.pop(0)
@@ -356,7 +356,7 @@ if __name__ == '__main__':
             if not args or args[0] == '--':
                 print('no id specified', file=sys.stderr)
                 usage()
-            id = args.pop(0)
+            pid = args.pop(0)
         elif arg == '-l':
             if not args or args[0] == '--':
                 print('no file specified', file=sys.stderr)
@@ -370,12 +370,12 @@ if __name__ == '__main__':
         else:
             print('unrecognized argument: ' + arg, file=sys.stderr)
             usage()
-    if id is None:
+    if pid is None:
         print('need to specify id with -p', file=sys.stderr)
         usage()
     allPaths = []
     util.convert_paths(args, allPaths)
-    obj = process(allPaths, lineFile, classFile, id)
+    obj = process(allPaths, lineFile, classFile, pid)
     if output != '-' and not os.path.exists(os.path.dirname(output)):
         os.makedirs(os.path.dirname(output))
     with util.OutWrapper(output) as out:

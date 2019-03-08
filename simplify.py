@@ -86,13 +86,13 @@ if __name__ == '__main__':
         print("must specify dictionary", file=sys.stderr)
         usage()
     with open(dictionary, 'r') as d:
-        dict = json.load(d)
+        edict = json.load(d)
     obj = {}
     if input == '-':
         obj = json.load(sys.stdin)
     else:
         with open(input, 'r') as f:
             obj = json.load(f)
-    obj = enrich(dict, obj)
+    obj = enrich(edict, obj)
     with util.OutWrapper(output) as out:
         print(json.dumps(obj, indent=2, sort_keys=True), file=out)

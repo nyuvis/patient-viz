@@ -666,7 +666,7 @@ def interpretArgs():
     }
     lookupMode = False
     args = sys.argv[:]
-    args.pop(0);
+    args.pop(0)
     while args:
         val = args.pop(0)
         if val == '-h' or val == '--help':
@@ -701,14 +701,14 @@ if __name__ == '__main__':
     (settings, settingsFile, info, lookupMode, rest) = interpretArgs()
     dictionary.init(settings, settingsFile)
     if lookupMode:
-        dict = {}
+        edict = {}
 
         def addEntry(e):
             spl = e.split('__', 1)
             if len(spl) != 2:
                 print("shorthand format is '${group_id}__${type_id}': " + e, file=sys.stderr)
                 sys.exit(1)
-            dictionary.createEntry(dict, spl[0].strip(), spl[1].strip())
+            dictionary.createEntry(edict, spl[0].strip(), spl[1].strip())
 
         for e in rest:
             if e == "-":
@@ -718,8 +718,8 @@ if __name__ == '__main__':
             else:
                 addEntry(e)
 
-        file = info['output']
-        with util.OutWrapper(file) as out:
-            print(json.dumps(dict, indent=2, sort_keys=True), file=out)
+        ofile = info['output']
+        with util.OutWrapper(ofile) as out:
+            print(json.dumps(edict, indent=2, sort_keys=True), file=out)
     else:
         enrichDict(info['output'], info['mid'])
