@@ -336,8 +336,8 @@ class OMOP():
             self.add_dict(dict, new_dict_entries, group, vocab, d_id, name, desc, code, unmapped)
             event = self.create_event(group, str(vocab) + str(d_id), id_row)
             event['time'] = self.to_time(row['p_date'])
-            #if 'p_cost' in row and row['p_cost']:
-            #    event['cost'] = float(row['p_cost'])
+            # if 'p_cost' in row and row['p_cost']:
+            #     event['cost'] = float(row['p_cost'])
             obj['events'].append(event)
 
     def get_observations_concept_valued(self, pid, obj, dict, new_dict_entries):
@@ -490,9 +490,13 @@ class OMOP():
             date_start = self.to_time(row['date_start'])
             date_end = self.to_time(row['date_end']) if row['date_end'] else date_start
             date_cur = date_start
+            # cost = row['m_cost'] if 'm_cost' in row else None
             while date_cur <= date_end:
                 event = self.create_event(group, str(vocab) + str(d_id), id_row)
                 event['time'] = date_cur
+                # if cost:
+                #     event['cost'] = float(cost)
+                #     cost = None
                 obj['events'].append(event)
                 date_cur = util.nextDay(date_cur)
 

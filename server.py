@@ -57,6 +57,7 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
     if not os.path.isfile(patients_list) or not use_cache:
         if use_db:
             omop.list_patients(patients, prefix=json_dir, limit=max_num, show_old_ids=True)
+        else:
             tf = StringIO()
             cms_analyze.compute(all_paths, {}, False, tf, filter_zero=True)
             tf.flush()
