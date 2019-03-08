@@ -93,7 +93,7 @@ class OMOP():
         limit_str = " LIMIT :limit" if limit is not None else ""
         query = "SELECT person_id, person_source_value FROM {schema}.person{limit}".format(schema=self.schema, limit=limit_str)
         for r in self._exec(query, limit=limit):
-	    patients.add(str(prefix) + (str(r['person_id']) if not show_old_ids else str(r['person_source_value']) + '.json'))
+            patients.add(str(prefix) + (str(r['person_id']) if not show_old_ids else str(r['person_source_value']) + '.json'))
 
     def get_person_id(self, pid):
         query = "SELECT person_id FROM {schema}.person WHERE person_source_value = :pid"

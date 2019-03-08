@@ -27,6 +27,7 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
     settings = {}
     util.read_config(settings, settings_file, True)
     use_cache = settings.get('use_cache', True)
+
     all_paths = []
     input_format = {}
     use_db = False
@@ -101,7 +102,7 @@ def start_server(max_num, settings_file, format_file, class_file, line_file, cms
     @server.json_get(prefix + '/' + json_dir, 1)
     def get_patient(req, args):
         pid = args['paths'][0]
-	if pid.endswith('.json') and use_db:
+        if pid.endswith('.json') and use_db:
             pid = pid[:-len('.json')]
             pid = omop.get_person_id(pid)
         cache_file = os.path.join(json_dir, pid)
