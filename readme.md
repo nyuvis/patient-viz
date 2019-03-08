@@ -89,8 +89,20 @@ http://localhost:8080/patient-viz/?p=json/12345678.json&d=json/dictionary.json
 ```
 (Note the `.json` after the id)
 
-If you want to stop the server you can type `quit` into its console or issue a
-keyboard interrupt via `CTRL-C`. Type `help` for available server commands.
+If you prefer to not cache patient files edit `config.txt` (or the config file you are using)
+to set `"use_cache": false`. `patient-viz` cannot automatically detect changes to
+the database content. When using caching you can force the patient files to
+update by removing the corresponding files in the `json` folder
+(the `json` folder can be safely removed to clear all cached patient files) and
+the `patients.txt` file (this file only contains a small subset of patient ids in the
+database; other patients can be accessed via specifying the URL as described above;
+once a patient file has been cached it will show up in the patient list regardless of the
+content of patients.txt). The `dictionary.json` file contains the mappings for
+readable code names; if those mappings change the file needs to be removed when using caching.
+
+If you want to stop the server you can type `quit` into its console
+(`CTRL-C` might affect the terminal which can be fixed by running `reset`).
+Type `help` for available server commands.
 
 Updating the git repository to the newest version found on Github should be
 done via `./setup.sh --update` as it cleans the cache and updates
